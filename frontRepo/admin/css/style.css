@@ -130,7 +130,7 @@ header > a:hover {
 
 /* container */
 .container {
-    height: calc(100vh - 50px - 39px);
+    min-height: calc(100vh - 50px - 39px);
     background-color: #f5f5f5;
     padding: 30px;
     box-sizing: border-box;
