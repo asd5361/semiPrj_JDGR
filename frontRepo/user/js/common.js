@@ -94,3 +94,22 @@ modalCloseButtons.forEach(button => {
         body.style.overflow = '';
     });
 });
+
+// tab
+const tabButtons = document.querySelectorAll('.tab_group .tab_btns button');
+const tabContents = document.querySelectorAll('.tab_group .tab_content');
+const tabContentsDiv = document.querySelectorAll('.tab_group .tab_content > div');
+
+tabButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const tabCode = this.getAttribute('rel');
+
+        // 모든 탭 버튼과 컨텐츠 숨기기
+        tabButtons.forEach(btn => btn.parentNode.classList.remove('on'));
+        tabContentsDiv.forEach(content => content.classList.remove('on'));
+
+        // 클릭한 탭 버튼과 해당하는 컨텐츠 표시
+        this.parentNode.classList.add('on');
+        document.querySelector('.' + tabCode).classList.add('on');
+    });
+});
