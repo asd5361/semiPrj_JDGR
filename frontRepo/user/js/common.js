@@ -4,8 +4,13 @@ const userInfoBtn = document.querySelector('header .util_box .after_login .user_
 const alarmBtn = document.querySelector('.ico_alarm');
 
 // 유저 정보 버튼과 알람 버튼에 클릭 이벤트 리스너 추가
-userInfoBtn.addEventListener('click', toggleHeaderPopup);
-alarmBtn.addEventListener('click', toggleHeaderPopup);
+if(userInfoBtn){
+    userInfoBtn.addEventListener('click', toggleHeaderPopup);
+}
+if(alarmBtn){
+    alarmBtn.addEventListener('click', toggleHeaderPopup);
+}
+
 
 function toggleHeaderPopup(e) {
     e.preventDefault();
