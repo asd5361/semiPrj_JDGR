@@ -29,7 +29,8 @@ header {
     border-bottom: 1px solid #ddd;
     box-sizing: border-box;
     height: 70px;
-    background-color: rgba(255, 255, 255, .9);
+    background-color: rgba(255, 255, 255, .94);
+    z-index: 100;
 }
 header .inner {
     display: flex;
@@ -220,34 +221,34 @@ header .util_box .after_login .user_box > a {
     background: url(../images/ico/ico_plus.svg) no-repeat center;
     text-indent: -9999em;
 }
-.pop_user_menu .user_blog {
+.user_blog {
     display: flex;
     flex-direction: column;
     gap: 14px;
     padding: 20px;
     border-bottom: 1px solid #ddd;
 }
-.pop_user_menu .user_blog .tit_box {
+.user_blog .tit_box {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.pop_user_menu .user_blog .tit_box strong {
+.user_blog .tit_box strong {
     font-size: var(--small-size);
     font-weight: 500;
     color: #999;
 }
-.pop_user_menu .user_blog ul {
+.user_blog ul {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-.pop_user_menu .user_blog ul li {
+.user_blog ul li {
     display: flex;
     position: relative;
     align-items: center;
 }
-.pop_user_menu .user_blog ul li span {
+.user_blog ul li span {
     display: block;
     width: calc(100% - 40px);
     font-size: var(--small-size);
@@ -256,13 +257,13 @@ header .util_box .after_login .user_box > a {
     text-overflow: ellipsis;
     word-break: break-all;
 }
-.pop_user_menu .user_blog ul li .ico_write {
+.user_blog ul li .ico_write {
     position: absolute;
     top: 50%;
     right: 20px;
     margin-top: -7px;
 }
-.pop_user_menu .user_blog ul li .ico_set {
+.user_blog ul li .ico_set {
     position: absolute;
     top: 50%;
     right: 0;
