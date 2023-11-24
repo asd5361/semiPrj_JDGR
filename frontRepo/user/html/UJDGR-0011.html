@@ -303,78 +303,24 @@
                 <!-- 포스트 목록 및 내용 및 댓글 -->
                 <div class="blog_right">
 
-                    <!-- 전체목록 -->
-                    <div class="b_post_list">
-                        <a href="" class="tit">
-                            <strong>전체보기</strong>
-                            <span>4개의 글</span>
-                        </a>
-                        <table>
-                            <colgroup>
-                                <col width="*">
-                                <col width="12%">
-                                <col width="10%">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th scope="col">글 제목</th>
-                                    <th scope="col">조회수</th>
-                                    <th scope="col">작성일</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                    <td>33</td>
-                                    <td>2023-11-23</td>
-                                </tr>
-                                <tr>
-                                    <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                    <td>33</td>
-                                    <td>2023-11-23</td>
-                                </tr>
-                                <tr>
-                                    <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                    <td>33</td>
-                                    <td>2023-11-23</td>
-                                </tr>
-                                <tr>
-                                    <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                    <td>33</td>
-                                    <td>2023-11-23</td>
-                                </tr>
-                                <tr>
-                                    <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                    <td>33</td>
-                                    <td>2023-11-23</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="paging_box">
-                            <ul>
-                                <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                                <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                                <li class="on"><a href="">1</a></li>
-                                <li><a href="">2</a></li>
-                                <li><a href="">3</a></li>
-                                <li><a href="">4</a></li>
-                                <li><a href="">5</a></li>
-                                <li><a href="">6</a></li>
-                                <li><a href="">7</a></li>
-                                <li><a href="">8</a></li>
-                                <li><a href="">9</a></li>
-                                <li><a href="">10</a></li>
-                                <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                                <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
-                            </ul>
+                    <!-- 블로그 메인 -->
+                    <div class="blog_main">
+
+                        <!-- 메인이 없을시 -->
+                        <div class="no_main">
+                            <strong>설정된 블로그 메인이 없습니다.</strong>
+                            <span>블로그 메인을 꾸며보세요!</span>
+
+                            <a href="">메인 꾸미기</a>
                         </div>
+
+                        <!-- 있을시 -->
+                        <div class="blog_main_content">
+                            유저가 작성한내용이 나옵니다.<br/>
+                            DB에서 불러와야함
+                        </div>
+                        
                     </div>
-
-                    <!-- 포스트 상세보기 -->
-                    <div class="b_post_detail"></div>
-
-                    <!-- 포스트 댓글 -->
-                    <div class="b_post_reply"></div>
 
                 </div>
 
