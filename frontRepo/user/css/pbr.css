@@ -1,3 +1,65 @@
 .login_div>div >input{
     padding-left: 65px !important;
 }
+
+.print_id{
+    background-color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+}
+
+.print_id>div:nth-child(3){
+    color: #ff7878;
+    font-size: 40px;
+}
+.modal_container>div.form_box>.input_email:nth-child(1){
+    width: 125px;
+    margin-left: 25px;
+}
+.modal_container>div.form_box>.input_email{
+    width: 130px;
+    margin: 10px;
+}
+.modal_container>div.form_box>.input_email:nth-child(2){
+    width: 150px;
+}
+.modal_container>div.form_box>select.selet_addr{
+    width: 150px;
+}
+.modal_container>div.form_box>div.inp_btn{
+    margin-top: 10px;
+    text-align: center;
+}
+.modal_container>div.form_box>div.inp_btn>.input_num{
+    width: 309px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.modal_container>div.form_box>div.inp_btn>button{
+    width: 154px;
+    height: 37px;
+}
+.mypage_div{
+    text-align: center;
+}
+.mypage_div>div.title>h1{
+    margin: 70px;
+}
+
+div.mypage_div>table{
+    height: 100px;
+    width: 50%;
+}
+
+div.mypage_div>table>tbody>tr>td:nth-child(1){
+    width: 200px; 
+    text-align: left;
+    padding-left: 10px;   
+}
+div.mypage_div>table>tbody>tr{
+    border-bottom: 1px solid rgb(168, 168, 168);
+}
+/* div.mypage_div>table>tbody>tr>td:nth-child(2)>div.form_box{
+        
+} */
