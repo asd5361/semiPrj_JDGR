@@ -804,6 +804,10 @@
 }
 .tbl_box.data table td {
     padding: 7px 0;
+    cursor: pointer;
+}
+.tbl_box.data table tr:hover td {
+    background-color: #ddd;
 }
 
 /* chklist */
