@@ -159,8 +159,90 @@ function updateClock() {
     clockEl.textContent = timeString;
     ampmTxt.textContent = ampmString;
 }
+if(clockEl){
+    // 1초마다 함수 호출
+    setInterval(updateClock, 1000);
+    // 페이지 로드 시 업데이트
+    updateClock();
+}
 
-// 1초마다 함수 호출
-setInterval(updateClock, 1000);
-// 페이지 로드 시 업데이트
-updateClock();
+// 댓글 수정/삭제 버튼 활성화 함수
+function replayPop(element) {
+    const replyButtons = element.querySelectorAll('.reply_pop > a');
+
+    replyButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const replyParent = e.currentTarget.parentNode.parentNode;
+            replyParent.classList.toggle('on');
+
+            document.addEventListener('click', handleClickOutside.bind(null, replyParent));
+        });
+    });
+
+    // 영역 외 클릭 시 닫기
+    function handleClickOutside(replyParent, e) {
+        const isClickInside = replyParent.contains(e.target);
+
+        if (!isClickInside) {
+            replyParent.classList.remove('on');
+
+            // 이벤트 리스너 제거
+            document.removeEventListener('click', handleClickOutside.bind(null, replyParent));
+        }
+    }
+}
+
+// 대댓글 추가 버튼
+const rreplyButtons = document.querySelectorAll('.b_post_reply .btn_area > button');
+
+rreplyButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+        const replyParent = e.currentTarget.parentNode.parentNode;
+        replyParent.classList.toggle('reply');
+    });
+});
+
+// 초기 댓글 수정/삭제 버튼 활성화
+replayPop(document);
+
+
+
+// 댓글수정 버튼
+const editBtn = document.querySelectorAll('.reply_pop > div .edit');
+if(editBtn){
+    editBtn.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const editLi = e.target.parentNode.parentNode.parentNode;
+            editLi.classList.add('edit');
+            editLi.querySelector('textarea').focus();
+            editLi.classList.remove('on');
+            editLi.querySelector('button:nth-child(1)').addEventListener('click', (ev) => {
+                console.log();
+                ev.target.parentNode.parentNode.parentNode.classList.remove('edit');
+            });
+        });
+    });
+}
+// 댓글삭제 버튼
+const deleteBtn = document.querySelectorAll('.reply_pop > div .delete');
+let blindEl = null;
+if(deleteBtn){
+    deleteBtn.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const editLi = e.target.parentNode.parentNode.parentNode;
+
+            blindElAdd('삭제된 댓글입니다.');
+            editLi.appendChild(blindEl);
+            editLi.classList.remove('on');
+
+        });
+    });
+}
+function blindElAdd(txt){
+    blindEl = document.createElement('div');
+    blindEl.classList.add('blind');
+    blindEl.textContent = txt;
+}

@@ -329,6 +329,7 @@ header .util_box .after_login .user_box > a {
     border-radius: 15px;
     box-shadow: 0 0 12px rgba(0, 0, 0, .19);
     padding: 10px;
+    z-index: 1;
 }
 
 .alarm_box.on .pop_alarm {
