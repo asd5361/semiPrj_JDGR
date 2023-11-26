@@ -49,17 +49,43 @@
 
 div.mypage_div>table{
     height: 100px;
-    width: 50%;
+    width: 100%;
 }
-
+div.mypage_div>table>tbody>tr>td{
+    height: 55px;
+    vertical-align: middle;
+}
 div.mypage_div>table>tbody>tr>td:nth-child(1){
     width: 200px; 
     text-align: left;
-    padding-left: 10px;   
 }
+div.mypage_div>table>tbody>tr>td:nth-child(2){
+    width: 200px; 
+    text-align: left;
+    padding-right: 500px;
+}
+
 div.mypage_div>table>tbody>tr{
     border-bottom: 1px solid rgb(168, 168, 168);
 }
 /* div.mypage_div>table>tbody>tr>td:nth-child(2)>div.form_box{
         
 } */
+td>div.form_box>input.input_email:nth-child(1){
+    margin-right: 5px;
+    width: 46.5%;
+    background-color:rgb(231, 231, 231);
+}
+td>div.form_box>input.input_email:nth-child(2){
+    margin-left: 5px;
+    width: 47%;
+    background-color:rgb(231, 231, 231);
+
+}
+
+td>div.form_box>div.btn_box>button.btn_black{
+    width: 120px !important;
+}
+div.btn_box>.dkdk:nth-child(1){
+    margin-left: 59px;
+}
