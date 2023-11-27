@@ -18,7 +18,7 @@
 .head01 > .right01 {
     display: flex;
     align-items: center;
-    gap: 10px;
+    margin-right: 10px;
 }
 
 .head01 > .left01 {
@@ -103,15 +103,15 @@
 }
 
 button.btn_k.like {
-    background: url(../images/ico/ico_like_b.svg) no-repeat left;
+    background: url(../images/ico/ico_like_b.svg) no-repeat 18px center;
 }
 
 button.btn_k.un_like {
-    background: url(../images/ico/ico_like.svg) no-repeat left;
+    background: url(../images/ico/ico_like.svg) no-repeat 18px center;
 }
 
 button.btn_k.plus {
-    background: url(../images/ico/ico_v2.svg) no-repeat left;
+    background: url(../images/ico/ico_v2.svg) no-repeat 15px center;
 }
 
 /* 신고팝업 */
