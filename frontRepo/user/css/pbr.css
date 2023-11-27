@@ -62,8 +62,9 @@ div.mypage_div>table>tbody>tr>td:nth-child(1){
 div.mypage_div>table>tbody>tr>td:nth-child(2){
     width: 200px; 
     text-align: left;
-    padding-right: 500px;
+    padding-right: 400px;
 }
+
 
 div.mypage_div>table>tbody>tr{
     border-bottom: 1px solid rgb(168, 168, 168);
@@ -86,6 +87,24 @@ td>div.form_box>input.input_email:nth-child(2){
 td>div.form_box>div.btn_box>button.btn_black{
     width: 120px !important;
 }
-div.btn_box>.dkdk:nth-child(1){
-    margin-left: 59px;
+
+
+div.btn_box:nth-child(1)>.dkdk{
+    width: 120px;
+    margin-top: 20px;
+    margin-left: 440px;
+    background-color: #ff7878;
+}
+div.btn_box:nth-child(2)>.dkdk{
+    width: 120px;
+    margin-top: 20px;
+
+    margin-left: 100px;
+    background-color: lightgray;
+}
+
+.btn_area>.btn_box.btn_group>.modal_open{
+    font-size: 20px;
+    height: 50px;
+    background-color: #ff7878;
 }
