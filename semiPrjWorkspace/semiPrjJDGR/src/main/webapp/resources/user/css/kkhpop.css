@@ -1,0 +1,73 @@
+/* 댓글/포스트 신고하기 */
+.rep_pos_pop{
+    margin-left: 30%;
+}
+
+/* 작성자, 내용 */
+.writer_content{
+    margin-left: 20px;
+}
+
+/*사유 선택*/
+.select_reason{
+    font-size: 20px;
+    font-weight: bolder;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+/* 사유 내용 감싸는 박스 */
+.reason_detail{
+    
+    width: 580px;
+    border-radius: 10px;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-top: 1px solid;
+    border-color: lightgray;
+}
+
+/* 버튼/내용 감싸는 박스 */
+.check_area{
+    
+    border-bottom: 1px solid;
+    border-color: lightgray;
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+}
+
+/* 라디오버튼 */
+.report_reason{
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+/* 사유 내용 */
+.reason_content{        
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+
+/* .detail_reason{
+    margin-left: 20px;
+    width: 540px;
+    border: 1px solid;
+    border-color: lightgray;
+} */
+
+
+
+
+
+.detail_content{
+    margin-top: 5px;
+    text-align: center;
+    width: 540px;
+    height: 120px;
+    border: 1px solid;
+    border-color: lightgray;
+}
