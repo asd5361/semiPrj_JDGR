@@ -1,27 +1,27 @@
-.container {
+.container01 {
     width: 100%;
     height: 700px;
     display: grid;
     grid-template-rows: 170px auto 50px;
 }
 
-.header {
+.header01 {
     width: 100%;
 }
 
-.head {
+.head01 {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.head > .right {
+.head01 > .right01 {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.head > .left {
+.head01 > .left01 {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -35,29 +35,29 @@
     font-size: 15px;
 }
 
-.text {
+.text01 {
     width: 100%;
     padding: 20px 0;
     border-top: 1px solid lightgray;
 }
 
-.footer {
+.footer01 {
     width: 100%;
 }
 
-.footer > .foot {
+.footer01 > .foot01 {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.foot > .left {
+.foot01 > .left02 {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.foot > .right {
+.foot01 > .right02 {
     display: flex;
     align-items: center;
     gap: 20px;
