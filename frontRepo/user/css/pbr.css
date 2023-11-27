@@ -108,3 +108,7 @@ div.btn_box:nth-child(2)>.dkdk{
     height: 50px;
     background-color: #ff7878;
 }
+
+.change_pwd{
+    color: aliceblue;
+}
