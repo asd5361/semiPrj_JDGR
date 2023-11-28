@@ -5,15 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>레이아웃</title>
 
+    <!-- swiper -->
+    <link rel="stylesheet" href="../css/swiper-bundle.css">
+    <script src="../js/swiper-bundle.min.js"></script>
+
     <!-- css -->
     <link rel="stylesheet" href="../css/allCss.css">
 
     <!-- js -->
-    <script src="../js/common.js" defer></script>
+    <script src="../js/common.js" defer=""></script>
+
+    <!-- summernote -->
+    <script src="../js/jquery-3.6.0.js"></script>
+    <script src="../summernote/summernote-lite.js"></script>
+    <script src="../summernote/lang/summernote-ko-KR.js"></script>
+    <link rel="stylesheet" href="../summernote/summernote-lite.css">
 
 </head>
 <body>
-<div class="wrap blog_set">
+<!-- blog class 추가시 유저블로그 -->
+<!-- blog.layout1,2,3 레이아웃 변경 -->
+<!-- blog.skin1,2,3,4,5,6 스킨변경 -->
+<div class="wrap">
 
     <!-- header -->
     <header>
@@ -184,83 +197,22 @@
     <main>
         <div class="inner">
 
-            <div class="blog_set_layout">
-
-                <div class="left">
-                    <dl>
-                        <dt>기본정보 관리</dt>
-                        <dd>
-                            <ul>
-                                <li><a href="">블로그 정보</a></li>
-                                <li><a href="">기본정보 관리</a></li>
-                            </ul>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt>구독 관리</dt>
-                        <dd>
-                            <ul>
-                                <li><a href="">구독한 블로그</a></li>
-                            </ul>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt>꾸미기 설정</dt>
-                        <dd>
-                            <ul>
-                                <li><a href="">스킨 선택</a></li>
-                                <li><a href="">레이아웃-위젯 설정</a></li>
-                            </ul>
-                        </dd>
-                    </dl>
+            <div class="write_box">
+                <div class="btn_area">
+                    <a href="" class="cancle">취소</a>
+                    <a href="" class="complete">등록</a>
                 </div>
 
-                <div class="right">
-                    <h2>블로그 정보</h2>
-
-                    <div class="content">
-
-                        <div class="data_dl">
-                            <dl>
-                                <dt>블로그명</dt>
-                                <dd>
-                                    <div class="inp_box">
-                                        <input type="text">
-                                        <span>한글, 영문, 숫자 혼용가능 (한글기준 25자 이내)</span>
-                                    </div>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>블로그 닉네임</dt>
-                                <dd>
-                                    <div class="inp_box">
-                                        <input type="text">
-                                        <span>한글, 영문, 숫자 혼용가능 (한글기준 25자 이내)</span>
-                                    </div>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>블로그 프로필 이미지</dt>
-                                <dd>
-                                    <div class="profile_box">
-                                        <div class="img"><img src="../images/ico/ico_profile.svg" alt=""></div>
-                                        <div class="profile_btn">
-                                            <button>등록</button>
-                                            <span class="txt">프로필 이미지는 가로 200px, 세로 200px로 생성됩니다.</span>
-                                        </div>
-                                    </div>
-                                </dd>
-                            </dl>
-                        </div>
-
-                        <div class="blog_set_btn">
-                            <a href="">저장</a>
-                        </div>
-
+                <form action="">
+                    <div class="inp_area">
+                        <select>
+                            <option value="1">카테고리이름</option>
+                        </select>
                     </div>
-
-                </div>
-
+                    <div class="write_area">
+                        <textarea id="summernote"></textarea>
+                    </div>
+                </form>
             </div>
 
         </div>
@@ -272,5 +224,37 @@
     <!-- //footer -->
 
 </div>
+<style>
+    @font-face {
+        font-family: "NotoSansKR";
+        src: url("../css/fonts/NotoSans-DemiLight.woff2");
+    }
+</style>
+<script>
+    const fontArr = ['NotoSansKR', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'];
+    $('#summernote').summernote({
+        // height: '100', // 에디터 높이
+        // minHeight: null, // 최소 높이
+        // maxHeight: null, // 최대 높이
+        focus: true, // 에디터 로딩후 포커스를 맞출지 여부
+        lang: "ko-KR", // 한글 설정
+        placeholder: '',	//placeholder 설정
+        toolbar: [
+                    // [groupName, [list of button]]
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['style', ['bold','italic','underline','strikethrough','forecolor','backcolor','superscript','subscript','clear']],
+                    ['color', ['forecolor','color']],
+                    ['table', ['table']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert',['picture','link','video']],
+                    ['view', ['fullscreen', 'help']]
+                  ],
+        fontNames: fontArr,
+        fontNamesIgnoreCheck: fontArr,
+        fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+    });
+</script>
 </body>
 </html>
