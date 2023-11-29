@@ -1811,3 +1811,6 @@ li .reply_inp_box::before {
     border: 1px solid #ddd;
 
 }
+.note-tooltip {
+    background-color: transparent !important;
+}
