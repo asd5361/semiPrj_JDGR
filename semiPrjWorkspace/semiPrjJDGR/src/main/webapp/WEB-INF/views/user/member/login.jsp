@@ -12,15 +12,15 @@
                 <!-- <strong>회원가입</strong> -->
             </h1>
         </div>
-
-        <!-- 로그인/회원가입 영역 -->
+		<form action="">
+		<!-- 로그인/회원가입 영역 -->
         <div class="membership_area">
             <div class="form_box ico_id">
-                <input type="text" name="" placeholder="아이디를 입력해주세요.">
+                <input type="text" name="memberId" placeholder="아이디를 입력해주세요.">
                 <span class="txt_msg">아이디 중복확인이 완료되었습니다.</span>
             </div>
             <div class="form_box ico_pwd">
-                <input type="password" name="" placeholder="비밀번호를 입력해주세요.">
+                <input type="password" name="memberPwd" placeholder="비밀번호를 입력해주세요.">
                 <span class="txt_msg">전화번호 형식이 맞지 않습니다.</span>
             </div>
             <!-- <div class="chk_box">
@@ -33,13 +33,15 @@
 
         <!-- 버튼 -->
         <div class="btn_area">
-            <a href="">로그인</a>
-            <ul class="etc_btn">
-                <li><a href="">회원가입</a></li>
-                <li><a href="">아이디 찾기</a></li>
-                <li><a href="">비밀번호 찾기</a></li>
-            </ul>
+            <button type="submit">로그인</button>
         </div>
+        <ul class="etc_btn">
+            <li><a href="">회원가입</a></li>
+            <li><a href="">아이디 찾기</a></li>
+            <li><a href="">비밀번호 찾기</a></li>
+        </ul>
+		</form>
+        
 
     </div>
 <%@include file = "../common/footer.jsp"%>

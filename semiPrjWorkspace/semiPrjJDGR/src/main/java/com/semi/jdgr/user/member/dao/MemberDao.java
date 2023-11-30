@@ -44,4 +44,45 @@ public class MemberDao {
 		return result;
 	}
 
+	public MemberVo login(Connection conn, MemberVo vo) throws Exception {
+		
+		String sql = "SELECT * FROM MEMBER WHERE MEM_ID = ? AND MEM_PWD = ? AND QUIT_YN = 'N'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, vo.getMemId());
+		pstmt.setString(2, vo.getMemPwd());
+		ResultSet rs = pstmt.executeQuery();
+		
+		MemberVo loginMember =null;
+		
+		if(rs.next()) {
+			String memNo = rs.getString("MEM_NO");
+			String memName = rs.getString("MEM_NAME");
+			String memId = rs.getString("MEM_ID");
+			String memPwd = rs.getString("MEM_PWD");
+			String memNick = rs.getString("MEM_NICK");
+			String memPhoneNum = rs.getString("MEM_PHONE_NUM");
+			String memEmail = rs.getString("MEM_EMAIL");
+			String quitYn = rs.getString("QUIT_YN");
+			String enrollDate = rs.getString("ENROLL_DATE");
+			String updateDate = rs.getString("UPDATE_DATE");
+			
+			loginMember = new MemberVo();
+			loginMember.setMemNo(memNo);
+			loginMember.setMemName(memName);
+			loginMember.setMemId(memId);
+			loginMember.setMemPwd(memPwd);
+			loginMember.setMemNick(memNick);
+			loginMember.setMemPhoneNum(memPhoneNum);
+			loginMember.setMemEmail(memEmail);
+			loginMember.setQuitYn(quitYn);
+			loginMember.setEnrollDate(enrollDate);
+			loginMember.setUpdateDate(updateDate);
+					
+		}
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return loginMember;
+	}
+
 }
