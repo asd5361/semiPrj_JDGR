@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi.jdgr.user.member.service.MemberService;
 
-@WebServlet("/member/findid")
+@WebServlet("/member/checkid")
 public class MemberCheckIdController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter out = resp.getWriter();
 		try {
 			// data
-			String memberId = req.getParameter("memberId");
+			String memberId = req.getParameter("joinId");
 			
 			MemberService ms = new MemberService();
 			boolean isOk = ms.checkIdDup(memberId);
