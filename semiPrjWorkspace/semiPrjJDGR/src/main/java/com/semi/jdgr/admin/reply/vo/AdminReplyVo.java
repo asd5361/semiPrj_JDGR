@@ -1,4 +1,4 @@
-package com.semi.jdgr.admin.member.vo;
+package com.semi.jdgr.admin.reply.vo;
 
 public class AdminReplyVo {
 
@@ -15,6 +15,7 @@ public class AdminReplyVo {
 	private int lastRow;		// 조회할 마지막 행 번호 (ROWNUM)
 	
 	
+	//생성자
 	public AdminReplyVo(int listCount, int currentPage, int pageLimit, int boardLimit, int maxPage, int startPage,
 			int endPage, int startRow, int lastRow) {
 		super();
@@ -28,8 +29,53 @@ public class AdminReplyVo {
 		this.startRow = startRow;
 		this.lastRow = lastRow;
 	}
+
+
+	public int getListCount() {
+		return listCount;
+	}
+
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+
+	public int getPageLimit() {
+		return pageLimit;
+	}
+
+
+	public int getBoardLimit() {
+		return boardLimit;
+	}
+
+
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+
+	public int getStartPage() {
+		return startPage;
+	}
+
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+
+	public int getStartRow() {
+		return startRow;
+	}
+
+
+	public int getLastRow() {
+		return lastRow;
+	}
 	
-	//생성자
+	
 	
 	
 }

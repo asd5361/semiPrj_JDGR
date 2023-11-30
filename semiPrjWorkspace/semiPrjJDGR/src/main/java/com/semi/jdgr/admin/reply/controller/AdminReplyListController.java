@@ -1,4 +1,4 @@
-package com.semi.jdgr.admin.member.controller;
+package com.semi.jdgr.admin.reply.controller;
 
 import java.io.IOException;
 
@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/admin/reply")
+import com.semi.jdgr.admin.reply.service.AdminReplyService;
+
+@WebServlet("/admin/reply/reply_list")
 public class AdminReplyListController extends HttpServlet{
 
 	//댓글 조회 화면
@@ -16,10 +18,10 @@ public class AdminReplyListController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			
-			ReplyService replyService = new ReplyService();
+			AdminReplyService ars = new AdminReplyService();
 			
 			//data
-			int listCount = replyService.selectReplyCount();	//전체 댓글 갯수
+			int listCount = ars.selectReplyCount();	//전체 댓글 갯수
 			String currentPage = req.getParameter("pno");
 			if(currentPage_ == null) {
 				currentPage_ = "1";
@@ -30,7 +32,7 @@ public class AdminReplyListController extends HttpServlet{
 			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, replyLimit);
 			
 			// service
-			List<ReplyVo> boardVoList = replyService.selectReplyList(pvo);
+			List<ReplyVo> boardVoList = ars.selectReplyList(pvo);
 			
 			// result (==view)
 			req.setAttribute("replyVoList", boardVoList);
