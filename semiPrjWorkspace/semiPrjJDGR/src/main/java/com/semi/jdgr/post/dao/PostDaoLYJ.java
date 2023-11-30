@@ -1,5 +1,5 @@
 package com.semi.jdgr.post.dao;
 
-public class PostDetailDao {
+public class PostDaoLYJ {
 
 }

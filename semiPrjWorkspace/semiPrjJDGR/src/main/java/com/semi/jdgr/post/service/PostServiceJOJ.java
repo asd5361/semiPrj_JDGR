@@ -1,5 +1,5 @@
 package com.semi.jdgr.post.service;
 
-public class PostDetailService {
+public class PostServiceJOJ {
 
 }
