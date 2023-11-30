@@ -33,7 +33,7 @@ public class BlogImageUploadController extends HttpServlet {
 	    
 		String path = "/resources/user/upload/img";
 		String realPath = req.getServletContext().getRealPath(path);
-		String name = "/kh_" + (int)(Math.random() * 100000000) + fileExtension;
+		String name = "/jdgr_" + (int)(Math.random() * 100000000) + "." + fileExtension;
 		File target = new File(realPath + name);
 		
 		InputStream in = filePart.getInputStream();

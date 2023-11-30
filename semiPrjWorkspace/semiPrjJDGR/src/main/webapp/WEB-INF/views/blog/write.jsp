@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@ include file="/WEB-INF/views/user/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
  <!-- summernote -->
 <script src="/jdgr/resources/user/js/jquery-3.6.0.js"></script>
 <script src="/jdgr/resources/user/summernote/summernote-lite.js"></script>
@@ -13,33 +13,26 @@
 
         <div class="write_box">
 
-            <form action="/blog/write" method="post">
+            <form action="" method="post">
                 <div class="inp_area">
-                	<label for="">구분</label>
-                    <select name="categoryNo">
-                        <option value="1">사진, 게임 등</option>
+                    <select>
+                        <option value="1">카테고리이름</option>
                     </select>
                 </div>
                 <div class="inp_area">
-                	<label for="">카테고리</label>
-                    <select name="groupNo">
-                        <option value="1">유저가 만든 카테고리 없으면 디폴트에 넣기</option>
+                    <select>
+                        <option value="1">카테고리이름</option>
                     </select>
-                </div>
-                <div class="inp_area">
-                	<label for="">제목</label>
-                	<input type="text" name="title" placeholder="오늘날짜">
                 </div>
                 <div class="write_area">
-                    <textarea id="summernote" name="content"></textarea>
+                    <textarea id="summernote"></textarea>
                 </div>
-            
-            
-	            <div class="btn_area mt20">
-	                <button type="button" class="cancle">취소</button>
-	                <button type="submit" class="complete">등록</button>
-	            </div>
             </form>
+
+            <div class="btn_area">
+                <a href="" class="cancle">취소</a>
+                <a href="" class="complete">등록</a>
+            </div>
         </div>
 
     </div>
@@ -108,4 +101,4 @@ const fontArr = ['NotoSansKR', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier
 </script>
 
 
-<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
