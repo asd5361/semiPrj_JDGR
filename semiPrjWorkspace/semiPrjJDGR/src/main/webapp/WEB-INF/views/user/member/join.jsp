@@ -21,7 +21,7 @@
             <div class="form_box login_div">
                 <div class="inp_btn ico_id">
                     <input  type="text" name="joinId" placeholder="아이디를 입력해주세요.">
-                    <button >중복확인</button>
+                    <button onclick="checkIdDup">중복확인</button>
                 </div>
                 <span class="txt_msg">아이디 중복확인이 완료되었습니다.</span>
             </div>
@@ -50,19 +50,19 @@
             
             <!-- 비번 입력 -->
             <div class="form_box ico_pwd">
-                <input type="password" name="join" placeholder="비밀번호를 입력해주세요.">
+                <input type="password" name="joinPwd" placeholder="비밀번호를 입력해주세요.">
                 <span class="txt_msg">비밀번호 형식이 맞지 않습니다.</span>
             </div>
             
             <!-- 비번 확인 -->
             <div class="form_box ico_pwd">
-                <input type="password" name="" placeholder="비밀번호 확인">
+                <input type="password" name="joinPwd2" placeholder="비밀번호 확인">
                 <span class="txt_msg">비밀번호가 다릅니다.</span>
             </div>
 
             <!-- 전화번호 입력 -->
             <div class="form_box ico_tel">
-                <input type="password" name="" placeholder="전화번호를 입력해주세요.(숫자만 입력)">
+                <input type="tel" name="joinTel" placeholder="전화번호를 입력해주세요.(숫자만 입력)">
                 <span class="txt_msg">아이디 중복확인이 완료되었습니다.</span>
             </div>
             
@@ -137,7 +137,7 @@
             <div class="form_box">
                 <div class="form_box inp_btn ">
                     인증번호 <input  type="text" name="" class="input_num">
-                    <button >인증하기</button>
+                    <button>인증하기</button>
                 </div>
                 <span class="txt_msg">닉네임 중복확인이 완료되었습니다.</span>
             </div>
@@ -150,3 +150,25 @@
 </div>
 </body>
 </html>
+<script>
+	//아이디 중복체크
+	function checkIdDup(){
+		
+		const memberIdValue = document.querySelector("input[name=joinId]").value;
+		console.log(memberIdValue)
+		fetch("/app99/member/check/id?memberId=" + memberIdValue)
+		.then( (resp) => { return resp.json() } )
+		.then( (data) => { 
+			const result = data.msg;
+			const isOk = result === "ok";
+			if(isOk){
+				alert("사용 가능한 아이디입니다.");
+				window.idOk = true;
+			}else{
+				alert("이미 사용중인 아이디입니다.");
+				window.idOk = false;
+			}
+		} );
+
+	
+</script>
