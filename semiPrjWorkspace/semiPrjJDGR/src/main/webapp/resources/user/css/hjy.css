@@ -1801,15 +1801,26 @@ li .reply_inp_box::before {
     color: #fff;
 }
 .write_box .inp_area {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
     padding-bottom: 10px;
 }
-.write_box .inp_area select {
+.write_box .inp_area label {
+	display: flex;
+	align-items: center;
+	font-size: var(--default-size);
+	color: #999;
+	border: none;
+}
+.write_box .inp_area select,
+.write_box .inp_area input {
     display: flex;
-    width: 100%;
+    width: calc(100% - 100px);
     padding: 10px 20px;
     border-radius: 5px;
     border: 1px solid #ddd;
-
+    box-sizing: border-box;
 }
 .note-tooltip {
     background-color: transparent !important;
