@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
- 	<%@ include file="/WEB-INF/views/common/admin_header.jsp" %>
+<%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 	
 	            <!-- container -->
             <div class="container">
@@ -235,5 +235,5 @@
             </div>
             <!-- //container -->
 	
-	<%@ include file="/WEB-INF/views/common/admin_footer.jsp" %>   
+<%@ include file="/WEB-INF/views/admin/common/footer.jsp" %>
     

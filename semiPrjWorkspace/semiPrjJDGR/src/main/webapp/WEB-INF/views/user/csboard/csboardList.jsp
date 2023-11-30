@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	<%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 	
 	<!-- main -->
     <main>
@@ -9,8 +9,8 @@
             <h1>고객센터</h1>
             <div class="btn_q mtp50">
                 <ul class="tab_btns">
-                    <li><button>고객센터</button></li>
-                    <li><button>공지사항</button></li>
+                    <li><button onclick="location.href='/jdgr/csboard';">고객센터</button></li>
+                    <li><button onclick="location.href='/jdgr/notice/list';">공지사항</button></li>
                     <li class="on"><button>1:1문의</button></li>
                 </ul>
             </div>
@@ -120,4 +120,4 @@
     </main>
     <!-- //main -->
 	
-	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
