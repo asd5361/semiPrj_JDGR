@@ -1814,3 +1814,84 @@ li .reply_inp_box::before {
 .note-tooltip {
     background-color: transparent !important;
 }
+
+/* 계정관리 */
+.account_setting {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.account_setting dl {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.account_setting dl dt {
+    font-size: 17px;
+}
+.blog_using dd {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.blog_using dd li input[type=radio] {
+    position: absolute;
+    left: -9999em;
+}
+.blog_list {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+.blog_using dd li input[type=radio] ~ label {
+    display: flex;
+    position: relative;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.blog_using dd li input[type=radio]:checked ~ label {
+    border-color: var(--main-color);
+}
+.blog_using dd li label .img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+}
+.blog_using dd li label .img img {
+    display: block;
+    min-height: 100%;
+    max-height: 100%;
+}
+.blog_using dd li label .cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+.blog_using dd li label .cont .tit {
+    font-size: 16px;
+}
+.blog_using dd li label .cont a {
+    font-size: var(--default-size);
+    color: #999;
+}
+.blog_using dd li label .req {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    margin-top: -15px;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 30px;
+    background-color: var(--main-color);
+    font-size: var(--small-size);
+    color: #fff;
+}
