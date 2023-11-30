@@ -1855,6 +1855,9 @@ li .reply_inp_box::before {
 .blog_using dd li input[type=radio]:checked ~ label {
     border-color: var(--main-color);
 }
+.blog_using dd li input[type=radio]:checked ~ label .req {
+    display: flex;
+}
 .blog_using dd li label .img {
     display: flex;
     align-items: center;
@@ -1882,7 +1885,7 @@ li .reply_inp_box::before {
     color: #999;
 }
 .blog_using dd li label .req {
-    display: flex;
+    display: none;
     position: absolute;
     top: 50%;
     right: 20px;
@@ -1893,5 +1896,30 @@ li .reply_inp_box::before {
     height: 30px;
     background-color: var(--main-color);
     font-size: var(--small-size);
+    color: #fff;
+}
+.blog_using .btn_area {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.blog_using .btn_area > * {
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--main-color);
+    color: #fff;
+}
+.blog_create dd {
+    display: flex;
+    justify-content: space-between;
+}
+.blog_create .btn_area > * {
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--main-color);
     color: #fff;
 }
