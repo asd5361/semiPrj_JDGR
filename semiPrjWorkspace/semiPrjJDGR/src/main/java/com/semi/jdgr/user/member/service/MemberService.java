@@ -41,5 +41,19 @@ public class MemberService {
 		
 		return result;
 	}
+
+	public MemberVo login(MemberVo vo) throws Exception {
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		MemberDao dao = new MemberDao();
+		MemberVo loginMember = dao.login(conn ,vo);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return loginMember;	
+	}
 	
 }
