@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/user/member/join")
+@WebServlet("/member/join")
 public class MemberJoinController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -18,7 +18,8 @@ public class MemberJoinController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String joinId = req.getParameter("joinId");
-		String joinPwd = req.getParameter("joinPwd");
+		String joinName = req.getParameter("joinName");
 		String joinNick = req.getParameter("joinNick");
+		String joinPwd = req.getParameter("joinPwd");
 	}
 }
