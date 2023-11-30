@@ -1,6 +1,7 @@
 package com.semi.jdgr.admin.reply.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.jdgr.admin.reply.service.AdminReplyService;
+import com.semi.jdgr.page.vo.PageVo;
 
 @WebServlet("/admin/reply/reply_list")
 public class AdminReplyListController extends HttpServlet{
@@ -42,9 +44,9 @@ public class AdminReplyListController extends HttpServlet{
 		
 		
 	}catch(Exception e) {
-		System.out.println("[ERROR-B001]게시글 목록 조회 중 에러 발생 ...");
+		System.out.println("[ERROR-B001]댓글 목록 조회 중 에러 발생 ...");
 		e.printStackTrace();
-		req.setAttribute("errorMsg", "게시글 목록 조회 에러");
+		req.setAttribute("errorMsg", "댓글 목록 조회 에러");
 		req.getRequestDispatcher("/WEB-INF/views/common/error.jsp").forward(req, resp);
 		
 		//service
@@ -52,6 +54,7 @@ public class AdminReplyListController extends HttpServlet{
 		//result(==view)
 	
 		
+	}
 	}
 	
 	//댓글 조회 로직
