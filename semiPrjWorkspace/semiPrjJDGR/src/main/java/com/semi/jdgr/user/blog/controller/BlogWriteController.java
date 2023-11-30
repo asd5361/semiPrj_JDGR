@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.jdgr.user.blog.service.BlogService;
-import com.semi.jdgr.user.blog.vo.PostVo;
+import com.semi.jdgr.blog.service.BlogService;
+import com.semi.jdgr.blog.vo.PostVo;
 
 @WebServlet("/user/blog/write")
 public class BlogWriteController extends HttpServlet {
