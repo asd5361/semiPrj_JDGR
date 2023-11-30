@@ -1,4 +1,4 @@
-package com.semi.jdgr.admin.csboard.controller;
+package com.semi.jdgr.user.csboard.controller;
 
 import java.io.IOException;
 

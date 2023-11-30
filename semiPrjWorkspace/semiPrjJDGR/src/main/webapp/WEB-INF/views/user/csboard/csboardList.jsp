@@ -11,7 +11,7 @@
                 <ul class="tab_btns">
                     <li><button onclick="location.href='/jdgr/csboard';">고객센터</button></li>
                     <li><button onclick="location.href='/jdgr/notice/list';">공지사항</button></li>
-                    <li class="on"><button>1:1문의</button></li>
+                    <li class="on"><button onclick="location.href='/jdgr/csboard/list';">1:1문의</button></li>
                 </ul>
             </div>
             <div class="q_box">
@@ -115,6 +115,9 @@
                 <li class="next"><a href="" title="다음페이지로 이동"></a></li>
                 <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
             </ul>
+        </div>
+        <div class="noti_btn qboard_btn mb20">
+            <a href="/jdgr/csboard/write" data-target="#pop_complete">문의 하기</a>
         </div>
         </div>
     </main>

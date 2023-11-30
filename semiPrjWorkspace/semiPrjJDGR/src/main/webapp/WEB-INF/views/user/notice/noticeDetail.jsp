@@ -9,9 +9,9 @@
             <h1>고객센터</h1>
             <div class="btn_q mtp50">
                 <ul class="tab_btns">
-                    <li><button>고객센터</button></li>
-                    <li class="on"><button>공지사항</button></li>
-                    <li><button>1:1문의</button></li>
+                    <li><button onclick="location.href='/jdgr/csboard';">고객센터</button></li>
+                    <li class="on"><button onclick="location.href='/jdgr/notice/list';">공지사항</button></li>
+                    <li><button onclick="location.href='/jdgr/csboard/list';">1:1문의</button></li>
                 </ul>
             </div>
             <div class="noti_box"></div>
