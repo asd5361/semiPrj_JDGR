@@ -14,17 +14,20 @@ public class PostVo {
 	private String modifyDate;
 	private String delYn;
 	private String postImg;
-	private String categoryName;
-	private String groupName;
 	private String heartCnt;
 	private String replyCnt;
+	private String userName;
+	private String postTitle;
+	private String categoryName;
+	private String groupName;
 
 	public PostVo() {
 	}
 
 	public PostVo(String postNo, String blogNo, String categoryNo, String groupNo, String title, String content,
 			String open, String inquiry, String enrollDate, String modifyDate, String delYn, String postImg,
-			String categoryName, String groupName, String heartCnt, String replyCnt) {
+			String heartCnt, String replyCnt, String userName, String blogTitle, String categoryName,
+			String groupName) {
 		this.postNo = postNo;
 		this.blogNo = blogNo;
 		this.categoryNo = categoryNo;
@@ -37,10 +40,12 @@ public class PostVo {
 		this.modifyDate = modifyDate;
 		this.delYn = delYn;
 		this.postImg = postImg;
-		this.categoryName = categoryName;
-		this.groupName = groupName;
 		this.heartCnt = heartCnt;
 		this.replyCnt = replyCnt;
+		this.userName = userName;
+		this.postTitle = blogTitle;
+		this.categoryName = categoryName;
+		this.groupName = groupName;
 	}
 
 	public String getPostNo() {
@@ -139,22 +144,6 @@ public class PostVo {
 		this.postImg = postImg;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
 	public String getHeartCnt() {
 		return heartCnt;
 	}
@@ -171,13 +160,45 @@ public class PostVo {
 		this.replyCnt = replyCnt;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getBlogTitle() {
+		return postTitle;
+	}
+
+	public void setBlogTitle(String blogTitle) {
+		this.postTitle = blogTitle;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", blogNo=" + blogNo + ", categoryNo=" + categoryNo + ", groupNo=" + groupNo
 				+ ", title=" + title + ", content=" + content + ", open=" + open + ", inquiry=" + inquiry
 				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", delYn=" + delYn + ", postImg="
-				+ postImg + ", categoryName=" + categoryName + ", groupName=" + groupName + ", heartCnt=" + heartCnt
-				+ ", replyCnt=" + replyCnt + "]";
+				+ postImg + ", heartCnt=" + heartCnt + ", replyCnt=" + replyCnt + ", userName=" + userName
+				+ ", postTitle=" + postTitle + ", categoryName=" + categoryName + ", groupName=" + groupName + "]";
 	}
 
 }
