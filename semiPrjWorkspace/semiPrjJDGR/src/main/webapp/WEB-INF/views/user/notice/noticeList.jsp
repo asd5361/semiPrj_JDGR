@@ -1,6 +1,9 @@
+<%@page import="com.semi.jdgr.notice.vo.NoticeVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<% List<NoticeVo> noticeVoList = (List<NoticeVo>)request.getAttribute("noticeVoList");   %>
+	
 	<%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 	
 	<!-- main -->
@@ -10,7 +13,7 @@
             <div class="btn_q mtp50">
                 <ul class="tab_btns">
                     <li><button onclick="location.href='/jdgr/csboard';">고객센터</button></li>
-                    <li class="on"><button onclick="location.href='/jdgr/notice/list';">공지사항</button></li>
+                    <li class="on"><button onclick="location.href='/jdgr/notice/list?pno=1';">공지사항</button></li>
                     <li><button onclick="location.href='/jdgr/csboard/list';">1:1문의</button></li>
                 </ul>
             </div>
@@ -44,64 +47,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><img src="/jdgr/resources/user/images/ico/ico_fix.svg" alt="고정표시"></td>
-                                    <td>공지사항 고정입니다.</td>
-                                    <td>2023-11-15</td>
-                                    <td>336</td>
+                                    <!-- <td><img src="/jdgr/resources/user/images/ico/ico_fix.svg" alt="고정표시"></td> -->
+<%for(NoticeVo vo : noticeVoList){%>
+								<tr>
+                                    <td><%= vo.getNoticeNo()%></td>
+                                    <td><%= vo.getTitle()%></td>
+                                    <td><%= vo.getEnrollDate()%></td>
+                                    <td><%= vo.getInquiry()%></td>
                                 </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr><tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr><tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr><tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr><tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr><tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr><tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr><tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr><tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항 제목공지사항1111…</td>
-                                    <td>2023-11-14</td>
-                                    <td>34</td>
-                                </tr>
+<%} %>  
                             </tbody>
                         </table>
                     </div>

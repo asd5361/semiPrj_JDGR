@@ -2,18 +2,19 @@ package com.semi.jdgr.user.csboard.vo;
 
 public class CsboardVo {
 
-	private String qNo;					//문의글 번호"PK"
-	private String adminNo;				//답변 관리자 번호
-	private String memNo;				//글 작성자 번호
-	private String qTit;				//문의글 제목
-	private String qCon;				//문의글 내용
-	private String qWriteDate;			//작성일
-	private String ansewr;				//답변 내용
-	private String ansewrDate;			//답변 작성일
-	private String updateDate;			//답변 수정일
-	private String delYn;				//글 공개 여부(삭제여부)
-	private String questionCategory;	//문의글 구분(문의/기능신고)
-	private String adminName;			//답변 관리자 이름
+	private String qNo;						//문의글 번호"PK"
+	private String adminNo;					//답변 관리자 번호
+	private String memNo;					//글 작성자 번호
+	private String qTit;					//문의글 제목
+	private String qCon;					//문의글 내용
+	private String qWriteDate;				//작성일
+	private String ansewr;					//답변 내용
+	private String ansewrDate;				//답변 작성일
+	private String updateDate;				//답변 수정일
+	private String delYn;					//글 공개 여부(삭제여부)
+	private String questionCategory;		//문의글 구분(문의/기능신고)
+	private String adminName;				//답변 관리자 이름
+	private String questionCategoryName;	//문의글 구분 이름
 	
 	public CsboardVo() {
 		super();
@@ -101,7 +102,23 @@ public class CsboardVo {
 		return questionCategory;
 	}
 	public void setQuestionCategory(String questionCategory) {
+		if(questionCategory.equals("NM")) {
+			this.questionCategoryName = "일반문의";
+			System.out.println("NM완료");
+		}
+		if(questionCategory.equals("SM")) {
+			this.questionCategoryName = "기능문의";
+			System.out.println("SM완료");
+		}
+		if(questionCategory.equals("PM")) {
+			this.questionCategoryName = "신고문의";
+			System.out.println("PM완료");
+		}
 		this.questionCategory = questionCategory;
+		System.out.println("setQuestionCategory 접근");
+	}
+	public String getQuestionCategoryName() {
+		return questionCategoryName;
 	}
 	public String getAdminName() {
 		return adminName;
@@ -109,12 +126,14 @@ public class CsboardVo {
 	public void setAdminName(String adminName) {
 		this.adminName = adminName;
 	}
+
 	@Override
 	public String toString() {
 		return "CsboardVo [qNo=" + qNo + ", adminNo=" + adminNo + ", memNo=" + memNo + ", qTit=" + qTit + ", qCon="
 				+ qCon + ", qWriteDate=" + qWriteDate + ", ansewr=" + ansewr + ", ansewrDate=" + ansewrDate
 				+ ", updateDate=" + updateDate + ", delYn=" + delYn + ", questionCategory=" + questionCategory
-				+ ", adminName=" + adminName + "]";
+				+ ", adminName=" + adminName + ", questionCategoryName=" + questionCategoryName + "]";
 	}
+	
 	
 }

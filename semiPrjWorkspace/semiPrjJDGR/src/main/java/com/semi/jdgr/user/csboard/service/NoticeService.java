@@ -18,13 +18,28 @@ public class NoticeService {
 		
 		//dao
 		NoticeDao dao = new NoticeDao();
-		List<NoticeVo> NoticeVoList = dao.selectNoticeTopList(conn);
+		List<NoticeVo> noticeVoList = dao.selectNoticeTopList(conn);
 		
 		//close
 		JDBCTemplate.close(conn);
 		
 		
-		return NoticeVoList;
+		return noticeVoList;
+	}
+	//공지사항 게시글 조회
+	public List<NoticeVo> selectNoticeList() throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		List<NoticeVo> noticeVoList = dao.selectNoticeList(conn);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return noticeVoList;
 	}
 
 }

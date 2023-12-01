@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 import com.semi.jdgr.user.csboard.vo.CsboardVo;
+import com.semi.jdgr.util.JDBCTemplate;
 
 public class CsboardDao {
 
@@ -13,39 +14,31 @@ public class CsboardDao {
 		String sql = "SELECT * FROM CUSTOMER_CENTER WHERE ROWNUM <= 5 ORDER BY DEL_YN DESC,Q_NO DESC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		List<CsboardVo> CsboardVoList = new ArrayList<CsboardVo>();
+		List<CsboardVo> csboardVoList = new ArrayList<CsboardVo>();
 		//rs
 		while(rs.next()) {
 			CsboardVo vo = new CsboardVo();
-			//rs 부분  수정하기
 			vo.setqNo(rs.getString("Q_NO"));
-			vo.setAdminNo(rs.getString("Q_NO"));
-			vo.setMemNo(rs.getString("Q_NO"));
-			vo.setqTit(rs.getString("Q_NO"));
-			vo.setqCon((rs.getString("Q_NO")));
-			vo.setqWriteDate(rs.getString("Q_NO"));
-			vo.setAnsewr(rs.getString("Q_NO"));
-			vo.setAnsewrDate(rs.getString("Q_NO"));
-			vo.setUpdateDate(rs.getString("Q_NO"));
-			vo.setDelYn(rs.getString("Q_NO"));
-			vo.setQuestionCategory(rs.getString("Q_NO"));
+			vo.setAdminNo(rs.getString("ADMIN_NO"));
+			vo.setMemNo(rs.getString("MEM_NO"));
+			vo.setqTit(rs.getString("Q_TIT"));
+			vo.setqCon((rs.getString("Q_CON")));
+			vo.setqWriteDate(rs.getString("Q_WRITE_DATE"));
+			vo.setAnsewr(rs.getString("ANSEWR"));
+			vo.setAnsewrDate(rs.getString("ANSEWR_DATE"));
+			vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+			vo.setDelYn(rs.getString("DEL_YN"));
+			vo.setQuestionCategory(rs.getString("QUESTION_CATEGORY"));
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+			csboardVoList.add(vo);
 		}
 		
-		
 		//close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
 		
 		
-		return null;
+		return csboardVoList;
 	}
 
 }
