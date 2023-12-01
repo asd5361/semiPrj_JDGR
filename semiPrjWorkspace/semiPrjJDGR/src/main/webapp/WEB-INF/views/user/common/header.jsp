@@ -1,10 +1,14 @@
+<%@page import="com.semi.jdgr.blog.vo.BlogVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	// 블로그 css class부여
 	String blogClassName = (String) request.getAttribute("blogClassName");
 	if(blogClassName == null){
 		blogClassName = "";
 	}
+	BlogVo headerBlogVo = (BlogVo) request.getAttribute("blogVo");
+	
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -28,7 +32,11 @@
 
 </head>
 <body>
+<% if(headerBlogVo != null){ %>		
+<div class="wrap <%= blogClassName %> layout<%= headerBlogVo.getLayout() %> skin<%= headerBlogVo.getSkin() %>">
+<% } else { %>
 <div class="wrap <%= blogClassName %>">
+<% } %>
 
     <!-- header -->
     <header>
@@ -196,10 +204,18 @@
     <!-- //header -->
     
     <% if(!blogClassName.equals("")){ %>
-    <!-- blog_header -->
-    <div class="blog_header">
-        <h1><a href="">유저가 지정한 블로그 제목</a></h1>
-    </div>
-    <!-- //blog_header -->
+    	<% if(headerBlogVo != null){ %>		
+		    <!-- blog_header -->
+		    <div class="blog_header">
+		        <h1><a href=""><%= headerBlogVo.getBlogTitle() %></a></h1>
+		    </div>
+		    <!-- //blog_header -->
+	    <% } else { %>
+		    <!-- blog_header -->
+		    <div class="blog_header">
+		        <h1><a href="">-</a></h1>
+		    </div>
+		    <!-- //blog_header -->
+	    <% } %>
     <% } %>
     
