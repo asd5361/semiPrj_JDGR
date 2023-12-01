@@ -17,12 +17,12 @@ public class CsboardService {
 		
 		//dao
 		CsboardDao dao = new CsboardDao();
-		List<CsboardVo> CsboardVoList = dao.selectCsboardTopList(conn);
+		List<CsboardVo> csboardVoList = dao.selectCsboardTopList(conn);
 		
 		//close
 		JDBCTemplate.close(conn);
 		
-		return CsboardVoList;
+		return csboardVoList;
 	}
 
 }

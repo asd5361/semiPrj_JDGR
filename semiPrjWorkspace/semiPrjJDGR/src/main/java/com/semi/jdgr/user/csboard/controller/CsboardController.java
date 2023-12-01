@@ -24,16 +24,18 @@ public class CsboardController extends HttpServlet{
 			//service
 			NoticeService ns = new NoticeService();
 			CsboardService cs = new CsboardService();
-			List<NoticeVo> NoticeVoList = ns.selectNoticeTopList();
-			List<CsboardVo> CsboardVo = cs.selectCsboardTopList();
+			List<NoticeVo> noticeVoList = ns.selectNoticeTopList();
+			List<CsboardVo> csboardVoList = cs.selectCsboardTopList();
 			
-			if(NoticeVoList == null) {
+			if(noticeVoList == null && csboardVoList == null) {
 				throw new Exception();
 			}
 			
 			//view 
-			System.out.println(NoticeVoList);
-			req.setAttribute("NoticeVoList", NoticeVoList);
+
+			req.setAttribute("noticeVoList", noticeVoList);
+			req.setAttribute("csboardVoList", csboardVoList);
+
 			req.getRequestDispatcher("/WEB-INF/views/user/csboard/csboard.jsp").forward(req, resp);
 		
 		}catch(Exception e) {
