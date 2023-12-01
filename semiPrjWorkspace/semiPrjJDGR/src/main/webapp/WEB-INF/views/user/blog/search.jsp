@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>관리자 포스트 목록조회하기</title>
+<title>관리자 포스트 관리 목록</title>
 </head>
 <body>
 
