@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.semi.jdgr.admin.reply.vo.AdminReplyVo;
-import com.semi.jdgr.admin.reply.vo.CategoryVo;
 import com.semi.jdgr.util.JDBCTemplate;
 import com.semi.jdgr.page.vo.PageVo;
 
@@ -19,7 +18,7 @@ public class AdminReplyDao{
    public List<AdminReplyVo> selectReplyList(Connection conn, PageVo pvo) throws Exception{
       
       //SQL
-      String sql = "";
+      String sql = "SELECT * FROM    ( SELECT ROWNUM RNUM, T.* FROM ( SELECT R.POST_NO ,R.REPLY_MEM ,R.PARENTS_NO ,R.CON ,R.WRITE_DATE ,R.DEL_YN, M.NICK AS MEM_NICK FROM BOARD R JOIN MEMBER M ON R.REPLY_MEM = M.MEM_NO WHERE B.STATUS = 'O' ORDER BY NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setInt(1, pvo.getStartRow());
       pstmt.setInt(2, pvo.getLastRow());
@@ -30,6 +29,7 @@ public class AdminReplyDao{
       List<AdminReplyVo> adminReplyVoList = new ArrayList<AdminReplyVo>();
       while(rs.next()) {
          
+    	 String replyNo = rs.getString("REPLY_NO");
          String postNo = rs.getString("POST_NO");
          String replyMem = rs.getString("REPLY_MEM");
          String parentsNo = rs.getString("PARENTS_NO");
@@ -38,6 +38,7 @@ public class AdminReplyDao{
          String delYn = rs.getString("DEL_YN");
          
          AdminReplyVo vo = new AdminReplyVo();
+         vo.setReplyNo(replyNo);
          vo.setPostNo(postNo);
          vo.setReplyMem(replyMem);
          vo.setParentsNo(parentsNo);
@@ -54,8 +55,75 @@ public class AdminReplyDao{
       JDBCTemplate.close(pstmt);
       JDBCTemplate.close(rs);
       
-      return boardVoList;
-   }
+      return adminReplyVoList;
+      
+   }//selectReplyList
+
+
+   //댓글 검색
+	public List<AdminReplyVo> search(Connection conn, Map<String, String> m , PageVo pvo) throws Exception {
+		
+		String searchType = m.get("searchType");
+		
+		// SQL
+		String sql = "";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, m.get("searchValue"));
+		pstmt.setInt(2, pvo.getStartRow());
+		pstmt.setInt(3, pvo.getLastRow());
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+	      List<AdminReplyVo> adminReplyVoList = new ArrayList<AdminReplyVo>();
+	      while(rs.next()) {
+	    	  
+	     	 String replyNo = rs.getString("REPLY_NO");
+	          String postNo = rs.getString("POST_NO");
+	          String replyMem = rs.getString("REPLY_MEM");
+	          String parentsNo = rs.getString("PARENTS_NO");
+	          String con = rs.getString("CON");
+	          String writeDate = rs.getString("WRITE_DATE");
+	          String delYn = rs.getString("DEL_YN");
+	         
+	         AdminReplyVo vo = new AdminReplyVo();
+	         vo.setReplyNo(replyNo);
+	         vo.setPostNo(postNo);
+	         vo.setReplyMem(replyMem);
+	         vo.setParentsNo(parentsNo);
+	         vo.setCon(con);
+	         vo.setWriteDate(writeDate);
+	         vo.setDelYn(delYn);
+	         
+	         adminReplyVoList.add(vo);
+	      }
+	
+		// close
+	    JDBCTemplate.close(rs);
+	    JDBCTemplate.close(pstmt);
+	      
+	    return adminReplyVoList;
+	}//search
+   
+   
+   //게시글 삭제
+   public int delete(Connection conn, String replyNo, String postNo) throws Exception {
+      
+      //SQL
+      String sql = "UPDATE REPLY SET STATUS = 'X' WHERE NO = ? AND REPLY_MEM = ?";
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, replyNo);
+      pstmt.setString(2, postNo);
+      int result = pstmt.executeUpdate();
+      
+      //close
+      JDBCTemplate.close(pstmt);
+      
+      return result;
+      
+   }//delete
+   
+   
+   
 //
 //   public int write(Connection conn, BoardVo vo) throws Exception {
 //      
@@ -134,21 +202,6 @@ public class AdminReplyDao{
 //      
 //   }
 
-//   //게시글 삭제
-//   public int delete(Connection conn, String no, String memberNo) throws Exception {
-//      
-//      //SQL
-//      String sql = "UPDATE BOARD SET STATUS = 'X' WHERE NO = ? AND WRITER_NO = ?";
-//      PreparedStatement pstmt = conn.prepareStatement(sql);
-//      pstmt.setString(1, no);
-//      pstmt.setString(2, memberNo);
-//      int result = pstmt.executeUpdate();
-//      
-//      //close
-//      JDBCTemplate.close(pstmt);
-//      
-//      return result;
-//   }//delete
 //
 //   public int selectBoardCount(Connection conn) throws Exception{
 //      
@@ -216,56 +269,7 @@ public class AdminReplyDao{
 //   }
 
 
-   //게시글 검색
-	public List<AdminReplyVo> search(Connection conn, Map<String, String> m , PageVo pvo) throws Exception {
-		
-		String searchType = m.get("searchType");
-		
-		// SQL
-		String sql = "";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, m.get("searchValue"));
-		pstmt.setInt(2, pvo.getStartRow());
-		pstmt.setInt(3, pvo.getLastRow());
-		ResultSet rs = pstmt.executeQuery();
-		
-		// rs
-	      List<AdminReplyVo> boardVoList = new ArrayList<AdminReplyVo>();
-	      while(rs.next()) {
-	         String no = rs.getString("NO");
-	         String categoryNo = rs.getString("CATEGORY_NO");
-	         String title = rs.getString("TITLE");
-	         String content = rs.getString("CONTENT");
-	         String writerNo = rs.getString("WRITER_NO");
-	         String writerNick = rs.getString("WRITER_NICK");
-	         String hit = rs.getString("HIT");
-	         String enrollDate = rs.getString("ENROLL_DATE");
-	         String modifyDate = rs.getString("MODIFY_DATE");
-	         String status = rs.getString("STATUS");
-	         String categoryName = rs.getString("CATEGORY_NAME");
-	         
-	         AdminReplyVo vo = new AdminReplyVo();
-	         vo.setNo(no);
-	         vo.setCategoryNo(categoryNo);
-	         vo.setTitle(title);
-	         vo.setContent(content);
-	         vo.setWriterNo(writerNo);
-	         vo.setWriterNick(writerNick);
-	         vo.setHit(hit);
-	         vo.setEnrollDate(enrollDate);
-	         vo.setModifyDate(modifyDate);
-	         vo.setStatus(status);
-	         vo.setCategoryName(categoryName);
-	         
-	         boardVoList.add(vo);
-	      }
-	
-		// close
-	    JDBCTemplate.close(rs);
-	    JDBCTemplate.close(pstmt);
-	      
-	    return boardVoList;
-	}
+//  
 
 
 

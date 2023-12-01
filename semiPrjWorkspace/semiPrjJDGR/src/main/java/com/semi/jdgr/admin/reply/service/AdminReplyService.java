@@ -13,7 +13,7 @@ public class AdminReplyService {
 
 
 
-	// 댓글글 목록 조회
+	// 댓글 목록 조회
 	public List<AdminReplyVo> selectReplyList(PageVo pvo) throws Exception {
 		
 		// conn
@@ -28,43 +28,51 @@ public class AdminReplyService {
 		
 		return adminReplyVoList;
 		
+	}//selectReplyList
+	
+
+	
+	
+	// 댓글 검색
+	public List<AdminReplyVo> search(Map<String, String> m , PageVo pvo) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// DAO
+		AdminReplyDao dao = new AdminReplyDao();
+		List<AdminReplyVo> boardVoList = dao.search(conn , m, pvo);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return boardVoList;
 	}
 	
-//	//댓글 삭제
-//	public int delete(String no, String memberNo) throws Exception {
-//		//conn
-//		Connection conn = JDBCTemplate.getConnection();
-//		
-//		//dao
-//		AdminReplyDao dao = new AdminReplyDao();
-//		int result = dao.delete(conn , no , memberNo);
-//		
-//		//tx
-//		if(result == 1) {
-//			JDBCTemplate.commit(conn);
-//		}else {
-//			JDBCTemplate.rollback(conn);
-//		}
-//		
-//		//close
-//		JDBCTemplate.close(conn);
-//
-//		return result;
-//	}//delete
-//	
-//	
-//	// 댓글 검색
-//	public List<AdminReplyVo> search(Map<String, String> m , PageVo pvo) throws Exception {
-//		// conn
-//		Connection conn = JDBCTemplate.getConnection();
-//		
-//		// DAO
-//		AdminReplyDao dao = new AdminReplyDao();
-//		List<AdminReplyVo> boardVoList = dao.search(conn , m, pvo);
-//		
-//		//close
-//		JDBCTemplate.close(conn);
-//		
-//		return boardVoList;
-//	}
-}
+	
+	
+	//댓글 삭제
+	public int delete(String no, String memberNo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		AdminReplyDao dao = new AdminReplyDao();
+		int result = dao.delete(conn , no , memberNo);
+		
+		//tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		//close
+		JDBCTemplate.close(conn);
+
+		return result;
+	}//delete
+	
+	
+}//class
