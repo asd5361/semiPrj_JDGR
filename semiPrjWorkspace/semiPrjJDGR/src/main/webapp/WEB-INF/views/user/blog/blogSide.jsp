@@ -1,21 +1,19 @@
 <%@page import="com.semi.jdgr.blog.vo.BlogVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	
-%>
+
 <!-- 블로그 주인 정보 및 위젯 -->
 <div class="blog_left">
 
     <!-- 유저 정보 -->
     <div class="blog_info">
         <div class="img">
-        	<img src="/<%= blogVo.getBlogImg() %>" alt="">
+        	<img src="/<%= LoginMemberBlogVo.getBlogImg() %>" alt="">
         	이미지 url 있으면 경로쓰고 없으면 기본이미지 ()
         </div>
         <div class="info">
-            <strong>memberVo 세션가져오기</strong>
-            <span>memberVo 세션가져오기</span>
+            <strong><%= LoginMemberVo.getMemNick() %></strong>
+            <span><%= LoginMemberVo.getMemId() %></span>
         </div>
         <div class="btn_area">
             <a href="/jdgr/blog/write" class="write">글쓰기</a>
@@ -40,7 +38,7 @@
     </div>
 
     <!-- 방문자 수 -->
-    <% if(blogVo.getVisitorsCntYn().equals("Y")){ %>
+    <% if(LoginMemberBlogVo.getVisitorsCntYn().equals("Y")){ %>
     <div class="widget blog_count">
         <h4 class="tit">방문자 수</h4>
         <dl class="today">
@@ -56,7 +54,7 @@
     
 
     <!-- 최근 댓글 -->
-    <% if(blogVo.getrCommentsYn().equals("Y")){ %>
+    <% if(LoginMemberBlogVo.getrCommentsYn().equals("Y")){ %>
     <div class="widget blog_newreply">
         <h4 class="tit">최근댓글</h4>
         <ul>
@@ -70,7 +68,7 @@
     <% } %>
 
     <!-- 시계 -->
-    <% if(blogVo.getClockYn().equals("Y")){ %>
+    <% if(LoginMemberBlogVo.getClockYn().equals("Y")){ %>
     <div class="widget blog_clock">
         <h4 class="tit">시계</h4>
         <span class="time">
@@ -81,7 +79,7 @@
     <% } %>
 
     <!-- 구독 블로그 -->
-    <% if(blogVo.getFollowBlogYn().equals("Y")){ %>
+    <% if(LoginMemberBlogVo.getFollowBlogYn().equals("Y")){ %>
     <div class="widget blog_subscribeblog">
         <a href="" class="tit">
             <strong>구독 블로그</strong>
@@ -98,7 +96,7 @@
     <% } %>
 
     <!-- 지도 -->
-    <% if(blogVo.getMapYn().equals("Y")){ %>
+    <% if(LoginMemberBlogVo.getMapYn().equals("Y")){ %>
     <div class="widget blog_map">
         <h4 class="tit">지도</h4>
         <div>

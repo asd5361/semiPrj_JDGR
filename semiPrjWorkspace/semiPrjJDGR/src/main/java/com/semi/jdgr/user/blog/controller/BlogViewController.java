@@ -21,10 +21,8 @@ public class BlogViewController extends HttpServlet {
 		try {
 			
 			// 로그인 유저정보 받아서 블로그 SELECT * FROM WHERE 대표블로그Y되어있는걸 받아오고 URL테이블 조인해서 URL가져오기
-			//HttpSession session = req.getSession();
-			//MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
-			MemberVo memberVo = new MemberVo();
-			memberVo.setMemNo("3");
+			HttpSession session = req.getSession();
+			MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
 			
 			// service
 			BlogService bs = new BlogService();
@@ -42,8 +40,8 @@ public class BlogViewController extends HttpServlet {
 			if(!memberVo.getMemNo().equals(blogVo.getMemNo())) {
 				throw new Exception("로그인한 멤버 no가 blogVo의 멤버 no와 같지않음");
 			}
+			System.out.println(blogVo.getBlogUrl());
 			String redirectUrl = "/jdgr/blog/view/" + blogVo.getBlogUrl();
-			System.out.println(redirectUrl);
 			resp.sendRedirect(redirectUrl);
 			
 		} catch(Exception e) {
