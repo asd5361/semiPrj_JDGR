@@ -22,16 +22,20 @@ public class BlogViewUrlController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-
-			// 로그인 유저정보 받아서 블로그 SELECT * FROM WHERE 대표블로그Y되어있는걸 받아오고 URL테이블 조인해서 URL가져오기
+			// url정보 
+			String pathInfo = req.getPathInfo();
+			String getBlogUrl = pathInfo.substring(1);
+			
+			// 로그인 유저정보
 			HttpSession session = req.getSession();
 			MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
 
 			// service
 			BlogService bs = new BlogService();
-			BlogVo blogVo = bs.getUserblog(memberVo); // 블로그 정보 가져오기
+			BlogVo blogVo = bs.getUserblog(memberVo, getBlogUrl); // 블로그 정보 가져오기
 			List<GroupVo> groupVoList = bs.getGroupList(blogVo); // 카테고리그룹 가져오기
-
+			List<BlogVo> blogVoList = bs.getBlogList(memberVo); // 블로그 리스트 가져오기
+			
 			// result
 			if(blogVo == null) {
 				throw new Exception("blogVo가 null");
@@ -41,6 +45,7 @@ public class BlogViewUrlController extends HttpServlet {
 			req.setAttribute("blogClassName", "blog");
 			req.setAttribute("loginMember", memberVo);
 			req.setAttribute("groupVoList", groupVoList);
+			req.setAttribute("loginMemberBlogVoList", blogVoList);
 			
 			req.getRequestDispatcher("/WEB-INF/views/user/blog/blogMain.jsp").forward(req, resp);
 			

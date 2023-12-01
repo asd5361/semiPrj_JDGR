@@ -4,6 +4,7 @@
     
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 
+
 <main>
 	<div class="inner">
 		<!-- blog_layout -->
@@ -18,7 +19,7 @@
 		        <!-- 블로그 메인 -->
 		        <div class="blog_main">
 		
-		            <% if(LoginMemberBlogVo.getBlogMain() == null){ %>
+		            <% if(loginMemberBlogVo.getBlogMain() == null){ %>
 		            	<!-- 메인이 없을시 -->
 		            	<div class="no_main">
 			                <strong>설정된 블로그 메인이 없습니다.</strong>
@@ -29,7 +30,7 @@
 	            	<% } else { %>
 		            	<!-- 있을시 -->
 			            <div class="blog_main_content">
-			                <%= LoginMemberBlogVo.getBlogMain() %>
+			                <%= loginMemberBlogVo.getBlogMain() %>
 			            </div>
 	            	<% } %>
 		            

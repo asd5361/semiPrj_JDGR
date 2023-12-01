@@ -1,4 +1,4 @@
-<%@page import="com.semi.jdgr.blog.vo.GroupVo"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
 <%@page import="com.semi.jdgr.blog.vo.BlogVo"%>
@@ -12,19 +12,20 @@
 	}
 	
 	// 로그인 멤버 정보 vo
-	MemberVo LoginMemberVo = (MemberVo) session.getAttribute("loginMember");
+	MemberVo loginMemberVo = (MemberVo) session.getAttribute("loginMember");
 	
-	// 로그인 유저 블로그 정보 vo
-	BlogVo LoginMemberBlogVo = (BlogVo) request.getAttribute("loginMemberBlogVo");
-	
-	// 블로그 카테고리 정보 vo
-	List<GroupVo> groupVoList = (List<GroupVo>) request.getAttribute("groupVoList");
-	
+	BlogVo loginMemberBlogVo = null;
+	List<BlogVo> loginMemberBlogVoList = new ArrayList<BlogVo>();
+	if(loginMemberVo != null){
+		// 로그인 유저 블로그 정보 vo
+		
+	}
+	loginMemberBlogVo = (BlogVo) request.getAttribute("loginMemberBlogVo");
+	loginMemberBlogVoList = (List<BlogVo>) request.getAttribute("loginMemberBlogVoList");
 %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JDGR - 좋아요 댓글 구독 알람설정♡</title>
@@ -43,8 +44,8 @@
 
 </head>
 <body>
-<% if(LoginMemberBlogVo != null){ %>		
-<div class="wrap <%= blogClassName %> layout<%= LoginMemberBlogVo.getLayout() %> skin<%= LoginMemberBlogVo.getSkin() %>">
+<% if(loginMemberBlogVo != null){ %>		
+<div class="wrap <%= blogClassName %> layout<%= loginMemberBlogVo.getLayout() %> skin<%= loginMemberBlogVo.getSkin() %>">
 <% } else { %>
 <div class="wrap <%= blogClassName %>">
 <% } %>
@@ -68,8 +69,7 @@
 
             
             <div class="util_box">
-
-				<% if(LoginMemberVo == null){ %>
+				<% if(loginMemberVo == null){ %>
 					<!-- 로그인 전 -->
 	                <div class="before_login">
 	                    <a href="/jdgr/member/login">로그인</a>
@@ -77,13 +77,17 @@
 				<% } else { %>
 					<!-- 로그인 후 -->
 	                <div class="after_login">
-	
+						
+						<div class="blog_home">
+							<a href="/jdgr/home">블로그 홈</a>
+						</div>
+						
 	                    <!-- 클릭시 on class -->
 	                    <div class="user_box">
 	
 	                        <a href="">
 	                            <div class="img"><img src="/jdgr/resources/user/images/ico/ico_info.svg" alt="유저프로필사진"></div>
-	                            <span class="user_nick"><%= LoginMemberVo.getMemNick() %><span>님</span></span>
+	                            <span class="user_nick"><%= loginMemberVo.getMemNick() %><span>님</span></span>
 	                            <span class="arrow"></span>
 	                        </a>
 	
@@ -91,33 +95,30 @@
 	                        <div class="pop_user_menu">
 	                            <div class="info_box">
 	                                <div class="info_user_name">
-	                                    <strong>유저닉네임</strong>
+	                                    <strong><%= loginMemberVo.getMemNick() %></strong>
 	                                    <span>님</span>
 	                                </div>
-	                                <div class="info_email">email1234@gmail.com</div>
-	                                <a href="" class="ico_set">관리</a>
+	                                <div class="info_email"><%= loginMemberVo.getMemEmail() %></div>
+	                                <a href="/jdgr/userSet/blog" class="ico_set">관리</a>
 	                            </div>
 	                            <div class="user_blog">
 	                                <div class="tit_box">
 	                                    <strong>운영중인 블로그</strong>
-	                                    <a href="" class="ico_add">추가하기</a>
+	                                    <a href="/jdgr/userSet/newblog" class="ico_add">추가하기</a>
 	                                </div>
 	                                <ul>
-	                                    <li>
-	                                        <span class="tit">운영중인 블로그 제목1</span>
-	                                        <a href="" class="ico_write"></a>
-	                                        <a href="" class="ico_set">관리</a>
-	                                    </li>
-	                                    <li>
-	                                        <span class="tit">운영중인 블로그 제목1</span>
-	                                        <a href="" class="ico_write"></a>
-	                                        <a href="" class="ico_set">관리</a>
-	                                    </li>
-	                                    <li>
-	                                        <span class="tit">운영중인 블로그 제목1</span>
-	                                        <a href="" class="ico_write"></a>
-	                                        <a href="" class="ico_set">관리</a>
-	                                    </li>
+	                                	<% if(loginMemberBlogVoList != null){ %>
+	                                		<% for(BlogVo blogVo : loginMemberBlogVoList){ %>
+	                                			<li>
+			                                        <a href="/jdgr/blog/view/<%= blogVo.getBlogUrl() %>" class="tit"><%= blogVo.getBlogTitle() %></a>
+			                                        <a href="" class="ico_write"></a>
+			                                        <a href="/jdgr/userSet/blog" class="ico_set">관리</a>
+			                                    </li>
+                                			<% } %>
+	                                		
+	                                	<% } else { %>
+	                                		운영중인 블로그가 없습니다.
+	                                	<% } %>
 	                                </ul>
 	                            </div>
 	                            <div class="btn_group">
@@ -217,11 +218,11 @@
     </header>
     <!-- //header -->
     
-    <% if(!blogClassName.equals("")){ %>
-    	<% if(LoginMemberBlogVo != null){ %>		
+    <% if(!blogClassName.equals("") && !blogClassName.equals("blog_set")){ %>
+    	<% if(loginMemberBlogVo != null){ %>		
 		    <!-- blog_header -->
 		    <div class="blog_header">
-		        <h1><a href=""><%= LoginMemberBlogVo.getBlogTitle() %></a></h1>
+		        <h1><a href="/jdgr/blog/view"><%= loginMemberBlogVo.getBlogTitle() %></a></h1>
 		    </div>
 		    <!-- //blog_header -->
 	    <% } else { %>
