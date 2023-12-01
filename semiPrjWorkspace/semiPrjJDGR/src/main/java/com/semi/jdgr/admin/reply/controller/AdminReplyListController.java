@@ -29,7 +29,7 @@ public class AdminReplyListController extends HttpServlet{
 				currentPage_ = "1";
 			}
 			int currentPage = Integer.parseInt(currentPage_);	//현재 페이지
-			int pageLimit = 5;
+			int pageLimit = 10;
 			int replyLimit = 10;
 			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, replyLimit);
 			
@@ -43,7 +43,7 @@ public class AdminReplyListController extends HttpServlet{
 		
 		
 		
-	}catch(Exception e) {
+		}catch(Exception e) {
 		System.out.println("[ERROR-B001]댓글 목록 조회 중 에러 발생 ...");
 		e.printStackTrace();
 		req.setAttribute("errorMsg", "댓글 목록 조회 에러");
@@ -54,14 +54,9 @@ public class AdminReplyListController extends HttpServlet{
 		//result(==view)
 	
 		
-	}
-	}
-	
-	//댓글 조회 로직
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		}
 		
+	}//doGet
 	
-	}
 
-}
+}//class
