@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+	MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+    String str = loginMember.getMemEmail(); 
+    String[] email = str.split("@");
+    
+	%>  
 <%@include file = "../common/header.jsp"%>
 <body>
 
@@ -7,7 +13,7 @@
     <main>
         <div class="inner">
         
-	        <form action="">
+	        <form action="/jdgr/member/mypage" method="post">
 	            <div class="mypage_div">
 	                <!-- 타이틀 -->
 	                <div class="title">
@@ -23,7 +29,7 @@
 	                            <td>
 	                                <!-- 이름 입력 -->
 	                                <div class="form_box ico_id">
-	                                    <input type="password" name="Id" >
+	                                    <input type="text" name="name" value="<%=loginMember.getMemName()%>">
 	                                </div>
 	                            </td>
 	                        </tr>
@@ -33,8 +39,8 @@
 	                            <td>
 	                                <!-- 이메일 출력 -->
 	                                <div class="form_box">
-	                                    <input class="input_email" type="email" name="email1" disabled>@
-	                                    <input class="input_email" type="email" name="email2" disabled>
+	                                    <input class="input_email" type="email" name="email1" disabled value="<%=email[0]%>">@
+	                                    <input class="input_email" type="email" name="email2" disabled value="<%=email[1]%>">
 	                                </div>
 	                            </td>
 	                        </tr>
@@ -87,7 +93,7 @@
 	                                <!-- 이름 입력 -->
 	                                <div class="form_box">
 	                                    <div class="inp_btn">
-	                                        <input  type="text" name="nick" >
+	                                        <input  type="text" name="nick" value="<%=loginMember.getMemNick()%>">
 	                                        <button >중복확인</button>
 	                                    </div>
 	                                    <span class="txt_msg">닉네임 중복확인이 완료되었습니다.</span>
@@ -99,7 +105,7 @@
 	                            <td>
 	                                <!-- 이름 입력 -->
 	                                <div class="form_box ico_id">
-	                                    <input type="password" name="phone" >
+	                                    <input type="tel" name="phone" value="<%=loginMember.getMemPhoneNum()%>">
 	                                </div>
 	                            </td>
 	                        </tr>

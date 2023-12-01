@@ -43,7 +43,7 @@ public class MemberLoginController extends HttpServlet {
 			}
 			
 			session.setAttribute("loginMember", loginMember);
-			req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
+			resp.sendRedirect("/jdgr/home"); 
 			
 		}catch(Exception e) {
 			e.printStackTrace();
