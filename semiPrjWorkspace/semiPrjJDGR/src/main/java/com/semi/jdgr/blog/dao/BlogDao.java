@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.semi.jdgr.blog.vo.BlogVo;
+import com.semi.jdgr.blog.vo.GroupVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
+import com.semi.jdgr.util.JDBCTemplate;
 
 public class BlogDao {
 
@@ -63,8 +67,39 @@ public class BlogDao {
 		}
 		
 		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
 		
 		return blogVo;
+	}
+
+	// 카테고리 그룹 가져오기
+	public List<GroupVo> getGroupList(Connection conn, BlogVo blogVo) throws Exception {
+		
+		// sql
+		String sql = "SELECT * FROM MYBLOG_CATEGORY MC JOIN BLOG B ON B.BLOG_NO = MC.BLOG_NO WHERE B.BLOG_NO = ? ORDER BY MC.GROUP_NO";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogVo.getBlogNo());
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		List<GroupVo> groupVoList = new ArrayList<GroupVo>();
+		while(rs.next()) {
+			String groupNo = rs.getString("GROUP_NO");
+			String groupName = rs.getString("GROUP_NAME");
+			
+			GroupVo vo = new GroupVo();
+			vo.setGroupNo(groupNo);
+			vo.setGroupName(groupName);
+			
+			groupVoList.add(vo);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return groupVoList;
 	}
 
 }

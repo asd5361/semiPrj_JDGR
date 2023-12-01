@@ -2,12 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%
-	BlogVo blogVo = (BlogVo) request.getAttribute("blogVo");
-	if (blogVo == null) {
-	    blogVo = new BlogVo();
-	}
-%>
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 
 <main>
@@ -24,7 +18,7 @@
 		        <!-- 블로그 메인 -->
 		        <div class="blog_main">
 		
-		            <% if(blogVo.getBlogMain() == null){ %>
+		            <% if(LoginMemberBlogVo.getBlogMain() == null){ %>
 		            	<!-- 메인이 없을시 -->
 		            	<div class="no_main">
 			                <strong>설정된 블로그 메인이 없습니다.</strong>
@@ -35,7 +29,7 @@
 	            	<% } else { %>
 		            	<!-- 있을시 -->
 			            <div class="blog_main_content">
-			                <%= blogVo.getBlogMain() %>
+			                <%= LoginMemberBlogVo.getBlogMain() %>
 			            </div>
 	            	<% } %>
 		            

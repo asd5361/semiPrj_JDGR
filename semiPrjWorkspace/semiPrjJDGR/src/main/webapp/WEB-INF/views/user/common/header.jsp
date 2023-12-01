@@ -1,3 +1,5 @@
+<%@page import="com.semi.jdgr.blog.vo.GroupVo"%>
+<%@page import="java.util.List"%>
 <%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
 <%@page import="com.semi.jdgr.blog.vo.BlogVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,11 +10,15 @@
 	if(blogClassName == null){
 		blogClassName = "";
 	}
-	// 블로그 정보 vo
-	BlogVo headerBlogVo = (BlogVo) request.getAttribute("blogVo");
 	
 	// 로그인 멤버 정보 vo
-	MemberVo headerLoginMemberVo = (MemberVo) session.getAttribute("loginMember");
+	MemberVo LoginMemberVo = (MemberVo) session.getAttribute("loginMember");
+	
+	// 로그인 유저 블로그 정보 vo
+	BlogVo LoginMemberBlogVo = (BlogVo) request.getAttribute("loginMemberBlogVo");
+	
+	// 블로그 카테고리 정보 vo
+	List<GroupVo> groupVoList = (List<GroupVo>) request.getAttribute("groupVoList");
 	
 %>
 <!DOCTYPE html>
@@ -37,11 +43,12 @@
 
 </head>
 <body>
-<% if(headerBlogVo != null){ %>		
-<div class="wrap <%= blogClassName %> layout<%= headerBlogVo.getLayout() %> skin<%= headerBlogVo.getSkin() %>">
+<% if(LoginMemberBlogVo != null){ %>		
+<div class="wrap <%= blogClassName %> layout<%= LoginMemberBlogVo.getLayout() %> skin<%= LoginMemberBlogVo.getSkin() %>">
 <% } else { %>
 <div class="wrap <%= blogClassName %>">
 <% } %>
+
 
     <!-- header -->
     <header>
@@ -59,10 +66,10 @@
                 <button>검색</button>
             </div>
 
-            <!-- 로그인 시 on class -->
-            <div class="util_box on">
+            
+            <div class="util_box">
 
-				<% if(headerLoginMemberVo == null){ %>
+				<% if(LoginMemberVo == null){ %>
 					<!-- 로그인 전 -->
 	                <div class="before_login">
 	                    <a href="/jdgr/member/login">로그인</a>
@@ -76,7 +83,7 @@
 	
 	                        <a href="">
 	                            <div class="img"><img src="/jdgr/resources/user/images/ico/ico_info.svg" alt="유저프로필사진"></div>
-	                            <span class="user_nick"><%= headerLoginMemberVo.getMemNick() %><span>님</span></span>
+	                            <span class="user_nick"><%= LoginMemberVo.getMemNick() %><span>님</span></span>
 	                            <span class="arrow"></span>
 	                        </a>
 	
@@ -211,10 +218,10 @@
     <!-- //header -->
     
     <% if(!blogClassName.equals("")){ %>
-    	<% if(headerBlogVo != null){ %>		
+    	<% if(LoginMemberBlogVo != null){ %>		
 		    <!-- blog_header -->
 		    <div class="blog_header">
-		        <h1><a href=""><%= headerBlogVo.getBlogTitle() %></a></h1>
+		        <h1><a href=""><%= LoginMemberBlogVo.getBlogTitle() %></a></h1>
 		    </div>
 		    <!-- //blog_header -->
 	    <% } else { %>

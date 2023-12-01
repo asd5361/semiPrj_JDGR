@@ -102,15 +102,9 @@ header .util_box .before_login a:hover {
     color: #fff;
 }
 header .util_box .after_login {
-    display: none;
+    display: flex;
     position: relative;
     gap: 25px;
-}
-header .util_box.on .after_login {
-    display: flex;
-}
-header .util_box.on .before_login {
-    display: none;
 }
 header .util_box .after_login .user_box {
     position: relative;
