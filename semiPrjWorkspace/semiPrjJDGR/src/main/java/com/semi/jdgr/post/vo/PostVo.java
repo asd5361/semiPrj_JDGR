@@ -16,7 +16,7 @@ public class PostVo {
 	private String postImg;
 	private String heartCnt;
 	private String replyCnt;
-	private String userName;
+	private String userNick;
 	private String postTitle;
 	private String categoryName;
 	private String groupName;
@@ -26,7 +26,7 @@ public class PostVo {
 
 	public PostVo(String postNo, String blogNo, String categoryNo, String groupNo, String title, String content,
 			String open, String inquiry, String enrollDate, String modifyDate, String delYn, String postImg,
-			String heartCnt, String replyCnt, String userName, String blogTitle, String categoryName,
+			String heartCnt, String replyCnt, String userNick, String postTitle, String categoryName,
 			String groupName) {
 		this.postNo = postNo;
 		this.blogNo = blogNo;
@@ -42,8 +42,8 @@ public class PostVo {
 		this.postImg = postImg;
 		this.heartCnt = heartCnt;
 		this.replyCnt = replyCnt;
-		this.userName = userName;
-		this.postTitle = blogTitle;
+		this.userNick = userNick;
+		this.postTitle = postTitle;
 		this.categoryName = categoryName;
 		this.groupName = groupName;
 	}
@@ -160,20 +160,20 @@ public class PostVo {
 		this.replyCnt = replyCnt;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUserNick() {
+		return userNick;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUserNick(String userNick) {
+		this.userNick = userNick;
 	}
 
-	public String getBlogTitle() {
+	public String getPostTitle() {
 		return postTitle;
 	}
 
-	public void setBlogTitle(String blogTitle) {
-		this.postTitle = blogTitle;
+	public void setPostTitle(String postTitle) {
+		this.postTitle = postTitle;
 	}
 
 	public String getCategoryName() {
@@ -197,7 +197,7 @@ public class PostVo {
 		return "PostVo [postNo=" + postNo + ", blogNo=" + blogNo + ", categoryNo=" + categoryNo + ", groupNo=" + groupNo
 				+ ", title=" + title + ", content=" + content + ", open=" + open + ", inquiry=" + inquiry
 				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", delYn=" + delYn + ", postImg="
-				+ postImg + ", heartCnt=" + heartCnt + ", replyCnt=" + replyCnt + ", userName=" + userName
+				+ postImg + ", heartCnt=" + heartCnt + ", replyCnt=" + replyCnt + ", userNick=" + userNick
 				+ ", postTitle=" + postTitle + ", categoryName=" + categoryName + ", groupName=" + groupName + "]";
 	}
 

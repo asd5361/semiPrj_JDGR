@@ -21,10 +21,11 @@ public class PostControllerJOJ extends HttpServlet{
 		try {
 			
 		// data
+		String no = req.getParameter("no");
 		
 		// service
 		PostServiceJOJ ps = new PostServiceJOJ();
-		PostVo postDetailVo = ps.PostDetail(postDetailVo);
+		PostVo postDetailVo = ps.PostDetail(no);
 		
 		// result
 		System.out.println(postDetailVo);
@@ -39,7 +40,7 @@ public class PostControllerJOJ extends HttpServlet{
 		}
 		
 		
-	}
+	}// PostDetail
 	
 	// 포스트 상세보기 (로직)
 	@Override
