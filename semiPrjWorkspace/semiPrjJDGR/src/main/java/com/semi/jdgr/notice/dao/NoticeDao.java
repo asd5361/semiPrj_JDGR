@@ -7,8 +7,8 @@ import com.semi.jdgr.notice.vo.NoticeVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class NoticeDao {
-	//공지사항 5개 조회하기
-	public List<NoticeVo> selectNoticeList(Connection conn) throws SQLException {
+	//공지사항 상위 5개 조회하기
+	public List<NoticeVo> selectNoticeTopList(Connection conn) throws SQLException {
 		
 		//sql
 		String sql="SELECT * FROM NOTICE WHERE ROWNUM <= 5 ORDER BY FIXED_YN DESC,NOTICE_NO DESC";

@@ -1,6 +1,11 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="com.semi.jdgr.notice.vo.NoticeVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<% List<NoticeVo> NoticeVoList = (List<NoticeVo>)request.getAttribute("NoticeVoList");   %>
+	
+	
 	<%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 	
 	<!-- main -->
@@ -42,7 +47,7 @@
                                 <col width="15%">
                                 <col width="10%">
                             </colgroup>
-                            <thead>
+                            <thead>                                                      
                                 <tr >
                                     <th scope="col">No</th>
                                     <th scope="col">제목</th>
@@ -51,36 +56,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목입니다.</td>
-                                    <td>2023-11-15</td>
-                                    <td>336</td>
+<%for(NoticeVo vo : NoticeVoList){%>
+								<tr>
+                                    <td><%= vo.getNoticeNo()%></td>
+                                    <td><%= vo.getTitle()%></td>
+                                    <td><%= vo.getEnrollDate()%></td>
+                                    <td><%= vo.getInquiry()%></td>
                                 </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목입니다.</td>
-                                    <td>2023-11-15</td>
-                                    <td>336</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목입니다.</td>
-                                    <td>2023-11-15</td>
-                                    <td>336</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목입니다.</td>
-                                    <td>2023-11-15</td>
-                                    <td>336</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>공지사항 제목입니다.</td>
-                                    <td>2023-11-15</td>
-                                    <td>336</td>
-                                </tr>
+<%} %>  
                             </tbody>
                         </table>
                     </div>

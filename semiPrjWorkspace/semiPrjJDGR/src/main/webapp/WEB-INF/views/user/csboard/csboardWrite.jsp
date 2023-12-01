@@ -48,7 +48,7 @@
             </div>
             <div class="noti_btn qboard_btn mb50">
                 <a href="#" class="modal_open" data-target="#pop_complete">문의 접수</a>
-                <a href="" >취소</a>
+                <a href="/jdgr/csboard/list" >취소</a>
             </div>
              
         </div>
