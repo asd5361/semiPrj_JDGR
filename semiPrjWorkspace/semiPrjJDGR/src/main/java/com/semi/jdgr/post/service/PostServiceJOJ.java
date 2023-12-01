@@ -14,21 +14,26 @@ public class PostServiceJOJ {
 	
 	// close
 
-	public PostVo PostDetail(PostVo postDetailVo) throws Exception {
+	// 포스트 상세보기 (화면)
+	public PostVo PostDetail(String no) throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
 		PostDaoJOJ dao = new PostDaoJOJ();
-		PostVo postDetailVo = dao.PostDetail(conn, postDetailVo);
+		PostVo postDetailVo = dao.PostDetail(conn, no);
 		
 		// close
 		JDBCTemplate.close(conn);
 		
 		return postDetailVo;
 		
-	}
+	}// PostDetail
+	
+
+
+
 	
 
 
