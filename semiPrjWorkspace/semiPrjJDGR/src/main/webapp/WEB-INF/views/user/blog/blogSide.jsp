@@ -10,7 +10,7 @@
     <!-- 유저 정보 -->
     <div class="blog_info">
         <div class="img">
-        	<img src="<%= blogVo.getBlogImg() %>" alt="">
+        	<img src="/<%= blogVo.getBlogImg() %>" alt="">
         	이미지 url 있으면 경로쓰고 없으면 기본이미지 ()
         </div>
         <div class="info">

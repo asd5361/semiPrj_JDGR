@@ -15,7 +15,7 @@ public class BlogDao {
 
 		// sql 1130 블로그테이블,유저테이블,url테이블만 join함 
 		// 나중에 카테고리, 포스트, 댓글 가져와야됨
-		String sql = "SELECT * FROM BLOG B JOIN MEMBER M ON B.MEM_NO = M.MEM_NO JOIN BLOG_URL U ON B.BLOG_NO = U.BLOG_NO WHERE M.MEM_NO = ? AND B.REP_YN = 'Y'";
+		String sql = "SELECT * FROM BLOG B JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE M.MEM_NO = ? AND B.REP_YN = 'Y'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, memberVo.getMemNo());
 		ResultSet rs = pstmt.executeQuery();

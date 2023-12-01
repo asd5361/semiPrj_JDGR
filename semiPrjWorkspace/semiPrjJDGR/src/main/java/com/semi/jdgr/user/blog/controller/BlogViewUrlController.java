@@ -18,7 +18,6 @@ public class BlogViewUrlController extends HttpServlet {
 	// 로그인 유저가 설정한 url
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		try {
 
 			System.out.println("확인1");
