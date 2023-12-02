@@ -26,7 +26,7 @@ public class BlogViewController extends HttpServlet {
 			
 			// service
 			BlogService bs = new BlogService();
-			BlogVo blogVo = bs.getUserblog(memberVo);
+			BlogVo blogVo = bs.getUserReqblog(memberVo);
 			
 			// result
 			if(blogVo == null) {
@@ -40,7 +40,7 @@ public class BlogViewController extends HttpServlet {
 			if(!memberVo.getMemNo().equals(blogVo.getMemNo())) {
 				throw new Exception("로그인한 멤버 no가 blogVo의 멤버 no와 같지않음");
 			}
-			System.out.println(blogVo.getBlogUrl());
+			
 			String redirectUrl = "/jdgr/blog/view/" + blogVo.getBlogUrl();
 			resp.sendRedirect(redirectUrl);
 			
