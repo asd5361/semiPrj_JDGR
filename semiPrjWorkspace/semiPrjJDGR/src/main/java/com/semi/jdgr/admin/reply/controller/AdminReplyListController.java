@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.jdgr.admin.reply.service.AdminReplyService;
-import com.semi.jdgr.page.vo.PageVo;
+import com.semi.jdgr.admin.reply.vo.AdminReplyVo;
+import com.semi.jdgr.page.vo.AdminReplyPageVo;
 
 @WebServlet("/admin/reply/reply_list")
 public class AdminReplyListController extends HttpServlet{
@@ -23,7 +24,7 @@ public class AdminReplyListController extends HttpServlet{
 			AdminReplyService ars = new AdminReplyService();
 			
 			//data
-			int listCount = ars.selectReplyCount();	//전체 댓글 갯수
+			int listCount = ars.selectReplyCount();				//전체 댓글 갯수
 			String currentPage = req.getParameter("pno");
 			if(currentPage_ == null) {
 				currentPage_ = "1";
@@ -31,13 +32,13 @@ public class AdminReplyListController extends HttpServlet{
 			int currentPage = Integer.parseInt(currentPage_);	//현재 페이지
 			int pageLimit = 10;
 			int replyLimit = 10;
-			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, replyLimit);
+			AdminReplyPageVo pvo = new AdminReplyPageVo(listCount, currentPage, pageLimit, replyLimit);
 			
 			// service
-			List<ReplyVo> boardVoList = ars.selectReplyList(pvo);
+			List<AdminReplyVo> AdminReplyVoList = ars.selectReplyList(pvo);
 			
 			// result (==view)
-			req.setAttribute("replyVoList", boardVoList);
+			req.setAttribute("AdminReplyVoList", AdminReplyVoList);
 			req.setAttribute("pvo" , pvo);
 			req.getRequestDispatcher("/WEB-INF/views/reply/reply_list.jsp").forward(req, resp);
 		

@@ -1,6 +1,6 @@
 package com.semi.jdgr.page.vo;
 
-public class PageVo {
+public class AdminReplyPageVo {
 	
 	private int listCount;		// 총 게시글 갯수
 	private int currentPage;	// 현재페이지
@@ -15,7 +15,7 @@ public class PageVo {
 	private int lastRow;		// 조회할 마지막 행 번호 (ROWNUM)
 	
 	//생성자
-	public PageVo(int listCount , int currentPage , int pageLimit, int replyLimit) {
+	public AdminReplyPageVo(int listCount , int currentPage , int pageLimit, int replyLimit) {
 		this.listCount = listCount;
 		this.currentPage = currentPage;
 		this.pageLimit = pageLimit;
