@@ -24,22 +24,19 @@ public class HomeController extends HttpServlet{
 			// 로그인 세션 가져오기
 			HttpSession session = req.getSession();
 			MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
-			BlogService bs = new BlogService();
 			
+			
+			// 블로그 정보,리스트 세션에 저장하기
+			BlogService bs = new BlogService();
 			BlogVo blogVo = null;
 			List<BlogVo> blogVoList = null;
 			if(memberVo != null) {
-				
-				// 블로그 정보 가져오기
-				blogVo = bs.getUserReqblog(memberVo); // 블로그 정보 가져오기
-				
-				// 블로그 리스트 가져오기
-				blogVoList = bs.getBlogList(memberVo);
-				
+				blogVo = bs.getUserReqblog(memberVo); // 대표 블로그 정보 가져오기
+				blogVoList = bs.getBlogList(memberVo); // 블로그 리스트 가져오기
 			}
 			
-			req.setAttribute("loginMemberBlogVo", blogVo);
-			req.setAttribute("loginMemberBlogVoList", blogVoList);
+			session.setAttribute("loginMemberBlogVo", blogVo);
+			session.setAttribute("loginMemberBlogVoList", blogVoList);
 			
 			req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
 			

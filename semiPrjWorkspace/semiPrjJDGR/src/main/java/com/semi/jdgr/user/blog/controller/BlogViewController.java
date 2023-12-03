@@ -13,6 +13,7 @@ import com.semi.jdgr.blog.service.BlogService;
 import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 
+// 나중에 지울 controller
 @WebServlet("/blog/view")
 public class BlogViewController extends HttpServlet {
 	@Override
@@ -20,13 +21,12 @@ public class BlogViewController extends HttpServlet {
 		
 		try {
 			
-			// 로그인 유저정보 받아서 블로그 SELECT * FROM WHERE 대표블로그Y되어있는걸 받아오고 URL테이블 조인해서 URL가져오기
-			HttpSession session = req.getSession();
-			MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+			// 로그인 유저정보
+			MemberVo memberVo = (MemberVo) req.getSession().getAttribute("loginMember");
 			
 			// service
 			BlogService bs = new BlogService();
-			BlogVo blogVo = bs.getUserReqblog(memberVo);
+			BlogVo blogVo = bs.getUserReqblog(memberVo); // 대표블로그 
 			
 			// result
 			if(blogVo == null) {

@@ -27,7 +27,7 @@ public class PostControllerHJY extends HttpServlet {
 			// url정보
 			String getBlogUrl = req.getParameter("url");
 			
-			System.out.println(getBlogUrl);
+			//System.out.println(getBlogUrl);
 			
 			// 로그인 유저정보
 			HttpSession session = req.getSession();
