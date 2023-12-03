@@ -104,18 +104,14 @@ public class CsboardVo {
 	public void setQuestionCategory(String questionCategory) {
 		if(questionCategory.equals("NM")) {
 			this.questionCategoryName = "일반문의";
-			System.out.println("NM완료");
 		}
 		if(questionCategory.equals("SM")) {
 			this.questionCategoryName = "기능문의";
-			System.out.println("SM완료");
 		}
 		if(questionCategory.equals("PM")) {
 			this.questionCategoryName = "신고문의";
-			System.out.println("PM완료");
 		}
 		this.questionCategory = questionCategory;
-		System.out.println("setQuestionCategory 접근");
 	}
 	public String getQuestionCategoryName() {
 		return questionCategoryName;

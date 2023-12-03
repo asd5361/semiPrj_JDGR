@@ -22,12 +22,15 @@ public class PageVo {
 		this.pageLimit = pageLimit;
 		this.boardLimit = boardLimit;
 		
-		this.maxPage = (int)Math.ceil((double)listCount/boardLimit);
-		this.startPage = (currentPage-1)/pageLimit * pageLimit + 1;
+		this.maxPage = (int) Math.ceil((double)listCount/boardLimit);
+		this.startPage = (currentPage - 1) / pageLimit * pageLimit + 1 ;
+		this.endPage = startPage + pageLimit - 1;
+		
 		if(endPage > maxPage) {
 			endPage = maxPage;
 		}
-		this.startRow = (currentPage-1)*boardLimit+1;
+		
+		this.startRow = (currentPage - 1) * boardLimit + 1;
 		this.lastRow = startRow + boardLimit - 1;
 	}
 
@@ -74,14 +77,6 @@ public class PageVo {
 
 	public int getLastRow() {
 		return lastRow;
-	}
-
-
-	@Override
-	public String toString() {
-		return "PageVo [listCount=" + listCount + ", currentPage=" + currentPage + ", pageLimit=" + pageLimit
-				+ ", boardLimit=" + boardLimit + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage="
-				+ endPage + ", startRow=" + startRow + ", lastRow=" + lastRow + "]";
 	}
 	
 }
