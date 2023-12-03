@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.semi.jdgr.post.vo.PostVo;
+import com.semi.jdgr.util.JDBCTemplate;
 
 public class PostDaoJOJ {
 	
@@ -16,6 +17,7 @@ public class PostDaoJOJ {
 	// close
 
 	// 포스트 상세보기 (화면)
+	// 관리자 상세보기
 	public PostVo PostDetail(Connection conn, String no) throws Exception {
 		
 		// sql
@@ -25,7 +27,8 @@ public class PostDaoJOJ {
 		ResultSet rs = pstmt.executeQuery();
 		
 		// rs
-		while(rs.next()) {
+		PostVo postDetailVo = null;
+		if(rs.next()) {
 			String categoryName = rs.getString("CATEGORY_NAME");
 			String postTitle = rs.getString("TITLE");
 			String postImg = rs.getString("POST_IMG");
@@ -35,14 +38,62 @@ public class PostDaoJOJ {
 			String heartCnt = rs.getString("POST_NO");
 			String replyCnt = rs.getString("POST_NO");
 			
+			postDetailVo = new PostVo();
+			postDetailVo.setCategoryName(categoryName);
+			postDetailVo.setPostTitle(postTitle);
+			postDetailVo.setPostImg(postImg);
+			postDetailVo.setUserNick(userNick);
+			postDetailVo.setEnrollDate(enrollDate);
+			postDetailVo.setContent(content);
+			postDetailVo.setHeartCnt(heartCnt);
+			postDetailVo.setReplyCnt(replyCnt);
 			
 
 		}
 		
 		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+		
+		return postDetailVo;
 		
 	}// PostDetail
+
+	public PostVo AdminPostDetail(Connection conn, String no) throws Exception {
+		
+		// sql
+		String sql = "";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		PostVo adminPostDetailVo = null;
+		if(rs.next()) {
+			String postImg = rs.getString("POST_IMG");
+			String blogNo = rs.getString("BLOG_NO");
+			String userId = rs.getString("MEM_ID");
+			String open = rs.getString("OPEN");
+			String inquiry = rs.getString("INQUIRY");
+			String del = rs.getString("DEL_YN");
+			String modifyDate = rs.getString("MODIFY_DATE");
+			String heartCnt = rs.getString("POST_NO");
+			String enrollDate = rs.getString("ENROLL_DATE");
+			String replyCnt = rs.getString("POST_NO");
+			String postTitle = rs.getString("TITLE");
+			String content = rs.getString("CONTENT");
+			
+			adminPostDetailVo = new PostVo();
+			adminPostDetailVo.setPostImg(postImg);
+
+		}
+			
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+		
+		return adminPostDetailVo;
+	}
 	
 
 
-}
+}// class
