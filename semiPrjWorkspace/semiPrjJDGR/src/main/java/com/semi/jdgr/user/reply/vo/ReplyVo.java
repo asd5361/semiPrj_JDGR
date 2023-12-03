@@ -1,6 +1,6 @@
-package com.semi.jdgr.admin.reply.vo;
+package com.semi.jdgr.user.reply.vo;
 
-public class AdminReplyVo {
+public class ReplyVo {
 
 	private String replyNo;
 	private String postNo;
@@ -55,7 +55,7 @@ public class AdminReplyVo {
 	}
 	
 	
-	public AdminReplyVo(String replyNo, String postNo, String replyMem, String parentsNo, String con, String writeDate,
+	public ReplyVo(String replyNo, String postNo, String replyMem, String parentsNo, String con, String writeDate,
 			String delYn) {
 		super();
 		this.replyNo = replyNo;
@@ -75,7 +75,7 @@ public class AdminReplyVo {
 	}
 	
 	
-	public AdminReplyVo() {
+	public ReplyVo() {
 
 	
 	}
