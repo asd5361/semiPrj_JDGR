@@ -30,6 +30,25 @@ public class PostServiceJOJ {
 		return postDetailVo;
 		
 	}// PostDetail
+
+	// 관리자 상세보기
+	public PostVo AdminPostDetail(String no) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		PostDaoJOJ dao = new PostDaoJOJ();
+		PostVo adminPostDetailVo = dao.AdminPostDetail(conn, no);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return adminPostDetailVo;
+		
+	}// AdminPostDetail
+
+
 	
 
 

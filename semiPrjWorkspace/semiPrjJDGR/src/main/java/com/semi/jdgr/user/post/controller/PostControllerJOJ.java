@@ -29,7 +29,7 @@ public class PostControllerJOJ extends HttpServlet{
 		
 		// result
 		System.out.println(postDetailVo);
-		req.setAttribute("PostDetailVo", postDetailVo);
+		req.setAttribute("postDetailVo", postDetailVo);
 		req.getRequestDispatcher("/WEB-INF/views/user/post/detail.jsp").forward(req, resp);
 		
 		}catch(Exception e) {
