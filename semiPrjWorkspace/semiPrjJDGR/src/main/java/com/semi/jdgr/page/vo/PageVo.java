@@ -1,4 +1,4 @@
-package com.semi.jdgr.post.vo;
+package com.semi.jdgr.page.vo;
 
 public class PageVo {
 
