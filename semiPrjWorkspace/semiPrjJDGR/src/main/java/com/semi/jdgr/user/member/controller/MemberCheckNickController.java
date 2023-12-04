@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.semi.jdgr.user.member.service.MemberService;
 
-@WebServlet("/member/check/id")
-public class MemberCheckIdController extends HttpServlet {
+@WebServlet("/member/check/nick")
+public class MemberCheckNickController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter out = resp.getWriter();
 		try {
 			// data
-			String joinId = req.getParameter("joinId");
+			String joinNick = req.getParameter("joinNick");
 			
 			MemberService ms = new MemberService();
-			boolean isOk = ms.checkIdDup(joinId);
+			boolean isOk = ms.checkNickDup(joinNick);
 			
 			if(isOk) {
 				out.write("{\"msg\" : \"ok\"}");

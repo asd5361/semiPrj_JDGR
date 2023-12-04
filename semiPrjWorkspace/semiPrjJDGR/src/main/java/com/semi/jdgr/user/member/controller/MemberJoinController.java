@@ -16,19 +16,21 @@ import com.semi.jdgr.user.member.vo.MemberVo;
 public class MemberJoinController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		req.getRequestDispatcher("/WEB-INF/views/user/member/join.jsp").forward(req, resp);
 	}
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-
 			
+
 			String joinId = req.getParameter("joinId");
-			String joinName = req.getParameter("joinId");
-			String joinNick = req.getParameter("joinId");
-			String joinPwd = req.getParameter("joinId");
-			String joinPwd2 = req.getParameter("joinId");
-			String joinTel = req.getParameter("joinId");
+			String joinName = req.getParameter("joinName");
+			String joinNick = req.getParameter("joinNick");
+			String joinPwd = req.getParameter("joinPwd");
+			String joinPwd2 = req.getParameter("joinPwd2");
+			String joinTel = req.getParameter("joinTel");
 			
 			MemberVo vo = new MemberVo();
 			vo.setMemId(joinId);
@@ -58,5 +60,7 @@ public class MemberJoinController extends HttpServlet {
 //			req.getRequestDispatcher("/WEB-INF/views/common/error.jsp").forward(req, resp);
 		
 		}
+		
 	}
 }
+		
