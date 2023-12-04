@@ -19,7 +19,7 @@
 		        <!-- 블로그 메인 -->
 		        <div class="blog_main">
 		
-		            <% if(loginMemberBlogVo.getBlogMain() == null){ %>
+		            <% if(blogUrlVo.getBlogMain() == null){ %>
 		            	<!-- 메인이 없을시 -->
 		            	<div class="no_main">
 			                <strong>설정된 블로그 메인이 없습니다.</strong>
@@ -30,7 +30,7 @@
 	            	<% } else { %>
 		            	<!-- 있을시 -->
 			            <div class="blog_main_content">
-			                <%= loginMemberBlogVo.getBlogMain() %>
+			                <%= blogUrlVo.getBlogMain() %>
 			            </div>
 	            	<% } %>
 		            

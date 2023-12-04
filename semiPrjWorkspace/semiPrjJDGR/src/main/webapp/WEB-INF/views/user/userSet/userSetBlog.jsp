@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
+<%
+	int subtractedSize = 3 - loginMemberBlogVoList.size(); 
+%>
 
 <!-- main -->
 <main>
@@ -14,7 +17,7 @@
                     <dt>블로그 관리</dt>
                     <dd>
                         <ul>
-                            <li><a href="">블로그 정보</a></li>
+                            <li class="on"><a href="/userSet/blog">블로그 정보</a></li>
                         </ul>
                     </dd>
                 </dl>
@@ -37,30 +40,23 @@
                         <dl class="blog_using">
                             <dt>운영중인 블로그</dt>
                             <dd>
-                                <form action="">
+                                <form action="/jdgr/userSet/blog" method="post">
                                     <ul class="blog_list">
-                                        <li>
-                                            <input type="radio" id="blog1" name="blog">
-                                            <label for="blog1">
-                                                <div class="img"><img src="../images/content/img_main01.png" alt=""></div>
-                                                <div class="cont">
-                                                    <div class="tit">블로그제목</div>
-                                                    <a href="">jdgr/blog/유저닉네임 링크</a>
-                                                </div>
-                                                <div class="req">대표</div>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" id="blog2" name="blog">
-                                            <label for="blog2">
-                                                <div class="img"><img src="../images/content/img_main01.png" alt=""></div>
-                                                <div class="cont">
-                                                    <div class="tit">블로그제목</div>
-                                                    <a href="">jdgr/blog/유저닉네임 링크</a>
-                                                </div>
-                                                <div class="req">대표</div>
-                                            </label>
-                                        </li>
+                                    	<% if(loginMemberBlogVoList != null){ %>
+                                    		<% for(BlogVo blogVo : loginMemberBlogVoList){ %>
+                                    			<li>
+		                                            <input type="radio" id="<%= blogVo.getBlogUrl() %>" name="blog" value="<%= blogVo.getBlogUrl() %>" <% if(blogVo.getRepYn().equals("Y")){ %>checked<% } %>>
+		                                            <label for="<%= blogVo.getBlogUrl() %>">
+		                                                <div class="img"><img src="블로그이미지경로<%= blogVo.getBlogImg() %>" alt=""></div>
+		                                                <div class="cont">
+		                                                    <div class="tit"><%= blogVo.getBlogTitle() %></div>
+		                                                    <a href="/jdgr/blog/view/<%= blogVo.getBlogUrl() %>" target="_blank" title="새 창으로 이동">/jdgr/blog/view/<%= blogVo.getBlogUrl() %></a>
+		                                                </div>
+		                                                <div class="req">대표</div>
+		                                            </label>
+		                                        </li>
+	                                        <% } %>
+                                    	<% } %>
                                     </ul>
                                     <div class="btn_area">
                                         <button>변경사항 저장</button>
@@ -71,10 +67,15 @@
                         <dl class="blog_create">
                             <dt>운영·개설</dt>
                             <dd>
-                                <div class="gg"><span>2개</span>의 블로그를 더 운영할 수 있습니다.</div>
-                                <div class="btn_area">
-                                    <button>새 블로그 만들기</button>
-                                </div>
+                            	<% if(loginMemberBlogVoList.size() < 3){ %>
+                            		<div class="gg"><span><%= subtractedSize %>개</span>의 블로그를 더 운영할 수 있습니다.</div>
+	                                <div class="btn_area">
+	                                    <button onclick="location.href='/jdgr/blog/create'">새 블로그 만들기</button>
+	                                </div>
+                            	<% } else { %>
+                            		
+                            		<div class="gg">더이상 블로그를 운영하실 수 없습니다.</div>
+                            	<% } %>
                             </dd>
                         </dl>
                     </div>

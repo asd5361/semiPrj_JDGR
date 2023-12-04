@@ -14,18 +14,18 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class BlogDao {
 
-	// 블로그 정보 가져오기
-	public BlogVo getUserBlog(Connection conn, MemberVo memberVo, String getBlogUrl) throws Exception {
+	// 블로그 url 정보 가져오기
+	public BlogVo getUserBlog(Connection conn, MemberVo loginMemberVo, String getBlogUrl) throws Exception {
 
 		// sql
 		String sql = "SELECT * FROM BLOG B JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE M.MEM_NO = ? AND B.BLOG_URL = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, memberVo.getMemNo());
+		pstmt.setString(1, loginMemberVo.getMemNo());
 		pstmt.setString(2, getBlogUrl);
 		ResultSet rs = pstmt.executeQuery();
 		
 		// rs
-		BlogVo blogVo = null;
+		BlogVo blogUrlVo = null;
 		if(rs.next()) {
 			
 			String blogNo = rs.getString("BLOG_NO");
@@ -46,31 +46,31 @@ public class BlogDao {
 			String repYn = rs.getString("REP_YN");
 			String blogUrl = rs.getString("BLOG_URL");
 			
-			blogVo = new BlogVo();
-			blogVo.setBlogNo(blogNo);
-			blogVo.setMemNo(memNo);
-			blogVo.setBlogTitle(blogTitle);
-			blogVo.setOpenYn(openYn);
-			blogVo.setLayout(layout);
-			blogVo.setSkin(skin);
-			blogVo.setClockYn(clockYn);
-			blogVo.setMapYn(mapYn);
-			blogVo.setrCommentsYn(rCommentsYn);
-			blogVo.setFollowBlogYn(followBlogYn);
-			blogVo.setVisitorsCntYn(visitorsCntYn);
-			blogVo.setBlogImg(blogImg);
-			blogVo.setrComments(rComments);
-			blogVo.setVisitCnt(visitCnt);
-			blogVo.setBlogMain(blogMain);
-			blogVo.setRepYn(repYn);
-			blogVo.setBlogUrl(blogUrl);
+			blogUrlVo = new BlogVo();
+			blogUrlVo.setBlogNo(blogNo);
+			blogUrlVo.setMemNo(memNo);
+			blogUrlVo.setBlogTitle(blogTitle);
+			blogUrlVo.setOpenYn(openYn);
+			blogUrlVo.setLayout(layout);
+			blogUrlVo.setSkin(skin);
+			blogUrlVo.setClockYn(clockYn);
+			blogUrlVo.setMapYn(mapYn);
+			blogUrlVo.setrCommentsYn(rCommentsYn);
+			blogUrlVo.setFollowBlogYn(followBlogYn);
+			blogUrlVo.setVisitorsCntYn(visitorsCntYn);
+			blogUrlVo.setBlogImg(blogImg);
+			blogUrlVo.setrComments(rComments);
+			blogUrlVo.setVisitCnt(visitCnt);
+			blogUrlVo.setBlogMain(blogMain);
+			blogUrlVo.setRepYn(repYn);
+			blogUrlVo.setBlogUrl(blogUrl);
 		}
 		
 		// close
 		JDBCTemplate.close(rs);
 		JDBCTemplate.close(pstmt);
 		
-		return blogVo;
+		return blogUrlVo;
 	}
 
 	// 카테고리 그룹 가져오기
@@ -216,6 +216,41 @@ public class BlogDao {
 		JDBCTemplate.close(pstmt);
 		
 		return blogVo;
+	}
+
+	// 대표블로그 수정하기
+	public int editBlogRep(Connection conn, BlogVo blogVo) throws Exception {
+
+		// sql
+		String sql = "UPDATE BLOG SET REP_YN = CASE WHEN BLOG_URL = ? THEN 'Y' ELSE 'N' END WHERE MEM_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogVo.getBlogUrl());
+		pstmt.setString(2, blogVo.getMemNo());
+		
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+
+	// 블로그 만들기
+	public int createBlog(Connection conn, BlogVo blogVo) throws Exception {
+
+		// sql
+		String sql = "INSERT INTO BLOG ( BLOG_NO , MEM_NO , BLOG_IMG , BLOG_TITLE , BLOG_URL ) VALUES ( SEQ_BLOG_NO.NEXTVAL , ? , ? , ? , ? )";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogVo.getMemNo());
+		pstmt.setString(2, blogVo.getBlogImg());
+		pstmt.setString(3, blogVo.getBlogTitle());
+		pstmt.setString(4, blogVo.getBlogUrl());
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
 	}
 
 }

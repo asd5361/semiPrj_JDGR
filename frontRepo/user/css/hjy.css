@@ -594,6 +594,9 @@
     width: 200px;
     height: 200px;
 }
+.blog_info .img img {
+    max-height: 100%;
+}
 .blog_info .info {
     display: flex;
     flex-direction: column;
@@ -1543,6 +1546,7 @@ li .reply_inp_box::before {
     justify-content: center;
     width: 200px;
     height: 200px;
+    border: 1px solid #ddd;
 }
 .blog_set_layout .right .data_dl dl dd .profile_box .img img {
     display: block;
@@ -1555,11 +1559,16 @@ li .reply_inp_box::before {
     flex-direction: column;
     align-items: flex-start;
 }
-.blog_set_layout .right .data_dl dl dd .profile_box .profile_btn button {
+.blog_set_layout .right .data_dl dl dd .profile_box .profile_btn input {
+    position: absolute;
+    left: -9999em;
+}
+.blog_set_layout .right .data_dl dl dd .profile_box .profile_btn label {
     display: flex;
     padding: 7px 23px;
     border-radius: 5px;
     background-color: #333;
+    font-size: var(--default-size);
     color: #fff;
     cursor: pointer;
 }

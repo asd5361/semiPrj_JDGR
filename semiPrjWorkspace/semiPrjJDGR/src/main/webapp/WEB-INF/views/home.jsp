@@ -223,7 +223,7 @@
 							<!-- 유저가 가지고있는 블로그가 있으면  -->
 							<% if(loginMemberBlogVoList != null){ %>
 								<div class="btn_util">
-		                            <a href="/jdgr/blog/view" class="my_blog">내 블로그</a>
+		                            <a href="/jdgr/blog/view/<%= loginMemberBlogVo.getBlogUrl() %>" class="my_blog">내 블로그</a>
 		                            <a href="/jdgr/blog/write" class="my_write">글쓰기</a>
 		                        </div>
 							<% } else { %>
@@ -399,8 +399,8 @@
 	                                        	<% if(loginMemberBlogVoList != null){ %>
 	                                        		<% for(BlogVo blogVo : loginMemberBlogVoList){ %>
 	                                        			<li>
-			                                                <span class="tit"><%= blogVo.getBlogTitle() %></span>
-			                                                <a href="" class="ico_write"></a>
+			                                                <a href="/jdgr/blog/view/<%= blogVo.getBlogUrl() %>" class="tit"><%= blogVo.getBlogTitle() %></a>
+			                                                <a href="/jdgr/blog/write" class="ico_write"></a>
 			                                                <a href="/jdgr/userSet/blog" class="ico_set">관리</a>
 			                                            </li>
 	                                        		<% } %>

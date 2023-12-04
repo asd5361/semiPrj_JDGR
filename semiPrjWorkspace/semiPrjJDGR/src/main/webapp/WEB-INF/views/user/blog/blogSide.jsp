@@ -5,8 +5,8 @@
     pageEncoding="UTF-8"%>
 
 <%
-
-	// 	블로그 카테고리 정보 vo
+	
+	// 블로그 카테고리 정보 vo
 	List<GroupVo> groupVoList = (List<GroupVo>) request.getAttribute("groupVoList");
 
 %>
@@ -17,8 +17,7 @@
     <!-- 유저 정보 -->
     <div class="blog_info">
         <div class="img">
-        	<img src="/<%= loginMemberBlogVo.getBlogImg() %>" alt="">
-        	이미지 url 있으면 경로쓰고 없으면 기본이미지 ()
+        	<img src="/<%= blogUrlVo.getBlogImg() %>" alt="">
         </div>
         <div class="info">
             <strong><%= loginMemberVo.getMemNick() %></strong>
@@ -36,10 +35,10 @@
             <strong>카테고리</strong>
         </a>
         <ul>
-        	<li class="category"><a href="/jdgr/hjy/post/view?url=<%= loginMemberBlogVo.getBlogUrl() %>"><strong>전체보기</strong><span>(12)</span></a></li>
+        	<li class="category"><a href="/jdgr/hjy/post/view?url=<%= blogUrlVo.getBlogUrl() %>"><strong>전체보기</strong><span>(12)</span></a></li>
         	<% if(groupVoList != null){ %>
         		<% for(GroupVo groupVo : groupVoList){ %>
-        			<li class="category"><a href="/jdgr/hjy/post/view?url=<%= loginMemberBlogVo.getBlogUrl() %>"><strong><%= groupVo.getGroupName() %></strong><span>(3)</span></a></li>
+        			<li class="category"><a href="/jdgr/hjy/post/view?url=<%= blogUrlVo.getBlogUrl() %>"><strong><%= groupVo.getGroupName() %></strong><span>(3)</span></a></li>
         		<% } %>
         	<% } %>
             <li class="line"></li>
@@ -47,7 +46,7 @@
     </div>
 
     <!-- 방문자 수 -->
-    <% if(loginMemberBlogVo.getVisitorsCntYn().equals("Y")){ %>
+    <% if(blogUrlVo.getVisitorsCntYn().equals("Y")){ %>
     <div class="widget blog_count">
         <h4 class="tit">방문자 수</h4>
         <dl class="today">
@@ -63,7 +62,7 @@
     
 
     <!-- 최근 댓글 -->
-    <% if(loginMemberBlogVo.getrCommentsYn().equals("Y")){ %>
+    <% if(blogUrlVo.getrCommentsYn().equals("Y")){ %>
     <div class="widget blog_newreply">
         <h4 class="tit">최근댓글</h4>
         <ul>
@@ -77,7 +76,7 @@
     <% } %>
 
     <!-- 시계 -->
-    <% if(loginMemberBlogVo.getClockYn().equals("Y")){ %>
+    <% if(blogUrlVo.getClockYn().equals("Y")){ %>
     <div class="widget blog_clock">
         <h4 class="tit">시계</h4>
         <span class="time">
@@ -88,7 +87,7 @@
     <% } %>
 
     <!-- 구독 블로그 -->
-    <% if(loginMemberBlogVo.getFollowBlogYn().equals("Y")){ %>
+    <% if(blogUrlVo.getFollowBlogYn().equals("Y")){ %>
     <div class="widget blog_subscribeblog">
         <a href="" class="tit">
             <strong>구독 블로그</strong>
@@ -105,7 +104,7 @@
     <% } %>
 
     <!-- 지도 -->
-    <% if(loginMemberBlogVo.getMapYn().equals("Y")){ %>
+    <% if(blogUrlVo.getMapYn().equals("Y")){ %>
     <div class="widget blog_map">
         <h4 class="tit">지도</h4>
         <div>

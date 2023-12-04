@@ -25,27 +25,23 @@ public class BlogViewUrlController extends HttpServlet {
 			// url정보 
 			String pathInfo = req.getPathInfo();
 			String getBlogUrl = pathInfo.substring(1);
-			
-			// 로그인 유저정보
-			HttpSession session = req.getSession();
-			MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
 
 			// service
+			MemberVo loginMemberVo = (MemberVo) req.getSession().getAttribute("loginMember");
+			
 			BlogService bs = new BlogService();
-			BlogVo blogVo = bs.getUserblog(memberVo, getBlogUrl); // 블로그 정보 가져오기
-			List<GroupVo> groupVoList = bs.getGroupList(blogVo); // 카테고리그룹 가져오기
-			List<BlogVo> blogVoList = bs.getBlogList(memberVo); // 블로그 리스트 가져오기
+			BlogVo blogUrlVo = bs.getUserblog(loginMemberVo, getBlogUrl); // url에 맞는 블로그 가져오기
+			List<GroupVo> groupVoList = bs.getGroupList(blogUrlVo); // 카테고리그룹 가져오기
+			
+			System.out.println(getBlogUrl);
+			System.out.println(blogUrlVo);
+			System.out.println(groupVoList);
 			
 			// result
-			if(blogVo == null) {
-				throw new Exception("blogVo가 null");
-			}
 
-			req.setAttribute("loginMemberBlogVo", blogVo);
 			req.setAttribute("blogClassName", "blog");
-			req.setAttribute("loginMember", memberVo);
 			req.setAttribute("groupVoList", groupVoList);
-			req.setAttribute("loginMemberBlogVoList", blogVoList);
+			req.getSession().setAttribute("blogUrlVo", blogUrlVo); // url 블로그 저장
 			
 			req.getRequestDispatcher("/WEB-INF/views/user/blog/blogMain.jsp").forward(req, resp);
 			

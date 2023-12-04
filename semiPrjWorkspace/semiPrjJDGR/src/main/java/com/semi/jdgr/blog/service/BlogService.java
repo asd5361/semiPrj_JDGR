@@ -11,15 +11,31 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class BlogService {
 
-	// 블로그 정보 가져오기
-	public BlogVo getUserblog(MemberVo memberVo, String getBlogUrl) throws Exception {
+	// url에 맞는 블로그 정보 가져오기
+	public BlogVo getUserblog(MemberVo loginMemberVo, String getBlogUrl) throws Exception {
 
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
 		BlogDao dao = new BlogDao();
-		BlogVo blogVo = dao.getUserBlog(conn, memberVo, getBlogUrl);
+		//if(대표블로그면..url ) {} else {대표블로그 아니면}
+		BlogVo blogUrlVo = dao.getUserBlog(conn, loginMemberVo, getBlogUrl);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return blogUrlVo;
+	}
+	
+	// 대표블로그 정보 가져오기
+	public BlogVo getUserReqblog(MemberVo memberVo) throws Exception {
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		BlogVo blogVo = dao.getUserReqBlog(conn, memberVo);
 		
 		// close
 		JDBCTemplate.close(conn);
@@ -58,20 +74,53 @@ public class BlogService {
 		
 		return blogVoList;
 	}
-	
-	// 대표블로그 정보 가져오기
-	public BlogVo getUserReqblog(MemberVo memberVo) throws Exception {
+
+	// 대표 블로그 수정하기
+	public int editBlogRep(BlogVo blogVo) throws Exception {
+		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
 		BlogDao dao = new BlogDao();
-		BlogVo blogVo = dao.getUserReqBlog(conn, memberVo);
+		int result = dao.editBlogRep(conn, blogVo);
+		
+		// tx
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
 		
 		// close
 		JDBCTemplate.close(conn);
 		
-		return blogVo;
+		return result;
+	}
+
+	// 블로그 만들기
+	public int createBlog(BlogVo blogVo) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// 비즈니스 로직 (검증로직 해야됨!!!!!!!!!!!!!)
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		int result = dao.createBlog(conn, blogVo);
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return result;
 	}
 	
 }
