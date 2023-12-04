@@ -1,8 +1,29 @@
+<%@page import="java.util.Map"%>
+<%@page import="com.semi.jdgr.page.vo.PageVo"%>
+<%@page import="com.semi.jdgr.admin.reply.vo.AdminReplyVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+    <%
+    	List<AdminReplyVo> replyVoList = (List<AdminReplyVo>) request.getAttribute("replyVoList");
+    	PageVo pvo = (PageVo)request.getAttribute("pvo");
+    	Map<String, String> searchMap = (Map<String, String>)request.getAttribute("searchMap");
+    %>
+    
+    <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+ <link rel="stylesheet" href="/jdgr/resources/admin/css/allCss.css">
+
+
     <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
  <!-- container -->
+ 
+ 
             <div class="container">
                 <!-- 제목 -->
                 <div class="tit_box">
@@ -97,7 +118,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>001</td>
+                                <td><%= vo.getPostNo() %></td>
                                 <td>1402934</td>
                                 <td>김상병</td>
                                 <td>ㅋㅋㅋㅋㅋㅋㅋㅋㅋ</td>

@@ -87,14 +87,14 @@ public class AdminReplyService {
 	
 	
 	//게시글 상세조회(댓글 번호, 포스트 번호, 작성자, 내용, 작성일자, 수정일자, 공개여부(공개, 비공개)
-	public AdminReplyVo selectReplyByNo(String no) throws Exception {
+	public AdminReplyVo selectReplyByPostNo(String postNo) throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
 		AdminReplyDao dao = new AdminReplyDao();
-		List<AdminReplyVo> adminReplyVoList = dao.selectReplyList(conn, pvo);
+		List<AdminReplyVo> adminReplyVoList = dao.selectReplyByPostNo(conn, postNo);
 		
 		
 		// close

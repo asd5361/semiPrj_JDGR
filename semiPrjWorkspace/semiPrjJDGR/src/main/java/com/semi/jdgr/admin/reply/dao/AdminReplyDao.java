@@ -19,7 +19,7 @@ public class AdminReplyDao{
    public List<AdminReplyVo> selectReplyList(Connection conn, AdminReplyPageVo pvo) throws Exception{
       
       //SQL
-      String sql = "SELECT * FROM    ( SELECT ROWNUM RNUM, T.* FROM ( SELECT R.POST_NO ,R.REPLY_MEM ,R.PARENTS_NO ,R.CON ,R.WRITE_DATE ,R.DEL_YN, M.NICK AS MEM_NICK FROM BOARD R JOIN MEMBER M ON R.REPLY_MEM = M.MEM_NO WHERE B.STATUS = 'O' ORDER BY NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+      String sql = "";
       PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setInt(1, pvo.getStartRow());
       pstmt.setInt(2, pvo.getLastRow());
@@ -36,7 +36,9 @@ public class AdminReplyDao{
          String parentsNo = rs.getString("PARENTS_NO");
          String con = rs.getString("CON");
          String writeDate = rs.getString("WRITE_DATE");
-         String delYn = rs.getString("DEL_YN");
+         String updateDate = rs.getString("UPDATE_DATE");
+         String openYn = rs.getString("OPEN_YN");
+         String sancYn = rs.getString("SANC_YN");
          
          AdminReplyVo vo = new AdminReplyVo();
          vo.setReplyNo(replyNo);
@@ -45,12 +47,13 @@ public class AdminReplyDao{
          vo.setParentsNo(parentsNo);
          vo.setCon(con);
          vo.setWriteDate(writeDate);
-         vo.setDelYn(delYn);
+         vo.setUpdateDate(updateDate);
+         vo.setOpenYn(openYn);
+         vo.setSancYn(sancYn);
          
          adminReplyVoList.add(vo);
          
       }
-      
       
       //close
       JDBCTemplate.close(pstmt);
@@ -77,26 +80,29 @@ public class AdminReplyDao{
 		// rs
 	      List<AdminReplyVo> adminReplyVoList = new ArrayList<AdminReplyVo>();
 	      while(rs.next()) {
-	    	  
-	     	 String replyNo = rs.getString("REPLY_NO");
-	          String postNo = rs.getString("POST_NO");
-	          String replyMem = rs.getString("REPLY_MEM");
-	          String parentsNo = rs.getString("PARENTS_NO");
-	          String con = rs.getString("CON");
-	          String writeDate = rs.getString("WRITE_DATE");
-	          String delYn = rs.getString("DEL_YN");
-	         
-	         AdminReplyVo vo = new AdminReplyVo();
-	         vo.setReplyNo(replyNo);
-	         vo.setPostNo(postNo);
-	         vo.setReplyMem(replyMem);
-	         vo.setParentsNo(parentsNo);
-	         vo.setCon(con);
-	         vo.setWriteDate(writeDate);
-	         vo.setDelYn(delYn);
-	         
-	         adminReplyVoList.add(vo);
-	      }
+    		 String replyNo = rs.getString("REPLY_NO");
+             String postNo = rs.getString("POST_NO");
+             String replyMem = rs.getString("REPLY_MEM");
+             String parentsNo = rs.getString("PARENTS_NO");
+             String con = rs.getString("CON");
+             String writeDate = rs.getString("WRITE_DATE");
+             String updateDate = rs.getString("UPDATE_DATE");
+             String openYn = rs.getString("OPEN_YN");
+             String sancYn = rs.getString("SANC_YN");
+             
+             AdminReplyVo vo = new AdminReplyVo();
+             vo.setReplyNo(replyNo);
+             vo.setPostNo(postNo);
+             vo.setReplyMem(replyMem);
+             vo.setParentsNo(parentsNo);
+             vo.setCon(con);
+             vo.setWriteDate(writeDate);
+             vo.setUpdateDate(updateDate);
+             vo.setOpenYn(openYn);
+             vo.setSancYn(sancYn);
+             
+             adminReplyVoList.add(vo);
+	      }//while
 	
 		// close
 	    JDBCTemplate.close(rs);
@@ -171,23 +177,27 @@ public class AdminReplyDao{
 	     //rs
 	     AdminReplyVo vo = null;
 	     if(rs.next()) {
-	        String replyNo = rs.getString("REPLY_NO");
-	        String postNo = rs.getString("POST_NO");
-	        String replyMem = rs.getString("REPLY_MEM");
-	        String parentsNo = rs.getString("PARENTS_NO");
-	        String con = rs.getString("CON");
-	        String writeDate = rs.getString("WRITE_DATE");
-	        String delYn = rs.getString("DEL_YN");
+    		 String replyNo = rs.getString("REPLY_NO");
+             String postNo = rs.getString("POST_NO");
+             String replyMem = rs.getString("REPLY_MEM");
+             String parentsNo = rs.getString("PARENTS_NO");
+             String con = rs.getString("CON");
+             String writeDate = rs.getString("WRITE_DATE");
+             String updateDate = rs.getString("UPDATE_DATE");
+             String openYn = rs.getString("OPEN_YN");
+             String sancYn = rs.getString("SANC_YN");
 
 	        
 	        vo = new AdminReplyVo();
-	        vo.setReplyNo(replyNo);
-	        vo.setPostNo(postNo);
-	        vo.setReplyMem(replyMem);
-	        vo.setParentsNo(parentsNo);
-	        vo.setCon(con);
-	        vo.setWriteDate(writeDate);
-	        vo.setDelYn(delYn);
+            vo.setReplyNo(replyNo);
+            vo.setPostNo(postNo);
+            vo.setReplyMem(replyMem);
+            vo.setParentsNo(parentsNo);
+            vo.setCon(con);
+            vo.setWriteDate(writeDate);
+            vo.setUpdateDate(updateDate);
+            vo.setOpenYn(openYn);
+            vo.setSancYn(sancYn);
 	        
 	     }
 	     
