@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>신고 목록</title>
+    <title>신고 / 제재 관리</title>
 
     <!-- css -->
     <link rel="stylesheet" href="../css/allCss.css">
@@ -28,6 +28,7 @@
                     <li><a href="">블로그 관리</a></li>
                     <li><a href="">포스트 관리</a></li>
                     <li><a href="">관리자 설정</a></li>
+                    <li><a href="">댓글 관리</a></li>
                 </ul>
             </nav>
 
@@ -56,6 +57,12 @@
                 
                 <!-- 검색박스 예시 -->
                 <div class="search_box">
+                    <div class="search_item">
+                        <label for="sel_01">댓글/포스트 번호</label>
+                        <div class="form_box">
+                            <input type="text" id="inp_02">
+                        </div>
+                    </div>
                     <div class="search_item">
                         <label for="sel_01">신고자</label>
                         <div class="form_box">
@@ -117,7 +124,7 @@
                 <!-- 버튼 -->
                 <div class="btn_box_group right">
                     <div class="btn_box">
-                        <button class="btn_gray">답변 일자</button>
+                        <button class="btn_gray">초기화</button>
                     </div>
                     <div class="btn_box">
                         <button class="btn_black">검색</button>
@@ -156,113 +163,113 @@
                         <tbody>
                             <tr>
                                 <td>001</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설//</td>
                                 <td>2023.11.11 23:30</td>
                                 <td>X</td>
                                 <td>일반문의</td>
                             </tr>
                             <tr>
                                 <td>002</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설</td>
                                 <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
+                                <td>2023.11.11 23:30</td>
+                                <td>2023.11.11 23:30</td>
                             </tr>
                             <tr>
                                 <td>003</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설</td>
                                 <td>2023.11.11 23:30</td>
                                 <td>X</td>
                                 <td>일반문의</td>
                             </tr>
                             <tr>
                                 <td>004</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설</td>
                                 <td>2023.11.11 23:30</td>
                                 <td>X</td>
                                 <td>일반문의</td>
                             </tr>
                             <tr>
                                 <td>005</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설</td>
                                 <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
+                                <td>2023.11.11 23:30</td>
+                                <td>2023.11.11 23:30</td>
                             </tr>
                             <tr>
                                 <td>006</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설</td>
                                 <td>2023.11.11 23:30</td>
                                 <td>X</td>
                                 <td>일반문의</td>
                             </tr>
                             <tr>
                                 <td>007</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설</td>
                                 <td>2023.11.11 23:30</td>
                                 <td>X</td>
                                 <td>일반문의</td>
                             </tr>
                             <tr>
                                 <td>008</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설</td>
                                 <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
+                                <td>2023.11.11 23:30</td>
+                                <td>2023.11.11 23:30</td>
                             </tr>
                             <tr>
                                 <td>009</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설</td>
                                 <td>2023.11.11 23:30</td>
                                 <td>X</td>
                                 <td>일반문의</td>
                             </tr>
                             <tr>
                                 <td>010</td>
-                                <td>컬럼내용</td>
+                                <td>신고자</td>
                                 <td>김병장</td>
                                 <td>컬럼내용컬럼내용</td>
                                 <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
+                                <td>욕설</td>
                                 <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
+                                <td>2023.11.11 23:30</td>
+                                <td>2023.11.11 23:30</td>
                             </tr>
                         </tbody>
                     </table>
