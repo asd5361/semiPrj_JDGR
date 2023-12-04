@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.semi.jdgr.admin.reply.vo.AdminReplyVo;
+import com.semi.jdgr.admin.reply.vo.CategoryVo;
 import com.semi.jdgr.util.JDBCTemplate;
 import com.semi.jdgr.page.vo.AdminReplyPageVo;
 
@@ -215,25 +216,22 @@ public class AdminReplyDao{
       
    }//delete
 
-   
-   
-   //카테고리 리스트 조회
- 	public List<CategoryVo> getCategoryList(Connection conn) throws Exception {
-	   
- 	   //SQL
-	   String sql = "SELECT * FROM CATEGORY ORDER BY NO";
+
+   //카테고리 리스트 조회	-> 공개 여부 / 제재 처리 여부로 수정
+   public List<CategoryVo> getCategoryList(Connection conn) throws Exception {
+	   //SQL
+	   String sql = "SELECT * FROM CATEGORY ORDER BY POST_NO";		//category 테이블을 따로 만들어야 하나??
 	   PreparedStatement pstmt = conn.prepareStatement(sql);
 	   ResultSet rs = pstmt.executeQuery();
-	   
 	   //rs
 	   List<CategoryVo> voList = new ArrayList<CategoryVo>();
 	   while(rs.next()) {
-		   String replyNo = rs.getString("REPLY_NO");
-		   String replyMem = rs.getString("REPLY_MEM");
+		   String openYn = rs.getString("OPEN_YN");
+		   String delYn = rs.getString("DEL_YN");
 		   
 		   CategoryVo vo = new CategoryVo();
-		   vo.setReplyNo(replyNo);
-		   vo.setReplyMem(replyMem);
+		   vo.setOpenYn(openYn);
+		   vo.setDelYn(delYn);
 		   voList.add(vo);
 	   }
 	   //close
@@ -241,44 +239,9 @@ public class AdminReplyDao{
 	   JDBCTemplate.close(pstmt);
 	   
 	   return voList;
- }
+   }
 
 
-   
-   
-   
-
-
-
-
-   
-   
-//   }
-
-//
-//   public int selectBoardCount(Connection conn) throws Exception{
-//      
-//      //SQL
-//      String sql = "SELECT COUNT(*) as cnt FROM BOARD WHERE STATUS = 'O'";
-//      PreparedStatement pstmt = conn.prepareStatement(sql);
-//      
-//      ResultSet rs = pstmt.executeQuery();
-//      
-//      //rs
-//      int cnt = 0;
-//      if(rs.next()) {
-////         int cnt = rs.getInt("cnt");
-//         cnt = rs.getInt(1); //첫번째 열을 가져오겠다 라는 뜻, 계산에 써야되기 때문에 String이 아닌 Int로 받아줌
-//      }
-//      
-//      //close
-//      JDBCTemplate.close(rs);
-//      JDBCTemplate.close(pstmt);
-//      
-//      return cnt;
-//         
-//   }
-   
 
    
 

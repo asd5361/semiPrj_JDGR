@@ -40,7 +40,7 @@ public class AdminReplyListController extends HttpServlet{
 			// result (==view)
 			req.setAttribute("AdminReplyVoList", AdminReplyVoList);
 			req.setAttribute("pvo" , pvo);
-			req.getRequestDispatcher("/WEB-INF/views/reply/reply_list.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/views/admin/reply/reply_list.jsp").forward(req, resp);
 		
 		
 		
