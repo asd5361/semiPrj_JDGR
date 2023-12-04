@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.semi.jdgr.notice.dao.NoticeDao;
 import com.semi.jdgr.notice.vo.NoticeVo;
-import com.semi.jdgr.post.vo.PageVo;
+import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class NoticeService {
