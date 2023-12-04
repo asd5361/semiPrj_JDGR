@@ -29,10 +29,10 @@ public class MemberDao {
 				
 	}
 
-	public boolean checkIdDup(Connection conn, String memberId) throws Exception {
-		String sql = "SELECT * FROM MEMBER WHERE ID = ?";
+	public boolean checkIdDup(Connection conn, String joinId) throws Exception {
+		String sql = "SELECT * FROM MEMBER WHERE MEM_ID = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, memberId);
+		pstmt.setString(1, joinId);
 		ResultSet rs = pstmt.executeQuery();
 		
 		boolean result = true;
@@ -43,6 +43,22 @@ public class MemberDao {
 		System.out.println(result);
 		return result;
 	}
+	
+	public boolean checkNickDup(Connection conn, String joinNick) throws Exception {
+		String sql = "SELECT * FROM MEMBER WHERE MEM_NICK = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, joinNick);
+		ResultSet rs = pstmt.executeQuery();
+		
+		boolean result = true;
+		if(rs.next()) {
+			result = false;
+		}
+		
+		System.out.println(result);
+		return result;
+	}
+
 
 	public MemberVo login(Connection conn, MemberVo vo) throws Exception {
 		
@@ -85,11 +101,23 @@ public class MemberDao {
 		return loginMember;
 	}
 
-	public int updateMemberInfo(Connection conn, MemberVo vo) {
+	public int updateMemberInfo(Connection conn, MemberVo vo) throws Exception {
 
-		String sql =
+		String sql = "UPDATE MEMBER SET MEM_NAME = ? , MEM_PWD = ? , MEM_NICK = ? , MEM_PHONE_NUM =? , UPDATE_DATE = SYSDATE WHERE MEM_EMAIL = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, vo.getMemName());
+		pstmt.setString(2, vo.getMemPwd());
+		pstmt.setString(3, vo.getMemNick());
+		pstmt.setString(4, vo.getMemPhoneNum());
+		pstmt.setString(5, vo.getMemEmail());
 		
-		return 0;
+		int result = pstmt.executeUpdate();
+		   
+		JDBCTemplate.close(pstmt);
+		   
+		return result; 
+		
 	}
+
 
 }

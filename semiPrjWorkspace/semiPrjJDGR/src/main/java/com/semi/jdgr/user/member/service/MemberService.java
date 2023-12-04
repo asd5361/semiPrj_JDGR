@@ -35,11 +35,23 @@ public class MemberService {
 		return result;
 	}
 
-	public boolean checkIdDup(String memberId) throws Exception {
+	public boolean checkIdDup(String joinId) throws Exception {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		
-		boolean result = dao.checkIdDup(conn, memberId);
+		boolean result = dao.checkIdDup(conn, joinId);
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+	
+	public boolean checkNickDup(String joinNick) throws Exception {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		
+		boolean result = dao.checkNickDup(conn, joinNick);
 		
 		JDBCTemplate.close(conn);
 		
@@ -75,5 +87,9 @@ public class MemberService {
 		
 		return result;
 	}
+
+	
+
+	
 	
 }

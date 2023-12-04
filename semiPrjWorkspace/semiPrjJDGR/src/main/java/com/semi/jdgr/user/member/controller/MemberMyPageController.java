@@ -21,39 +21,21 @@ public class MemberMyPageController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
-			//다오에서 sql문 해야함
 			HttpSession session = req.getSession(false);
 			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-			System.out.println(loginMember.getMemEmail());
 			String name = req.getParameter("name");
-			String email = req.getParameter("email1") + "@" + req.getParameter("email2");
 			String cert = req.getParameter("cert");
 			String pwd1 = req.getParameter("pwd1");
 			String pwd2 = req.getParameter("pwd2");
 			String nick = req.getParameter("nick");
 			String phone= req.getParameter("phone");
-			
 			MemberVo vo = loginMember;
-
+			
 			vo.setMemName(name);
-			vo.setMemEmail(email);
 			vo.setMemNick(nick);
 			vo.setMemPhoneNum(phone);
 			
-			if(pwd1 != null && pwd2 != null) {
+			if(pwd1 != "" && pwd2 != "") {
 				vo.setMemPwd(pwd1);
 				vo.setMemPwd2(pwd2);
 			}		
@@ -61,10 +43,16 @@ public class MemberMyPageController extends HttpServlet {
 			MemberService ms = new MemberService();
 			int result = ms.updateMemberInfo(vo);
 			
+			if(result != 1) {
+				session.setAttribute("alertMsg", "마이페이지 정보 저장에 실패하였습니다.");
+				throw new Exception("마이페이지 저장 실패 ...");
+			}
+			session.setAttribute("loginMember", vo);
+			resp.sendRedirect("/jdgr/home"); 
 			
 		
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 }
