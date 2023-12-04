@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.semi.jdgr.admin.reply.dao.AdminReplyDao;
 import com.semi.jdgr.admin.reply.vo.AdminReplyVo;
+import com.semi.jdgr.admin.reply.vo.CategoryVo;
 import com.semi.jdgr.page.vo.AdminReplyPageVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -126,7 +127,7 @@ public class AdminReplyService {
 	}//delete
 	
 
-	// 카테고리 리스트 조회
+	// 카테고리 리스트 조회	-> 공개 여부 / 제재 처리 여부로 수정
 	public List<CategoryVo> getCategoryList() throws Exception {
 		//conn
 		Connection conn = JDBCTemplate.getConnection();

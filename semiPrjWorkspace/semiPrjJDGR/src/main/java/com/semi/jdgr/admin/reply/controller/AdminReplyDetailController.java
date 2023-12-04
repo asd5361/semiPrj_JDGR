@@ -41,4 +41,4 @@ public class AdminReplyDetailController extends HttpServlet{
 
 	}//doGet
 
-}
+}//class
