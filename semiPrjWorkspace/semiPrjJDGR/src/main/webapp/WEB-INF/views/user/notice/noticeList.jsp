@@ -1,11 +1,12 @@
-<%@page import="com.semi.jdgr.post.vo.PageVo"%>
+<%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="com.semi.jdgr.notice.vo.NoticeVo"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% List<NoticeVo> noticeVoList = (List<NoticeVo>)request.getAttribute("noticeVoList");   %>
 <% PageVo pvo = (PageVo)request.getAttribute("pageVo"); %>
-	
+<% String searchValue = (String)request.getAttribute("searchValue"); %>
+
 	<%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 	
 	<!-- main -->
@@ -91,16 +92,17 @@
 	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
 
 <script>
-function setPageArea(){
-    const aTagArr = document.querySelectorAll(".paging_box ul li a");
-    for(let i = 0; i< aTagArr.length; i++){
-        aTagArr[i].href = aTagArr[i].replace('list','list/search');
-        // aTagArrp[i].href = +=
-        // aTagArr[i].href += "&searchType=<%= searchMap.get("searchType") %>";
-		// aTagArr[i].href += "&searchValue=<%= searchMap.get("searchValue") %>";
+<% if(searchValue != null){ %>
+	function setPageArea(){
+	    const aTagArr = document.querySelectorAll(".paging_box ul li a");
+	    for(let i = 0; i< aTagArr.length; i++){
+	        aTagArr[i].href = aTagArr[i].href.replace('list','list/search');
+	        aTagArr[i].href +='&searchValue=<%=searchValue%>';
+	    }
+	}
+	setPageArea();
+<%}%>
 
-    }
-}
-setPageArea();
+
 </script>
 	

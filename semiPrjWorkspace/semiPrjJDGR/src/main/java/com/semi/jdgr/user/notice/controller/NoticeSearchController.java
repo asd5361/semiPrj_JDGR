@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.jdgr.notice.vo.NoticeVo;
-import com.semi.jdgr.post.vo.PageVo;
+import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.user.csboard.service.NoticeService;
 
 @WebServlet("/notice/list/search")
@@ -41,10 +41,10 @@ public class NoticeSearchController extends HttpServlet {
 				throw new Exception();
 			}
 			//view
+			req.setAttribute("searchValue", searchValue);
 			req.setAttribute("noticeVoList", noticeVoList);
 			req.setAttribute("pageVo", pvo);
 			req.getRequestDispatcher("/WEB-INF/views/user/notice/noticeList.jsp").forward(req, resp);
-			
 			
 			
 		}catch(Exception e) {
