@@ -12,11 +12,12 @@ public class PostVo {
 	private String inquiry;
 	private String enrollDate;
 	private String modifyDate;
-	private String delYn;
+	private String postDelYn;
 	private String postImg;
 	private String heartCnt;
 	private String replyCnt;
 	private String userNick;
+	private String userId;
 	private String postTitle;
 	private String categoryName;
 	private String groupName;
@@ -25,8 +26,8 @@ public class PostVo {
 	}
 
 	public PostVo(String postNo, String blogNo, String categoryNo, String groupNo, String title, String content,
-			String open, String inquiry, String enrollDate, String modifyDate, String delYn, String postImg,
-			String heartCnt, String replyCnt, String userNick, String postTitle, String categoryName,
+			String open, String inquiry, String enrollDate, String modifyDate, String postDelYn, String postImg,
+			String heartCnt, String replyCnt, String userNick, String userId, String postTitle, String categoryName,
 			String groupName) {
 		this.postNo = postNo;
 		this.blogNo = blogNo;
@@ -38,11 +39,12 @@ public class PostVo {
 		this.inquiry = inquiry;
 		this.enrollDate = enrollDate;
 		this.modifyDate = modifyDate;
-		this.delYn = delYn;
+		this.postDelYn = postDelYn;
 		this.postImg = postImg;
 		this.heartCnt = heartCnt;
 		this.replyCnt = replyCnt;
 		this.userNick = userNick;
+		this.userId = userId;
 		this.postTitle = postTitle;
 		this.categoryName = categoryName;
 		this.groupName = groupName;
@@ -128,12 +130,12 @@ public class PostVo {
 		this.modifyDate = modifyDate;
 	}
 
-	public String getDelYn() {
-		return delYn;
+	public String getPostDelYn() {
+		return postDelYn;
 	}
 
-	public void setDelYn(String delYn) {
-		this.delYn = delYn;
+	public void setPostDelYn(String postDelYn) {
+		this.postDelYn = postDelYn;
 	}
 
 	public String getPostImg() {
@@ -168,6 +170,14 @@ public class PostVo {
 		this.userNick = userNick;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	public String getPostTitle() {
 		return postTitle;
 	}
@@ -196,9 +206,10 @@ public class PostVo {
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", blogNo=" + blogNo + ", categoryNo=" + categoryNo + ", groupNo=" + groupNo
 				+ ", title=" + title + ", content=" + content + ", open=" + open + ", inquiry=" + inquiry
-				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", delYn=" + delYn + ", postImg="
-				+ postImg + ", heartCnt=" + heartCnt + ", replyCnt=" + replyCnt + ", userNick=" + userNick
-				+ ", postTitle=" + postTitle + ", categoryName=" + categoryName + ", groupName=" + groupName + "]";
+				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", postDelYn=" + postDelYn
+				+ ", postImg=" + postImg + ", heartCnt=" + heartCnt + ", replyCnt=" + replyCnt + ", userNick="
+				+ userNick + ", userId=" + userId + ", postTitle=" + postTitle + ", categoryName=" + categoryName
+				+ ", groupName=" + groupName + "]";
 	}
 
 }
