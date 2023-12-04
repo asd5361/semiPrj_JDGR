@@ -36,7 +36,7 @@
 </div>
 
 <!-- 레이어팝업 경고 모달 -->
-<div id="pop_warning" class="modal_bg warning">
+<div id="pop_warning" class="modal_bg warning" style="<%= warningId %>">
     <div class="modal_box">
         <div class="modal_header">
             <button class="modal_close">닫기</button>
@@ -46,8 +46,8 @@
             <div class="modal_content">
                 <div class="img"></div>
                 <div class="txt">
-                    <strong>비밀글</strong>
-                    <span></span>
+                    <strong><%= warningTitle %></strong>
+                    <span><%= warningContent %></span>
                 </div>
             </div>
             
@@ -70,7 +70,7 @@
                 <div class="img"></div>
                 <div class="txt">
                     <strong><%= completeTitle %></strong>
-                    <span></span>
+                    <span><%= completeContent %></span>
                 </div>
             </div>
 

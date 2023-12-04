@@ -95,10 +95,25 @@ public class BlogCreateController extends HttpServlet {
 			// 세션 업데이트
 			//어떻게함?
 			
-			resp.sendRedirect("/jdgr/userSet/blog");
+			req.setAttribute("blogClassName", "blog_set");
+			req.getRequestDispatcher("/WEB-INF/views/user/blog/userSetBlog.jsp").forward(req, resp);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
+			
+			// 팝업메세지 전달
+			
+			// 에러 메시지 가져오기
+		    String errorMessage = e.getMessage();
+		    
+			Map<String, String> popText = new HashMap<String, String>();
+			popText.put("warningId", "display: flex;");
+			popText.put("warningTitle", errorMessage);
+			popText.put("warningContent", "다시 확인해주세요!");
+			req.getSession().setAttribute("popText", popText);
+			
+			req.setAttribute("blogClassName", "blog_set");
+			req.getRequestDispatcher("/WEB-INF/views/user/blog/create.jsp").forward(req, resp);
 		}
 	}
 	
