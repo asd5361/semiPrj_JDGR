@@ -56,5 +56,32 @@ public class NoticeService {
 		
 		return cnt;
 	}
+	public List<NoticeVo> search(String searchValue, PageVo pvo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		List<NoticeVo> noticeVoList = dao.search(conn, searchValue,pvo);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return noticeVoList;
+	}
+	public int selectSearchNoticeCount(String searchValue) throws Exception {
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		int cnt = dao.selectSearchNoticeCount(conn,searchValue);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
+	}
 
 }

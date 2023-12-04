@@ -18,7 +18,7 @@
                 <ul class="tab_btns">
                     <li class="on"><button onclick="location.href='/jdgr/csboard';">고객센터</button></li>
                     <li><button onclick="location.href='/jdgr/notice/list?pno=1';">공지사항</button></li>
-                    <li><button onclick="location.href='/jdgr/csboard/list';">1:1문의</button></li>
+                    <li><button onclick="location.href='/jdgr/csboard/list?pno=1';">1:1문의</button></li>
                 </ul>
             </div>
             <div class="q_box">

@@ -16,15 +16,17 @@
                 <ul class="tab_btns">
                     <li><button onclick="location.href='/jdgr/csboard';">고객센터</button></li>
                     <li class="on"><button onclick="location.href='/jdgr/notice/list?pno=1';">공지사항</button></li>
-                    <li><button onclick="location.href='/jdgr/csboard/list';">1:1문의</button></li>
+                    <li><button onclick="location.href='/jdgr/csboard/list?pno=1';">1:1문의</button></li>
                 </ul>
             </div>
             <div class="q_box">
                 <h1 class="mtp50">공지사항 검색하기</h1>
+                <form action="/jdgr/notice/list/search?pno=1" method="get">
                 <div class="search_box mt40">
-                    <input type="text" name="">
+                    <input type="text" name="searchValue">
                     <button>검색</button>
                 </div>
+                </form>
             </div>
         </div>
         <div class="inner">
@@ -87,3 +89,18 @@
 	
 	
 	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
+
+<script>
+function setPageArea(){
+    const aTagArr = document.querySelectorAll(".paging_box ul li a");
+    for(let i = 0; i< aTagArr.length; i++){
+        aTagArr[i].href = aTagArr[i].replace('list','list/search');
+        // aTagArrp[i].href = +=
+        // aTagArr[i].href += "&searchType=<%= searchMap.get("searchType") %>";
+		// aTagArr[i].href += "&searchValue=<%= searchMap.get("searchValue") %>";
+
+    }
+}
+setPageArea();
+</script>
+	
