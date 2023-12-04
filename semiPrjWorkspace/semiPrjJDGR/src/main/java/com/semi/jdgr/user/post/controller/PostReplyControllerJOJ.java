@@ -15,7 +15,7 @@ public class PostReplyControllerJOJ extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//리다이렉트 or ajax로 처리
+		// 리다이렉트 or ajax로 처리
 
 		// data
 		

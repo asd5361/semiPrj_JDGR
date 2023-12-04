@@ -17,7 +17,6 @@ public class PostDaoJOJ {
 	// close
 
 	// 포스트 상세보기 (화면)
-	// 관리자 상세보기
 	public PostVo PostDetail(Connection conn, String no) throws Exception {
 		
 		// sql
@@ -29,6 +28,7 @@ public class PostDaoJOJ {
 		// rs
 		PostVo postDetailVo = null;
 		if(rs.next()) {
+			String postNo = rs.getString("POST_NO");
 			String categoryName = rs.getString("CATEGORY_NAME");
 			String postTitle = rs.getString("TITLE");
 			String postImg = rs.getString("POST_IMG");
@@ -39,6 +39,7 @@ public class PostDaoJOJ {
 			String replyCnt = rs.getString("POST_NO");
 			
 			postDetailVo = new PostVo();
+			postDetailVo.setPostNo(postNo);
 			postDetailVo.setCategoryName(categoryName);
 			postDetailVo.setPostTitle(postTitle);
 			postDetailVo.setPostImg(postImg);
@@ -48,7 +49,6 @@ public class PostDaoJOJ {
 			postDetailVo.setHeartCnt(heartCnt);
 			postDetailVo.setReplyCnt(replyCnt);
 			
-
 		}
 		
 		// close
@@ -58,11 +58,30 @@ public class PostDaoJOJ {
 		return postDetailVo;
 		
 	}// PostDetail
-
+	
+	public int increaseHit(Connection conn, String no) throws Exception {
+		
+		// sql
+		String sql = "UPDATE POST SET INQUIRY = INQUIRY+1 WHERE POST_NO = ? AND OPEN = 'Y'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		int result = pstmt.executeUpdate();
+		
+		// rs
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+		
+	}// increaseHit
+	
+	
+	// 관리자 상세보기
 	public PostVo AdminPostDetail(Connection conn, String no) throws Exception {
 		
 		// sql
-		String sql = "";
+		String sql = "SELECT P.POST_IMG ,P.BLOG_NO ,M.MEM_ID ,P.OPEN ,P.INQUIRY ,P.DEL_YN ,P.MODIFY_DATE ,H.POST_NO ,P.ENROLL_DATE ,R.POST_NO ,P.TITLE ,P.CONTENT FROM POST P JOIN CATEGORY_LIST C ON P.POST_NO = C.CATEGORY_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = REPLY_NO JOIN BLOG B ON P.POST_NO = B.BLOG_NO JOIN MEMBER M ON B.BLOG_NO = M.MEM_NO WHERE P.POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -74,7 +93,7 @@ public class PostDaoJOJ {
 			String userId = rs.getString("MEM_ID");
 			String open = rs.getString("OPEN");
 			String inquiry = rs.getString("INQUIRY");
-			String del = rs.getString("DEL_YN");
+			String postDelYn = rs.getString("DEL_YN");
 			String modifyDate = rs.getString("MODIFY_DATE");
 			String heartCnt = rs.getString("POST_NO");
 			String enrollDate = rs.getString("ENROLL_DATE");
@@ -84,6 +103,18 @@ public class PostDaoJOJ {
 			
 			adminPostDetailVo = new PostVo();
 			adminPostDetailVo.setPostImg(postImg);
+			adminPostDetailVo.setBlogNo(blogNo);
+			adminPostDetailVo.setUserId(userId);
+			adminPostDetailVo.setOpen(open);
+			adminPostDetailVo.setInquiry(inquiry);
+			adminPostDetailVo.setPostDelYn(postDelYn);
+			adminPostDetailVo.setModifyDate(modifyDate);
+			adminPostDetailVo.setHeartCnt(heartCnt);
+			adminPostDetailVo.setEnrollDate(enrollDate);
+			adminPostDetailVo.setReplyCnt(replyCnt);
+			adminPostDetailVo.setPostTitle(postTitle);
+			adminPostDetailVo.setContent(content);
+			
 
 		}
 			
@@ -92,7 +123,9 @@ public class PostDaoJOJ {
 		JDBCTemplate.close(rs);
 		
 		return adminPostDetailVo;
-	}
+		
+	}// AdminPostDetail
+
 	
 
 

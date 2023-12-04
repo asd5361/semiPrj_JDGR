@@ -12,9 +12,11 @@ public class PostServiceJOJ {
 	
 	// dao
 	
+	// tx
+	
 	// close
 
-	// 포스트 상세보기 (화면)
+	// 포스트 상세보기 (화면) (+조회수 증가)
 	public PostVo PostDetail(String no) throws Exception {
 		
 		// conn
@@ -22,7 +24,20 @@ public class PostServiceJOJ {
 		
 		// dao
 		PostDaoJOJ dao = new PostDaoJOJ();
-		PostVo postDetailVo = dao.PostDetail(conn, no);
+		int result = dao.increaseHit(conn, no);
+		
+		
+		PostVo postDetailVo = null;
+		if (result == 1) {
+			postDetailVo = dao.PostDetail(conn, no);
+		}
+		
+		// tx
+		if (result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
 		
 		// close
 		JDBCTemplate.close(conn);

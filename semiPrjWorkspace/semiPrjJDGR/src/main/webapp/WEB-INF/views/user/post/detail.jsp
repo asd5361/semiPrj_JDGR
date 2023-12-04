@@ -1,19 +1,22 @@
+<%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    
+    <%
+    	PostVo postDetailVo = (PostVo) request.getAttribute("postDetailVo");
+    %>
 
     <div class="container01">
         <div class="header01">
-            <div>카테고리</div>
+            <div><%= postDetailVo.getCategoryName() %></div>
             
-            <div><h1>유저가 작성한 블로그 제목</h1></div>
+            <div><h1><%= postDetailVo.getTitle() %></h1></div>
 
             <div class="head01">
                 <div class="left01">
-                    <span><img class="user" src="../images/ico/ico_info.svg" alt="유저프로필사진"></span>
-                    <span class="nick">유저의 닉네임</span>
-                    <span>2023.11.26 00:00</span>
+                    <span><img class="user" src=<%= postDetailVo.getPostImg() %> alt="유저프로필사진"></span>
+                    <span class="nick"><%= postDetailVo.getUserNick() %></span>
+                    <span><%= postDetailVo.getEnrollDate() %></span>
                 </div> 
                 
                 <div class="right01">
@@ -32,17 +35,17 @@
             <br>
         </div>
         
-            <div class="text01"></div>
+            <div class="text01"><%= postDetailVo.getContent() %></div>
         
             <div class="footer01">
                 <div class="foot01">
                     <div class="left02">
-                        <button id="like_btn" class="btn_k un_like" onclick="{clickEvent('like')}">공감</button>
-                        <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('rep')}">댓글</button>
+                        <button id="like_btn" class="btn_k un_like" onclick="{clickEvent('like')}">공감<%= postDetailVo.getHeartCnt() %></button>
+                        <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('rep')}">댓글<%= postDetailVo.getReplyCnt() %></button>
                     </div>
                     <div class="right02">
                         <button id="plus_btn" class="btn_k un_plus" onclick="{clickEvent('plus')}">구독하기</button>
-                        <button class="btn_k"><img src="../images/ico/ico_declaration.svg" alt="신고">신고하기</button>
+                        <button class="btn_k" onclick="location=window.open('xxx.jsp', 'blamePage')"><img src="../images/ico/ico_declaration.svg" alt="신고">신고하기</button>
                     </div>    
                 </div>
             </div>
