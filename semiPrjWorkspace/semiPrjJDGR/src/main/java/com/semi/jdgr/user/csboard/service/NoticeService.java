@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.semi.jdgr.notice.dao.NoticeDao;
 import com.semi.jdgr.notice.vo.NoticeVo;
+import com.semi.jdgr.post.vo.PageVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class NoticeService {
@@ -27,19 +28,33 @@ public class NoticeService {
 		return noticeVoList;
 	}
 	//공지사항 게시글 조회
-	public List<NoticeVo> selectNoticeList() throws Exception {
+	public List<NoticeVo> selectNoticeList(PageVo pvo) throws Exception {
 		
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		//dao
 		NoticeDao dao = new NoticeDao();
-		List<NoticeVo> noticeVoList = dao.selectNoticeList(conn);
+		List<NoticeVo> noticeVoList = dao.selectNoticeList(conn,pvo);
 		
 		//close
 		JDBCTemplate.close(conn);
 		
 		return noticeVoList;
+	}
+	public int selectNoticeCount() throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		int cnt = dao.selectNoticeCount(conn);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
 	}
 
 }

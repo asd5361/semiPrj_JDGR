@@ -1,8 +1,10 @@
+<%@page import="com.semi.jdgr.post.vo.PageVo"%>
 <%@page import="com.semi.jdgr.notice.vo.NoticeVo"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% List<NoticeVo> noticeVoList = (List<NoticeVo>)request.getAttribute("noticeVoList");   %>
+<% PageVo pvo = (PageVo)request.getAttribute("pageVo"); %>
 	
 	<%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 	
@@ -61,20 +63,22 @@
                     </div>
                     <div class="paging_box mt40">
                     <ul>
-                        <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                        <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                        <li class="on"><a href="">1</a></li>
-                        <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li><a href="">6</a></li>
-                        <li><a href="">7</a></li>
-                        <li><a href="">8</a></li>
-                        <li><a href="">9</a></li>
-                        <li><a href="">10</a></li>
-                        <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
+<% if(pvo.getStartPage() != 1){ %>
+						<li class="prev_all"><a href="/jdgr/notice/list?pno=1" title="최신페이지로 이동"></a></li>
+                        <li class="prev"><a href="/jdgr/notice/list?pno=<%= pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
+<%} %>
+
+<%for(int i=pvo.getStartPage(); i<=pvo.getEndPage(); i++) {%>
+	<%if(i== pvo.getCurrentPage()) {%>
+						<li class="on"><a href=""><%=i %></a></li>
+	<%}else{ %>
+	 					<li><a href="/jdgr/notice/list?pno=<%=i%>"><%=i %></a></li>
+<%} }%>
+<% if( pvo.getEndPage() != pvo.getMaxPage() ){ %>
+                        <li class="next"><a href="/jdgr/notice/list?pno=<%= pvo.getEndPage()+1 %>" title="다음페이지로 이동"></a></li>
+                        <li class="next_all"><a href="/jdgr/notice/list?pno=<%= pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
+<%} %>
+                        
                     </ul>
                 </div>
         </div>
