@@ -79,7 +79,9 @@ public class BlogCreateController extends HttpServlet {
 
 			// service
 			BlogService bs = new BlogService();
-			int result = bs.createBlog(blogVo);
+			Map<String, Object> blogInfo = bs.createBlog(blogVo, loginMemberVo);
+			int result = (int) blogInfo.get("result");
+			List<BlogVo> userBlogList = (List<BlogVo>) blogInfo.get("userBlogList");
 			
 			// result
 			if(result != 1) {
@@ -90,13 +92,14 @@ public class BlogCreateController extends HttpServlet {
 			Map<String, String> popText = new HashMap<String, String>();
 			popText.put("completeId", "display: flex;");
 			popText.put("completeTitle", "블로그 개설이 완료되었습니다!");
+			popText.put("completeContent", "");
 			req.getSession().setAttribute("popText", popText);
 			
 			// 세션 업데이트
-			//어떻게함?
-			
+			req.getSession().setAttribute("loginMemberBlogVoList", userBlogList);
 			req.setAttribute("blogClassName", "blog_set");
-			req.getRequestDispatcher("/WEB-INF/views/user/blog/userSetBlog.jsp").forward(req, resp);
+			
+			resp.sendRedirect("/jdgr/userSet/blog");
 			
 		} catch(Exception e) {
 			e.printStackTrace();
