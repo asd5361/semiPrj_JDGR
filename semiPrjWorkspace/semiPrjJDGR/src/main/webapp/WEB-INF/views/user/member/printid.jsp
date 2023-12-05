@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file = "../common/header.jsp"%>
+<%
+	MemberVo printIdVo = (MemberVo)request.getAttribute("printIdVo");
+%>
 <body>
 <div class="wrap gray">
 
@@ -19,9 +22,9 @@
         </div>
 
         <div class="print_id">
-            <div><strong>박범렬</strong>님의 아이디는</div>
+            <div><strong><%= printIdVo.getMemName() %></strong>님의 아이디는</div>
             <br>
-            <div> "ryeol3721"</div>
+            <div> "<%=printIdVo.getMemId() %>"</div>
             <br>
             <div>입니다. </div>
         </div>

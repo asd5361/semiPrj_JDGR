@@ -125,7 +125,7 @@
 	                            </div>
 	                            <div class="btn_group">
 	                                <a href="">고객센터</a>
-	                                <a href="">로그아웃</a>
+	                                <a href="/jdgr/member/logout">로그아웃</a>
 	                            </div>
 	                        </div>
 	                        <!-- //유저 팝업 -->

@@ -7,11 +7,35 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/member/printpwd")
-public class MemberPrintPwdController extends HttpServlet {
+@WebServlet("/member/logout")
+public class MemberLogoutController extends HttpServlet {
+	
+	// 로그아웃 처리
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/views/user/member/printpwd.jsp").forward(req, resp);
+		req.getSession().invalidate();	
+		
+		resp.sendRedirect("/jdgr/home");
 	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
