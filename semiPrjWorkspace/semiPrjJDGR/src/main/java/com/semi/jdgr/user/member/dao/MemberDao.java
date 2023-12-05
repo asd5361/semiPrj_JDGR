@@ -14,6 +14,7 @@ public class MemberDao {
 		// sql
 				String sql = "INSERT INTO MEMBER (MEM_NO,MEM_NAME,MEM_ID,MEM_PWD,MEM_NICK,MEM_PHONE_NUM,MEM_EMAIL) VALUES (SEQ_MEMBER.NEXTVAL, ?,?, ?,?,?,?)";
 				PreparedStatement pstmt = conn.prepareStatement(sql);
+				System.out.println("3"+vo.getMemNick());
 				pstmt.setString(1, vo.getMemName());
 				pstmt.setString(2, vo.getMemId());
 				pstmt.setString(3, vo.getMemPwd());
@@ -21,6 +22,8 @@ public class MemberDao {
 				pstmt.setString(5, vo.getMemPhoneNum());
 				pstmt.setString(6, vo.getMemEmail());
 				int result = pstmt.executeUpdate();
+				
+				System.out.println("3"+vo.getMemNick());
 				
 				// close
 				JDBCTemplate.close(pstmt);

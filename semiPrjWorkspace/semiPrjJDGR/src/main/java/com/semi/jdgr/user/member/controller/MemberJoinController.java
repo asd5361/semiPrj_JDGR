@@ -27,10 +27,12 @@ public class MemberJoinController extends HttpServlet {
 
 			String joinId = req.getParameter("joinId");
 			String joinName = req.getParameter("joinName");
-			String joinNick = req.getParameter("Nick");
+			String joinNick = req.getParameter("nick");
 			String joinPwd = req.getParameter("joinPwd");
 			String joinPwd2 = req.getParameter("joinPwd2");
 			String joinTel = req.getParameter("joinTel");
+			
+			System.out.println("1"+joinNick);
 			
 			MemberVo vo = new MemberVo();
 			vo.setMemId(joinId);
@@ -39,6 +41,9 @@ public class MemberJoinController extends HttpServlet {
 			vo.setMemPwd(joinPwd);
 			vo.setMemPwd2(joinPwd2);
 			vo.setMemPhoneNum(joinTel);
+
+			System.out.println("2"+vo.getMemNick());
+			
 			
 			MemberService ms = new MemberService();
 			int result = ms.join(vo);

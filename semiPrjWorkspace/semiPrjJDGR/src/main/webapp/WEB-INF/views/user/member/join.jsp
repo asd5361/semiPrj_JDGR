@@ -66,6 +66,8 @@
 						중복확인이 완료되었습니다.</span>
 				</div>
 			</div>
+		<input type="hidden" id ="checkNum">
+		<input type="hidden" id ="nowEmail" name="nick">
 
 			<!-- 버튼 -->
 			<div class="btn_area">
@@ -76,8 +78,6 @@
 					<li><a href="">비밀번호 찾기</a></li>
 				</ul>
 			</div>
-		<input type="hidden" id ="checkNum">
-		<input type="hidden" id ="nowEmail" name="Nick">
 		</form>
 	</div>
 	<footer>Copyright © KH Group3 PowerBloger. All Rights
@@ -218,8 +218,8 @@
 			
 		const email1 = document.querySelector("input[name=email1]").value;
 		const email2 = document.querySelector("input[name=email2]").value;
-		const email = email1+"@"+email2
-			document.querySelector("nowEmail").value = email;
+		const email = email1+"@"+email2;
+			document.getElementById("nowEmail").value = email;
 		}
 		else{
 			alert("인증실패");
