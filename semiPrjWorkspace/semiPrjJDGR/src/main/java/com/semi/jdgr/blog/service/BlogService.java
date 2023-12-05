@@ -24,7 +24,6 @@ public class BlogService {
 		
 		// dao
 		BlogDao dao = new BlogDao();
-		//if(대표블로그면..url ) {} else {대표블로그 아니면}
 		BlogVo blogUrlVo = dao.getUserBlog(conn, loginMemberVo, getBlogUrl);
 		
 		// close
@@ -186,6 +185,50 @@ public class BlogService {
 		JDBCTemplate.close(conn);
 		
 		return blogInfo;
+	}
+
+	// 블로그 정보 수정
+	public BlogVo editInfo(BlogVo blogVo) {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		int result = dao.editInfo(blogVo); // 수정 업데이트 결과값
+		
+		//dao.
+		
+		// 비즈니스 로직
+        Pattern blogTitleRegex = Pattern.compile("^[가-힣a-zA-Z0-9\\s]{0,25}$"); // 한글, 영문, 숫자, 띄어쓰기 혼용가능 (25자 이내)
+        Pattern blogImgRegex = Pattern.compile("^(jpg|jpeg|png|gif|svg)$"); // 이미지파일만 받기
+        
+        // 이미지 경로
+        String blogImgPath = blogVo.getBlogImg();
+        String sep = File.separator;
+        // 파일 이름 추출
+        int lastSeparatorIndex = blogImgPath.lastIndexOf(sep);
+        String fileName = lastSeparatorIndex >= 0 ? blogImgPath.substring(lastSeparatorIndex + 1) : blogImgPath;
+        // 확장자 추출
+        int dotIndex = fileName.lastIndexOf('.');
+        String fileExtension = null;
+        if (dotIndex > 0 && dotIndex < fileName.length() - 1) {
+            fileExtension = fileName.substring(dotIndex + 1);
+        }
+        // Matcher 객체 생성
+        Matcher blogTitleMatcher = blogTitleRegex.matcher(blogVo.getBlogTitle());
+        Matcher blogUrlMatcher = blogUrlRegex.matcher(blogVo.getBlogUrl());
+        Matcher blogImgMatcher = blogImgRegex.matcher(fileExtension);
+        // 이미지 파일 확장자 정규표현식과 일치하는지 확인
+        if(!blogImgMatcher.matches()) {
+            throw new Exception("올바르지 않은 이미지 파일 확장자입니다. 파일 확장자: " + fileExtension);
+        }
+        // 블로그 타이틀 정규표현식과 일치하는지 확인
+        if(!blogTitleMatcher.matches()) {
+            throw new Exception("블로그 타이틀이 적절하지 않습니다.");
+        }
+		
+		return null;
 	}
 	
 }

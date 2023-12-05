@@ -57,7 +57,7 @@
 	                            <dt>블로그 프로필 이미지</dt>
 	                            <dd>
 	                                <div class="profile_box">
-	                                    <div class="img"><img src="../images/ico/ico_profile.svg" alt=""></div>
+	                                    <div class="img"><img src="/jdgr/resources/user/images/ico/ico_profile.svg" alt=""></div>
 	                                    <div class="profile_btn">
 	                                        <input type="file" id="blogImg" name="blogImg" accept="image/*">
 	                                        <label for="blogImg">등록</label>

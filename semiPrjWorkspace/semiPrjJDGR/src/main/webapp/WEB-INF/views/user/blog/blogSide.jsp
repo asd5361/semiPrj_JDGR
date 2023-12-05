@@ -25,7 +25,7 @@
         </div>
         <div class="btn_area">
             <a href="/jdgr/blog/write" class="write">글쓰기</a>
-            <a href="/jdgr/blogSet" class="set">블로그·관리</a>
+            <a href="/jdgr/blogSet/blogInfo?url=<%= blogUrlVo.getBlogUrl() %>" class="set">블로그·관리</a>
         </div>
     </div>
 
