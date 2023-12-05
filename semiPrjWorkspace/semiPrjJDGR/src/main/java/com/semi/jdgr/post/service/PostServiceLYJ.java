@@ -12,13 +12,13 @@ import com.semi.jdgr.util.JDBCTemplate;
 public class PostServiceLYJ {
 
 	//포스트 관리 목록 조회(관리자)
-	public List<PostVo> selectPostList(PageVo pvo) throws Exception {
+	public List<PostVo> selectPostList(PostVo postVo) throws Exception {
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
 		PostDaoLYJ dao = new PostDaoLYJ();
-		List<PostVo> postVoList = dao.selectPostList(conn, pvo);
+		List<PostVo> postVoList = dao.selectPostList(conn, postVo);
 		
 		// close
 		JDBCTemplate.close(conn);
