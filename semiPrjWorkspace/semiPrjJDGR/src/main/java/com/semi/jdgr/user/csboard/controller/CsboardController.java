@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.jdgr.csboard.service.CsboardService;
+import com.semi.jdgr.csboard.service.NoticeService;
+import com.semi.jdgr.csboard.vo.CsboardVo;
 import com.semi.jdgr.notice.vo.NoticeVo;
-import com.semi.jdgr.user.csboard.service.CsboardService;
-import com.semi.jdgr.user.csboard.service.NoticeService;
-import com.semi.jdgr.user.csboard.vo.CsboardVo;
 
 @WebServlet("/csboard")
 public class CsboardController extends HttpServlet{

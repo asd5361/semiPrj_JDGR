@@ -92,7 +92,7 @@
 
                 <div class="btn_box_group right mt20">
                     <div class="btn_box">
-                        <a href="" class="btn_grayline">목록가기</a>
+                        <a href="/jdgr/admin/notice/list?pno=1" class="btn_grayline">목록가기</a>
                     </div>
                     <div class="btn_box">
                         <a href="" class="btn_blue">수정하기</a>

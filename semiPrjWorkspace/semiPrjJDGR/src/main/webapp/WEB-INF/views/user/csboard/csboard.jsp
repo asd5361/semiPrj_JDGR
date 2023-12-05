@@ -1,4 +1,4 @@
-<%@page import="com.semi.jdgr.user.csboard.vo.CsboardVo"%>
+<%@page import="com.semi.jdgr.csboard.vo.CsboardVo"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="com.semi.jdgr.notice.vo.NoticeVo"%>
 <%@page import="java.util.List"%>
@@ -24,15 +24,15 @@
             <div class="q_box">
                 <h1 class="mtp50">궁금한 점을 검색해보세요.</h1>
                 <div class="search_box mt40">
-                    <input type="text" name="">
-                    <button>검색</button>
+                    <input type="text" name="searchValue">
+                    <button id ="q_btn" onclick="searchBtn();">검색</button>
                 </div>
             </div>
         </div>
         <div class="inner">
             <!-- 여기에 내용작성하시면 됩니다. 고객센터 제외 -->
             <dl class="item-content">
-                    <div class="q_tit mt50">
+                    <div class="q_tit  mt50">
                         <h1>공지사항</h1>
                         <a href="/jdgr/notice/list?pno=1">
                             <h5>더보기<img class="icon_next ml10" src="/jdgr/resources/user/images/ico/ico_next.svg"></h5>
@@ -40,7 +40,7 @@
 
                     </div>
                     <!-- 가로테이블 -->
-                    <div class="tbl_box q_data mt40">
+                    <div class="tbl_box q_data mt40 noti">
                         <table>
                             <caption>테이블</caption>
                             <colgroup>
@@ -78,7 +78,7 @@
 
                     </div>
                     <!-- 가로테이블 -->
-                    <div class="tbl_box q_data mt40">
+                    <div class="tbl_box q_data mt40 csbo">
                         <table>
                             <caption>테이블</caption>
                             <colgroup>
@@ -99,7 +99,7 @@
 <%for(CsboardVo vo : csboardVoList){%>
 								<tr>
                                     <td><%= vo.getqNo()%></td>
-                                    <td><img class="q_icon" src="/jdgr/resources/user/images/ico/ico_secret.svg"><%= vo.getqTit()%></td>
+                                    <td><img class="q_icon" src="/jdgr/resources/user/images/ico/ico_secret.svg"> <%= vo.getqTit()%></td>
                                     <td><%= vo.getqWriteDate()%></td>
                                     <td><%= vo.getQuestionCategoryName()%></td>
                                 </tr>
@@ -114,3 +114,33 @@
     <!-- //main -->
 	
 	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
+
+<script>
+    //공지사항 상세보기 링크
+    const trArr = document.querySelectorAll(".noti> table> tbody> tr");
+    for(let i=0; i<trArr.length; i++){
+        trArr[i].addEventListener('click',handleClick);
+    }
+    function handleClick(event){
+        const tr = event.currentTarget;
+        const no = tr.children[0].innerText;
+        location.href = '/jdgr/notice/detail?no='+no+'&currPage=1';
+    }
+
+    //1:1문의글 상세보기 링크
+    const trArr2 = document.querySelectorAll(".csbo> table> tbody> tr");
+    for(let i=0; i<trArr2.length; i++){
+        trArr2[i].addEventListener('click',handleClick2);
+    }
+    function handleClick2(event){
+        const tr = event.currentTarget;
+        const no = tr.children[0].innerText;
+        location.href = '/jdgr/csboard/detail?no='+no+'&currPage=1';
+    }
+
+    function searchBtn(){
+        const btn = document.querySelector(".search_box #q_btn");
+        const searchValue = document.querySelector("input[name=searchValue]");
+        location.href='/jdgr/notice/list/search?pno=1&searchValue='+searchValue.value;
+    }
+</script>
