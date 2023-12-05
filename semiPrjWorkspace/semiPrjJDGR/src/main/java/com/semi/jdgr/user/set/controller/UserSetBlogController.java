@@ -1,7 +1,9 @@
 package com.semi.jdgr.user.set.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,9 +40,6 @@ public class UserSetBlogController extends HttpServlet {
 			blogVo.setBlogUrl(blogUrl);
 			blogVo.setMemNo(loginMemberVo.getMemNo());
 			
-			System.out.println("라디오value에서 가져온 블로그 url : " + blogUrl);
-			System.out.println("로그인유저 멤버번호 : " + loginMemberVo.getMemNo());
-			
 			// service
 			BlogService bs = new BlogService();
 			int result = bs.editBlogRep(blogVo);
@@ -60,11 +59,29 @@ public class UserSetBlogController extends HttpServlet {
 				}
 			}
 			
+			// 팝업메세지 전달
+			Map<String, String> popText = new HashMap<String, String>();
+			popText.put("completeId", "display: flex;");
+			popText.put("completeTitle", "대표블로그가 변경되었습니다!");
+			popText.put("completeContent", "");
+			req.getSession().setAttribute("popText", popText);
+			
 			req.setAttribute("blogClassName", "blog_set");
 			req.getRequestDispatcher("/WEB-INF/views/user/userSet/userSetBlog.jsp").forward(req, resp);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
+			
+			// 에러 메시지 가져오기
+		    String errorMessage = e.getMessage();
+		    
+			Map<String, String> popText = new HashMap<String, String>();
+			popText.put("warningId", "display: flex;");
+			popText.put("warningTitle", errorMessage);
+			popText.put("warningContent", "다시 확인해주세요!");
+			req.getSession().setAttribute("popText", popText);
+			
+			req.getRequestDispatcher("/WEB-INF/views/user/userSet/userSetBlog.jsp").forward(req, resp);
 		}
 	}
 }

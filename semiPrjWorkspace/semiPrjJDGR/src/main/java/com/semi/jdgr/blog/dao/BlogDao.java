@@ -253,4 +253,62 @@ public class BlogDao {
 		return result;
 	}
 
+	// 모든 블로그 정보 리스트 가져오기
+	public List<BlogVo> getBlogAllList(Connection conn) throws Exception {
+
+		// sql
+		String sql = "SELECT * FROM BLOG";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		List<BlogVo> blogVoList = new ArrayList<BlogVo>();
+		while(rs.next()) {
+			String blogNo = rs.getString("BLOG_NO");
+			String memNo = rs.getString("MEM_NO");
+			String blogTitle = rs.getString("BLOG_TITLE");
+			String openYn = rs.getString("OPEN_YN");
+			String layout = rs.getString("LAYOUT");
+			String skin = rs.getString("SKIN");
+			String clockYn = rs.getString("CLOCK_YN");
+			String mapYn = rs.getString("MAP_YN");
+			String rCommentsYn = rs.getString("R_COMMENTS_YN");
+			String followBlogYn = rs.getString("FOLLOW_BLOG_YN");
+			String visitorsCntYn = rs.getString("VISITORS_CNT_YN");
+			String blogImg = rs.getString("BLOG_IMG");
+			String rComments = rs.getString("R_COMMENTS");
+			String visitCnt = rs.getString("VISIT_CNT");
+			String blogMain = rs.getString("BLOG_MAIN");
+			String repYn = rs.getString("REP_YN");
+			String blogUrl = rs.getString("BLOG_URL");
+			
+			BlogVo blogVo = new BlogVo();
+			blogVo.setBlogNo(blogNo);
+			blogVo.setMemNo(memNo);
+			blogVo.setBlogTitle(blogTitle);
+			blogVo.setOpenYn(openYn);
+			blogVo.setLayout(layout);
+			blogVo.setSkin(skin);
+			blogVo.setClockYn(clockYn);
+			blogVo.setMapYn(mapYn);
+			blogVo.setrCommentsYn(rCommentsYn);
+			blogVo.setFollowBlogYn(followBlogYn);
+			blogVo.setVisitorsCntYn(visitorsCntYn);
+			blogVo.setBlogImg(blogImg);
+			blogVo.setrComments(rComments);
+			blogVo.setVisitCnt(visitCnt);
+			blogVo.setBlogMain(blogMain);
+			blogVo.setRepYn(repYn);
+			blogVo.setBlogUrl(blogUrl);
+			
+			blogVoList.add(blogVo);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return blogVoList;
+	}
+
 }

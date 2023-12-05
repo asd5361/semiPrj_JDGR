@@ -47,7 +47,7 @@
                                     			<li>
 		                                            <input type="radio" id="<%= blogVo.getBlogUrl() %>" name="blog" value="<%= blogVo.getBlogUrl() %>" <% if(blogVo.getRepYn().equals("Y")){ %>checked<% } %>>
 		                                            <label for="<%= blogVo.getBlogUrl() %>">
-		                                                <div class="img"><img src="블로그이미지경로<%= blogVo.getBlogImg() %>" alt=""></div>
+		                                                <div class="img"><img src="/<%= blogVo.getBlogImg() %>" alt=""></div>
 		                                                <div class="cont">
 		                                                    <div class="tit"><%= blogVo.getBlogTitle() %></div>
 		                                                    <a href="/jdgr/blog/view/<%= blogVo.getBlogUrl() %>" target="_blank" title="새 창으로 이동">/jdgr/blog/view/<%= blogVo.getBlogUrl() %></a>
@@ -68,9 +68,9 @@
                             <dt>운영·개설</dt>
                             <dd>
                             	<% if(loginMemberBlogVoList.size() < 3){ %>
-                            		<div class="gg"><span><%= subtractedSize %>개</span>의 블로그를 더 운영할 수 있습니다.</div>
+                            		<div class="gg"><span><%= subtractedSize %></span>개의 블로그를 더 운영할 수 있습니다.</div>
 	                                <div class="btn_area">
-	                                    <button onclick="location.href='/jdgr/blog/create'">새 블로그 만들기</button>
+	                                    <button onclick="newBlogValidationCheck();">새 블로그 만들기</button>
 	                                </div>
                             	<% } else { %>
                             		
@@ -91,3 +91,24 @@
 <!-- //main -->
 
 <%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
+
+<script>
+    function newBlogValidationCheck(){
+        const warningPopup = document.querySelector('.modal_bg.warning');
+        const warningTitle = document.querySelector('.modal_bg.warning .modal_content strong');
+        const warningContent = document.querySelector('.modal_bg.warning .modal_content span');
+
+        // 블로그를 3개 이상 만들시
+        const blogCnt = document.querySelector('.blog_create .gg span');
+        if(blogCnt.innerHTML > 3){
+            warningPopup.style.display = 'flex';
+            warningTitle.innerHTML = '블로그는 3개까지만 생성 가능합니다.';
+            warningContent.innerHTML = ' ';
+
+            return false;
+        }
+
+        // url요청
+        location.href='/jdgr/blog/create'
+    }
+</script>

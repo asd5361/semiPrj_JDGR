@@ -47,9 +47,9 @@
 	                            <dt>블로그 주소</dt>
 	                            <dd>
 	                                <div class="inp_box">
-	                                    <span>http://jdgr/blog/</span>
+	                                    <span>http://jdgr/blog/view/</span>
 	                                    <input type="text" name="blogUrl">
-	                                    <span>최소 4자 ~ 최대 32자의 영문 소문자, 숫자로 입력</span>
+	                                    <span>최소 4자 ~ 최대 32자의 영문, 숫자로 입력</span>
 	                                </div>
 	                            </dd>
 	                        </dl>
@@ -61,7 +61,7 @@
 	                                    <div class="profile_btn">
 	                                        <input type="file" id="blogImg" name="blogImg" accept="image/*">
 	                                        <label for="blogImg">등록</label>
-	                                        <span class="txt">프로필 이미지는 가로 200px, 세로 200px로 생성됩니다.</span>
+	                                        <span class="txt">프로필 이미지는 가로 200px, 세로 200px로 적용됩니다.</span>
 	                                    </div>
 	                                </div>
 	                            </dd>
@@ -69,7 +69,7 @@
 	                    </div>
 	
 	                    <div class="blog_set_btn">
-	                        <button>개설하기</button>
+	                        <button type="button" onclick="newBlogValidationCheck();">개설하기</button>
 	                    </div>
 	                </form>
 					
@@ -107,3 +107,44 @@
     });
 </script>
 <%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
+
+<script>
+    function newBlogValidationCheck(){
+        const warningPopup = document.querySelector('.modal_bg.warning');
+        const warningTitle = document.querySelector('.modal_bg.warning .modal_content strong');
+        const warningContent = document.querySelector('.modal_bg.warning .modal_content span');
+
+        // 블로그 타이틀 정규표현식과 일치하는지 확인
+        const blogTitleRegex = /^[가-힣a-zA-Z0-9\s]{0,25}$/;
+        const blogTitle = document.querySelector('input[name=blogTitle]');
+        console.log(blogTitle.value);
+        if(!blogTitleRegex.test(blogTitle.value)){
+            warningPopup.style.display = 'flex';
+            warningTitle.innerHTML = '블로그 타이틀이 적절하지 않습니다.';
+            warningContent.innerHTML = '한글, 영문, 숫자 혼용가능 (한글기준 25자 이내)';
+
+            return false;
+        }
+        // 블로그 URL 정규표현식과 일치하는지 확인
+        const blogUrlRegex = /^[a-zA-Z0-9]{4,32}$/;
+        const blogUrl = document.querySelector('input[name=blogUrl]');
+        if(!blogUrlRegex.test(blogUrl.value)){
+            warningPopup.style.display = 'flex';
+            warningTitle.innerHTML = '블로그 URL이 적절하지 않습니다.';
+            warningContent.innerHTML = '최소 4자 ~ 최대 32자의 영문, 숫자로 입력';
+
+            return false;
+        }
+        // 블로그 url이 값이 없는지 확인
+        if(blogUrl.value === null){
+            warningPopup.style.display = 'flex';
+            warningTitle.innerHTML = '블로그 URL을 입력해주세요.';
+            warningContent.innerHTML = ' ';
+
+            return false;
+        }
+
+        const form = document.querySelector('form');
+        form.submit();
+    }
+</script>
