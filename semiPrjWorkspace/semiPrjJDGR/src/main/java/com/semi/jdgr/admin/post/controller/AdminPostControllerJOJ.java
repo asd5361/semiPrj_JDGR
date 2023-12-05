@@ -48,15 +48,37 @@ public class AdminPostControllerJOJ extends HttpServlet{
 	}
 	
 	// 관리자 포스트 상세관리 (로직)
+	// 공개여부 , 삭제여부 수정
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		// data
-		
-		// service
-		
-		// result
-		
+		try {
+			// data
+			String open = req.getParameter("open");
+			String postDelYn = req.getParameter("postDelYn");
+			String no = req.getParameter("postNo");
+			
+			PostVo vo = new PostVo();
+			vo.setOpen(open);
+			vo.setPostDelYn(postDelYn);
+			vo.setPostNo(no);
+			
+			System.out.println(vo);
+			// service
+			PostServiceJOJ ps = new PostServiceJOJ();
+			int result = ps.AdminPostEdit(vo);
+			
+			// result
+			if(result != 1) {
+				throw new Exception();
+			}
+			resp.sendRedirect("/jdgr/admin/post/detail?no=" + no);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			req.setAttribute("errorMsg", "관리자 수정 실패");
+			req.getRequestDispatcher("/WEB-INF/views/admin/common/error.jsp").forward(req, resp);
+		}
 	}
 
 }

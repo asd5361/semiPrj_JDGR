@@ -3,7 +3,6 @@ package com.semi.jdgr.post.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.util.JDBCTemplate;
@@ -135,7 +134,7 @@ public class PostDaoJOJ {
 	public PostVo AdminPostDetail(Connection conn, String no) throws Exception {
 
 		// sql
-		String sql = "SELECT P.POST_IMG ,P.BLOG_NO ,M.MEM_ID ,P.OPEN ,P.INQUIRY ,P.DEL_YN ,P.MODIFY_DATE ,H.POST_NO ,P.ENROLL_DATE ,R.POST_NO ,P.TITLE ,P.CONTENT FROM POST P JOIN CATEGORY_LIST C ON P.POST_NO = C.CATEGORY_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = REPLY_NO JOIN BLOG B ON P.POST_NO = B.BLOG_NO JOIN MEMBER M ON B.BLOG_NO = M.MEM_NO WHERE P.POST_NO = ?";
+		String sql = "SELECT P.POST_IMG, P.POST_NO ,P.BLOG_NO ,M.MEM_ID ,P.OPEN ,P.INQUIRY ,P.DEL_YN ,P.MODIFY_DATE ,H.POST_NO ,P.ENROLL_DATE ,R.POST_NO ,P.TITLE ,P.CONTENT FROM POST P JOIN CATEGORY_LIST C ON P.POST_NO = C.CATEGORY_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = REPLY_NO JOIN BLOG B ON P.POST_NO = B.BLOG_NO JOIN MEMBER M ON B.BLOG_NO = M.MEM_NO WHERE P.POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, no);
 		ResultSet rs = pstmt.executeQuery();
@@ -144,6 +143,7 @@ public class PostDaoJOJ {
 		PostVo adminPostDetailVo = null;
 		if (rs.next()) {
 			String postImg = rs.getString("POST_IMG");
+			String postNo = rs.getString("POST_NO");
 			String blogNo = rs.getString("BLOG_NO");
 			String userId = rs.getString("MEM_ID");
 			String open = rs.getString("OPEN");
@@ -156,6 +156,7 @@ public class PostDaoJOJ {
 
 			adminPostDetailVo = new PostVo();
 			adminPostDetailVo.setPostImg(postImg);
+			adminPostDetailVo.setPostNo(postNo);
 			adminPostDetailVo.setBlogNo(blogNo);
 			adminPostDetailVo.setUserId(userId);
 			adminPostDetailVo.setOpen(open);
@@ -174,7 +175,26 @@ public class PostDaoJOJ {
 		return adminPostDetailVo;
 
 	}// AdminPostDetail
-
+	
+	// 관리자 상세보기 (공개여부 , 삭제여부 수정)
+	public int AdminPostEdit(Connection conn, PostVo vo) throws Exception {
+		
+		// sql
+		String sql = "UPDATE POST SET OPEN = ? , DEL_YN = ? WHERE POST_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, vo.getOpen());
+		pstmt.setString(2, vo.getPostDelYn());
+		pstmt.setString(3, vo.getPostNo());
+		int result = pstmt.executeUpdate();
+		
+		// rs
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+	
 	// 공감체크 기능
 	public boolean checkHeart(Connection conn, String no, String memberNo) throws Exception {
 
@@ -236,5 +256,7 @@ public class PostDaoJOJ {
 		return del;
 
 	}
+
+
 
 }// class
