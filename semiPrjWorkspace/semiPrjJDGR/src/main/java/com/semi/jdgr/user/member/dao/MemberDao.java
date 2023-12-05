@@ -19,7 +19,7 @@ public class MemberDao {
 				pstmt.setString(3, vo.getMemPwd());
 				pstmt.setString(4, vo.getMemNick());
 				pstmt.setString(5, vo.getMemPhoneNum());
-				pstmt.setString(6, "vkfkdjafuf2@naver.com");
+				pstmt.setString(6, vo.getMemEmail());
 				int result = pstmt.executeUpdate();
 				
 				// close

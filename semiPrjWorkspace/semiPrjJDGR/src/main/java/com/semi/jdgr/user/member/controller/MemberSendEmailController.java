@@ -29,7 +29,7 @@ public class MemberSendEmailController extends HttpServlet {
 		String host = "smtp.naver.com";            
 		final String user = "vkfkdjafuf2@naver.com";   
 		final String password = "qjafuf2";         
-
+		System.out.println(email);
 		String to = email;
 		
 
@@ -45,9 +45,10 @@ public class MemberSendEmailController extends HttpServlet {
 		        return new PasswordAuthentication(user, password);
 		    }
 		});
-
-		// Compose the message
+		boolean sendOk = false;
+		PrintWriter out = resp.getWriter();
 		try {
+			
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -61,9 +62,17 @@ public class MemberSendEmailController extends HttpServlet {
 
 			// send the message
 			Transport.send(message);
-			System.out.println("메세지 보내기 성공");
+			sendOk = true;
 
+			if(sendOk) {
+				out.write("{\"msg\" : \"ok\"}");
+				System.out.println("메세지 보내기 성공");
+			}else {
+				throw new MessagingException();
+			}
 		} catch (MessagingException e) {
+			resp.sendRedirect("/jdgr/member/join");
+			out.write("{\"msg\" : \"fail\"}");
 			e.printStackTrace();
 		}
 		

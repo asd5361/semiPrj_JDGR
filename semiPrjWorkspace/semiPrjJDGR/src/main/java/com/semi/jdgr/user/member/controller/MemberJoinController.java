@@ -27,7 +27,7 @@ public class MemberJoinController extends HttpServlet {
 
 			String joinId = req.getParameter("joinId");
 			String joinName = req.getParameter("joinName");
-			String joinNick = req.getParameter("joinNick");
+			String joinNick = req.getParameter("Nick");
 			String joinPwd = req.getParameter("joinPwd");
 			String joinPwd2 = req.getParameter("joinPwd2");
 			String joinTel = req.getParameter("joinTel");

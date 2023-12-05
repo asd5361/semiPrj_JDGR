@@ -76,6 +76,8 @@
 					<li><a href="">비밀번호 찾기</a></li>
 				</ul>
 			</div>
+		<input type="hidden" id ="checkNum">
+		<input type="hidden" id ="nowEmail" name="Nick">
 		</form>
 	</div>
 	<footer>Copyright © KH Group3 PowerBloger. All Rights
@@ -112,8 +114,8 @@
 			<!-- 인증번호 입력 -->
 			<div class="form_box">
 				<div class="form_box inp_btn ">
-					인증번호 <input type="text" name="" class="input_num">
-					<button>인증하기</button>
+					인증번호 <input type="text" name="inputCheckNum" class="input_num">
+					<button onclick="certification()">인증하기</button>
 				</div>
 				<span class="txt_msg">닉네임 중복확인이 완료되었습니다.</span>
 			</div>
@@ -124,6 +126,7 @@
 		</div>
 	</div>
 </div>
+
 </body>
 </html>
 
@@ -190,17 +193,38 @@
 		
 		console.log(checkNum);
 		console.log(email);
-		fetch("/jdgr/member/sendemail?email=" + email)
+		fetch("/jdgr/member/sendemail?email=" + email+"&checkNum=" + checkNum )
 		.then( (resp) => { return resp.json() } )
 		.then( (data) => { 
 			const result = data.msg;
 			const isOk = result === "ok";
 			if(isOk){
-				alert("인증완료");
+				document.getElementById("checkNum").value = checkNum;
+				
 			}else{
 				alert("인증실패");
 			}
 		} );
+		
+		console.log(document.querySelector("#checkNum").value);
+	}
+
+		function certification(){
+		const nowCeckNum = document.querySelector("#checkNum").value;
+		const inputCheckNum = document.querySelector("input[name=inputCheckNum]").value;
+		
+
+		if(nowCeckNum === inputCheckNum){
+			
+		const email1 = document.querySelector("input[name=email1]").value;
+		const email2 = document.querySelector("input[name=email2]").value;
+		const email = email1+"@"+email2
+			document.querySelector("nowEmail").value = email;
+		}
+		else{
+			alert("인증실패");
+			
+		}
 	}
 </script>
 
