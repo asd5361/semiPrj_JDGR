@@ -40,7 +40,7 @@
             <div class="footer01">
                 <div class="foot01">
                     <div class="left02">
-                        <button id="like_btn" class="btn_k un_like" onclick="{clickEvent('like')}">공감<%= postDetailVo.getHeartCnt() %></button>
+                        <button id="like_btn" class="btn_k un_like" onclick="{clickEvent('like')}">공감<%=  %></button>
                         <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('rep')}">댓글<%= postDetailVo.getReplyCnt() %></button>
                     </div>
                     <div class="right02">
@@ -94,6 +94,26 @@
         }
         
     }
+    
+    
+ // 공감 중복체크
+	function checkHeartDup() {
+		
+		const memberIdvalue = document.querySelector("main input[name=memberId]").value;
+		
+		fetch("/app99/member/check/id?memberId=" + memberIdvalue)
+		.then( (resp) => { return resp.json() } )
+		.then( (data) => {
+			const result = data.msg;
+			const isOk = result == "ok";
+			if(isOk){
+				alert("사용가능");
+				window.idOk = true;
+			}else{
+				alert("사용불가");
+				window.idOk = false;
+			}
+		} );
 </script>
 
 

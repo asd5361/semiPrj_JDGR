@@ -9,25 +9,25 @@ import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class PostDaoJOJ {
-	
+
 	// sql
-	
+
 	// rs
-	
+
 	// close
 
 	// 포스트 상세보기 (화면)
 	public PostVo PostDetail(Connection conn, String no) throws Exception {
-		
+
 		// sql
 		String sql = "SELECT C.CATEGORY_NAME ,P.TITLE ,P.POST_IMG ,M.MEM_NICK ,P.ENROLL_DATE ,P.CONTENT ,H.POST_NO ,R.POST_NO FROM POST P JOIN CATEGORY_LIST C ON P.POST_NO = C.CATEGORY_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = REPLY_NO JOIN BLOG B ON P.POST_NO = B.BLOG_NO JOIN MEMBER M ON B.BLOG_NO = M.MEM_NO WHERE P.POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, no);
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		// rs
 		PostVo postDetailVo = null;
-		if(rs.next()) {
+		if (rs.next()) {
 			String postNo = rs.getString("POST_NO");
 			String categoryName = rs.getString("CATEGORY_NAME");
 			String postTitle = rs.getString("TITLE");
@@ -37,7 +37,7 @@ public class PostDaoJOJ {
 			String content = rs.getString("CONTENT");
 			String heartCnt = rs.getString("POST_NO");
 			String replyCnt = rs.getString("POST_NO");
-			
+
 			postDetailVo = new PostVo();
 			postDetailVo.setPostNo(postNo);
 			postDetailVo.setCategoryName(categoryName);
@@ -48,46 +48,73 @@ public class PostDaoJOJ {
 			postDetailVo.setContent(content);
 			postDetailVo.setHeartCnt(heartCnt);
 			postDetailVo.setReplyCnt(replyCnt);
-			
+
 		}
-		
+
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
-		
+
 		return postDetailVo;
-		
+
 	}// PostDetail
-	
+
+	// 조회수 증가
 	public int increaseHit(Connection conn, String no) throws Exception {
-		
+
 		// sql
 		String sql = "UPDATE POST SET INQUIRY = INQUIRY+1 WHERE POST_NO = ? AND OPEN = 'Y'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, no);
 		int result = pstmt.executeUpdate();
-		
+
 		// rs
 		
+
 		// close
 		JDBCTemplate.close(pstmt);
-		
+
 		return result;
-		
+
 	}// increaseHit
-	
-	
+
+	// 공감수
+	public PostVo heartNumber(Connection conn, String no) throws Exception {
+
+		// sql
+		String sql = "SELECT COUNT(POST_NO) FROM HEART WHERE POST_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		PostVo heart = null;
+		if(rs.next()) {
+			String postNo = rs.getString("POST_NO");
+			
+			heart = new PostVo();
+			heart.setPostNo(postNo);
+		}
+
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return heart;
+
+	}// heartNumber
+
 	// 관리자 상세보기
 	public PostVo AdminPostDetail(Connection conn, String no) throws Exception {
-		
+
 		// sql
 		String sql = "SELECT P.POST_IMG ,P.BLOG_NO ,M.MEM_ID ,P.OPEN ,P.INQUIRY ,P.DEL_YN ,P.MODIFY_DATE ,H.POST_NO ,P.ENROLL_DATE ,R.POST_NO ,P.TITLE ,P.CONTENT FROM POST P JOIN CATEGORY_LIST C ON P.POST_NO = C.CATEGORY_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = REPLY_NO JOIN BLOG B ON P.POST_NO = B.BLOG_NO JOIN MEMBER M ON B.BLOG_NO = M.MEM_NO WHERE P.POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		// rs
 		PostVo adminPostDetailVo = null;
-		if(rs.next()) {
+		if (rs.next()) {
 			String postImg = rs.getString("POST_IMG");
 			String blogNo = rs.getString("BLOG_NO");
 			String userId = rs.getString("MEM_ID");
@@ -100,7 +127,7 @@ public class PostDaoJOJ {
 			String replyCnt = rs.getString("POST_NO");
 			String postTitle = rs.getString("TITLE");
 			String content = rs.getString("CONTENT");
-			
+
 			adminPostDetailVo = new PostVo();
 			adminPostDetailVo.setPostImg(postImg);
 			adminPostDetailVo.setBlogNo(blogNo);
@@ -114,19 +141,76 @@ public class PostDaoJOJ {
 			adminPostDetailVo.setReplyCnt(replyCnt);
 			adminPostDetailVo.setPostTitle(postTitle);
 			adminPostDetailVo.setContent(content);
-			
-
 		}
-			
+
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
-		
+
 		return adminPostDetailVo;
-		
+
 	}// AdminPostDetail
 
-	
+	// 공감체크 기능
+	public boolean checkHeartDup(Connection conn, String no, String memberNo) throws Exception {
 
+		// sql
+		String sql = "SELECT * FROM HEART WHERE POST_NO = ? AND MEM_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		pstmt.setString(2, memberNo);
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		boolean result = true;
+		if (rs.next()) {
+			result = false;
+		}
+
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return result;
+
+	}// checkHeartDup
+
+	// 공감추가 기능
+	public int AddHeart(Connection conn, String no, String memberNo) throws Exception {
+
+		// sql
+		String sql = "INSERT INTO HEART (POST_NO, MEM_NO) VALUES (?, ?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		pstmt.setString(2, memberNo);
+		int result = pstmt.executeUpdate();
+
+		// rs
+
+		// close
+		JDBCTemplate.close(pstmt);
+
+		return result;
+
+	}// AddHeary
+
+	// 공감삭제 기능
+	public int delHeart(Connection conn, String no, String memberNo) throws Exception {
+
+		// sql
+		String sql = "DELETE FROM HEART WHERE POST_NO = ? AND MEM_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		pstmt.setString(2, memberNo);
+		int del = pstmt.executeUpdate();
+
+		// rs
+
+		// close
+		JDBCTemplate.close(pstmt);
+
+		return del;
+
+	}
 
 }// class

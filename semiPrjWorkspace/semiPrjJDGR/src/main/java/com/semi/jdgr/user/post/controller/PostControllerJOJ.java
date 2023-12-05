@@ -42,6 +42,8 @@ public class PostControllerJOJ extends HttpServlet{
 		
 	}// PostDetail
 	
+	
+	
 	// 포스트 상세보기 (로직)
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
