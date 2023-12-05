@@ -1,4 +1,4 @@
-package com.semi.jdgr.user.csboard.service;
+package com.semi.jdgr.csboard.service;
 
 import java.sql.Connection;
 import java.util.List;
@@ -82,6 +82,20 @@ public class NoticeService {
 		JDBCTemplate.close(conn);
 		
 		return cnt;
+	}
+	public NoticeVo noticeDetail(String boardno) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		NoticeVo vo = dao.noticeDetail(conn,boardno);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return vo;
 	}
 
 }

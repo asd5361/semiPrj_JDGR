@@ -1,4 +1,4 @@
-package com.semi.jdgr.user.csboard.vo;
+package com.semi.jdgr.csboard.vo;
 
 public class CsboardVo {
 

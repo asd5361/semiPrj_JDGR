@@ -1,11 +1,11 @@
-package com.semi.jdgr.user.csboard.service;
+package com.semi.jdgr.csboard.service;
 
 import java.sql.Connection;
 import java.util.List;
 
+import com.semi.jdgr.csboard.dao.CsboardDao;
+import com.semi.jdgr.csboard.vo.CsboardVo;
 import com.semi.jdgr.page.vo.PageVo;
-import com.semi.jdgr.user.csboard.dao.CsboardDao;
-import com.semi.jdgr.user.csboard.vo.CsboardVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class CsboardService {
@@ -84,5 +84,13 @@ public class CsboardService {
 		
 		return csboardVoList;
 	}
+	//여깃부터 진행 /***************************************************************************/
+	public CsboardVo csboardDetail(String board) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 }

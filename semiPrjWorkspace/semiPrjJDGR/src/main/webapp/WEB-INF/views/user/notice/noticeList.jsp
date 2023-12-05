@@ -92,7 +92,23 @@
 	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
 
 <script>
+    const trArr = document.querySelectorAll(".tbl_box> table> tbody> tr");
+    for(let i=0; i<trArr.length; i++){
+        trArr[i].addEventListener('click',handleClick);
+    }
+    function handleClick(event){
+        const tr = event.currentTarget;
+        const no = tr.children[0].innerText;
+        location.href = '/jdgr/notice/detail?no='+no+'&currPage=<%=pvo.getCurrentPage()%>';
+    }
 <% if(searchValue != null){ %>
+    function setSearchArea(){
+        const searchValueTag = document.querySelector(".q_box form div input[name=searchValue]")
+        searchValueTag.value = '<%=searchValue%>';
+    }
+    setSearchArea();
+
+
 	function setPageArea(){
 	    const aTagArr = document.querySelectorAll(".paging_box ul li a");
 	    for(let i = 0; i< aTagArr.length; i++){

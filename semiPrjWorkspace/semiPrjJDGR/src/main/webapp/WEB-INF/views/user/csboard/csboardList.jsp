@@ -1,6 +1,6 @@
 <%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
-<%@page import="com.semi.jdgr.user.csboard.vo.CsboardVo"%>
+<%@page import="com.semi.jdgr.csboard.vo.CsboardVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% List<CsboardVo> csboardVoList = (List<CsboardVo>)request.getAttribute("csboardVoList"); %>
@@ -54,7 +54,7 @@
 <%for(CsboardVo vo : csboardVoList){%>
 	                    <tr>
 	                        <td><%= vo.getqNo()%></td>
-	                        <td><img class="q_icon" src="/jdgr/resources/user/images/ico/ico_secret.svg"><%=vo.getqTit() %></td>
+	                        <td><img class="q_icon" src="/jdgr/resources/user/images/ico/ico_secret.svg"> <%=vo.getqTit() %></td>
 	                        <td><%=vo.getqWriteDate() %></td>
 	                        <td><%=vo.getQuestionCategoryName() %></td>
 	                    </tr>
@@ -97,7 +97,22 @@
 	
 	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
     <script>
+        const trArr = document.querySelectorAll(".tbl_box> table> tbody> tr");
+        for(let i = 0; i<trArr.length; i++){
+            trArr[i].addEventListener('click',handleClick);
+        }
+        function handleClick(event){
+            const tr = event.currentTarget;          // 이벤트가 발생 된 tr 요소를 선택함
+            const no = tr.children[0].innerText;    //글번호를 가져옴
+            location.href = '/jdgr/csboard/detail?no='+no+'&currPage=<%=pvo.getCurrentPage()%>'
+        }
 <%if(searchValue != null){%>
+        function setSearchArea(){
+            const searchValueTag = document.querySelector(".q_box form div input[name=searchValue]")
+            searchValueTag.value = '<%=searchValue%>';
+        }
+        setSearchArea();
+
         function setPageArea(){
             const aTagArr = document.querySelectorAll(".paging_box ul li a");
             for(let i=0; i< aTagArr.length; i++){

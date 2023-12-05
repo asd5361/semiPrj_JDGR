@@ -60,7 +60,9 @@
     padding: 10px;
     text-align: center;
 }
-
+.tbl_box.q_data table tbody tr{
+    cursor: pointer;
+}
 .tbl_box.q_data table td:nth-child(2){
     text-align: left;
 }

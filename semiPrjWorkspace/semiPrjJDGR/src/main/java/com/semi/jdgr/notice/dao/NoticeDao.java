@@ -12,7 +12,7 @@ public class NoticeDao {
 	public List<NoticeVo> selectNoticeTopList(Connection conn) throws SQLException {
 		
 		//sql
-		String sql="SELECT * FROM NOTICE WHERE ROWNUM <= 5 ORDER BY FIXED_YN DESC,NOTICE_NO DESC";
+		String sql="SELECT * FROM (SELECT * FROM NOTICE WHERE DEL_YN ='Y'ORDER BY NOTICE_NO DESC) WHERE ROWNUM <=5";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		List<NoticeVo> noticeVoList = new ArrayList<NoticeVo>();
@@ -152,6 +152,39 @@ public class NoticeDao {
 		JDBCTemplate.close(pstmt);
 		
 		return cnt;
+	}
+	
+	
+	//공지사항 1개 상세 조회
+	public NoticeVo noticeDetail(Connection conn, String boardno) throws SQLException {
+		
+		//sql
+		String sql ="SELECT * FROM NOTICE WHERE NOTICE_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1,boardno);
+		ResultSet rs = pstmt.executeQuery();
+		NoticeVo vo = null;
+		
+		//rs
+		if(rs.next()) {
+			vo =new NoticeVo();
+			
+			vo.setNoticeNo(rs.getString("NOTICE_NO"));
+			vo.setAdminNo(rs.getString("ADMIN_NO"));
+			vo.setTitle(rs.getString("TITLE"));
+			vo.setContent(rs.getString("CONTENT"));
+			vo.setInquiry(rs.getString("INQUIRY"));
+			vo.setEnrollDate(rs.getString("ENROLL_DATE"));
+			vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+			vo.setFixedYn(rs.getString("FIXED_YN"));
+			vo.setDelYn(rs.getString("DEL_YN"));			
+		}
+		
+		//result
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return vo;
 	}
 
 }

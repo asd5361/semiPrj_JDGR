@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.jdgr.csboard.service.CsboardService;
+import com.semi.jdgr.csboard.vo.CsboardVo;
 import com.semi.jdgr.page.vo.PageVo;
-import com.semi.jdgr.user.csboard.service.CsboardService;
-import com.semi.jdgr.user.csboard.vo.CsboardVo;
 
 @WebServlet("/csboard/list/search")
 public class CsboardSearchController extends HttpServlet{

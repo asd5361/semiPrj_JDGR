@@ -1,10 +1,10 @@
-package com.semi.jdgr.user.csboard.dao;
+package com.semi.jdgr.csboard.dao;
 
 import java.sql.*;
 import java.util.*;
 
+import com.semi.jdgr.csboard.vo.CsboardVo;
 import com.semi.jdgr.page.vo.PageVo;
-import com.semi.jdgr.user.csboard.vo.CsboardVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class CsboardDao {
@@ -12,7 +12,7 @@ public class CsboardDao {
 	public List<CsboardVo> selectCsboardTopList(Connection conn) throws SQLException {
 		
 		//sql
-		String sql = "SELECT * FROM CUSTOMER_CENTER WHERE ROWNUM <= 5 ORDER BY DEL_YN DESC,Q_NO DESC";
+		String sql = "SELECT * FROM (SELECT * FROM CUSTOMER_CENTER WHERE DEL_YN ='N'ORDER BY Q_NO DESC) WHERE ROWNUM <=5";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		List<CsboardVo> csboardVoList = new ArrayList<CsboardVo>();

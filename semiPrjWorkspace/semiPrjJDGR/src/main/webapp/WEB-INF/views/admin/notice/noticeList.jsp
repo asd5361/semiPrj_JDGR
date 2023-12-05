@@ -66,7 +66,7 @@
                         <button class="btn_black">검색</button>
                     </div>
                     <div class="btn_box">
-                        <button class="btn_blue">작성</button>
+                        <button class="btn_blue" onclick="location.href='/jdgr/admin/notice/write';">작성</button>
                     </div>
                 </div>
 
