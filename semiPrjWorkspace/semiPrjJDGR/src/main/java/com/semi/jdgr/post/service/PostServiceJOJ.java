@@ -25,8 +25,6 @@ public class PostServiceJOJ {
 		// dao
 		PostDaoJOJ dao = new PostDaoJOJ();
 		int result = dao.increaseHit(conn, no);
-		PostVo heart = dao.heartNumber(conn, no);
-		
 		
 		PostVo postDetailVo = null;
 		if (result == 1) {
@@ -44,9 +42,48 @@ public class PostServiceJOJ {
 		JDBCTemplate.close(conn);
 		
 		return postDetailVo;
-		return heart;
+		
 		
 	}// PostDetail
+	
+	// 공감수
+	public PostVo heartCnt(String no) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		PostDaoJOJ dao = new PostDaoJOJ();
+		PostVo heartCnt = dao.heartCnt(conn, no);
+		
+		// tx
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return heartCnt;
+		
+	}// heartHit
+	
+	// 댓글수
+	public PostVo ReplyCnt(String no) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		PostDaoJOJ dao = new PostDaoJOJ();
+		PostVo replyCnt = dao.ReplyCnt(conn, no);
+		
+		// tx
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return replyCnt;
+		
+	}// ReplyCnt
+	
 
 	// 관리자 상세보기
 	public PostVo AdminPostDetail(String no) throws Exception {
@@ -66,20 +103,20 @@ public class PostServiceJOJ {
 	}// AdminPostDetail
 	
 	// 공감체크 기능
-		public boolean checkHeartDup(String no, String memberNo) throws Exception {
+		public boolean checkHeart(String no, String memberNo) throws Exception {
 			
 			// conn
 			Connection conn = JDBCTemplate.getConnection();
 			
 			// dao
 			PostDaoJOJ dao = new PostDaoJOJ();
-			boolean result = dao.checkHeartDup(conn, no, memberNo);
+			boolean heartCheck = dao.checkHeart(conn, no, memberNo);
 			
 			// tx
 			
 			// close
 			JDBCTemplate.close(conn);
-			return result;
+			return heartCheck;
 			
 		}// checkHeartDup
 
@@ -106,7 +143,7 @@ public class PostServiceJOJ {
 		
 	}// AddHeart
 
-	//공감삭제 기능
+	// 공감삭제 기능
 	public int delHeart(String no, String memberNo) throws Exception {
 		
 		// conn
@@ -129,6 +166,10 @@ public class PostServiceJOJ {
 		return del;
 		
 	}
+
+
+
+
 	
 	
 

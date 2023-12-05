@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.semi.jdgr.post.service.PostServiceJOJ;
 import com.semi.jdgr.post.vo.PostVo;
@@ -32,32 +33,29 @@ public class PostHeartControllerJOJ extends HttpServlet {
 
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
-			boolean isOk = ps.checkHeartDup(no, memberNo);
+			boolean isOk = ps.checkHeart(no, memberNo);
+//			HttpSession session = req.getSession();
+			
 
 			// result
 			int result = 0;
 			if (isOk) {
 				result = ps.AddHeart(no, memberNo);
 				if (result == 1) {
+					req.setAttribute("alertMsg1", "공감 추가");
 					resp.sendRedirect("/jdgr/post/detail.jsp");
+//					session.setAttribute("alertMsg1", "공감 추가");
+//					req.getSession().setAttribute("alertMsg1", "공감 추가");
 				}
 			} else {
 				int del = ps.delHeart(no, memberNo);
 				if (del == 1) {
+					req.setAttribute("alertMsg2", "취소");
 					resp.sendRedirect("/jdgr/post/detail.jsp");
+//					session.setAttribute("alertMsg1", "공감 취소");
+//					req.getSession().setAttribute("alertMsg2", "공감 취소");
 				}
 			}
-
-			// result
-//			if(isOk) {
-//				int result = ps.AddHeart(no, memberNo);
-////				result = 1;
-//				req.getSession().setAttribute("alertMsg", "공감 성공");
-//			}
-//			if(result != 1) {
-//				
-//			}
-			req.getSession().setAttribute("alertMsg2", "공감 취소");
 
 			resp.sendRedirect("/jdgr/post/detail");
 

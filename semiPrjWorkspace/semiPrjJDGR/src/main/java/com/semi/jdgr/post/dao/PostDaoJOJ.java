@@ -35,8 +35,8 @@ public class PostDaoJOJ {
 			String userNick = rs.getString("MEM_NICK");
 			String enrollDate = rs.getString("ENROLL_DATE");
 			String content = rs.getString("CONTENT");
-			String heartCnt = rs.getString("POST_NO");
-			String replyCnt = rs.getString("POST_NO");
+//			String heartCnt = rs.getString("POST_NO");
+//			String replyCnt = rs.getString("POST_NO");
 
 			postDetailVo = new PostVo();
 			postDetailVo.setPostNo(postNo);
@@ -46,8 +46,8 @@ public class PostDaoJOJ {
 			postDetailVo.setUserNick(userNick);
 			postDetailVo.setEnrollDate(enrollDate);
 			postDetailVo.setContent(content);
-			postDetailVo.setHeartCnt(heartCnt);
-			postDetailVo.setReplyCnt(replyCnt);
+//			postDetailVo.setHeartCnt(heartCnt);
+//			postDetailVo.setReplyCnt(replyCnt);
 
 		}
 
@@ -79,10 +79,10 @@ public class PostDaoJOJ {
 	}// increaseHit
 
 	// 공감수
-	public PostVo heartNumber(Connection conn, String no) throws Exception {
+	public PostVo heartCnt(Connection conn, String no) throws Exception {
 
 		// sql
-		String sql = "SELECT COUNT(POST_NO) FROM HEART WHERE POST_NO = ?";
+		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM HEART WHERE POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, no);
 		ResultSet rs = pstmt.executeQuery();
@@ -102,7 +102,34 @@ public class PostDaoJOJ {
 
 		return heart;
 
-	}// heartNumber
+	}// heartCnt
+	
+	// 댓글수
+	public PostVo ReplyCnt(Connection conn, String no) throws Exception {
+		
+		// sql
+		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM REPLY WHERE POST_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		PostVo replyCnt = null;
+		if(rs.next()) {
+			String postNo = rs.getString("POST_NO");
+			
+			replyCnt = new PostVo();
+			replyCnt.setPostNo(postNo);
+		}
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+		
+		return replyCnt;
+		
+	}// FollowCnt
+	
 
 	// 관리자 상세보기
 	public PostVo AdminPostDetail(Connection conn, String no) throws Exception {
@@ -110,6 +137,7 @@ public class PostDaoJOJ {
 		// sql
 		String sql = "SELECT P.POST_IMG ,P.BLOG_NO ,M.MEM_ID ,P.OPEN ,P.INQUIRY ,P.DEL_YN ,P.MODIFY_DATE ,H.POST_NO ,P.ENROLL_DATE ,R.POST_NO ,P.TITLE ,P.CONTENT FROM POST P JOIN CATEGORY_LIST C ON P.POST_NO = C.CATEGORY_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = REPLY_NO JOIN BLOG B ON P.POST_NO = B.BLOG_NO JOIN MEMBER M ON B.BLOG_NO = M.MEM_NO WHERE P.POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
@@ -122,9 +150,7 @@ public class PostDaoJOJ {
 			String inquiry = rs.getString("INQUIRY");
 			String postDelYn = rs.getString("DEL_YN");
 			String modifyDate = rs.getString("MODIFY_DATE");
-			String heartCnt = rs.getString("POST_NO");
 			String enrollDate = rs.getString("ENROLL_DATE");
-			String replyCnt = rs.getString("POST_NO");
 			String postTitle = rs.getString("TITLE");
 			String content = rs.getString("CONTENT");
 
@@ -136,9 +162,7 @@ public class PostDaoJOJ {
 			adminPostDetailVo.setInquiry(inquiry);
 			adminPostDetailVo.setPostDelYn(postDelYn);
 			adminPostDetailVo.setModifyDate(modifyDate);
-			adminPostDetailVo.setHeartCnt(heartCnt);
 			adminPostDetailVo.setEnrollDate(enrollDate);
-			adminPostDetailVo.setReplyCnt(replyCnt);
 			adminPostDetailVo.setPostTitle(postTitle);
 			adminPostDetailVo.setContent(content);
 		}
@@ -152,7 +176,7 @@ public class PostDaoJOJ {
 	}// AdminPostDetail
 
 	// 공감체크 기능
-	public boolean checkHeartDup(Connection conn, String no, String memberNo) throws Exception {
+	public boolean checkHeart(Connection conn, String no, String memberNo) throws Exception {
 
 		// sql
 		String sql = "SELECT * FROM HEART WHERE POST_NO = ? AND MEM_NO = ?";
@@ -162,16 +186,16 @@ public class PostDaoJOJ {
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
-		boolean result = true;
+		boolean heartCheck = true;
 		if (rs.next()) {
-			result = false;
+			heartCheck = false;
 		}
 
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
 
-		return result;
+		return heartCheck;
 
 	}// checkHeartDup
 
