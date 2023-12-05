@@ -1,5 +1,8 @@
+<%@page import="com.semi.jdgr.csboard.vo.CsboardVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% CsboardVo csboardVo = (CsboardVo)request.getAttribute("csboardVo"); %>
+<% String currPage = (String)request.getAttribute("currPage"); %>
 
 	<%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 	
@@ -26,10 +29,11 @@
                         <col width=""/>
                         <col width=""/>
                         <col width=""/>
+                        <col width=""/>
                     </colgroup>
                     <tbody>
                         <tr>
-                            <th>1:1문의 제목입니다.</th>
+                            <th><%=csboardVo.getqTit() %></th>
                         </tr>
                         <tr>
                             <th>
@@ -38,21 +42,30 @@
                                         <img src="/jdgr/resources/user/images/ico/ico_people.svg"> 관리자
                                     </div>
                                     <div>
-                                        <img src="/jdgr/resources/user/images/ico/ico_eye.svg">251 
-                                        <img class="ml30" src="/jdgr/resources/user/images/ico/ico_cal.svg">2023-11-24
+                                        <%= csboardVo.getQuestionCategoryName() %>
+                                        <img class="ml30" src="/jdgr/resources/user/images/ico/ico_cal.svg"><%=csboardVo.getqWriteDate() %>
                                     </div>
                                 </div>
                             </th>
                         </tr>
                         <tr>
-                            <th>공지사항<br>내<br>용<br>입<br>니<br>다<br>ㅋ<br>ㅋㅋㅋ<br><br><br><br><br><br><br>ㅋㅋㅋ<br>ㅋㅋ</th>
+                            <th>
+                            	<%=csboardVo.getqCon() %>
+                            </th>
                         </tr>
+<%if(csboardVo.getAnsewr() != null){%>
+                        <tr>
+                            <th>
+                            	<%= csboardVo.getAnsewr() %>
+                            </th>
+                        </tr>
+<%} %>
                     </tbody>
                 </table>
             </div>
             <div class="noti_btn">
-                <a href="" >목록</a>
-                <a href="" >답변 작성</a>
+                <a href="/jdgr/csboard/list?pno=<%=currPage%>" >목록</a>
+               <!--  <a href="" >답변 작성</a>  -->
             </div>
              <div class="tbl_box noti_ft">
                 <table>

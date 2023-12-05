@@ -84,10 +84,42 @@ public class CsboardService {
 		
 		return csboardVoList;
 	}
-	//여깃부터 진행 /***************************************************************************/
-	public CsboardVo csboardDetail(String board) {
-		// TODO Auto-generated method stub
-		return null;
+
+	public CsboardVo csboardDetail(String board) throws Exception {
+
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		CsboardDao dao = new CsboardDao();
+		CsboardVo vo = dao.csboardDetail(conn,board);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return vo;
+	}
+
+	public int CsboardWrite(CsboardVo vo) throws Exception{
+		
+		//conn
+		Connection conn =JDBCTemplate.getConnection();
+		
+		//dao
+		CsboardDao dao = new CsboardDao();
+		int result = dao.CsboardWrite(conn,vo);
+		
+		//tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return result;
 	}
 
 

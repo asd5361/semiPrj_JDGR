@@ -89,7 +89,7 @@
             </ul>
         </div>
         <div class="noti_btn qboard_btn mb20">
-            <a href="/jdgr/csboard/write" data-target="#pop_complete">문의 하기</a>
+            <a href="/jdgr/csboard/write?pno=<%=pvo.getCurrentPage() %>" data-target="#pop_complete">문의 하기</a>
         </div>
         </div>
     </main>
