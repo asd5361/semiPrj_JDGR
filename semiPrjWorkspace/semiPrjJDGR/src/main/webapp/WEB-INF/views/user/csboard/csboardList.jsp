@@ -1,10 +1,11 @@
-<%@page import="com.semi.jdgr.post.vo.PageVo"%>
+<%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="com.semi.jdgr.user.csboard.vo.CsboardVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% List<CsboardVo> csboardVoList = (List<CsboardVo>)request.getAttribute("csboardVoList"); %>
-<% PageVo pvo = (PageVo)request.getAttribute("pvo"); %>
+<% PageVo pvo = (PageVo)request.getAttribute("pageVo"); %>
+<% String searchValue = (String)request.getAttribute("searchValue"); %>
 
 	<%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 	
@@ -21,10 +22,12 @@
             </div>
             <div class="q_box">
                 <h1 class="mtp50">1:1문의 검색하기</h1>
+                <form action="/jdgr/csboard/list/search?pno=1" method="get">
                 <div class="search_box mt40">
-                    <input type="text" name="">
+                    <input type="text" name="searchValue">
                     <button>검색</button>
                 </div>
+                </form>
             </div>
         </div>
         <div class="inner">
@@ -93,3 +96,15 @@
     <!-- //main -->
 	
 	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
+    <script>
+<%if(searchValue != null){%>
+        function setPageArea(){
+            const aTagArr = document.querySelectorAll(".paging_box ul li a");
+            for(let i=0; i< aTagArr.length; i++){
+                aTagArr[i].href = aTagArr[i].href.replace('list','list/search');
+                aTagArr[i].href += '&searchValue=<%=searchValue%>';
+            }
+        }
+        setPageArea();
+<%}%>
+    </script>

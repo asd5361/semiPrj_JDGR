@@ -3,7 +3,7 @@ package com.semi.jdgr.user.csboard.service;
 import java.sql.Connection;
 import java.util.List;
 
-import com.semi.jdgr.post.vo.PageVo;
+import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.user.csboard.dao.CsboardDao;
 import com.semi.jdgr.user.csboard.vo.CsboardVo;
 import com.semi.jdgr.util.JDBCTemplate;
@@ -54,6 +54,35 @@ public class CsboardService {
 		JDBCTemplate.close(conn);
 		
 		return csboardVo;
+	}
+
+	public int selectSearchCsboardCount(String searchValue) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		CsboardDao dao = new CsboardDao();
+		int cnt = dao.selectSearchCsboardCount(conn,searchValue);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
+	}
+
+	public List<CsboardVo> search(String searchValue, PageVo pvo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		CsboardDao dao = new CsboardDao();
+		List<CsboardVo> csboardVoList = dao.search(conn,searchValue,pvo);
+		//close
+		
+		
+		return csboardVoList;
 	}
 
 }
