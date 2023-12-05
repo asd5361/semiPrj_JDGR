@@ -8,7 +8,7 @@
     <%
     	List<PostVo> postVoList = (List<PostVo>)request.getAttribute("postVoList");
     	PageVo pvo = (PageVo)request.getAttribute("pvo");
-    	Map<String, String> searchMap = (Map<String,String>)request.getAttribute("searchMap");
+//     	Map<String, String> searchMap = (Map<String,String>)request.getAttribute("searchMap");
     
     %>
 
@@ -251,7 +251,7 @@
 <%@include file = "/WEB-INF/views/admin/common/footer.jsp" %>
 
 <script>
-	const 
+	
 
 </script>
             

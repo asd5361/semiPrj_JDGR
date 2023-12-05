@@ -34,10 +34,11 @@ public class PostControllerLYJ extends HttpServlet{
 			int boardLimit = 10;
 			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 			
+			PostVo postVo = new PostVo();
 		
 			//service
-			List<PostVo> postVoList = ps.selectPostList(pvo);
-			postVoList = ps.selectPostList(pvo);
+			List<PostVo> postVoList = ps.selectPostList(postVo);
+			postVoList = ps.selectPostList(postVo);
 			
 			//result(==view)
 			req.setAttribute("postVoList", postVoList);

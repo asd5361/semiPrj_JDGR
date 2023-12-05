@@ -15,11 +15,12 @@ import com.semi.jdgr.util.JDBCTemplate;
 public class PostDaoLYJ {
 
 	//포스트 관리 목록 조회(관리자)
-	public List<PostVo> selectPostList(Connection conn, PageVo pvo) throws Exception {
+	public List<PostVo> selectPostList(Connection conn, PostVo postVo) throws Exception {
 		
 		//SQL
 		String sql = "SELECT M.MEM_NAME AS 작성자,  B.BLOG_NO AS 블로그번호, P.POST_NO AS 포스트번호, CL.CATEGORY_NAME AS 카테고리명, P.TITLE AS 제목, P.INQUIRY  AS 조회수,  P.ENROLL_DATE  AS 등록일자, P.MODIFY_DATE  AS 수정일자, P.DEL_YN  AS 공개여부 FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE MEM_NAME = '?'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, postVo.getUserNick());
 		ResultSet rs = pstmt.executeQuery();
 		
 		//rs
@@ -40,24 +41,28 @@ public class PostDaoLYJ {
 	        
 	        
 	        
-	        String sql2 = "리뷰수 가져오기 포스트 번호써서 ";
+	        String sql2 = "SELECT COUNT(REPLY_NO) AS REPLYCNT FROM REPLY R JOIN POST P ON P.POST_NO = R.POST_NO WHERE P.POST_NO = ? ";
 	        PreparedStatement pstmt2 = conn.prepareStatement(sql);
+			pstmt.setString(1,postNo);
+			
 	        ResultSet rs2 = pstmt.executeQuery();
+	        String replyCnt = null;
 	        if(rs2.next()) {
-	        	String reviewCnt = rs.getString("리뷰 행수");//블로그 번호
+	        	replyCnt = rs.getString("REPLYCNT");//블로그 번호
 	        }
 	        
 	        
-	        String sql3 = "E AS 제목, P.INQUIRY  AS 조회수,  P.ENROLL_DATE  AS 등록일자, P.MODIFY_DATE  AS 수정일자, P.DEL_YN  AS 공개여부 FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE MEM_NAME = '?'";
+	        String sql3 = "SELECT COUNT(REPLY_NO) AS HEARTCNT FROM HEART H JOIN POST P ON P.POST_NO = H.POST_NO WHERE P.POST_NO = ?";
 	        PreparedStatement pstmt3 = conn.prepareStatement(sql);
+	        pstmt.setString(1,postNo);
+	        
 	        ResultSet rs3 = pstmt.executeQuery();
+	        String heartCnt = null;
 	        if(rs3.next()) {
-	        	String reviewCnt = rs.getString("=하트카운트");//블로그 번호
+	        	heartCnt = rs.getString("HEARTCNT");//블로그 번호
 	        }
 	        
-	        
-	        
-	        
+	        	        
 	        PostVo vo = new PostVo();
 	        vo.setUserNick(userNick);
 	        vo.setBlogNo(blogNo);
@@ -66,7 +71,7 @@ public class PostDaoLYJ {
 	        vo.setTitle(title);
 	        vo.setInquiry(inquiry);
 	        vo.setHeartCnt(heartCnt);
-	        vo.setReplyCnt(reviewCnt);
+	        vo.setReplyCnt(replyCnt);
 	        vo.setEnrollDate(enrollDate);
 	        vo.setModifyDate(modifyDate);
 	        vo.setOpen(open);
