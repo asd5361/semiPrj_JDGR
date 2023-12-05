@@ -14,6 +14,8 @@ public class BlogSubscribeEditController extends HttpServlet {
 	// 구독한 블로그 수정 화면
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		
 		req.setAttribute("blogClassName", "blog_set");
 		req.setAttribute("blogSideClassName", "subscribe");
 		req.getRequestDispatcher("/WEB-INF/views/user/blogSet/subscribe.jsp").forward(req, resp);

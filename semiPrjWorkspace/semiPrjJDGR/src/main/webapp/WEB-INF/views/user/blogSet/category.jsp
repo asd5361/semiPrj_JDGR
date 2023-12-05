@@ -2,7 +2,10 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
-
+<% 
+	// 블로그 관리정보 vo
+	BlogVo userSetblogVo = (BlogVo) request.getAttribute("blogUserData");
+%>
 <!-- main -->
 <main>
     <div class="inner">
