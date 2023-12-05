@@ -1,5 +1,16 @@
+<%@page import="java.util.Map"%>
+<%@page import="com.semi.jdgr.page.vo.PageVo"%>
+<%@page import="com.semi.jdgr.post.vo.PostVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%
+    	List<PostVo> postVoList = (List<PostVo>)request.getAttribute("postVoList");
+    	PageVo pvo = (PageVo)request.getAttribute("pvo");
+    	Map<String, String> searchMap = (Map<String,String>)request.getAttribute("searchMap");
+    
+    %>
 
 <%@include file = "/WEB-INF/views/admin/common/header.jsp" %>
                 
@@ -67,155 +78,180 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
+                        <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
+                        <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
+                        <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
+                        <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
+                        <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
+                        <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
+                         <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
+                        <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
+                        <% for(PostVo vo : postVoList){ %>
                             <tr>
-                                <td>심원용</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>음식</td>
-                                <td>마라탕은 맛있다.</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>5</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>2023.11.26 00:00</td>
-                                <td>Y</td>
+                                <td><%= vo.getUserNick() %></td>
+                                <td><%= vo.getBlogNo() %></td>
+                                <td><%= vo.getPostNo() %></td>
+                                <td><%= vo.getCategoryNo() %></td>
+                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getInquiry() %></td>
+                                <td><%= vo.getHeartCnt() %></td>
+                                <td><%= vo.getReplyCnt() %></td>
+                                <td><%= vo.getEnrollDate() %></td>
+                                <td><%= vo.getModifyDate() %></td>
+                                <td><%= vo.getOpen() %></td>
                             </tr>
+                        <% } %>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="paging_box mt30">
                     <ul>
-                        <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                        <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                        <li class="on"><a href="">1</a></li>
-                        <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
+                        <li class="prev_all"><a href="/jdgr/admin/post/list" title="최신페이지로 이동"></a></li>
+                        <li class="prev"><a href="/jdgr/admin/post/list" title="이전페이지로 이동"></a></li>
+                        <li class="on"><a href="/jdgr/admin/post/list">1</a></li>
+                        <li><a href="/jdgr/admin/post/list">2</a></li>
+                        <li><a href="/jdgr/admin/post/list">3</a></li>
+                        <li><a href="/jdgr/admin/post/list">4</a></li>
+                        <li><a href="/jdgr/admin/post/list">5</a></li>
+                        <li class="next"><a href="/jdgr/admin/post/list" title="다음페이지로 이동"></a></li>
+                        <li class="next_all"><a href="/jdgr/admin/post/list" title="마지막페이지로 이동"></a></li>
                     </ul>
                 </div>
 
             </div>
             <!-- //container -->
 <%@include file = "/WEB-INF/views/admin/common/footer.jsp" %>
+
+<script>
+	const 
+
+</script>
             

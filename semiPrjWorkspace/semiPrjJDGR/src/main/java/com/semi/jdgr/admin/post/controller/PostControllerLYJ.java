@@ -24,7 +24,7 @@ public class PostControllerLYJ extends HttpServlet{
 			
 			PostServiceLYJ ps = new PostServiceLYJ();		
 			//data
-			int listCount = ps.selectPostCount();		//전체 게시글 갯수
+			int listCount = ps.selectPostCount(null);		//전체 게시글 갯수
 			String currentPage_ = req.getParameter("pno");
 			if(currentPage_ == null) {
 				currentPage_ = "1";
@@ -34,20 +34,21 @@ public class PostControllerLYJ extends HttpServlet{
 			int boardLimit = 10;
 			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 			
-			
-			
+		
 			//service
 			List<PostVo> postVoList = ps.selectPostList(pvo);
+			postVoList = ps.selectPostList(pvo);
 			
 			//result(==view)
 			req.setAttribute("postVoList", postVoList);
 			req.setAttribute("pvo" , pvo);
 			req.getRequestDispatcher("/WEB-INF/views/admin/post/list.jsp").forward(req, resp);	
+			
 		}catch(Exception e) {
 			System.out.println("[ERROR-B001]포스트 관리 목록 조회 중 에러 발생 ...");
 			e.printStackTrace();
 			req.setAttribute("errorMsg", "포스트 관리 목록 조회 에러");
-			req.getRequestDispatcher("/WEB-INF/views/common/error.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/views/admin/common/error.jsp").forward(req, resp);
 		}
 			
 	}
