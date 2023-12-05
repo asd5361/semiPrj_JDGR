@@ -88,6 +88,21 @@ public class MemberService {
 		return result;
 	}
 
+	public MemberVo printId(String nowEmail) throws Exception {
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		
+		MemberVo loginMember = dao.printId(conn ,nowEmail);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return loginMember;	
+
+	}
+
 	
 
 	

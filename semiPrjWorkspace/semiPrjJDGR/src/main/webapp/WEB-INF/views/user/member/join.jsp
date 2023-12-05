@@ -1,7 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="../common/header.jsp"%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JDGR - 좋아요 댓글 구독 알람설정♡</title>
+
+<!-- swiper -->
+<link rel="stylesheet" href="/jdgr/resources/user/css/swiper-bundle.css">
+<script src="/jdgr/resources/user/js/swiper-bundle.min.js"></script>
+
+<!-- css -->
+<link rel="stylesheet" href="/jdgr/resources/user/css/allCss.css">
+
+<!-- js -->
+<script src="/jdgr/resources/user/js/jquery-3.6.0.js"></script>
+<script src="/jdgr/resources/user/js/common.js" defer></script>
+
+
+</head>
 <div class="wrap gray">
 
 	<div class="membership_box">
@@ -66,8 +85,6 @@
 						중복확인이 완료되었습니다.</span>
 				</div>
 			</div>
-		<input type="hidden" id ="checkNum">
-		<input type="hidden" id ="nowEmail" name="nick">
 
 			<!-- 버튼 -->
 			<div class="btn_area">
@@ -78,6 +95,8 @@
 					<li><a href="">비밀번호 찾기</a></li>
 				</ul>
 			</div>
+			<input type="hidden" id="checkNum"> 
+			<input type="hidden" id="nowEmail" name="nowEmail">
 		</form>
 	</div>
 	<footer>Copyright © KH Group3 PowerBloger. All Rights
@@ -87,45 +106,46 @@
 </div>
 
 <!-- 이메일 팝업 -->
-<div id="pop_email" class="modal_bg">
-	<div class="modal_box">
-		<div class="modal_header">
-			<h2>이메일 인증</h2>
-			<button class="modal_close">닫기</button>
-		</div>
-		<div class="modal_container">
-			<!-- 이메일 입력 -->
-			<div class="form_box">
-				이메일 <input class="input_email" type="email" name="email1">@
-				<input class="input_email" type="email" name="email2"> <select
-					class="selet_addr" name="">
-					<option value="">직접입력</option>
-					<option value="naver.com">naver.com</option>
-					<option value="gmail.com">gmail.com</option>
-					<option value="daum.net">daum.net</option>
-				</select>
+	<div id="pop_email" class="modal_bg">
+		<div class="modal_box">
+			<div class="modal_header">
+				<h2>이메일 인증</h2>
+				<button class="modal_close">닫기</button>
 			</div>
-			<!-- 이메일 전송 버튼 -->
-			<div class="btn_box btn_group">
-				<button class="btn_black modal_open" data-target="#pop_email"
-					onclick="sendEmail()">인증번호 전송</button>
-			</div>
-
-			<!-- 인증번호 입력 -->
-			<div class="form_box">
-				<div class="form_box inp_btn ">
-					인증번호 <input type="text" name="inputCheckNum" class="input_num">
-					<button onclick="certification()">인증하기</button>
+			<div class="modal_container">
+				<!-- 이메일 입력 -->
+				<div class="form_box">
+					이메일 <input class="input_email" type="email" name="email1">@
+					<input id="input_addr" class="input_email" type="email"
+						name="email2"> <select id="selet_addr" class="selet_addr"
+						onchange="onChangeFruits(event)">
+						<option value="">직접입력</option>
+						<option value="naver.com">naver.com</option>
+						<option value="gmail.com">gmail.com</option>
+						<option value="daum.net">daum.net</option>
+					</select>
 				</div>
-				<span class="txt_msg">닉네임 중복확인이 완료되었습니다.</span>
-			</div>
-		</div>
+				<!-- 이메일 전송 버튼 -->
+				<div class="btn_box btn_group">
+					<button class="btn_black modal_open" data-target="#pop_email"
+						onclick="sendEmail()">인증번호 전송</button>
+				</div>
 
-		<div class="modal_footer">
-			<button class="modal_close btn_black">확인</button>
+				<!-- 인증번호 입력 -->
+				<div class="form_box">
+					<div class="form_box inp_btn ">
+						인증번호 <input type="text" name="inputCheckNum" class="input_num">
+						<button onclick="certification()">인증하기</button>
+					</div>
+				</div>
+			</div>
+			
+
+			<div class="modal_footer">
+				<button class="modal_close btn_black">확인</button>
+			</div>
 		</div>
 	</div>
-</div>
 
 </body>
 </html>
@@ -185,48 +205,9 @@
 		} );
 	}
 	
-	function sendEmail(){
-		const email1 = document.querySelector("input[name=email1]").value;
-		const email2 = document.querySelector("input[name=email2]").value;
-		const email = email1+"@"+email2
-		const checkNum = Math.floor(Math.random() *(900000) +100000 );
-		
-		console.log(checkNum);
-		console.log(email);
-		fetch("/jdgr/member/sendemail?email=" + email+"&checkNum=" + checkNum )
-		.then( (resp) => { return resp.json() } )
-		.then( (data) => { 
-			const result = data.msg;
-			const isOk = result === "ok";
-			if(isOk){
-				document.getElementById("checkNum").value = checkNum;
-				
-			}else{
-				alert("인증실패");
-			}
-		} );
-		
-		console.log(document.querySelector("#checkNum").value);
-	}
-
-		function certification(){
-		const nowCeckNum = document.querySelector("#checkNum").value;
-		const inputCheckNum = document.querySelector("input[name=inputCheckNum]").value;
-		
-
-		if(nowCeckNum === inputCheckNum){
-			
-		const email1 = document.querySelector("input[name=email1]").value;
-		const email2 = document.querySelector("input[name=email2]").value;
-		const email = email1+"@"+email2;
-			document.getElementById("nowEmail").value = email;
-		}
-		else{
-			alert("인증실패");
-			
-		}
-	}
+	
 </script>
+<script src="/jdgr/resources/user/js/sendEmail.js"></script>
 
 <!-- <div class="form_box ico_pwd">
 	                <div class="inp_btn">

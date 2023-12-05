@@ -14,7 +14,6 @@ public class MemberDao {
 		// sql
 				String sql = "INSERT INTO MEMBER (MEM_NO,MEM_NAME,MEM_ID,MEM_PWD,MEM_NICK,MEM_PHONE_NUM,MEM_EMAIL) VALUES (SEQ_MEMBER.NEXTVAL, ?,?, ?,?,?,?)";
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				System.out.println("3"+vo.getMemNick());
 				pstmt.setString(1, vo.getMemName());
 				pstmt.setString(2, vo.getMemId());
 				pstmt.setString(3, vo.getMemPwd());
@@ -23,7 +22,6 @@ public class MemberDao {
 				pstmt.setString(6, vo.getMemEmail());
 				int result = pstmt.executeUpdate();
 				
-				System.out.println("3"+vo.getMemNick());
 				
 				// close
 				JDBCTemplate.close(pstmt);
@@ -120,6 +118,46 @@ public class MemberDao {
 		   
 		return result; 
 		
+	}
+
+	public MemberVo printId(Connection conn, String nowEmail) throws Exception {
+		
+		String sql = "SELECT * FROM MEMBER WHERE MEM_EMAIL = ? AND QUIT_YN = 'N'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, nowEmail);
+		ResultSet rs = pstmt.executeQuery();
+		
+		MemberVo loginMember =null;
+		
+		if(rs.next()) {
+			String memNo = rs.getString("MEM_NO");
+			String memName = rs.getString("MEM_NAME");
+			String memId = rs.getString("MEM_ID");
+			String memPwd = rs.getString("MEM_PWD");
+			String memNick = rs.getString("MEM_NICK");
+			String memPhoneNum = rs.getString("MEM_PHONE_NUM");
+			String memEmail = rs.getString("MEM_EMAIL");
+			String quitYn = rs.getString("QUIT_YN");
+			String enrollDate = rs.getString("ENROLL_DATE");
+			String updateDate = rs.getString("UPDATE_DATE");
+			
+			loginMember = new MemberVo();
+			loginMember.setMemNo(memNo);
+			loginMember.setMemName(memName);
+			loginMember.setMemId(memId);
+			loginMember.setMemPwd(memPwd);
+			loginMember.setMemNick(memNick);
+			loginMember.setMemPhoneNum(memPhoneNum);
+			loginMember.setMemEmail(memEmail);
+			loginMember.setQuitYn(quitYn);
+			loginMember.setEnrollDate(enrollDate);
+			loginMember.setUpdateDate(updateDate);
+					
+		}
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return loginMember;
 	}
 
 
