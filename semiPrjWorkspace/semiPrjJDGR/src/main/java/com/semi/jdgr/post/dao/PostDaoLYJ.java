@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.vo.PostVo;
@@ -17,7 +18,7 @@ public class PostDaoLYJ {
 	public List<PostVo> selectPostList(Connection conn, PageVo pvo) throws Exception {
 		
 		//SQL
-		String sql = "SELECT M.MEM_NAME AS 작성자,  B.BLOG_NO AS 블로그번호, P.POST_NO AS 포스트번호, CL.CATEGORY_NAME AS 카테고리명, P.TITLE AS 제목, P.INQUIRY  AS 조회수, H.POST_NO AS 공감수, R.POST_NO  AS 댓글수,  P.ENROLL_DATE  AS 등록일자, P.MODIFY_DATE  AS 수정일자, P.DEL_YN  AS 공개여부 FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO JOIN HEART H ON H.POST_NO = P.POST_NO JOIN REPLY R ON R.POST_NO = P.POST_NO";
+		String sql = "SELECT M.MEM_NAME AS 작성자,  B.BLOG_NO AS 블로그번호, P.POST_NO AS 포스트번호, CL.CATEGORY_NAME AS 카테고리명, P.TITLE AS 제목, P.INQUIRY  AS 조회수,  P.ENROLL_DATE  AS 등록일자, P.MODIFY_DATE  AS 수정일자, P.DEL_YN  AS 공개여부 FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE MEM_NAME = '?'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -31,11 +32,31 @@ public class PostDaoLYJ {
 	        String categoryNo = rs.getString("CATEGORY_NO");//카테고리명
 	        String title = rs.getString("TITLE");//제목
 	        String inquiry = rs.getString("INQUIRY");//조회수
-//	        String heartCnt = rs.getString("");//공감수
-//	        String replyCnt = rs.getString("");//댓글수
+//	        String heartCnt = rs.getString("POST_NO");//공감수
+//	        String replyCnt = rs.getString("POST_NO");//댓글수
 	        String enrollDate = rs.getString("ENROLL_DATE");//등록일자
 	        String modifyDate = rs.getString("MODIFY_DATE");//수정일자
 	        String open = rs.getString("OPEN");//공개여부
+	        
+	        
+	        
+	        String sql2 = "리뷰수 가져오기 포스트 번호써서 ";
+	        PreparedStatement pstmt2 = conn.prepareStatement(sql);
+	        ResultSet rs2 = pstmt.executeQuery();
+	        if(rs2.next()) {
+	        	String reviewCnt = rs.getString("리뷰 행수");//블로그 번호
+	        }
+	        
+	        
+	        String sql3 = "E AS 제목, P.INQUIRY  AS 조회수,  P.ENROLL_DATE  AS 등록일자, P.MODIFY_DATE  AS 수정일자, P.DEL_YN  AS 공개여부 FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE MEM_NAME = '?'";
+	        PreparedStatement pstmt3 = conn.prepareStatement(sql);
+	        ResultSet rs3 = pstmt.executeQuery();
+	        if(rs3.next()) {
+	        	String reviewCnt = rs.getString("=하트카운트");//블로그 번호
+	        }
+	        
+	        
+	        
 	        
 	        PostVo vo = new PostVo();
 	        vo.setUserNick(userNick);
@@ -44,10 +65,12 @@ public class PostDaoLYJ {
 	        vo.setCategoryNo(categoryNo);
 	        vo.setTitle(title);
 	        vo.setInquiry(inquiry);
+	        vo.setHeartCnt(heartCnt);
+	        vo.setReplyCnt(reviewCnt);
 	        vo.setEnrollDate(enrollDate);
 	        vo.setModifyDate(modifyDate);
 	        vo.setOpen(open);
-	         
+	        
 	        postVoList.add(vo);
 	        
 		}
@@ -61,13 +84,13 @@ public class PostDaoLYJ {
 
 	
 	//전체 게시글 갯수 조회(관리자)
-	public int selectBoardCount(Connection conn) {
-		public int getBoardCountBySearch(Connection conn, Map<String, String> m) throws Exception {
+	public int selectPostCount(Connection conn, Map<String, String> p) throws Exception{
+		
 			
 			// SQL
-			String sql = "SELECT COUNT(*) FROM BOARD WHERE STATUS = 'O' AND " + m.get("searchType") + " LIKE '%' || ? || '%'";
+			String sql = "SELECT COUNT(*) FROM POST WHERE OPEN = 'Y' AND " + p.get("searchType") + " LIKE '%' || ? || '%'";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m.get("searchValue"));
+			pstmt.setString(1, p.get("searchValue"));
 			ResultSet rs = pstmt.executeQuery();
 			
 			// rs
@@ -84,7 +107,4 @@ public class PostDaoLYJ {
 	}
 	
 
-	
-
 }//class
-

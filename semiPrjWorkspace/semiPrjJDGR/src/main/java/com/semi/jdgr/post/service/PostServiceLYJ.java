@@ -2,6 +2,7 @@ package com.semi.jdgr.post.service;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.page.vo.PageVo;
@@ -28,14 +29,14 @@ public class PostServiceLYJ {
 	
 	
 	//전체 게시글 갯수 조회(관리자)
-	public int selectPostCount() throws Exception {
+	public int selectPostCount(Map<String, String> p) throws Exception {
 		
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		//dao
 		PostDaoLYJ dao = new PostDaoLYJ();
-		int cnt = dao.selectBoardCount(conn);
+		int cnt = dao.selectPostCount(conn, p);
 		
 		// close
 		JDBCTemplate.close(conn);
