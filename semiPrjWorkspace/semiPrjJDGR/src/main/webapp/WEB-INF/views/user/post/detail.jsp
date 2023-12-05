@@ -4,13 +4,15 @@
     
     <%
     	PostVo postDetailVo = (PostVo) request.getAttribute("postDetailVo");
+    	PostVo heartCnt = (PostVo) request.getAttribute("heartCnt");
+    	PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
     %>
 
     <div class="container01">
         <div class="header01">
             <div><%= postDetailVo.getCategoryName() %></div>
             
-            <div><h1><%= postDetailVo.getTitle() %></h1></div>
+            <div><h1><%= postDetailVo.getPostTitle() %></h1></div>
 
             <div class="head01">
                 <div class="left01">
@@ -40,8 +42,8 @@
             <div class="footer01">
                 <div class="foot01">
                     <div class="left02">
-                        <button id="like_btn" class="btn_k un_like" onclick="{clickEvent('like')}">공감<%=  %></button>
-                        <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('rep')}">댓글<%= postDetailVo.getReplyCnt() %></button>
+                        <button id="like_btn" class="btn_k un_like" onclick="{clickEvent('like')}">공감<%= heartCnt.getPostNo() %></button>
+                        <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('rep')}">댓글<%= replyCnt.getPostNo() %></button>
                     </div>
                     <div class="right02">
                         <button id="plus_btn" class="btn_k un_plus" onclick="{clickEvent('plus')}">구독하기</button>
@@ -73,7 +75,13 @@
     //     }
     //     plusClick = !plusClick;
     // }
+    
+    // 공감
+    function clickHeart() {
+    	const heart = document.querySelector();
+    }
 
+    // 이미지 변경
     function clickEvent(mode) {
         switch (mode) {
             case 'like' :

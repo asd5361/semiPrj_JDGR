@@ -19,7 +19,6 @@ public class AdminPostControllerJOJ extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		
-		
 		try {
 			// data
 			String no = req.getParameter("no");
@@ -27,10 +26,16 @@ public class AdminPostControllerJOJ extends HttpServlet{
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
 			PostVo adminPostDetailVo = ps.AdminPostDetail(no);
+			PostVo heartCnt = ps.heartCnt(no);
+			PostVo replyCnt = ps.ReplyCnt(no);
 			
 			// result
 			System.out.println(adminPostDetailVo);
+			System.out.println(heartCnt);
+			System.out.println(replyCnt);
 			req.setAttribute("adminPostDetailVo", adminPostDetailVo);
+			req.setAttribute("heartCnt", heartCnt);
+			req.setAttribute("replyCnt", replyCnt);
 			req.getRequestDispatcher("/WEB-INF/views/admin/post/detail.jsp").forward(req, resp);
 			
 		}catch (Exception e) {

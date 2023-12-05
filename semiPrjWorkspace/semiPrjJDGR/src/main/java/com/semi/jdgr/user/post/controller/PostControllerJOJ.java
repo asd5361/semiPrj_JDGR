@@ -26,10 +26,16 @@ public class PostControllerJOJ extends HttpServlet{
 		// service
 		PostServiceJOJ ps = new PostServiceJOJ();
 		PostVo postDetailVo = ps.PostDetail(no);
+		PostVo heartCnt = ps.heartCnt(no);
+		PostVo replyCnt = ps.ReplyCnt(no);
 		
 		// result
 		System.out.println(postDetailVo);
+		System.out.println(heartCnt);
+		System.out.println(replyCnt);
 		req.setAttribute("postDetailVo", postDetailVo);
+		req.setAttribute("heartCnt", heartCnt);
+		req.setAttribute("replyCnt", replyCnt);
 		req.getRequestDispatcher("/WEB-INF/views/user/post/detail.jsp").forward(req, resp);
 		
 		}catch(Exception e) {
