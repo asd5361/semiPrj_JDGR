@@ -1,16 +1,10 @@
+<%@page import="com.semi.jdgr.admin.reply.vo.AdminReplyVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
     
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <link rel="stylesheet" href="/jdgr/resources/user/css/blamepop.css">
 
-</head>
-<body>
 <!-- 레이어팝업 모달 -->
 <div id="pop_email" class="modal_bg">
     <div class="modal_box">
@@ -19,7 +13,7 @@
             <button class="modal_close">닫기</button>
         </div>
         <hr>
-        <div class="writer_content"><h5>작성자&nbsp&nbsp| 작성자 아이디</h5><br><h5>내&nbsp&nbsp&nbsp&nbsp&nbsp용&nbsp&nbsp| 댓글/포스트 제목</h5>
+        <div class="writer_content"><h5>작성자 | <%= vo.getMemNick() %></h5><br><h5>내   용| <%= vo.getCon() %></h5>
         </div>
         <hr>
         <div class="select_reason">사유선택</div>
@@ -114,5 +108,3 @@
 </script>
 
 <%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
-</body>
-</html>
