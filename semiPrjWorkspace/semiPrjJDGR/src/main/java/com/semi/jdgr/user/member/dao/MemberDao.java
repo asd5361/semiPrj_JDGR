@@ -4,7 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
+import com.semi.jdgr.user.member.vo.MemberReplySanctionVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -12,22 +21,21 @@ public class MemberDao {
 
 	public int join(Connection conn, MemberVo vo) throws Exception {
 		// sql
-				String sql = "INSERT INTO MEMBER (MEM_NO,MEM_NAME,MEM_ID,MEM_PWD,MEM_NICK,MEM_PHONE_NUM,MEM_EMAIL) VALUES (SEQ_MEMBER.NEXTVAL, ?,?, ?,?,?,?)";
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, vo.getMemName());
-				pstmt.setString(2, vo.getMemId());
-				pstmt.setString(3, vo.getMemPwd());
-				pstmt.setString(4, vo.getMemNick());
-				pstmt.setString(5, vo.getMemPhoneNum());
-				pstmt.setString(6, vo.getMemEmail());
-				int result = pstmt.executeUpdate();
-				
-				
-				// close
-				JDBCTemplate.close(pstmt);
-				
-				return result;
-				
+		String sql = "INSERT INTO MEMBER (MEM_NO,MEM_NAME,MEM_ID,MEM_PWD,MEM_NICK,MEM_PHONE_NUM,MEM_EMAIL) VALUES (SEQ_MEMBER.NEXTVAL, ?,?, ?,?,?,?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, vo.getMemName());
+		pstmt.setString(2, vo.getMemId());
+		pstmt.setString(3, vo.getMemPwd());
+		pstmt.setString(4, vo.getMemNick());
+		pstmt.setString(5, vo.getMemPhoneNum());
+		pstmt.setString(6, vo.getMemEmail());
+		int result = pstmt.executeUpdate();
+
+		// close
+		JDBCTemplate.close(pstmt);
+
+		return result;
+
 	}
 
 	public boolean checkIdDup(Connection conn, String joinId) throws Exception {
@@ -35,43 +43,42 @@ public class MemberDao {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, joinId);
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		boolean result = true;
-		if(rs.next()) {
+		if (rs.next()) {
 			result = false;
 		}
-		
+
 		System.out.println(result);
 		return result;
 	}
-	
+
 	public boolean checkNickDup(Connection conn, String joinNick) throws Exception {
 		String sql = "SELECT * FROM MEMBER WHERE MEM_NICK = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, joinNick);
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		boolean result = true;
-		if(rs.next()) {
+		if (rs.next()) {
 			result = false;
 		}
-		
+
 		System.out.println(result);
 		return result;
 	}
 
-
 	public MemberVo login(Connection conn, MemberVo vo) throws Exception {
-		
+
 		String sql = "SELECT * FROM MEMBER WHERE MEM_ID = ? AND MEM_PWD = ? AND QUIT_YN = 'N'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, vo.getMemId());
 		pstmt.setString(2, vo.getMemPwd());
 		ResultSet rs = pstmt.executeQuery();
-		
-		MemberVo loginMember =null;
-		
-		if(rs.next()) {
+
+		MemberVo loginMember = null;
+
+		if (rs.next()) {
 			String memNo = rs.getString("MEM_NO");
 			String memName = rs.getString("MEM_NAME");
 			String memId = rs.getString("MEM_ID");
@@ -82,7 +89,7 @@ public class MemberDao {
 			String quitYn = rs.getString("QUIT_YN");
 			String enrollDate = rs.getString("ENROLL_DATE");
 			String updateDate = rs.getString("UPDATE_DATE");
-			
+
 			loginMember = new MemberVo();
 			loginMember.setMemNo(memNo);
 			loginMember.setMemName(memName);
@@ -94,11 +101,11 @@ public class MemberDao {
 			loginMember.setQuitYn(quitYn);
 			loginMember.setEnrollDate(enrollDate);
 			loginMember.setUpdateDate(updateDate);
-					
+
 		}
 		JDBCTemplate.close(rs);
 		JDBCTemplate.close(pstmt);
-		
+
 		return loginMember;
 	}
 
@@ -111,25 +118,25 @@ public class MemberDao {
 		pstmt.setString(3, vo.getMemNick());
 		pstmt.setString(4, vo.getMemPhoneNum());
 		pstmt.setString(5, vo.getMemEmail());
-		
+
 		int result = pstmt.executeUpdate();
-		   
+
 		JDBCTemplate.close(pstmt);
-		   
-		return result; 
-		
+
+		return result;
+
 	}
 
 	public MemberVo printId(Connection conn, String nowEmail) throws Exception {
-		
+
 		String sql = "SELECT * FROM MEMBER WHERE MEM_EMAIL = ? AND QUIT_YN = 'N'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, nowEmail);
 		ResultSet rs = pstmt.executeQuery();
-		
-		MemberVo loginMember =null;
-		
-		if(rs.next()) {
+
+		MemberVo loginMember = null;
+
+		if (rs.next()) {
 			String memNo = rs.getString("MEM_NO");
 			String memName = rs.getString("MEM_NAME");
 			String memId = rs.getString("MEM_ID");
@@ -140,7 +147,7 @@ public class MemberDao {
 			String quitYn = rs.getString("QUIT_YN");
 			String enrollDate = rs.getString("ENROLL_DATE");
 			String updateDate = rs.getString("UPDATE_DATE");
-			
+
 			loginMember = new MemberVo();
 			loginMember.setMemNo(memNo);
 			loginMember.setMemName(memName);
@@ -152,13 +159,82 @@ public class MemberDao {
 			loginMember.setQuitYn(quitYn);
 			loginMember.setEnrollDate(enrollDate);
 			loginMember.setUpdateDate(updateDate);
-					
+
 		}
 		JDBCTemplate.close(rs);
 		JDBCTemplate.close(pstmt);
-		
+
 		return loginMember;
 	}
 
+	public int updateMemberInfo(Connection conn, String newPwd, String nowEmail) throws Exception {
+		String sql = "UPDATE MEMBER SET MEM_PWD = ? WHERE MEM_EMAIL = ?";
+
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, newPwd);
+		pstmt.setString(2, nowEmail);
+
+		int result = pstmt.executeUpdate();
+
+		JDBCTemplate.close(pstmt);
+
+		return result;
+	}
+
+	public List<MemberReplySanctionVo> findMRSVoList(Connection conn) throws Exception {
+		// SQL
+		String sql = "SELECT M.MEM_ID, RS.SANC_DATE,RS.BAN_DAY FROM MEMBER M JOIN REPLY R ON R.REPLY_MEM = M.MEM_NO JOIN REPLY_BLAME RB ON R.REPLY_NO = RB.R_NO JOIN REPLY_SANCTIONS RS ON RB.R_BLA_NO = RS.R_BLA_NO";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		List<MemberReplySanctionVo> mrsVoList = new ArrayList<MemberReplySanctionVo>();
+		// 현재 날짜 구하기
+		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+		String strToday = dateFormat.format(c1.getTime());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		// 현재 날짜
+		LocalDate today = LocalDate.parse(strToday, formatter);
+
+		while (rs.next()) {
+
+			String memId = rs.getString("MEM_ID");
+			String sancDate = rs.getString("SANC_DATE");
+			String banDay = rs.getString("BAN_DAY");
+			// 디비 날짜 변경
+			DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			LocalDateTime dateTime = LocalDateTime.parse(sancDate, inputFormatter);
+
+			// LocalDateTime을 다른 형식으로 포맷
+			String formattedDate = dateTime.format(formatter);
+			// 제재가 걸린 날짜
+			LocalDate date = LocalDate.parse(formattedDate, formatter);
+			LocalDate endDate = date.plusDays(Integer.parseInt(banDay));
+	        
+	        System.out.println(endDate);
+	        
+	        long daysDifference = today.until(endDate, ChronoUnit.DAYS);
+
+	        System.out.println("두 날짜 사이의 일 수 차이: " + daysDifference + "일");
+
+			MemberReplySanctionVo mrsVo = new MemberReplySanctionVo();
+
+			mrsVo.setMemId(memId);
+			mrsVo.setSancDate(endDate);
+			mrsVo.setBanDay(daysDifference);
+			
+			mrsVoList.add(mrsVo);
+
+		}
+
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return mrsVoList;
+
+	}
 
 }
