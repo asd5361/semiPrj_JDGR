@@ -102,6 +102,29 @@ public class PostServiceJOJ {
 		
 	}// AdminPostDetail
 	
+	// 관리자 상세보기 (공개여부 , 삭제여부 수정)
+	public int AdminPostEdit(PostVo vo) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		PostDaoJOJ dao = new PostDaoJOJ();
+		int result = dao.AdminPostEdit(conn, vo);
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+	
 	// 공감체크 기능
 		public boolean checkHeart(String no, String memberNo) throws Exception {
 			
@@ -166,6 +189,8 @@ public class PostServiceJOJ {
 		return del;
 		
 	}
+
+
 
 
 

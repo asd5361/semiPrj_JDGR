@@ -21,13 +21,14 @@ PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
                 <h2>포스팅 상세 관리</h2>
             </div>
 
+            <form action="/jdgr/admin/post/detail"  method="POST">
+
             <!-- 가로 테이블 -->
             <div class="detail_box">
                 <!-- 테이블 -->
                 <div class="tbl_group">
             
                     <div class="tbl_box">
-                    <form action="/jdgr/admin/post/detail"  method="POST">
                         <table>
                             <caption>회원목록 상세 테이블</caption>
                             <colgroup>
@@ -42,8 +43,10 @@ PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
                                     <td rowspan="4" scope="row"><img src= <%= adminPostDetailVo.getPostImg() %> alt="이미지없음"></td>
                                 </tr>
                                 <tr>
-                                    <th><label for="">블로그 번호</label></th>
-                                    <td><%= adminPostDetailVo.getBlogNo() %></td>
+                                    <th><label for="">포스트 번호</label></th>
+                                    <td><%= adminPostDetailVo.getPostNo() %>
+                                        <input type="hidden" name="postNo" value="<%= adminPostDetailVo.getPostNo() %>">
+                                    </td>
                                 </tr> 
                                 <tr>
                                     <th scope="row"><label for="">회원ID</label></th>
@@ -55,7 +58,7 @@ PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
                                     <th scope="row"><label for="">공개여부</label></th>
                                     <td>
                                         <div class="form_box">
-                                            <select class="sel_box" id="open">
+                                            <select class="sel_box" id="open" name="open">
                                                 <option value="N">N</option>
                                                 <option value="Y">Y</option>
                                             </select>
@@ -68,9 +71,9 @@ PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
                                     <th scope="row"><label for="">삭제여부</label></th>
                                     <td>
                                         <div class="form_box">
-                                            <select class="sel_box">
-                                                <option value="">N</option>
-                                                <option value="">Y</option>
+                                            <select class="sel_box" id="del" name="postDelYn">
+                                                <option value="N">N</option>
+                                                <option value="Y">Y</option>
                                             </select>
                                         </div>
                                     </td>
@@ -104,7 +107,6 @@ PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
                                 </tr>
                             </tbody>
                         </table>
-                        </form>
                     </div>
                     
                 </div>
@@ -114,11 +116,13 @@ PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
                         <a href="" class="btn_grayline">목록보기</a>
                     </div>
                     <div class="btn_box">
-                        <a href="" class="btn_blue">수정하기</a>
+                        <!-- <a href="" class="btn_blue" value="open">수정하기</a> -->
+                         <button type="submit" class="btn_blue">수정하기</button>
                     </div>
                 </div>
 
             </div>
+            </form>
         </div>
         <!-- //container -->
 
@@ -127,12 +131,22 @@ PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
 
 <script>
 
+	//관리자 포스팅 관리 공개여부
     const openArr = document.querySelectorAll("#open option");
     const openType = "<%= adminPostDetailVo.getOpen() %>";
     for(let i = 0; i < openArr.length; ++i){
         if( openArr[i].value === openType ) {
             openArr[i].selected = true;
-            console.log(aa);
+            break;
+        };
+    };
+    
+    // 관리자 포스팅 관리 삭제여부
+    const delArr = document.querySelectorAll("#del option");
+    const delType = "<%= adminPostDetailVo.getPostDelYn() %>";
+    for(let i = 0; i < delArr.length; ++i){
+        if( delArr[i].value === delType ) {
+        	delArr[i].selected = true;
             break;
         };
     };
