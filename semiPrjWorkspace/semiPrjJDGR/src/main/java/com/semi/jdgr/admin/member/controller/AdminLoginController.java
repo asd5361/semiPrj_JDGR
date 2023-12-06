@@ -7,12 +7,50 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.semi.jdgr.admin.member.service.AdminService;
+import com.semi.jdgr.admin.member.vo.AdaminVo;
 
-@WebServlet("/admin/member/login")
-public class AdminLoginController extends HttpServlet{
+@WebServlet("/admin/login")
+public class AdminLoginController extends HttpServlet {
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/views/admin/login.jsp").forward(req, resp);
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/WEB-INF/views/admin/member/login.jsp").forward(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		try {
+			
+			// data
+			String memberId = req.getParameter("memberId");
+			String memberPwd = req.getParameter("memberPwd");
+			
+			AdaminVo vo = new AdaminVo();
+			vo.setAdminId(memberId);
+			vo.setAdminPwd(memberPwd);
+			
+			// service
+			AdminService as = new AdminService();
+			AdaminVo loginMember = as.login(vo);
+
+			HttpSession session = req.getSession();
+			// result (==view)
+			if(loginMember == null) {
+				session.setAttribute("alertMsg", "아이디 또는 비밀번호가 틀렸습니다.");
+				throw new Exception("로그인 실패 ...");
+			}
+			
+			session.setAttribute("loginMember", loginMember);
+			resp.sendRedirect("/jdgr/admin/notice/list"); 
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			resp.sendRedirect("/jdgr/admin/login"); 
+			
+		}
+		
 	}
 }
