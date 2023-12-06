@@ -72,7 +72,7 @@
                         <button class="btn_black">검색</button>
                     </div>
                     <div class="btn_box">
-                        <button class="btn_blue" onclick="location.href='/jdgr/admin/notice/write';">작성</button>
+                        <button class="btn_blue" onclick="location.href='/jdgr/admin/notice/write?pno=<%=pvo.getCurrentPage()%>';">작성</button>
                     </div>
                 </div>
 
@@ -147,4 +147,15 @@
             <!-- //container -->
 	
 <%@ include file="/WEB-INF/views/admin/common/footer.jsp" %>
+    <script>
+        const trArr = document.querySelectorAll(".tbl_box> table> tbody> tr");
+        for(let i = 0; i<trArr.length; i++){
+            trArr[i].addEventListener('click',handleClick);
+        }
+        function handleClick(event){
+            const tr = event.currentTarget;          // 이벤트가 발생 된 tr 요소를 선택함
+            const no = tr.children[0].innerText;    //글번호를 가져옴
+            location.href = '/jdgr/admin/notice/detail?no='+no+'&currPage=<%=pvo.getCurrentPage()%>'
+        }
+    </script>
     

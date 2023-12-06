@@ -239,5 +239,24 @@ public class NoticeDao {
 		
 		return noticeVoList;
 	}
+	//게시글 수정
+	public int noticeUpdate(Connection conn, NoticeVo vo) throws SQLException {
+		
+		//sql
+		String sql = "UPDATE NOTICE SET DEL_YN = ?,FIXED_YN =?, TITLE =? , CONTENT =? WHERE NOTICE_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, vo.getDelYn());
+		pstmt.setString(2, vo.getFixedYn());
+		pstmt.setString(3, vo.getTitle());
+		pstmt.setString(4, vo.getContent());
+		pstmt.setString(5, vo.getNoticeNo());
+		
+		int result = pstmt.executeUpdate();
+		
+		//close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
 
 }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
-
+<% String pno = (String)request.getAttribute("pno"); %>
 	 <!-- container -->
         <div class="container">
 
@@ -90,10 +90,10 @@
 
                 <div class="btn_box_group right mt20">
                     <div class="btn_box">
-                        <a href="/jdgr/admin/notice/list?pno=1" class="btn_grayline">목록가기</a>
+                        <a href="/jdgr/admin/notice/list?pno=<%=pno %>" class="btn_grayline">목록가기</a>
                     </div>
                     <div class="btn_box">
-                        <a href="" class="btn_blue">작성완료</a>
+                        <a href="javascript:sendPost();" class="btn_blue">작성완료</a>
                     </div>
                 </div>
 
@@ -102,3 +102,20 @@
         <!-- //container -->
 
 <%@ include file="/WEB-INF/views/admin/common/footer.jsp" %>   
+
+    <script>
+
+        function sendPost(){
+        let tableTag = document.querySelector(".tbl_box table");
+        let formTag = document.createElement("form");
+        let divTag = document.querySelector(".tbl_box");
+        formTag.setAttribute('method','post');
+        formTag.setAttribute('action','/jdgr/admin/notice/write?pno=<%=pno%>');
+        formTag.appendChild(tableTag);
+        divTag.appendChild(formTag);
+        formTag.submit();
+
+            
+        }
+        
+    </script>
