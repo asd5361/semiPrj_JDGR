@@ -24,15 +24,15 @@ public class PostControllerLYJ extends HttpServlet{
 			
 			PostServiceLYJ ps = new PostServiceLYJ();		
 			//data
-			int listCount = ps.selectPostCount(null);		//전체 게시글 갯수
-			String currentPage_ = req.getParameter("pno");
-			if(currentPage_ == null) {
-				currentPage_ = "1";
-			}
-			int currentPage = Integer.parseInt(currentPage_);	//현재 페이지
-			int pageLimit = 5;
-			int boardLimit = 10;
-			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+//			int listCount = ps.selectPostCount(null);		//전체 게시글 갯수
+//			String currentPage_ = req.getParameter("pno");
+//			if(currentPage_ == null) {
+//				currentPage_ = "1";
+//			}
+//			int currentPage = Integer.parseInt(currentPage_);	//현재 페이지
+//			int pageLimit = 5;
+//			int boardLimit = 10;
+//			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 			
 			PostVo postVo = new PostVo();
 		
@@ -42,7 +42,7 @@ public class PostControllerLYJ extends HttpServlet{
 			
 			//result(==view)
 			req.setAttribute("postVoList", postVoList);
-			req.setAttribute("pvo" , pvo);
+//			req.setAttribute("pvo" , pvo);
 			req.getRequestDispatcher("/WEB-INF/views/admin/post/list.jsp").forward(req, resp);	
 			
 		}catch(Exception e) {
