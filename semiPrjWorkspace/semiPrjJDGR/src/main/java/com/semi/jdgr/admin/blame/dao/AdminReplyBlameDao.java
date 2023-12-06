@@ -12,7 +12,7 @@ import com.semi.jdgr.admin.blame.vo.AdminBlameVo;
 import com.semi.jdgr.page.vo.AdminBlamePageVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
-public class AdminBlameDao {
+public class AdminReplyBlameDao {
 
 	   //게시글 목록 조회
 	   public List<AdminBlameVo> selectBlameList(Connection conn, AdminBlamePageVo pvo) throws Exception{

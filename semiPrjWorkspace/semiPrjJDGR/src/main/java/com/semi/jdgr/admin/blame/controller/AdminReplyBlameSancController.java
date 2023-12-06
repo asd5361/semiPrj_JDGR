@@ -1,5 +1,5 @@
 package com.semi.jdgr.admin.blame.controller;
 
-public class AdminBlameSancController {
+public class AdminReplyBlameSancController {
 
 }
