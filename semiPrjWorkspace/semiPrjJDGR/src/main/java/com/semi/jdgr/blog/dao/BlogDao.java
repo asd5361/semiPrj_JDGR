@@ -15,13 +15,12 @@ import com.semi.jdgr.util.JDBCTemplate;
 public class BlogDao {
 
 	// 블로그 url 정보 가져오기
-	public BlogVo getUserBlog(Connection conn, MemberVo loginMemberVo, String getBlogUrl) throws Exception {
+	public BlogVo getUserBlog(Connection conn, String getBlogUrl) throws Exception {
 
 		// sql
-		String sql = "SELECT * FROM BLOG B JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE M.MEM_NO = ? AND B.BLOG_URL = ?";
+		String sql = "SELECT * FROM BLOG B JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE B.BLOG_URL = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, loginMemberVo.getMemNo());
-		pstmt.setString(2, getBlogUrl);
+		pstmt.setString(1, getBlogUrl);
 		ResultSet rs = pstmt.executeQuery();
 		
 		// rs
@@ -45,10 +44,14 @@ public class BlogDao {
 			String blogMain = rs.getString("BLOG_MAIN");
 			String repYn = rs.getString("REP_YN");
 			String blogUrl = rs.getString("BLOG_URL");
+			String memNick = rs.getString("MEM_NICK");
+			String memId = rs.getString("MEM_ID");
 			
 			blogUrlVo = new BlogVo();
 			blogUrlVo.setBlogNo(blogNo);
 			blogUrlVo.setMemNo(memNo);
+			blogUrlVo.setMemNick(memNick);
+			blogUrlVo.setMemId(memId);
 			blogUrlVo.setBlogTitle(blogTitle);
 			blogUrlVo.setOpenYn(openYn);
 			blogUrlVo.setLayout(layout);
@@ -309,6 +312,38 @@ public class BlogDao {
 		JDBCTemplate.close(pstmt);
 		
 		return blogVoList;
+	}
+
+	// 블로그 정보 수정
+	public int editInfo(Connection conn, BlogVo blogVo) throws Exception {
+
+		// sql
+		String sql = "UPDATE BLOG SET BLOG_TITLE = ? , BLOG_IMG = ? WHERE BLOG_URL = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogVo.getBlogTitle());
+		pstmt.setString(2, blogVo.getBlogImg());
+		pstmt.setString(3, blogVo.getBlogUrl());
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+
+	// 이미지 업데이트 안하는 정보 수정
+	public int editImgNoInfo(Connection conn, BlogVo blogVo) throws Exception {
+		// sql
+		String sql = "UPDATE BLOG SET BLOG_TITLE = ? WHERE BLOG_URL = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogVo.getBlogTitle());
+		pstmt.setString(2, blogVo.getBlogUrl());
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
 	}
 
 }

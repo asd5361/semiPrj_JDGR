@@ -17,14 +17,14 @@ import com.semi.jdgr.util.JDBCTemplate;
 public class BlogService {
 
 	// url에 맞는 블로그 정보 가져오기
-	public BlogVo getUserblog(MemberVo loginMemberVo, String getBlogUrl) throws Exception {
+	public BlogVo getUserblog(String getBlogUrl) throws Exception {
 
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
 		BlogDao dao = new BlogDao();
-		BlogVo blogUrlVo = dao.getUserBlog(conn, loginMemberVo, getBlogUrl);
+		BlogVo blogUrlVo = dao.getUserBlog(conn, getBlogUrl);
 		
 		// close
 		JDBCTemplate.close(conn);
@@ -188,47 +188,67 @@ public class BlogService {
 	}
 
 	// 블로그 정보 수정
-	public BlogVo editInfo(BlogVo blogVo) {
+	public BlogVo editInfo(BlogVo blogVo) throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
-		// dao
-		BlogDao dao = new BlogDao();
-		int result = dao.editInfo(blogVo); // 수정 업데이트 결과값
-		
-		//dao.
 		
 		// 비즈니스 로직
-        Pattern blogTitleRegex = Pattern.compile("^[가-힣a-zA-Z0-9\\s]{0,25}$"); // 한글, 영문, 숫자, 띄어쓰기 혼용가능 (25자 이내)
+        Pattern blogTitleRegex = Pattern.compile("^[ㄱ-ㅎ가-힣a-zA-Z0-9\\s]{0,25}$"); // 한글, 영문, 숫자, 띄어쓰기 혼용가능 (25자 이내)
         Pattern blogImgRegex = Pattern.compile("^(jpg|jpeg|png|gif|svg)$"); // 이미지파일만 받기
         
         // 이미지 경로
+        System.out.println(blogVo.getBlogImg());
         String blogImgPath = blogVo.getBlogImg();
-        String sep = File.separator;
-        // 파일 이름 추출
-        int lastSeparatorIndex = blogImgPath.lastIndexOf(sep);
-        String fileName = lastSeparatorIndex >= 0 ? blogImgPath.substring(lastSeparatorIndex + 1) : blogImgPath;
-        // 확장자 추출
-        int dotIndex = fileName.lastIndexOf('.');
-        String fileExtension = null;
-        if (dotIndex > 0 && dotIndex < fileName.length() - 1) {
-            fileExtension = fileName.substring(dotIndex + 1);
+        if(blogImgPath != null && !blogImgPath.isEmpty()) {
+        	String sep = File.separator;
+            // 파일 이름 추출
+            int lastSeparatorIndex = blogImgPath.lastIndexOf(sep);
+            String fileName = lastSeparatorIndex >= 0 ? blogImgPath.substring(lastSeparatorIndex + 1) : blogImgPath;
+            // 확장자 추출
+            int dotIndex = fileName.lastIndexOf('.');
+            String fileExtension = null;
+            if (dotIndex > 0 && dotIndex < fileName.length() - 1) {
+                fileExtension = fileName.substring(dotIndex + 1);
+            }
+            // Matcher 객체 생성
+            Matcher blogImgMatcher = blogImgRegex.matcher(fileExtension);
+            // 이미지 파일 확장자 정규표현식과 일치하는지 확인
+            if(!blogImgMatcher.matches()) {
+                throw new Exception("올바르지 않은 이미지 파일 확장자입니다. 파일 확장자: " + fileExtension);
+            }
         }
+        
         // Matcher 객체 생성
         Matcher blogTitleMatcher = blogTitleRegex.matcher(blogVo.getBlogTitle());
-        Matcher blogUrlMatcher = blogUrlRegex.matcher(blogVo.getBlogUrl());
-        Matcher blogImgMatcher = blogImgRegex.matcher(fileExtension);
-        // 이미지 파일 확장자 정규표현식과 일치하는지 확인
-        if(!blogImgMatcher.matches()) {
-            throw new Exception("올바르지 않은 이미지 파일 확장자입니다. 파일 확장자: " + fileExtension);
-        }
         // 블로그 타이틀 정규표현식과 일치하는지 확인
         if(!blogTitleMatcher.matches()) {
             throw new Exception("블로그 타이틀이 적절하지 않습니다.");
         }
 		
-		return null;
+		// dao
+		BlogDao dao = new BlogDao();
+		int result = 0;
+		// 이미지 경로가 null이면 이미지 업데이트 안함
+		if(blogImgPath != null && !blogImgPath.isEmpty()) {
+			result = dao.editInfo(conn, blogVo); // 수정 업데이트 결과값
+		} else {
+			result = dao.editImgNoInfo(conn, blogVo); // 수정 업데이트 결과값
+		}
+		
+        
+        // tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// 수정된 정보 select
+		BlogVo editBlogVo = dao.getUserBlog(conn, blogVo.getBlogUrl());
+		
+		return editBlogVo;
 	}
 	
 }

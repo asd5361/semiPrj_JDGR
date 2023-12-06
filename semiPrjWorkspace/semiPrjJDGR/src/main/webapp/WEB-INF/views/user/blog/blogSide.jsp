@@ -17,15 +17,15 @@
     <!-- 유저 정보 -->
     <div class="blog_info">
         <div class="img">
-        	<img src="/<%= blogUrlVo.getBlogImg() %>" alt="">
+        	<img src="/${blogUrlVo.blogImg}" alt="">
         </div>
         <div class="info">
-            <strong><%= loginMemberVo.getMemNick() %></strong>
-            <span><%= loginMemberVo.getMemId() %></span>
+            <strong>${blogUrlVo.memNick}</strong>
+            <span>${blogUrlVo.memId}</span>
         </div>
         <div class="btn_area">
             <a href="/jdgr/blog/write" class="write">글쓰기</a>
-            <a href="/jdgr/blogSet/blogInfo?url=<%= blogUrlVo.getBlogUrl() %>" class="set">블로그·관리</a>
+            <a href="/jdgr/blogSet/blogInfo?url=${blogUrlVo.blogUrl}" class="set">블로그·관리</a>
         </div>
     </div>
 
@@ -35,10 +35,10 @@
             <strong>카테고리</strong>
         </a>
         <ul>
-        	<li class="category"><a href="/jdgr/hjy/post/view?url=<%= blogUrlVo.getBlogUrl() %>"><strong>전체보기</strong><span>(12)</span></a></li>
+        	<li class="category"><a href="/jdgr/hjy/post/view?url=${blogUrlVo.blogUrl}"><strong>전체보기</strong><span>(12)</span></a></li>
         	<% if(groupVoList != null){ %>
         		<% for(GroupVo groupVo : groupVoList){ %>
-        			<li class="category"><a href="/jdgr/hjy/post/view?url=<%= blogUrlVo.getBlogUrl() %>"><strong><%= groupVo.getGroupName() %></strong><span>(3)</span></a></li>
+        			<li class="category"><a href="/jdgr/hjy/post/view?url=${blogUrlVo.blogUrl}"><strong><%= groupVo.getGroupName() %></strong><span>(3)</span></a></li>
         		<% } %>
         	<% } %>
             <li class="line"></li>

@@ -16,13 +16,13 @@
 	
 	// 로그인 멤버 블로그정보
 	BlogVo loginMemberBlogVo = null;
-	BlogVo blogUrlVo = null;
+	
 	List<BlogVo> loginMemberBlogVoList = new ArrayList<BlogVo>();
 	if(loginMemberVo != null){
 		loginMemberBlogVo = (BlogVo) session.getAttribute("loginMemberBlogVo"); // 대표블로그 설정 가져오기
 		loginMemberBlogVoList = (List<BlogVo>) session.getAttribute("loginMemberBlogVoList"); // 블로그 리스트 가져오기
-		blogUrlVo = (BlogVo) session.getAttribute("blogUrlVo"); // url에 맞는 블로그 정보
 	}
+	BlogVo blogUrlVo = (BlogVo) session.getAttribute("blogUrlVo"); // url에 맞는 블로그 정보
 	
 %>
 <!DOCTYPE html>
@@ -72,6 +72,11 @@
             
             <div class="util_box">
 				<% if(loginMemberVo == null){ %>
+						
+					<div class="blog_home">
+						<a href="/jdgr/home">블로그 홈</a>
+					</div>
+					
 					<!-- 로그인 전 -->
 	                <div class="before_login">
 	                    <a href="/jdgr/member/login">로그인</a>

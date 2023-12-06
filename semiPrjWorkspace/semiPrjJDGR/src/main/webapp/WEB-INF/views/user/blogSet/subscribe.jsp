@@ -215,5 +215,51 @@
     </div>
 </main>
 <!-- //main -->
+<script>
 
+// 전체선택
+const allchkBtn = document.querySelector('.allchk_Btn'); // 전체선택 버튼
+const allchkBtnInp = document.querySelector('.chk_All input'); // 전체선택 input
+const checkboxes = document.querySelectorAll('tbody .chk_box input[type="checkbox"]'); // 체크박스들
+
+// 전체 선택/해제 체크박스에 이벤트 리스너 추가
+allchkBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = true;
+        allchkBtnInp.checked = true;
+    });
+    const currentText = allchkBtn.innerHTML; // allchkBtn으로 변경
+    const nextText = currentText === '전체선택' ? '전체해제' : '전체선택';
+    allchkBtn.innerHTML = nextText; // allchkBtn으로 변경
+
+    if(currentText === '전체해제'){
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+            allchkBtnInp.checked = false;
+        });
+    }
+});
+
+allchkBtnInp.addEventListener('change', (e) => {
+    if (e.target.checked) {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = true;
+        });
+    } else {
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+    }
+});
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+        allchkBtnInp.checked = allChecked;
+    });
+});
+
+
+</script>
 <%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
