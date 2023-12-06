@@ -6,6 +6,7 @@
     	PostVo postDetailVo = (PostVo) request.getAttribute("postDetailVo");
     	PostVo heartCnt = (PostVo) request.getAttribute("heartCnt");
     	PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
+    	request.getat
     %>
 
     <div class="container01">
@@ -80,6 +81,24 @@
     function clickHeart() {
     	const heart = document.querySelector();
     }
+    
+    const p = new Promise( ( resolve , reject ) => {
+        console.log("공감");
+        const voList = 서버에서 데이터 받기();
+        if(voList.length > 0){
+            resolve(데이터);
+        }else{
+            reject();
+        }
+        resolve();  // 작업상태 변경
+    } )
+    .then( (데이터) => {
+        console.log("hello");
+    } )
+    .catch( () => {
+        console.log("bye");
+    } )
+    ;
 
     // 이미지 변경
     function clickEvent(mode) {
