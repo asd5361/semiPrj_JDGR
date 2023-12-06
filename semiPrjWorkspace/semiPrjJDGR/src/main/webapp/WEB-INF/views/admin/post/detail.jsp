@@ -113,7 +113,7 @@ PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
 
                 <div class="btn_box_group right mt20">
                     <div class="btn_box">
-                        <a href="" class="btn_grayline">목록보기</a>
+                        <a href="/jdgr/admin/post/list" class="btn_grayline">목록보기</a>
                     </div>
                     <div class="btn_box">
                         <!-- <a href="" class="btn_blue" value="open">수정하기</a> -->
