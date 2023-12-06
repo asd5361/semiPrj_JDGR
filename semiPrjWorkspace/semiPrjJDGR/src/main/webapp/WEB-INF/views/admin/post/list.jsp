@@ -7,7 +7,7 @@
     
     <%
     	List<PostVo> postVoList = (List<PostVo>)request.getAttribute("postVoList");
-    	PageVo pvo = (PageVo)request.getAttribute("pvo");
+//     	PageVo pvo = (PageVo)request.getAttribute("pvo");
 //     	Map<String, String> searchMap = (Map<String,String>)request.getAttribute("searchMap");
     
     %>
@@ -26,13 +26,13 @@
                     <div class="search_item">
                         <label for="sel_01">작성자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" id="inp_02" name="작성자">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">제목</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" id="inp_02" name="제목">
                         </div>
                     </div>
 

@@ -20,6 +20,14 @@ public class PostServiceLYJ {
 		PostDaoLYJ dao = new PostDaoLYJ();
 		List<PostVo> postVoList = dao.selectPostList(conn, postVo);
 		
+		// 공감수 조회하는 쿼리문 실행
+		for (PostVo vo : postVoList) {
+			String cnt = dao.getHeartCnt(conn , vo.getPostNo());
+			vo.setHeartCnt(cnt);
+		}
+		
+		// 댓글수 조회하는 쿼리문 실행
+		
 		// close
 		JDBCTemplate.close(conn);
 		
@@ -28,22 +36,22 @@ public class PostServiceLYJ {
 	}//selectPostList
 	
 	
-	//전체 게시글 갯수 조회(관리자)
-	public int selectPostCount(Map<String, String> p) throws Exception {
-		
-		//conn
-		Connection conn = JDBCTemplate.getConnection();
-		
-		//dao
-		PostDaoLYJ dao = new PostDaoLYJ();
-		int cnt = dao.selectPostCount(conn, p);
-		
-		// close
-		JDBCTemplate.close(conn);
-		
-		return cnt;
-		
-	}//selectPostCount
+//	//전체 게시글 갯수 조회(관리자)
+//	public int selectPostCount(Map<String, String> p) throws Exception {
+//		
+//		//conn
+//		Connection conn = JDBCTemplate.getConnection();
+//		
+//		//dao
+//		PostDaoLYJ dao = new PostDaoLYJ();
+//		int cnt = dao.selectPostCount(conn, p);
+//		
+//		// close
+//		JDBCTemplate.close(conn);
+//		
+//		return cnt;
+//		
+//	}//selectPostCount
 	
 	
 	
