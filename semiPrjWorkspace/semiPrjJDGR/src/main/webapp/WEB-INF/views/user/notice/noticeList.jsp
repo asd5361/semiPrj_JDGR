@@ -55,7 +55,7 @@
                                     <!-- <td><img src="/jdgr/resources/user/images/ico/ico_fix.svg" alt="고정표시"></td> -->
 <%for(NoticeVo vo : noticeVoList){%>
 								<tr>
-                                    <td><%= vo.getNoticeNo()%></td>
+									<td><%= vo.getNoticeNo()%></td>           
                                     <td><%= vo.getTitle()%></td>
                                     <td><%= vo.getEnrollDate()%></td>
                                     <td><%= vo.getInquiry()%></td>

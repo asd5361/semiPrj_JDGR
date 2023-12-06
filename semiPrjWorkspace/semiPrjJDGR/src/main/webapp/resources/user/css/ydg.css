@@ -104,7 +104,7 @@
     display: flex;
     /* justify-content: center; */
     align-items: center;
-    gap: 930px;
+    gap: 920px;
 }
 .noti_tbl table tbody tr:nth-child(2) th div img{
     width: 13px;
