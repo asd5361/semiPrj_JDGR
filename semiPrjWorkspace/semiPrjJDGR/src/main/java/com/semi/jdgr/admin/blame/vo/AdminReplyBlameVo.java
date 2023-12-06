@@ -1,21 +1,33 @@
 package com.semi.jdgr.admin.blame.vo;
 
-public class AdminBlameVo {
+public class AdminReplyBlameVo {
 	
-	private String blameNo;
-	private String replyNo;		//댓글 번호
-	private String postNo;		//포스트 번호
-	private String title;		//포스트 제목
-	private String con;			//댓글 내용
-	private String blameDate;	//신고일자
-	private String blaList;		//사유 항목(번호)
-	private String sancYn;		//제재여부
-	private String ansDate;		//답변일자
-	private String delYn;
-	private String blamerNo;	//신고자 번호
-	private String blamerId;	//신고자 아이디 
-	private String memNo;		//작성자 이름
-	private String memId;		//작성자 아이디
+	r_bla_no
+	r_no
+	r_blamer_no
+	r_writer_no
+	r_bla_con
+	r_bla_date
+	r_bla_list
+	r_bla_detail_reason
+	r_sanc_yn
+	r_ans_date
+	r_bla_detail
+	r_del_yn
+
+	
+	private String rBlaNo;
+	private String rNo;
+	private String rBlamerNo;
+	private String rWriterNo;
+	private String rBlaCon;
+	private String rBlaDate;
+	private String r_bla_list;
+	private String r_bla_detail_reason;
+	private String r_sanc_yn;
+	private String r_ans_date;
+	private String r_bla_detail;
+	private String r_del_yn;
 	
 	
 	public String getBlameNo() {
@@ -104,7 +116,7 @@ public class AdminBlameVo {
 	}
 	
 	
-	public AdminBlameVo(String blameNo, String replyNo, String postNo, String title, String con, String blameDate,
+	public AdminReplyBlameVo(String blameNo, String replyNo, String postNo, String title, String con, String blameDate,
 			String blaList, String sancYn, String ansDate, String delYn, String blamerNo, String blamerId, String memNo,
 			String memId) {
 		super();
@@ -134,7 +146,7 @@ public class AdminBlameVo {
 	}
 	
 	
-	public AdminBlameVo() {
+	public AdminReplyBlameVo() {
 	}
 	
 	

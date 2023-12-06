@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-import com.semi.jdgr.admin.blame.dao.AdminBlameDao;
+import com.semi.jdgr.admin.blame.dao.AdminReplyBlameDao;
 import com.semi.jdgr.admin.blame.vo.AdminBlameCategoryVo;
 import com.semi.jdgr.admin.blame.vo.AdminBlameVo;
 import com.semi.jdgr.page.vo.AdminBlamePageVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
-public class AdminBlameService {
+public class AdminReplyBlameService {
 
 	// 신고 목록 조회
 	public List<AdminBlameVo> selectBlameList(AdminBlamePageVo pvo) throws Exception {
@@ -19,7 +19,7 @@ public class AdminBlameService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
-		AdminBlameDao dao = new AdminBlameDao();
+		AdminReplyBlameDao dao = new AdminReplyBlameDao();
 		List<AdminBlameVo> blameVoList = dao.selectBlameList(conn, pvo);
 		
 		// close
@@ -37,7 +37,7 @@ public class AdminBlameService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
-		AdminBlameDao dao = new AdminBlameDao();
+		AdminReplyBlameDao dao = new AdminReplyBlameDao();
 		int cnt = dao.selectBlameCount(conn);
 		
 		// close
@@ -54,7 +54,7 @@ public class AdminBlameService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		//dao
-		AdminBlameDao dao = new AdminBlameDao();
+		AdminReplyBlameDao dao = new AdminReplyBlameDao();
 		List<AdminBlameCategoryVo> voList = dao.getCategoryList(conn);
 		
 		//close
@@ -71,7 +71,7 @@ public class AdminBlameService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
-		AdminBlameDao dao = new AdminBlameDao();
+		AdminReplyBlameDao dao = new AdminReplyBlameDao();
 		AdminBlameVo vo = dao.selectBlameByNo(conn, no);
 
 		
@@ -88,7 +88,7 @@ public class AdminBlameService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// DAO
-		AdminBlameDao dao = new AdminBlameDao();
+		AdminReplyBlameDao dao = new AdminReplyBlameDao();
 		List<AdminBlameVo> blameVoList = dao.search(conn , m, pvo);
 		
 		//close
@@ -105,7 +105,7 @@ public class AdminBlameService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// DAO
-		AdminBlameDao dao = new AdminBlameDao();
+		AdminReplyBlameDao dao = new AdminReplyBlameDao();
 		int cnt = dao.getBlameCountBySearch(conn , m);
 		
 		// close

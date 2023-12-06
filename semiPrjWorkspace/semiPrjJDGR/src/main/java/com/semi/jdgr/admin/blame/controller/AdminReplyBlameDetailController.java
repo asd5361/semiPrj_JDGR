@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.jdgr.admin.blame.service.AdminBlameService;
+import com.semi.jdgr.admin.blame.service.AdminReplyBlameService;
 import com.semi.jdgr.admin.blame.vo.AdminBlameVo;
 
 @WebServlet("/admin/blame/blame_detail")
-public class AdminBlameDetailController extends HttpServlet{
+public class AdminReplyBlameDetailController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,7 +22,7 @@ public class AdminBlameDetailController extends HttpServlet{
 			String no = req.getParameter("no");
 			
 			//service
-			AdminBlameService abs = new AdminBlameService();
+			AdminReplyBlameService abs = new AdminReplyBlameService();
 			AdminBlameVo vo = abs.selectBlameByNo(no);
 			
 			//result(==view)

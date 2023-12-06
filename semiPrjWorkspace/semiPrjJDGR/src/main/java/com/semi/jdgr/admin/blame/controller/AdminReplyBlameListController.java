@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.jdgr.admin.blame.service.AdminBlameService;
+import com.semi.jdgr.admin.blame.service.AdminReplyBlameService;
 import com.semi.jdgr.admin.blame.vo.AdminBlameVo;
 import com.semi.jdgr.page.vo.AdminBlamePageVo;
 import com.semi.jdgr.page.vo.PageVo;
 
 @WebServlet("/admin/blame/blame_list")
-public class AdminBlameListController extends HttpServlet{
+public class AdminReplyBlameListController extends HttpServlet{
 
 	//신고 목록 조회 화면
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			AdminBlameService abs = new AdminBlameService();
+			AdminReplyBlameService abs = new AdminReplyBlameService();
 			
 			//data
 			int listCount = abs.selectBlameCount();
