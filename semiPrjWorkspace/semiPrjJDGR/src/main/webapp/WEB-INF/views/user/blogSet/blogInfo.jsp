@@ -21,14 +21,14 @@
 
                 <div class="content">
 
-                    <form action="/blogSet/blogInfo" method="post" enctype="multipart/form-data">
+                    <form action="/jdgr/blogSet/blogInfo" method="post" enctype="multipart/form-data">
                         <div class="data_dl">
                             <dl>
                                 <dt>블로그명</dt>
                                 <dd>
                                     <div class="inp_box">
                                         <% if(userBlogVo != null){ %>
-                                        <input type="text" value="<%= userBlogVo.getBlogTitle() %>" name="blogTitle">
+                                        <input type="text" value="${blogUserData.blogTitle}" name="blogTitle">
                                         <% } %>
                                         <span>한글, 영문, 숫자 혼용가능 (한글기준 25자 이내)</span>
                                     </div>
@@ -40,7 +40,7 @@
                                     <div class="profile_box">
                                         <div class="img">
                                             <% if(userBlogVo != null){ %>
-                                            <img src="<%= userBlogVo.getBlogImg() %>" alt="">
+                                            <img src="${blogUserData.blogImg}" alt="">
                                             <% } %>
                                         </div>
                                         <div class="profile_btn">
@@ -56,7 +56,7 @@
                         <div class="blog_set_btn">
                             <button>저장</button>
                         </div>
-                        <input type="hidden" name="blogUrl" value="<%= userBlogVo.getBlogUrl() %>">
+                        <input type="hidden" name="blogUrl" value="${blogUserData.blogUrl}">
                     </form>
 
                 </div>

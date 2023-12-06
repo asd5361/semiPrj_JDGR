@@ -30,7 +30,7 @@ public class BlogViewUrlController extends HttpServlet {
 			MemberVo loginMemberVo = (MemberVo) req.getSession().getAttribute("loginMember");
 			
 			BlogService bs = new BlogService();
-			BlogVo blogUrlVo = bs.getUserblog(loginMemberVo, getBlogUrl); // url에 맞는 블로그 가져오기
+			BlogVo blogUrlVo = bs.getUserblog(getBlogUrl); // url에 맞는 블로그 가져오기
 			List<GroupVo> groupVoList = bs.getGroupList(blogUrlVo); // 카테고리그룹 가져오기
 			
 			// result

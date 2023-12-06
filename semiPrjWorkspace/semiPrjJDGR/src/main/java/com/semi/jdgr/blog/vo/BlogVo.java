@@ -4,6 +4,8 @@ public class BlogVo {
 	
 	private String blogNo;
 	private String memNo;
+	private String memNick;
+	private String memId;
 	private String blogTitle;
 	private String openYn;
 	private String layout;
@@ -30,6 +32,18 @@ public class BlogVo {
 	}
 	public void setMemNo(String memNo) {
 		this.memNo = memNo;
+	}
+	public String getMemNick() {
+		return memNick;
+	}
+	public void setMemNick(String memNick) {
+		this.memNick = memNick;
+	}
+	public String getMemId() {
+		return memId;
+	}
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
 	public String getBlogTitle() {
 		return blogTitle;
@@ -121,20 +135,15 @@ public class BlogVo {
 	public void setBlogUrl(String blogUrl) {
 		this.blogUrl = blogUrl;
 	}
-	@Override
-	public String toString() {
-		return "BlogVo [blogNo=" + blogNo + ", memNo=" + memNo + ", blogTitle=" + blogTitle + ", openYn=" + openYn
-				+ ", layout=" + layout + ", skin=" + skin + ", clockYn=" + clockYn + ", mapYn=" + mapYn
-				+ ", rCommentsYn=" + rCommentsYn + ", followBlogYn=" + followBlogYn + ", visitorsCntYn=" + visitorsCntYn
-				+ ", blogImg=" + blogImg + ", rComments=" + rComments + ", visitCnt=" + visitCnt + ", blogMain="
-				+ blogMain + ", repYn=" + repYn + ", blogUrl=" + blogUrl + "]";
-	}
-	public BlogVo(String blogNo, String memNo, String blogTitle, String openYn, String layout, String skin,
-			String clockYn, String mapYn, String rCommentsYn, String followBlogYn, String visitorsCntYn, String blogImg,
-			String rComments, String visitCnt, String blogMain, String repYn, String blogUrl) {
+	public BlogVo(String blogNo, String memNo, String memNick, String memId, String blogTitle, String openYn,
+			String layout, String skin, String clockYn, String mapYn, String rCommentsYn, String followBlogYn,
+			String visitorsCntYn, String blogImg, String rComments, String visitCnt, String blogMain, String repYn,
+			String blogUrl) {
 		super();
 		this.blogNo = blogNo;
 		this.memNo = memNo;
+		this.memNick = memNick;
+		this.memId = memId;
 		this.blogTitle = blogTitle;
 		this.openYn = openYn;
 		this.layout = layout;
@@ -155,5 +164,5 @@ public class BlogVo {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 }

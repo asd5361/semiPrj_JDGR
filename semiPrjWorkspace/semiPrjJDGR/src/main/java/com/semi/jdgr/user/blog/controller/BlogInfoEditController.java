@@ -32,12 +32,11 @@ public class BlogInfoEditController extends HttpServlet {
 		
 		try {
 			// data
-			MemberVo memberVo = (MemberVo) req.getSession().getAttribute("loginMember");
 			String userUrl = req.getParameter("url");
 			
 			// service
 			BlogService bs = new BlogService();
-			BlogVo blogVo = bs.getUserblog(memberVo, userUrl); // 블로그 데이터 불러오기
+			BlogVo blogVo = bs.getUserblog(userUrl); // 블로그 데이터 불러오기
 			
 			// result
 			if(blogVo == null) {
@@ -77,28 +76,30 @@ public class BlogInfoEditController extends HttpServlet {
 			String blogTitle = req.getParameter("blogTitle");
 			Part blogImg = req.getPart("blogImg");
 			String blogUrl = req.getParameter("blogUrl");
-			
+			System.out.println(blogImg);
+			String fileUrl = null;
 			// 파일 설정
 			String submittedFileName = blogImg.getSubmittedFileName(); // 파일 이름 가져오기
-			String fileExtension = submittedFileName.substring(submittedFileName.lastIndexOf('.')); // 확장자 추출
-			InputStream in = blogImg.getInputStream(); // 읽기 준비
-			
-			String sep = File.separator;
-			
-			// 내보내기 준비
-			String path = sep + "resources" + sep + "user" + sep + "upload" + sep + "userImg";
-			String realPath = req.getServletContext().getRealPath(path);
-			String fileName = sep + "jdgrUser_" + (int)(Math.random() * 100000000) + fileExtension;
-			File target = new File(realPath + fileName);
-			FileOutputStream out = new FileOutputStream(target);
-			
-			byte[] buf = new byte[1024];
-			int size = 0;
-			while((size = in.read(buf)) != -1) {
-				out.write(buf, 0, size);
+			if(submittedFileName != null && !submittedFileName.isEmpty()) {
+				String fileExtension = submittedFileName.substring(submittedFileName.lastIndexOf('.')); // 확장자 추출
+				InputStream in = blogImg.getInputStream(); // 읽기 준비
+				
+				String sep = File.separator;
+				
+				// 내보내기 준비
+				String path = sep + "resources" + sep + "user" + sep + "upload" + sep + "userImg";
+				String realPath = req.getServletContext().getRealPath(path);
+				String fileName = sep + "jdgrUser_" + (int)(Math.random() * 100000000) + fileExtension;
+				File target = new File(realPath + fileName);
+				FileOutputStream out = new FileOutputStream(target);
+				
+				byte[] buf = new byte[1024];
+				int size = 0;
+				while((size = in.read(buf)) != -1) {
+					out.write(buf, 0, size);
+				}
+				fileUrl = sep + "jdgr" + path + fileName;
 			}
-			
-			String fileUrl = "jdgr" + path + fileName;
 			
 			BlogVo blogVo = new BlogVo();
 			blogVo.setBlogTitle(blogTitle);
@@ -118,7 +119,9 @@ public class BlogInfoEditController extends HttpServlet {
 			popText.put("completeContent", "");
 			req.getSession().setAttribute("popText", popText);
 						
-			req.setAttribute("userBlogVo", resultVo);
+			req.setAttribute("blogUserData", resultVo);
+			req.setAttribute("blogClassName", "blog_set");
+			req.setAttribute("blogSideClassName", "blogInfo");
 			req.getRequestDispatcher("/WEB-INF/views/user/blogSet/blogInfo.jsp").forward(req, resp);
 			
 		} catch(Exception e) {
