@@ -2,6 +2,7 @@ package com.semi.jdgr.admin.blame.vo;
 
 public class AdminBlameVo {
 	
+	private String blameNo;
 	private String replyNo;		//댓글 번호
 	private String postNo;		//포스트 번호
 	private String title;		//포스트 제목
@@ -16,6 +17,13 @@ public class AdminBlameVo {
 	private String memNo;		//작성자 이름
 	private String memId;		//작성자 아이디
 	
+	
+	public String getBlameNo() {
+		return blameNo;
+	}
+	public void setBlameNo(String blameNo) {
+		this.blameNo = blameNo;
+	}
 	public String getReplyNo() {
 		return replyNo;
 	}
@@ -94,21 +102,13 @@ public class AdminBlameVo {
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
-
 	
 	
-	@Override
-	public String toString() {
-		return "AdminBlameVo [replyNo=" + replyNo + ", postNo=" + postNo + ", title=" + title + ", con=" + con
-				+ ", blameDate=" + blameDate + ", blaList=" + blaList + ", sancYn=" + sancYn + ", ansDate=" + ansDate
-				+ ", delYn=" + delYn + ", blamerNo=" + blamerNo + ", blamerId=" + blamerId + ", memNo=" + memNo
-				+ ", memId=" + memId + "]";
-	}
-	
-	
-	public AdminBlameVo(String replyNo, String postNo, String title, String con, String blameDate, String blaList,
-			String sancYn, String ansDate, String delYn, String blamerNo, String blamerId, String memNo, String memId) {
+	public AdminBlameVo(String blameNo, String replyNo, String postNo, String title, String con, String blameDate,
+			String blaList, String sancYn, String ansDate, String delYn, String blamerNo, String blamerId, String memNo,
+			String memId) {
 		super();
+		this.blameNo = blameNo;
 		this.replyNo = replyNo;
 		this.postNo = postNo;
 		this.title = title;
@@ -125,8 +125,19 @@ public class AdminBlameVo {
 	}
 	
 	
+	@Override
+	public String toString() {
+		return "AdminBlameVo [blameNo=" + blameNo + ", replyNo=" + replyNo + ", postNo=" + postNo + ", title=" + title
+				+ ", con=" + con + ", blameDate=" + blameDate + ", blaList=" + blaList + ", sancYn=" + sancYn
+				+ ", ansDate=" + ansDate + ", delYn=" + delYn + ", blamerNo=" + blamerNo + ", blamerId=" + blamerId
+				+ ", memNo=" + memNo + ", memId=" + memId + "]";
+	}
+	
+	
 	public AdminBlameVo() {
 	}
+	
+	
 	
 	
 

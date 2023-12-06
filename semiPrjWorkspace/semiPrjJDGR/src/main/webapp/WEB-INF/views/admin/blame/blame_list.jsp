@@ -1,7 +1,18 @@
+<%@page import="java.util.Map"%>
+<%@page import="com.semi.jdgr.page.vo.AdminBlamePageVo"%>
+<%@page import="com.semi.jdgr.admin.blame.vo.AdminBlameVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
     <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
+    
+    <%
+    	List<AdminBlameVo> blameVoList = (List<AdminBlameVo>) request.getAttribute("blameVoList");
+    	AdminBlamePageVo pvo = (AdminBlamePageVo)request.getAttribute("pvo");
+    	Map<String, String> searchMap = (Map<String, String>)request.getAttribute("searchMap");
+    %>
+    
   <!-- container -->
             <div class="container">
                 <!-- 제목 -->
