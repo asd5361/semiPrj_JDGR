@@ -97,5 +97,34 @@ public class NoticeService {
 		
 		return vo;
 	}
+	public int selectAdminNoticeCount() throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		int cnt = dao.selectAdminNoticeCount(conn);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
+	}
+	//관리자 게시글 전체 조회
+	public List<NoticeVo> selectAdminNoticeList(PageVo pvo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		List<NoticeVo> noticeVoList = dao.selectAdminNoticeList(conn,pvo);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return noticeVoList;
+	}
 
 }

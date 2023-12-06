@@ -726,13 +726,13 @@
     background-color: var(--main-color);
 }
 
-.paging_box ul li.prev_all a {background-image: url(../images/ico/ico_prev_off.svg);}
-.paging_box ul li.prev a {background-image: url(../images/ico/ico_prev_all_off.svg);}
+.paging_box ul li.prev_all a {background-image: url(../images/ico/ico_prev_all_off.svg);}
+.paging_box ul li.prev a {background-image: url(../images/ico/ico_prev_off.svg);}
 .paging_box ul li.next a {background-image: url(../images/ico/ico_next_off.svg);}
 .paging_box ul li.next_all a {background-image: url(../images/ico/ico_next_all_off.svg);}
 
-.paging_box ul li.prev_all:hover a {background-image: url(../images/ico/ico_prev_on.svg);}
-.paging_box ul li.prev:hover a {background-image: url(../images/ico/ico_prev_all_on.svg);}
+.paging_box ul li.prev_all:hover a {background-image: url(../images/ico/ico_prev_all_on.svg);}
+.paging_box ul li.prev:hover a {background-image: url(../images/ico/ico_prev_on.svg);}
 .paging_box ul li.next:hover a {background-image: url(../images/ico/ico_next_on.svg);}
 .paging_box ul li.next_all:hover a {background-image: url(../images/ico/ico_next_all_on.svg);}
 
