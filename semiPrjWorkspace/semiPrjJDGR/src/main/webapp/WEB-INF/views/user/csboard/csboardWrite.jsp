@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<%@ include file="/WEB-INF/views/user/common/header.jsp" %>
-	
+
 	<!-- main -->
     <main>
         <div class="con1 agn_c">
@@ -53,29 +53,6 @@
         </div>
     </main>
     <!-- //main -->
-    
-	<!-- 레이어팝업 완료 모달 -->
-<div id="pop_complete" class="modal_bg complete">
-    <div class="modal_box">
-        <div class="modal_header">
-            <button class="modal_close">닫기</button>
-        </div>
-        <div class="modal_container">
-
-            <div class="modal_content">
-                <div class="img"></div>
-                <div class="txt">
-                    <strong>1:1 문의 완료</strong>
-                </div>
-            </div>
-
-        </div>
-        <div class="modal_footer">
-        
-            <button class="modal_close btn_black">확인</button>
-        </div>
-    </div>
-</div>	
 
 
 	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>

@@ -1,5 +1,11 @@
+<%@page import="com.semi.jdgr.page.vo.PageVo"%>
+<%@page import="com.semi.jdgr.notice.vo.NoticeVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% List<NoticeVo> noticeVoList = (List<NoticeVo>)request.getAttribute("noticeVoList"); %>
+<% PageVo pvo = (PageVo) request.getAttribute("pageVo"); %>
+
 
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 	
@@ -98,137 +104,42 @@
                                 <th scope="col">공개여부</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>관리자</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>1001</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>고정</td>
-                                <td>공개</td>
-                            </tr>
+                        <tbody>         
+<%for(NoticeVo vo : noticeVoList) {%>
+							<tr>
+								<td><%= vo.getNoticeNo()%></td>
+								<td><%= vo.getTitle()%></td>
+								<td><%= vo.getAdminNo() %></td>
+								<td><%= vo.getContent() %></td>
+								<td><%= vo.getInquiry()%></td>
+								<td><%= vo.getEnrollDate()%></td>
+								<td><%= vo.getUpdateDate() %></td>
+								<td><%= vo.getFixedYn() %></td>
+								<td><%= vo.getDelYn() %></td>     
+							</tr>
+<%} %>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="paging_box mt30">
                     <ul>
-                        <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                        <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                        <li class="on"><a href="">1</a></li>
-                        <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li><a href="">10</a></li>
-                        <li><a href="">100</a></li>
-                        <li><a href="">1000</a></li>
-                        <li><a href="">9</a></li>
-                        <li><a href="">10</a></li>
-                        <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
+<%if(pvo.getStartPage() != 1) {%>
+                        <li class="prev_all"><a href="/jdgr/admin/notice/list?pno=1" title="최신페이지로 이동"></a></li>
+                        <li class="prev"><a href="/jdgr/admin/notice/list?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
+
+<%} %>
+
+<%for(int i = pvo.getStartPage(); i<=pvo.getEndPage(); i++) {%>
+	<%if(i == pvo.getCurrentPage()) {%>
+						<li class="on"><a href="/jdgr/admin/notice/list?pno=<%=i%>"><%=i %></a></li>
+	<%}else{ %>
+						<li><a href="/jdgr/admin/notice/list?pno=<%=i%>"><%=i %></a></li>
+<%} } %>
+<%if(pvo.getEndPage() != pvo.getMaxPage()) {%>
+                        <li class="next"><a href="/jdgr/admin/notice/list?pno=<%=pvo.getEndPage()+1 %>" title="다음페이지로 이동"></a></li>
+                        <li class="next_all"><a href="/jdgr/admin/notice/list?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
+<%} %>
                     </ul>
                 </div>
 

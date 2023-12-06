@@ -1,5 +1,10 @@
+<%@page import="com.semi.jdgr.page.vo.PageVo"%>
+<%@page import="com.semi.jdgr.csboard.vo.CsboardVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% List<CsboardVo> csboardVoList = (List<CsboardVo>)request.getAttribute("csboardVoList"); %>
+<% PageVo pvo = (PageVo)request.getAttribute("pageVo"); %>
 
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 
@@ -97,120 +102,23 @@
                             </tr>
                         </thead>
                         <tbody>
+<%for(CsboardVo vo : csboardVoList){%>
                             <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
+								<td><%=vo.getqNo() %></td>
+								<td><%=vo.getqTit() %></td>
+								<td><%=vo.getMemNo() %></td>
+								<td><%=vo.getqCon() %></td>
+								<td><%=vo.getqWriteDate() %></td>
+								<td><%=vo.getAnsewrDate() %></td>
+								<td><%=vo.getAnsewrDate() %></td>
+								<td><%=vo.getDelYn() %></td>
+								<td><%=vo.getQuestionCategoryName() %></td>
                             </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
-                            </tr>
-                            <tr>
-                                <td>001</td>
-                                <td>컬럼내용</td>
-                                <td>김병장</td>
-                                <td>컬럼내용컬럼내용</td>
-                                <td>2023.11.11 23:00</td>
-                                <td>답변완료</td>
-                                <td>2023.11.11 23:30</td>
-                                <td>X</td>
-                                <td>일반문의</td>
-                            </tr>
+<%} %>
                         </tbody>
                     </table>
                 </div>
-
+<!-- 여기부터 진행하기 -->
                 <div class="paging_box mt30">
                     <ul>
                         <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
