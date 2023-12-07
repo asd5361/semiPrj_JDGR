@@ -17,6 +17,7 @@ public class ReplyBlameVo {
 	private String rBlaDetail;
 	private String rDelYn;
 	private String[] rBlaList;
+	private String rBlaListStr;
 	
 	
 	public String getrBlaNo() {
@@ -89,22 +90,24 @@ public class ReplyBlameVo {
 		return rBlaList;
 	}
 	public void setrBlaList(String[] rBlaList) {
+		if(rBlaList == null) {
+			this.rBlaListStr = "";
+			return;
+		}
 		this.rBlaList = rBlaList;
+		this.rBlaListStr = String.join(",", rBlaList);
 	}
-	
-	
-	@Override
-	public String toString() {
-		return "ReplyBlameVo [rBlaNo=" + rBlaNo + ", rNo=" + rNo + ", rBlamerNo=" + rBlamerNo + ", rWriterNo="
-				+ rWriterNo + ", rBlaCon=" + rBlaCon + ", rBlaDate=" + rBlaDate + ", rBlaDetailReason="
-				+ rBlaDetailReason + ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate + ", rBlaDetail=" + rBlaDetail
-				+ ", rDelYn=" + rDelYn + ", rBlaList=" + Arrays.toString(rBlaList) + "]";
+	public String getrBlaListStr() {
+		return rBlaListStr;
+	}
+	public void setrBlaListStr(String rBlaListStr) {
+		this.rBlaListStr = rBlaListStr;
 	}
 	
 	
 	public ReplyBlameVo(String rBlaNo, String rNo, String rBlamerNo, String rWriterNo, String rBlaCon, String rBlaDate,
 			String rBlaDetailReason, String rSancYn, String rAnsDate, String rBlaDetail, String rDelYn,
-			String[] rBlaList) {
+			String[] rBlaList, String rBlaListStr) {
 		super();
 		this.rBlaNo = rBlaNo;
 		this.rNo = rNo;
@@ -118,12 +121,22 @@ public class ReplyBlameVo {
 		this.rBlaDetail = rBlaDetail;
 		this.rDelYn = rDelYn;
 		this.rBlaList = rBlaList;
+		this.rBlaListStr = rBlaListStr;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "ReplyBlameVo [rBlaNo=" + rBlaNo + ", rNo=" + rNo + ", rBlamerNo=" + rBlamerNo + ", rWriterNo="
+				+ rWriterNo + ", rBlaCon=" + rBlaCon + ", rBlaDate=" + rBlaDate + ", rBlaDetailReason="
+				+ rBlaDetailReason + ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate + ", rBlaDetail=" + rBlaDetail
+				+ ", rDelYn=" + rDelYn + ", rBlaList=" + Arrays.toString(rBlaList) + ", rBlaListStr=" + rBlaListStr
+				+ "]";
 	}
 	
 	
 	public ReplyBlameVo() {
-		super();
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	

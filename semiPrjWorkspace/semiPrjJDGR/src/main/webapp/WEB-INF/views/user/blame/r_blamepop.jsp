@@ -1,12 +1,15 @@
-<%@page import="com.semi.jdgr.admin.reply.vo.AdminReplyVo"%>
-<%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
-<%@page import="com.semi.jdgr.user.blame.vo.ReplyBlameVo" %>
+<%@page import="com.semi.jdgr.user.blame.vo.ReplyBlameVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
     
+    <%
+	ReplyBlameVo replyBlameVo = (ReplyBlameVo) request.getAttribute("replyBlameVo");
+%>
+    
+    
 <link rel="stylesheet" href="/jdgr/resources/user/css/blamepop.css">
-
+<button class="modal_open" data-target="#pop_email">신고하기</button>
 <!-- 레이어팝업 모달 -->
 <div id="pop_email" class="modal_bg">
     <div class="modal_box">
@@ -15,11 +18,11 @@
             <button class="modal_close">닫기</button>
         </div>
         <hr>
-        <div class="writer_content">
-        <h5>작성자 |  + <%= vo.getMemNick() %></h5>
-        <br>
-        <h5>내   용| <%= vo.getCon() %><%=vo.getTitle() %></h5>
-        </div>
+<!--         <div class="writer_content"> -->
+<%--         <h5>작성자 |</h5><h5><%= replyBlameVo.getrWriterNo() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 --> --%>
+<!--         <br> -->
+<%--         <h5>내   용| </h5><h5><%= replyBlameVo.getrBlaCon() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 --> --%>
+<!--         </div> -->
         <hr>
         <div class="select_reason">사유선택</div>
         <div class="modal_container">
@@ -28,44 +31,44 @@
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="0" class="report_reason">
-                            <label class="reason_content"  for="0"><%= vo.get(0).getrBlaList() %></label>
+                            <label class="reason_content"  for="0"><%= replyBlameVo.getrBlaListStr().charAt(0) %></label>
 
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="1" class="report_reason">
-                            <label class="reason_content"  for="1"><%= vo.getrBlaList() %>.</label>
+                            <label class="reason_content"  for="1">ㅇㅇㅇ</label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="2" class="report_reason">
-                            <label class="reason_content"  for="2"><%= vo.getrBlaList() %></label>
+                            <label class="reason_content"  for="2">ㅇㅇㅇ</label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="3" class="report_reason">
-                            <label class="reason_content" for="3"><%= vo.getrBlaList() %></label>
+                            <label class="reason_content" for="3">ㅇㅇㅇ</label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="4" class="report_reason">
-                            <label class="reason_content"  for="4"><%= vo.getrBlaList() %></label>
+                            <label class="reason_content"  for="4">ㅇㅇㅇ</label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="5" class="report_reason">
-                            <label class="reason_content"  for="5"><%= vo.getrBlaList() %></label>
+                            <label class="reason_content"  for="5">ㅇㅇㅇ</label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area_last">
                             <input type="radio" name="select" id="6" class="report_reason">
-                            <label class="reason_content"  for="6"><%= vo.getrBlaList() %></label>
+                            <label class="reason_content"  for="6">ㅇㅇㅇ</label>
                         </div>
                     </li>
                 </ul>

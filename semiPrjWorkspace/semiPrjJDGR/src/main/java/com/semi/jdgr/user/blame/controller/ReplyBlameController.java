@@ -12,13 +12,13 @@ import javax.servlet.http.HttpSession;
 import com.semi.jdgr.user.blame.service.ReplyBlameService;
 import com.semi.jdgr.user.blame.vo.ReplyBlameVo;
 
-@WebServlet("/user/blame/blamepop")
+@WebServlet("/user/blame/r_blamepop")
 public class ReplyBlameController extends HttpServlet{
 	
 	//유저가 신고한 신고구분 가져오기
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/views/user/blame/blamepop.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/user/blame/r_blamepop.jsp").forward(req, resp);
 	
 	}//doGet
 	
