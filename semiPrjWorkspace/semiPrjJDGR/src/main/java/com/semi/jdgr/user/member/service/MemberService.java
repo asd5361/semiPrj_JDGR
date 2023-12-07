@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.semi.jdgr.user.member.dao.MemberDao;
+import com.semi.jdgr.user.member.vo.MemberPostSanctionVo;
 import com.semi.jdgr.user.member.vo.MemberReplySanctionVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
@@ -128,6 +129,20 @@ public class MemberService {
 		JDBCTemplate.close(conn);
 
 		return mrsVoList;
+	}
+
+	public List<MemberPostSanctionVo> findMPSVoList() throws Exception {
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+
+		// dao
+		MemberDao dao = new MemberDao();
+		List<MemberPostSanctionVo> mpsVoList = dao.findMPSVoList(conn);
+
+		// close
+		JDBCTemplate.close(conn);
+
+		return mpsVoList;
 	}
 
 }

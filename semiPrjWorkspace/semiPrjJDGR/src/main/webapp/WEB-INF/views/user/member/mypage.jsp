@@ -24,6 +24,7 @@
 	                <hr>
 	                <table>
 	                    <tbody>
+			<input type="hidden" id="checkNum"> 
 	                        <tr>
 	                            <td>이름</td>
 	                            <td>
@@ -50,22 +51,21 @@
 	                                <!-- 비번 변경 버튼 -->
 	                                <div class="form_box">
 	                                    <div class="btn_box">
-	                                        <button class="btn_black" data-target="#pop_email">비밀번호 변경</button>
+	                                        <button type="button" class="btn_black" onclick="sendEmailMypage()">메일로 인증번호 전송</button>
 	                                    </div>
 	                                    <span class="txt_msg">*사용자의 메일로 인증번호가 전송 되었습니다.</span>
 	                                </div>
 	                            </td>
 	                        </tr>
-	                        <tr>
+	                        <tr >
 	                            <td>인증번호 입력</td>
-	                            <td>
+	                            <td id="certInputRow" style="display: none;">
 	                                <!-- 인증번호 입력 -->
 	                                <div class="form_box">
 	                                    <div class="inp_btn">
-	                                        <input  type="text" name="cert" >
-	                                        <button >인증</button>
+	                                        <input id = "cert" type="text" name="inputCheckNum" disabled>
+	                                        <button type="button" onclick="certification()">인증</button>
 	                                    </div>
-	                                    <span class="txt_msg">*인증완료</span>
 	                                </div>
 	                            </td>
 	                        </tr>
@@ -74,7 +74,7 @@
 	                            <td>
 	                                <!-- 이름 입력 -->
 	                                <div class="form_box ico_id">
-	                                    <input type="password" name="pwd1" >
+	                                    <input id ="pwd1" type="password" name="pwd1" disabled>
 	                                </div>
 	                            </td>
 	                        </tr>
@@ -83,7 +83,7 @@
 	                            <td>
 	                                <!-- 이름 입력 -->
 	                                <div class="form_box ico_id">
-	                                    <input type="password" name="pwd2" >
+	                                    <input id ="pwd2" type="password" name="pwd2" disabled>
 	                                </div>
 	                            </td>
 	                        </tr>
@@ -146,3 +146,4 @@
     <!-- footer -->
     
 <%@include file = "../common/footer.jsp"%>
+<script src="/jdgr/resources/user/js/sendEmail.js"></script>
