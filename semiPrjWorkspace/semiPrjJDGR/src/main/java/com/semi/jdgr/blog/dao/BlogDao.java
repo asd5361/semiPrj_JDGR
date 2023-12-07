@@ -80,7 +80,7 @@ public class BlogDao {
 	public List<GroupVo> getGroupList(Connection conn, BlogVo blogVo) throws Exception {
 		
 		// sql
-		String sql = "SELECT * FROM MYBLOG_CATEGORY MC JOIN BLOG B ON B.BLOG_NO = MC.BLOG_NO WHERE B.BLOG_NO = ? ORDER BY MC.GROUP_ORDER";
+		String sql = "SELECT * FROM MYBLOG_CATEGORY MC JOIN BLOG B ON B.BLOG_NO = MC.BLOG_NO WHERE B.BLOG_NO = ? AND MC.DEL_YN = 'N' ORDER BY MC.GROUP_ORDER";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, blogVo.getBlogNo());
 		ResultSet rs = pstmt.executeQuery();
@@ -90,10 +90,12 @@ public class BlogDao {
 		while(rs.next()) {
 			String groupNo = rs.getString("GROUP_NO");
 			String groupName = rs.getString("GROUP_NAME");
+			String groupOrder = rs.getString("GROUP_ORDER");
 			
 			GroupVo vo = new GroupVo();
 			vo.setNo(groupNo);
 			vo.setName(groupName);
+			vo.setOrder(groupOrder);
 			
 			groupVoList.add(vo);
 		}
