@@ -25,14 +25,21 @@ public class AdminPostControllerLYJ extends HttpServlet{
 		PostVo postVo = new PostVo();
 		try {
 			
+			int listCount = ps.selectSearchBoardCount();
+			int currentPage = 1;
+			if(req.getParameter("pno") != null) {
+				currentPage = Integer.parseInt(req.getParameter("pno"));
+			}
+			int pageLimit = 5;
+			int boardLimit = 10;
+			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+			
 			//service
 			List<PostVo> postVoList = ps.allSelectPostList(postVo);
 			
 			//result(==view)
 			req.setAttribute("postVoList", postVoList);
-//			req.setAttribute("pvo" , pvo);
-//			resp.sendRedirect("/jdgr/admin/post/list");
-			
+			req.setAttribute("pvo" , pvo);
 			req.getRequestDispatcher("/WEB-INF/views/admin/post/list.jsp").forward(req, resp);	
 			
 		} catch (Exception e) {
@@ -44,7 +51,7 @@ public class AdminPostControllerLYJ extends HttpServlet{
 		}	
 	}
 	
-	//관리자 포스트 목록 관리(조회하기)
+	//관리자 포스트 목록 관리(10개 조회하기)
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		

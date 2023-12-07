@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.semi.jdgr.post.vo.PostVo;
+import com.semi.jdgr.notice.dao.NoticeDao;
 import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.dao.PostDaoLYJ;
 import com.semi.jdgr.util.JDBCTemplate;
@@ -75,25 +76,27 @@ public class PostServiceLYJ {
 	
 	}//selectPostList
 
+
+	// 게시글 갯수 조회(맨 처음에 보이는 전체 리스트 조회)
+	public int selectSearchBoardCount() throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// DAO
+		PostDaoLYJ dao = new PostDaoLYJ();
+		int cnt = dao.getBoardCountBySearch(conn);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
+	}
+
 	
 
 	
-	//	//전체 게시글 갯수 조회(관리자)
-//	public int selectPostCount(Map<String, String> p) throws Exception {
-//		
-//		//conn
-//		Connection conn = JDBCTemplate.getConnection();
-//		
-//		//dao
-//		PostDaoLYJ dao = new PostDaoLYJ();
-//		int cnt = dao.selectPostCount(conn, p);
-//		
-//		// close
-//		JDBCTemplate.close(conn);
-//		
-//		return cnt;
-//		
-//	}//selectPostCount
+	
 	
 	
 	

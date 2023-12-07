@@ -7,7 +7,7 @@
     
     <%
     	List<PostVo> postVoList = (List<PostVo>)request.getAttribute("postVoList");
-//     	PageVo pvo = (PageVo)request.getAttribute("pvo");
+    	PageVo pvo = (PageVo)request.getAttribute("pvo");
 //     	Map<String, String> searchMap = (Map<String,String>)request.getAttribute("searchMap");
     
     %>
@@ -118,7 +118,16 @@
 <%@include file = "/WEB-INF/views/admin/common/footer.jsp" %>
 
 <script>
+	const trArr = document.querySelectorAll(".paging_box mt30 > ul > li");
+	for(let i = 0 ; i < trArr.length; ++i){
+		trArr[i].addEventListener('click' , handleClick);
+	}
 	
+	function handleClick(event){
+		const tr = event.currentTarget;
+		const no = tr.children[0].innerText;
+		location.href = '/jsgr/admin/post/list?no=' + no + '&currPage=<%= pvo.getCurrentPage() %>';	
+	}
 
 </script>
             

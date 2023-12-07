@@ -18,7 +18,7 @@ public class PostDaoLYJ {
 	public List<PostVo> allSelectPostList(Connection conn, PostVo postVo) throws Exception {
 		
 		//SQL
-		String sql = "SELECT M.MEM_NAME ,  B.BLOG_NO , P.POST_NO , CL.CATEGORY_NAME, P.TITLE , P.INQUIRY  ,  P.ENROLL_DATE  , P.MODIFY_DATE  , P.DEL_YN  FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO ";
+		String sql = "SELECT M.MEM_NAME ,  B.BLOG_NO , P.POST_NO , CL.CATEGORY_NAME, P.TITLE , P.INQUIRY  ,  P.ENROLL_DATE  , P.MODIFY_DATE  , P.DEL_YN  FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO ORDER BY B.BLOG_NO ASC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -202,30 +202,31 @@ public class PostDaoLYJ {
 	    JDBCTemplate.close(rs2);
 		return replyCnt;
 	 }
+
 	 
-	
-//	//전체 게시글 갯수 조회(관리자)
-//	public int selectPostCount(Connection conn, Map<String, String> p) throws Exception{
-//		
-//			
-//			// SQL
-//			String sql = "SELECT COUNT(*) FROM POST WHERE OPEN = 'Y' AND " + p.get("searchType") + " LIKE '%' || ? || '%'";
-//			PreparedStatement pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, p.get("searchValue"));
-//			ResultSet rs = pstmt.executeQuery();
-//			
-//			// rs
-//			int cnt = 0;
-//			if(rs.next()) {
-//				cnt = rs.getInt(1);
-//			}
-//			
-//			// close
-//			JDBCTemplate.close(rs);
-//			JDBCTemplate.close(pstmt);
-//			
-//			return cnt;
-//	}
+	// 게시글 갯수 조회(맨 처음에 보이는 전체 리스트 조회)
+	public int getBoardCountBySearch(Connection conn) throws Exception {
+		// SQL
+		String sql = "SELECT COUNT(*) FROM POST WHERE DEL_YN = 'Y'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		int cnt = 0;
+		if(rs.next()) {
+			cnt = rs.getInt(1);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return cnt;
+	}
+	 
+////////////////////////////////////////////////////////////////////////////
+	 
+
 	
 
 }//class
