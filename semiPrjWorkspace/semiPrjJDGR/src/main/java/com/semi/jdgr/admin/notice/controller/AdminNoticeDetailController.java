@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.jdgr.csboard.service.NoticeService;
+import com.semi.jdgr.notice.service.NoticeService;
 import com.semi.jdgr.notice.vo.NoticeVo;
 
 @WebServlet("/admin/notice/detail")

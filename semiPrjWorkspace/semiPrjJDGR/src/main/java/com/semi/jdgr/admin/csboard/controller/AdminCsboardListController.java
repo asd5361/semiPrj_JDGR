@@ -34,7 +34,7 @@ public class AdminCsboardListController extends HttpServlet{
 			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);			
 			
 			//service
-			List<CsboardVo> csboardVoList = cs.selectAdminNoticeList(pvo);
+			List<CsboardVo> csboardVoList = cs.selectAdminCsboardList(pvo);
 			
 			//view
 			if(csboardVoList == null) {

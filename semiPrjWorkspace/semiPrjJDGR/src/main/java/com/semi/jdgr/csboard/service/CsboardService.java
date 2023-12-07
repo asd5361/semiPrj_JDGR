@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.semi.jdgr.csboard.dao.CsboardDao;
 import com.semi.jdgr.csboard.vo.CsboardVo;
-import com.semi.jdgr.notice.vo.NoticeVo;
 import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -122,7 +121,7 @@ public class CsboardService {
 		
 		return result;
 	}
-
+	
 	public int selectAdminCsboardCount() throws Exception {
 		
 		//conn
@@ -137,19 +136,55 @@ public class CsboardService {
 		
 		return cnt;
 	}
-
-	public List<CsboardVo> selectAdminNoticeList(PageVo pvo) throws Exception {
+	//관리자 문의글 전체 목록 조회 
+	public List<CsboardVo> selectAdminCsboardList(PageVo pvo) throws Exception {
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		//dao
 		CsboardDao dao = new CsboardDao();
-		List<CsboardVo> csboardVo = dao.selectAdminNoticeList(conn,pvo);
+		List<CsboardVo> csboardVo = dao.selectAdminCsboardList(conn,pvo);
 		
 		//close
 		JDBCTemplate.close(conn);
 		
 		return csboardVo;
+	}
+
+	public CsboardVo adminCsboardDetail(String board) throws Exception {
+
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		CsboardDao dao = new CsboardDao();
+		CsboardVo vo = dao.adminCsboardDetail(conn,board);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return vo;
+	}	
+	
+	//관리자 문의 답변 입력
+	public int csboardAnsewr(CsboardVo vo, String dateColumn) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		CsboardDao dao = new CsboardDao();
+		int result = dao.csboardAnsewr(conn,vo,dateColumn);
+
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		//close
+		JDBCTemplate.close(conn);
+		
+		return result;
 	}
 
 

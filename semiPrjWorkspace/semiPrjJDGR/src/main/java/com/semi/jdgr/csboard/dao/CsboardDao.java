@@ -1,5 +1,6 @@
 package com.semi.jdgr.csboard.dao;
 
+import java.nio.file.spi.FileSystemProvider;
 import java.sql.*;
 import java.util.*;
 
@@ -218,7 +219,7 @@ public class CsboardDao {
 		return cnt;
 	}
 	//관리자 게시글 전체 조회
-	public List<CsboardVo> selectAdminNoticeList(Connection conn, PageVo pvo) throws SQLException {
+	public List<CsboardVo> selectAdminCsboardList(Connection conn, PageVo pvo) throws SQLException {
 	//sql
 	String sql = "SELECT * FROM (SELECT ROWNUM RNUM, CSBOARD.* FROM ( SELECT * FROM CUSTOMER_CENTER ORDER BY Q_NO DESC) CSBOARD) WHERE RNUM BETWEEN ? AND ?";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -250,6 +251,58 @@ public class CsboardDao {
 	JDBCTemplate.close(pstmt);
 	
 	return csboardVoList;
+	}
+	//1:1문의 1개 상세 조회
+		public CsboardVo adminCsboardDetail(Connection conn, String board) throws SQLException {
+			
+			//sql
+			String sql = "SELECT * FROM CUSTOMER_CENTER WHERE Q_NO = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, board);
+			ResultSet rs = pstmt.executeQuery();
+			CsboardVo vo = null;
+			
+			//rs
+			if(rs.next()) {
+				vo = new CsboardVo();
+				vo.setqNo(rs.getString("Q_NO"));
+				vo.setAdminNo(rs.getString("ADMIN_NO"));
+				vo.setMemNo(rs.getString("MEM_NO"));
+				vo.setqTit(rs.getString("Q_TIT"));
+				vo.setqCon((rs.getString("Q_CON")));
+				vo.setqWriteDate(rs.getString("Q_WRITE_DATE"));
+				vo.setAnsewr(rs.getString("ANSEWR"));
+				vo.setAnsewrDate(rs.getString("ANSEWR_DATE"));
+				vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+				vo.setDelYn(rs.getString("DEL_YN"));
+				vo.setQuestionCategory(rs.getString("QUESTION_CATEGORY"));
+				
+			}
+			//close
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			
+			return vo;
+		}
+	
+	
+	//관리자 문의 답변 작성 기능
+	public int csboardAnsewr(Connection conn, CsboardVo vo, String dateColumn ) throws SQLException {
+		
+		//sql
+		String sql ="UPDATE CUSTOMER_CENTER SET DEL_YN = ?, ANSEWR = ? ,"+dateColumn+" = SYSDATE ,ADMIN_NO = ? WHERE Q_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, vo.getDelYn());
+		pstmt.setString(2, vo.getAnsewr());
+		pstmt.setString(3, vo.getAdminNo());
+		pstmt.setString(4, vo.getqNo());
+		System.out.println(vo);
+		int result = pstmt.executeUpdate();
+		System.out.println(result);
+		//close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
 	}
 
 }
