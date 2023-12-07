@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.semi.jdgr.user.member.vo.MemberPostSanctionVo;
 import com.semi.jdgr.user.member.vo.MemberReplySanctionVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
+import com.semi.jdgr.util.DateTemplate;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class MemberDao {
@@ -190,51 +192,34 @@ public class MemberDao {
 		// rs
 		List<MemberReplySanctionVo> mrsVoList = new ArrayList<MemberReplySanctionVo>();
 		// 현재 날짜 구하기
-		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
-		Calendar c1 = Calendar.getInstance();
-		String strToday = dateFormat.format(c1.getTime());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-		// 현재 날짜
-		LocalDate today = LocalDate.parse(strToday, formatter);
+		LocalDate today = DateTemplate.findToday();
 
 		while (rs.next()) {
 
 			String memId = rs.getString("MEM_ID");
 			String sancDate = rs.getString("SANC_DATE");
 			String banDay = rs.getString("BAN_DAY");
-			// 디비 날짜 변경
-			DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			LocalDateTime dateTime = LocalDateTime.parse(sancDate, inputFormatter);
-
-			// LocalDateTime을 다른 형식으로 포맷
-			String formattedDate = dateTime.format(formatter);
-			// 제재가 걸린 날짜
-			LocalDate date = LocalDate.parse(formattedDate, formatter);
+			
+			LocalDate date = DateTemplate.changeTypeDbDate(sancDate);
+			
 			LocalDate endDate = date.plusDays(Integer.parseInt(banDay));
 	        
-	        System.out.println(endDate);
+	       
 	        
 	        long daysDifference = today.until(endDate, ChronoUnit.DAYS);
 
-	        System.out.println("두 날짜 사이의 일 수 차이: " + daysDifference + "일");
 
 			MemberReplySanctionVo mrsVo = new MemberReplySanctionVo();
 			
 			int comparisonResult = endDate.compareTo(today);
 
 			if (comparisonResult >= 0) {
-			    System.out.println("date가 더 늦은 날짜입니다.");
 			    mrsVo.setMemId(memId);
 				mrsVo.setSancDate(endDate);
 				mrsVo.setBanDay(daysDifference);
 				
 				mrsVoList.add(mrsVo);
 			} 
-			
-			
-			
-			
 			
 
 		}
@@ -245,6 +230,61 @@ public class MemberDao {
 
 		return mrsVoList;
 
+	}
+
+	public List<MemberPostSanctionVo> findMPSVoList(Connection conn) throws Exception {
+		// SQL
+		String sql = "SELECT M.MEM_ID, PS.SANC_DATE,PS.BAN_DAY FROM MEMBER M JOIN BLOG B ON B.MEM_NO = M.MEM_NO JOIN POST P ON P.BLOG_NO = B.BLOG_NO JOIN POST_BLAME PB ON P.POST_NO = PB.P_NO JOIN POST_SANCTIONS PS ON PB.P_BLA_NO = PS.P_BLA_NO";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		List<MemberPostSanctionVo> mpsVoList = new ArrayList<MemberPostSanctionVo>();
+		
+		
+		LocalDate today = DateTemplate.findToday();
+		
+//		// 현재 날짜 구하기
+
+
+		while (rs.next()) {
+
+			String memId = rs.getString("MEM_ID");
+			String sancDate = rs.getString("SANC_DATE");
+			String banDay = rs.getString("BAN_DAY");
+			// 디비 날짜 변경
+
+			
+			LocalDate date = DateTemplate.changeTypeDbDate(sancDate);
+			
+			// 제재가 걸린 날짜
+			LocalDate endDate = date.plusDays(Integer.parseInt(banDay));
+	        
+	        long daysDifference = today.until(endDate, ChronoUnit.DAYS);
+
+
+	        MemberPostSanctionVo mpsVo = new MemberPostSanctionVo();
+			
+			int comparisonResult = endDate.compareTo(today);
+
+			if (comparisonResult >= 0) {
+			    mpsVo.setMemId(memId);
+			    mpsVo.setSancDate(endDate);
+			    mpsVo.setBanDay(daysDifference);
+				
+				mpsVoList.add(mpsVo);
+			} 
+			
+
+		}
+
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return mpsVoList;
+
+	
 	}
 
 }
