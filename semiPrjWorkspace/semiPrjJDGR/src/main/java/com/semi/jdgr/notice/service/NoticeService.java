@@ -1,4 +1,4 @@
-package com.semi.jdgr.csboard.service;
+package com.semi.jdgr.notice.service;
 
 import java.sql.Connection;
 import java.util.List;

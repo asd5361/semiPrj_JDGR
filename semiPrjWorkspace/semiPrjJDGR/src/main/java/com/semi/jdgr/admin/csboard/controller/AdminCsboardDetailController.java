@@ -23,12 +23,13 @@ public class AdminCsboardDetailController extends HttpServlet{
 			
 			//service
 			CsboardService cs = new CsboardService();
-			CsboardVo vo = cs.csboardDetail(noticeNo);
+			CsboardVo vo = cs.adminCsboardDetail(noticeNo);
 			
 			//result
 			if(vo == null){
 				throw new Exception();
 			}
+			req.setAttribute("vo", vo);
 			req.setAttribute(noticeNo, req.getParameter("pno"));
 			req.getRequestDispatcher("/WEB-INF/views/admin/csboard/csboardDetail.jsp").forward(req, resp);
 			
