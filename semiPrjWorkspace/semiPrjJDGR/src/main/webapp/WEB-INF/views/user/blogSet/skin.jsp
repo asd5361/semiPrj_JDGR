@@ -5,6 +5,10 @@
 <% 
 	// 블로그 관리정보 vo
 	BlogVo userSetblogVo = (BlogVo) request.getAttribute("blogUserData");
+
+	// 배경색 
+	String[] backgroundColors = {"#FFC1C1", "#333333", "#1F34EF", "#FFFFFF", "#FFEAC1", "#DEFFE5"};
+	String[] fontColors = {"#333333", "#FFFFFF", "#FFFFFF", "#333333", "#333333", "#333333"};
 %>
 <!-- main -->
 <main>
@@ -19,74 +23,43 @@
 
                 <div class="content">
 
-                    <div class="blogSkin_select">
-                        <ul>
-                            <li>
-                                <input type="radio" id="skin1" name="skinSelect">
-                                <label for="skin1">
-                                    <div class="color">#FFC1C1</div>
-                                    <div class="txt">
-                                        배경색 #FFC1C1
-                                        글자색 #333333
-                                    </div>
-                                </label>
-                            </li>
-                            <li>
-                                <input type="radio" id="skin2" name="skinSelect">
-                                <label for="skin2">
-                                    <div class="color">#333333</div>
-                                    <div class="txt">
-                                        배경색 #333333
-                                        글자색 #FFFFFF
-                                    </div>
-                                </label>
-                            </li>
-                            <li>
-                                <input type="radio" id="skin3" name="skinSelect">
-                                <label for="skin3">
-                                    <div class="color">#1F34EF</div>
-                                    <div class="txt">
-                                        배경색 #1F34EF
-                                        글자색 #FFFFFF
-                                    </div>
-                                </label>
-                            </li>
-                            <li>
-                                <input type="radio" id="skin4" name="skinSelect" checked="">
-                                <label for="skin4">
-                                    <div class="color">#FFFFFF</div>
-                                    <div class="txt">
-                                        배경색 #FFFFFF
-                                        글자색 #333333
-                                    </div>
-                                </label>
-                            </li>
-                            <li>
-                                <input type="radio" id="skin5" name="skinSelect">
-                                <label for="skin5">
-                                    <div class="color">#FFEAC1</div>
-                                    <div class="txt">
-                                        배경색 #FFEAC1
-                                        글자색 #333333
-                                    </div>
-                                </label>
-                            </li>
-                            <li>
-                                <input type="radio" id="skin6" name="skinSelect">
-                                <label for="skin6">
-                                    <div class="color">#DEFFE5</div>
-                                    <div class="txt">
-                                        배경색 #DEFFE5
-                                        글자색 #333333
-                                    </div>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="blog_set_btn">
-                        <a href="">저장</a>
-                    </div>
+                    <form action="/jdgr/blogSet/skin" method="post">
+                        <div class="blogSkin_select">
+                            <ul>
+                                <% for(int i = 1; i <= 6; i++){ %>
+                                    <% if (userSetblogVo.getSkin().equals(Integer.toString(i))) { %>
+                                    <li>
+                                        <input type="radio" id="skin<%= i %>" name="skinSelect" value="<%= i %>" checked>
+                                        <label for="skin<%= i %>">
+                                            <div class="color"><%= fontColors[i - 1] %></div>
+                                            <div class="txt">
+                                                배경색 <%= backgroundColors[i - 1] %>
+                                                글자색 <%= fontColors[i - 1] %>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <% } else { %>
+                                    <li>
+                                        <input type="radio" id="skin<%= i %>" name="skinSelect" value="<%= i %>" >
+                                        <label for="skin<%= i %>">
+                                            <div class="color"><%= fontColors[i - 1] %></div>
+                                            <div class="txt">
+                                                배경색 <%= backgroundColors[i - 1] %>
+                                                글자색 <%= fontColors[i - 1] %>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <% } %>
+                                    
+                                <% } %>
+                            </ul>
+                        </div>
+    
+                        <div class="blog_set_btn">
+                            <button>저장</button>
+                        </div>
+                        <input type="hidden" name="blogUrl" value="${blogUserData.blogUrl}">
+                    </form>
 
                 </div>
 

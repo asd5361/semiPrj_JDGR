@@ -80,7 +80,7 @@ public class BlogDao {
 	public List<GroupVo> getGroupList(Connection conn, BlogVo blogVo) throws Exception {
 		
 		// sql
-		String sql = "SELECT * FROM MYBLOG_CATEGORY MC JOIN BLOG B ON B.BLOG_NO = MC.BLOG_NO WHERE B.BLOG_NO = ? ORDER BY MC.GROUP_NO";
+		String sql = "SELECT * FROM MYBLOG_CATEGORY MC JOIN BLOG B ON B.BLOG_NO = MC.BLOG_NO WHERE B.BLOG_NO = ? ORDER BY MC.GROUP_ORDER";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, blogVo.getBlogNo());
 		ResultSet rs = pstmt.executeQuery();
@@ -92,8 +92,8 @@ public class BlogDao {
 			String groupName = rs.getString("GROUP_NAME");
 			
 			GroupVo vo = new GroupVo();
-			vo.setGroupNo(groupNo);
-			vo.setGroupName(groupName);
+			vo.setNo(groupNo);
+			vo.setName(groupName);
 			
 			groupVoList.add(vo);
 		}
@@ -337,6 +337,43 @@ public class BlogDao {
 		String sql = "UPDATE BLOG SET BLOG_TITLE = ? WHERE BLOG_URL = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, blogVo.getBlogTitle());
+		pstmt.setString(2, blogVo.getBlogUrl());
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+
+	// 블로그 레이아웃 정보 수정
+	public int editLayout(Connection conn, BlogVo blogVo) throws Exception {
+
+		// sql
+		String sql = "UPDATE BLOG SET LAYOUT = ? , CLOCK_YN = ? , MAP_YN = ? , R_COMMENTS_YN = ? , FOLLOW_BLOG_YN = ? , VISITORS_CNT_YN = ? WHERE BLOG_URL = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogVo.getLayout());
+		pstmt.setString(2, blogVo.getClockYn());
+		pstmt.setString(3, blogVo.getMapYn());
+		pstmt.setString(4, blogVo.getrCommentsYn());
+		pstmt.setString(5, blogVo.getFollowBlogYn());
+		pstmt.setString(6, blogVo.getVisitorsCntYn());
+		pstmt.setString(7, blogVo.getBlogUrl());
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+
+	// 블로그 스킨 정보 수정
+	public int editSkin(Connection conn, BlogVo blogVo) throws Exception {
+
+		// sql
+		String sql = "UPDATE BLOG SET SKIN = ? WHERE BLOG_URL = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogVo.getSkin());
 		pstmt.setString(2, blogVo.getBlogUrl());
 		int result = pstmt.executeUpdate();
 		

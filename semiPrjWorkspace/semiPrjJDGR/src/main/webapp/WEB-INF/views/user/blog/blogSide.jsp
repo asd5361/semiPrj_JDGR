@@ -38,7 +38,7 @@
         	<li class="category"><a href="/jdgr/hjy/post/view?url=${blogUrlVo.blogUrl}"><strong>전체보기</strong><span>(12)</span></a></li>
         	<% if(groupVoList != null){ %>
         		<% for(GroupVo groupVo : groupVoList){ %>
-        			<li class="category"><a href="/jdgr/hjy/post/view?url=${blogUrlVo.blogUrl}"><strong><%= groupVo.getGroupName() %></strong><span>(3)</span></a></li>
+        			<li class="category"><a href="/jdgr/hjy/post/view?url=${blogUrlVo.blogUrl}"><strong><%= groupVo.getName() %></strong><span>(3)</span></a></li>
         		<% } %>
         	<% } %>
             <li class="line"></li>

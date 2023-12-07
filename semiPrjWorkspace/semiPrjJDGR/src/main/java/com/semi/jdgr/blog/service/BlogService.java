@@ -248,7 +248,90 @@ public class BlogService {
 		// 수정된 정보 select
 		BlogVo editBlogVo = dao.getUserBlog(conn, blogVo.getBlogUrl());
 		
+		// close
+		JDBCTemplate.close(conn);
+		
 		return editBlogVo;
+	}
+
+	// 블로그 레이아웃 수정
+	public BlogVo editLayout(BlogVo blogVo) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+
+		// 검증로직
+		blogVo.setrCommentsYn(getCheckedValue(blogVo.getrCommentsYn()));
+		blogVo.setFollowBlogYn(getCheckedValue(blogVo.getFollowBlogYn()));
+		blogVo.setVisitorsCntYn(getCheckedValue(blogVo.getVisitorsCntYn()));
+		blogVo.setClockYn(getCheckedValue(blogVo.getClockYn()));
+		blogVo.setMapYn(getCheckedValue(blogVo.getMapYn()));
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		int result = dao.editLayout(conn, blogVo);
+		
+		
+		// tx
+		BlogVo editBlogVo = null;
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+			editBlogVo = dao.getUserBlog(conn, blogVo.getBlogUrl()); // 수정된 정보 select
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+				
+		// close
+		JDBCTemplate.close(conn);
+		
+		return editBlogVo;
+	}
+	
+	// 검증메소드
+	private String getCheckedValue(String value) {
+	    return (value != null) ? "Y" : "N";
+	}
+
+	// 블로그 스킨 정보 수정
+	public BlogVo editSkin(BlogVo blogVo) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		int result = dao.editSkin(conn, blogVo);
+		
+		// tx
+		BlogVo editBlogVo = null;
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+			editBlogVo = dao.getUserBlog(conn, blogVo.getBlogUrl()); // 수정된 정보 select
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return editBlogVo;
+	}
+
+	// 카테고리 수정화면 가져오기
+	public List<GroupVo> getEditGroupList(String userUrl) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		BlogVo blogVo = dao.getUserBlog(conn, userUrl); // 블로그 정보 가져오기
+		List<GroupVo> groupVoList = dao.getGroupList(conn, blogVo); // 카테고리 그룹 리스트 가져오기
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return groupVoList;
 	}
 	
 }
