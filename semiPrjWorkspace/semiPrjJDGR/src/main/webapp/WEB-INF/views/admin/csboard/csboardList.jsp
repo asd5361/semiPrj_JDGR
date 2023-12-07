@@ -118,23 +118,25 @@
                         </tbody>
                     </table>
                 </div>
-<!-- 여기부터 진행하기 -->
+
                 <div class="paging_box mt30">
                     <ul>
-                        <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                        <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                        <li class="on"><a href="">1</a></li>
-                        <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li><a href="">10</a></li>
-                        <li><a href="">100</a></li>
-                        <li><a href="">1000</a></li>
-                        <li><a href="">9</a></li>
-                        <li><a href="">10</a></li>
-                        <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
+<%if(pvo.getStartPage() != 1) {%>
+                        <li class="prev_all"><a href="/jdgr/admin/csboard/list?pno=1" title="최신페이지로 이동"></a></li>
+                        <li class="prev"><a href="/jdgr/admin/csboard/list?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
+<%} %>     
+               
+<%for(int i = pvo.getStartPage(); i<= pvo.getEndPage(); i++) {%> 
+	<%if(i == pvo.getCurrentPage()) {%>
+						<li class="on"><a href="/jdgr/admin/csboard/list?pno=<%= i%>"><%= i%></a></li>
+	<%}else{ %>	
+						<li><a href="/jdgr/admin/csboard/list?pno=<%= i%>"><%= i%></a></li>
+<%} }%>
+
+<%if(pvo.getEndPage() != pvo.getMaxPage()) {%>
+                        <li class="next"><a href="/jdgr/admin/csboard/list?pno=<%=pvo.getEndPage()+1 %>" title="다음페이지로 이동"></a></li>
+                        <li class="next_all"><a href="/jdgr/admin/csboard/list?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
+<%} %>                    
                     </ul>
                 </div>
 
@@ -143,3 +145,14 @@
 
 
 <%@ include file="/WEB-INF/views/admin/common/footer.jsp" %>
+    <script>
+        const trArr = document.querySelectorAll(".tbl_box> table> tbody> tr");
+        for(let i = 0; i<trArr.length; i++){
+            trArr[i].addEventListener('click',handleClick);
+        }
+        function handleClick(event){
+            const tr = event.currentTarget;          // 이벤트가 발생 된 tr 요소를 선택함
+            const no = tr.children[0].innerText;    //글번호를 가져옴
+            location.href = '/jdgr/admin/csboard/detail?no='+no+'&currPage=<%=pvo.getCurrentPage() %>';
+        }
+    </script>

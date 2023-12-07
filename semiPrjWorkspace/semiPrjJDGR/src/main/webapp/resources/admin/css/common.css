@@ -805,7 +805,9 @@
 .tbl_box.data table td {
     padding: 7px 0;
 }
-
+.tbl_box.data table tbody tr{
+    cursor: pointer;
+}
 /* chklist */
 .chklist_box {
     display: flex;

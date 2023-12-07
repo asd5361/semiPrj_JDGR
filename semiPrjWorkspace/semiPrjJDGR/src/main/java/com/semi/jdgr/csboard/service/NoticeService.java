@@ -126,5 +126,26 @@ public class NoticeService {
 		
 		return noticeVoList;
 	}
+	//게시글 수정
+	public int notideUpdate(NoticeVo vo) throws Exception {
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		int result = dao.noticeUpdate(conn,vo);
+		
+		//tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
 
 }
