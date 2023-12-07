@@ -1,5 +1,8 @@
+<%@page import="com.semi.jdgr.csboard.vo.CsboardVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% String pno = (String)request.getAttribute("pno"); %>
+<% CsboardVo vo = (CsboardVo)request.getAttribute("vo"); %>
 
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 

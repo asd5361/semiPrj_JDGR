@@ -25,8 +25,10 @@ public class AdminNoticeWriteController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			//data
+			String CurrentPage = req.getParameter("pno");
+			System.out.println(CurrentPage);
 			NoticeVo vo = new NoticeVo();
-			vo.setNoticeNo(req.getParameter("no"));
+			vo.setAdminNo("1"); /**임시 로그인 번호 넣기*************************************/
 			vo.setDelYn(req.getParameter("del"));
 			vo.setFixedYn(req.getParameter("fixed"));
 			vo.setTitle(req.getParameter("title"));
@@ -34,9 +36,13 @@ public class AdminNoticeWriteController extends HttpServlet{
 
 			//service
 			NoticeService ns = new NoticeService();
-			/*여기는 작성만 신경쓰기*/
+			int result = ns.noticeWrite(vo);
+			
 			//view
-			resp.sendRedirect("/jdgr/admin/notice/list?pno=1");
+			if(result != 1) {
+				throw new Exception();
+			}
+			resp.sendRedirect("/jdgr/admin/notice/list?pno="+CurrentPage);	// 작성하기 누르기 전 보고 있던 페이지 번호
 		}catch(Exception e) {
 			e.printStackTrace();
 			req.setAttribute("errorMsg", "[ERROR] 관리자 공지사항 작성 페이지 에러 발생");
