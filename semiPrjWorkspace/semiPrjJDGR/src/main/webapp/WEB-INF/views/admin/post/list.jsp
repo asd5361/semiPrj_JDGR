@@ -20,19 +20,19 @@
                 <div class="tit_box">
                     <h2>포스트 관리 목록</h2>
                 </div>
-                
+                <form action="/jdgr/admin/post/list" method="post">
                 <!-- 검색박스 예시 -->
                 <div class="search_box">
                     <div class="search_item">
                         <label for="sel_01">작성자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02" name="작성자">
+                            <input type="text" id="inp_02" name="memNick">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">제목</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02" name="제목">
+                            <input type="text" id="inp_02" name="aa">
                         </div>
                     </div>
 
@@ -45,9 +45,11 @@
                         <button class="btn_gray">초기화</button>
                     </div>
                     <div class="btn_box">
-                        <button class="btn_black">검색</button>
+                        <button type="submit" class="btn_black">검색</button>
                     </div>
                 </div>
+
+                </form>
 
                 <!-- 테이블 -->
                 <div class="tbl_box data mt40">
