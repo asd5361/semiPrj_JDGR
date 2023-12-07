@@ -36,7 +36,7 @@
                                 <ul>
                                 	<% for(int i = 1; i <= blogUserGroupData.size(); i++){ %>
                                 	<li class="category">
-                                        <input type="radio" id="category<%= i %>" name="userCategoryNum" value="<%= blogUserGroupData.get(i - 1).getNo() %>" >
+                                        <input type="radio" id="category<%= i %>" name="userCategoryNum" value="<%= blogUserGroupData.get(i - 1).getOrder() %>" >
                                         <input type="hidden" name="userCategoryValue" value="<%= blogUserGroupData.get(i - 1).getName() %>">
                                         <label for="category<%= i %>"><%= blogUserGroupData.get(i - 1).getName() %></label>
                                     </li>
@@ -109,6 +109,13 @@
             <label for="category` + nextValue + `">카테고리</label>
         `;
         categoryUl.appendChild(categoryLi);
+
+        const userCategoryNum = categoryLi.querySelector('input[name=userCategoryNum]').value;
+        const userCategoryValue = categoryLi.querySelector('input[name=userCategoryValue]').value;
+        //const editCategoryName = document.querySelector('input[name=groupName]').value;
+        const userUrl = document.querySelector('input[name=blogUrl]').value;
+
+        addAjax(userCategoryNum, userCategoryValue, userUrl);
     }
 
     function lineAdd(){
@@ -138,5 +145,58 @@
         console.log(selectCategoryInp.parentNode);
         selectCategoryInp.parentNode.remove();
     }
+
+    function addAjax(userCategoryNum, userCategoryValue, userUrl){
+		const dataToSend = {
+            groupOrder: userCategoryNum,
+			groupName: userCategoryValue,
+			userUrl: userUrl
+        }
+		// 서버한테 요청보내기
+        console.log(userCategoryNum);
+        console.log(userCategoryValue);
+        console.log(userUrl);
+        console.log(JSON.stringify(dataToSend));
+		fetch("/jdgr/blogSet/categoryAdd", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // JSON 데이터를 전송할 것이므로 Content-Type을 지정
+            },
+            body: JSON.stringify(dataToSend) // JSON 형태로 데이터 변환
+        })
+		.then( (resp) => { return resp.json() } ) // 데이터 가공
+		.then( (x) => { // 가공된 데이터로 할수있는거 하기
+			console.log(x);
+			
+		} );
+		
+	}
+    // // 보낼 데이터를 정의
+    // const dataToSend = {
+    //     key1: 'value1',
+    //     key2: 'value2'
+    // };
+
+    // // 서버 URL
+    // const url = 'https://example.com/api';
+
+    // // fetch를 사용하여 POST 요청 보내기
+    // fetch(url, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json', // 전송하는 데이터의 형식을 지정 (JSON인 경우)
+    //         // 다른 필요한 헤더들도 추가 가능
+    //     },
+    //     body: JSON.stringify(dataToSend) // JSON 형태로 데이터 변환
+    // })
+    // .then(response => response.json()) // 서버로부터 응답 받기
+    // .then(data => {
+    //     console.log('서버로부터 받은 데이터:', data);
+    //     // 데이터를 이용한 로직 추가
+    // })
+    // .catch(error => {
+    //     console.error('오류 발생:', error);
+    //     // 오류 처리 로직 추가
+    // });
 </script>
 <%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
