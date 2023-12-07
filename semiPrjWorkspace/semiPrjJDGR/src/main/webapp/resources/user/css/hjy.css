@@ -1811,12 +1811,21 @@ li .reply_inp_box::before {
     color: #fff;
 }
 .write_box .inp_area {
+    display: flex;
+    justify-content: space-between;
     padding-bottom: 10px;
 }
-.write_box .inp_area select {
+.write_box .inp_area label {
     display: flex;
-    width: 100%;
+    align-items: center;
+    font-size: var(--default-size);
+}
+.write_box .inp_area select,
+.write_box .inp_area input {
+    display: flex;
+    width: calc(100% - 100px);
     padding: 10px 20px;
+    box-sizing: border-box;
     border-radius: 5px;
     border: 1px solid #ddd;
 
@@ -1935,7 +1944,7 @@ li .reply_inp_box::before {
 }
 
 /* 카테고리 */
-.category_box form {
+.category_box {
     display: flex;
     justify-content: space-between;
 }
