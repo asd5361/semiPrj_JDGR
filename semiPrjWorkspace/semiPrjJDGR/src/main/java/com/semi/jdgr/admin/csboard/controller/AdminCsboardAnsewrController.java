@@ -25,7 +25,7 @@ public class AdminCsboardAnsewrController extends HttpServlet{
 			String ansewrDate = req.getParameter("ansDate");
 			String DateColumn = "UPDATE_DATE";
 			System.out.println(pno);
-			/*pno가 null 임 + option selected 넣어줘야함 답변 조회해야함*/
+
 			CsboardVo vo = new CsboardVo();
 			vo.setAdminNo(adminNo);
 			vo.setqNo(req.getParameter("no"));
@@ -44,7 +44,7 @@ public class AdminCsboardAnsewrController extends HttpServlet{
 				throw new Exception();
 			}
 			
-			resp.sendRedirect("/admin/csboard/list?pno="+pno);
+			resp.sendRedirect("/jdgr/admin/csboard/list?pno="+pno);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

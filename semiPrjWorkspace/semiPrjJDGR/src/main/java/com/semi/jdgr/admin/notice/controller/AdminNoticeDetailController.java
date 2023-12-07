@@ -49,7 +49,7 @@ public class AdminNoticeDetailController extends HttpServlet {
 			vo.setDelYn(req.getParameter("del"));
 			vo.setFixedYn(req.getParameter("fixed"));
 			vo.setTitle(req.getParameter("title"));
-			vo.setContent(req.getParameter("content").replace("\r\n", "<br>"));
+			vo.setContent(req.getParameter("content"));
 
 			//service
 			NoticeService ns = new NoticeService();

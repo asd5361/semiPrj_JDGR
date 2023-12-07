@@ -20,7 +20,7 @@ public class AdminCsboardDetailController extends HttpServlet{
 		try {
 			//data
 			String noticeNo = req.getParameter("no");
-			
+			System.out.println(req.getParameter("currPage"));
 			//service
 			CsboardService cs = new CsboardService();
 			CsboardVo vo = cs.adminCsboardDetail(noticeNo);
@@ -30,7 +30,7 @@ public class AdminCsboardDetailController extends HttpServlet{
 				throw new Exception();
 			}
 			req.setAttribute("vo", vo);
-			req.setAttribute(noticeNo, req.getParameter("pno"));
+			req.setAttribute("pno", req.getParameter("currPage"));
 			req.getRequestDispatcher("/WEB-INF/views/admin/csboard/csboardDetail.jsp").forward(req, resp);
 			
 		}catch(Exception e) {

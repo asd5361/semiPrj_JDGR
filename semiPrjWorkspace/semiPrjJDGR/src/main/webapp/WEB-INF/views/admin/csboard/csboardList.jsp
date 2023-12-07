@@ -20,31 +20,31 @@
                     <div class="search_item">
                         <label for="sel_01">제목</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" name="title" id="inp_02">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">내용</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" name="content" id="inp_02">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">작성자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" name="writer" id="inp_02">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">답변 일자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" name="updateDate" id="inp_02">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">문의 분류</label>
                         <div class="form_box">
-                            <select class="sel_box">
+                            <select class="sel_box" name="csSel">
                                 <option value="">일반문의</option>
                                 <option value="">기능문의</option>
                                 <option value="">신고문의</option>
@@ -54,7 +54,7 @@
                     <div class="search_item">
                         <label for="sel_01">답변여부</label>
                         <div class="form_box">
-                            <select class="sel_box">
+                            <select class="sel_box" name="ansSel">
                                 <option value="">답변완료</option>
                                 <option value="">미답변</option>
                             </select>
@@ -65,7 +65,7 @@
                 <!-- 버튼 -->
                 <div class="btn_box_group right">
                     <div class="btn_box">
-                        <button class="btn_gray">초기화</button>
+                        <button class="btn_gray" onclick="reset()">초기화</button>
                     </div>
                     <div class="btn_box">
                         <button class="btn_black">검색</button>
@@ -154,5 +154,13 @@
             const tr = event.currentTarget;          // 이벤트가 발생 된 tr 요소를 선택함
             const no = tr.children[0].innerText;    //글번호를 가져옴
             location.href = '/jdgr/admin/csboard/detail?no='+no+'&currPage=<%=pvo.getCurrentPage() %>';
+        }
+        // 초기화 버튼
+        function reset(){
+            const inputArr = document.querySelectorAll(".form_box input");
+            
+            for(let i=0; i<inputArr.length; i++){
+                inputArr[i].value = null;
+            }
         }
     </script>
