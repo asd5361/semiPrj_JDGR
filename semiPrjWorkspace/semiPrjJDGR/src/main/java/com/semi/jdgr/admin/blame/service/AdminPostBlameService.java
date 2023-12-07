@@ -4,23 +4,23 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-import com.semi.jdgr.admin.blame.dao.AdminReplyBlameDao;
+import com.semi.jdgr.admin.blame.dao.AdminPostBlameDao;
 import com.semi.jdgr.admin.blame.vo.AdminBlameCategoryVo;
-import com.semi.jdgr.admin.blame.vo.AdminReplyBlameVo;
+import com.semi.jdgr.admin.blame.vo.AdminPostBlameVo;
 import com.semi.jdgr.page.vo.AdminBlamePageVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
-public class AdminReplyBlameService {
+public class AdminPostBlameService {
 
 	// 신고 목록 조회
-	public List<AdminReplyBlameVo> selectBlameList(AdminBlamePageVo pvo) throws Exception {
+	public List<AdminPostBlameVo> selectBlameList(AdminBlamePageVo pvo) throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
-		AdminReplyBlameDao dao = new AdminReplyBlameDao();
-		List<AdminReplyBlameVo> blameVoList = dao.selectBlameList(conn, pvo);
+		AdminPostBlameDao dao = new AdminPostBlameDao();
+		List<AdminPostBlameVo> blameVoList = dao.selectBlameList(conn, pvo);
 		
 		// close
 		JDBCTemplate.close(conn);
@@ -37,7 +37,7 @@ public class AdminReplyBlameService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
-		AdminReplyBlameDao dao = new AdminReplyBlameDao();
+		AdminPostBlameDao dao = new AdminPostBlameDao();
 		int cnt = dao.selectBlameCount(conn);
 		
 		// close
@@ -54,7 +54,7 @@ public class AdminReplyBlameService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		//dao
-		AdminReplyBlameDao dao = new AdminReplyBlameDao();
+		AdminPostBlameDao dao = new AdminPostBlameDao();
 		List<AdminBlameCategoryVo> voList = dao.getCategoryList(conn);
 		
 		//close
@@ -65,14 +65,14 @@ public class AdminReplyBlameService {
 	
 	
 	//신고 목록 상세조회
-	public AdminReplyBlameVo selectBlameByNo(String rBlaNo) throws Exception {
+	public AdminPostBlameVo selectBlameByNo(String pBlaNo) throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
-		AdminReplyBlameDao dao = new AdminReplyBlameDao();
-		AdminReplyBlameVo vo = dao.selectBlameByNo(conn, rBlaNo);
+		AdminPostBlameDao dao = new AdminPostBlameDao();
+		AdminPostBlameVo vo = dao.selectBlameByNo(conn, pBlaNo);
 
 		
 		// close
@@ -83,13 +83,13 @@ public class AdminReplyBlameService {
 	
 	
 	// 신고 목록 검색
-	public List<AdminReplyBlameVo> search(Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
+	public List<AdminPostBlameVo> search(Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// DAO
-		AdminReplyBlameDao dao = new AdminReplyBlameDao();
-		List<AdminReplyBlameVo> blameVoList = dao.search(conn , m, pvo);
+		AdminPostBlameDao dao = new AdminPostBlameDao();
+		List<AdminPostBlameVo> blameVoList = dao.search(conn , m, pvo);
 		
 		//close
 		JDBCTemplate.close(conn);
@@ -105,7 +105,7 @@ public class AdminReplyBlameService {
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// DAO
-		AdminReplyBlameDao dao = new AdminReplyBlameDao();
+		AdminPostBlameDao dao = new AdminPostBlameDao();
 		int cnt = dao.getBlameCountBySearch(conn , m);
 		
 		// close

@@ -2,155 +2,124 @@ package com.semi.jdgr.admin.blame.vo;
 
 public class AdminReplyBlameVo {
 	
-	r_bla_no
-	r_no
-	r_blamer_no
-	r_writer_no
-	r_bla_con
-	r_bla_date
-	r_bla_list
-	r_bla_detail_reason
-	r_sanc_yn
-	r_ans_date
-	r_bla_detail
-	r_del_yn
-
-	
 	private String rBlaNo;
 	private String rNo;
 	private String rBlamerNo;
 	private String rWriterNo;
 	private String rBlaCon;
 	private String rBlaDate;
-	private String r_bla_list;
-	private String r_bla_detail_reason;
-	private String r_sanc_yn;
-	private String r_ans_date;
-	private String r_bla_detail;
-	private String r_del_yn;
+	private String rBlaList;
+	private String rBlaDetailReason;
+	private String rSancYn;
+	private String rAnsDate;
+	private String rBlaDetail;
+	private String rDelYn;
 	
 	
-	public String getBlameNo() {
-		return blameNo;
+	public String getrBlaNo() {
+		return rBlaNo;
 	}
-	public void setBlameNo(String blameNo) {
-		this.blameNo = blameNo;
+	public void setrBlaNo(String rBlaNo) {
+		this.rBlaNo = rBlaNo;
 	}
-	public String getReplyNo() {
-		return replyNo;
+	public String getrNo() {
+		return rNo;
 	}
-	public void setReplyNo(String replyNo) {
-		this.replyNo = replyNo;
+	public void setrNo(String rNo) {
+		this.rNo = rNo;
 	}
-	public String getPostNo() {
-		return postNo;
+	public String getrBlamerNo() {
+		return rBlamerNo;
 	}
-	public void setPostNo(String postNo) {
-		this.postNo = postNo;
+	public void setrBlamerNo(String rBlamerNo) {
+		this.rBlamerNo = rBlamerNo;
 	}
-	public String getTitle() {
-		return title;
+	public String getrWriterNo() {
+		return rWriterNo;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setrWriterNo(String rWriterNo) {
+		this.rWriterNo = rWriterNo;
 	}
-	public String getCon() {
-		return con;
+	public String getrBlaCon() {
+		return rBlaCon;
 	}
-	public void setCon(String con) {
-		this.con = con;
+	public void setrBlaCon(String rBlaCon) {
+		this.rBlaCon = rBlaCon;
 	}
-	public String getBlameDate() {
-		return blameDate;
+	public String getrBlaDate() {
+		return rBlaDate;
 	}
-	public void setBlameDate(String blameDate) {
-		this.blameDate = blameDate;
+	public void setrBlaDate(String rBlaDate) {
+		this.rBlaDate = rBlaDate;
 	}
-	public String getBlaList() {
-		return blaList;
+	public String getrBlaList() {
+		return rBlaList;
 	}
-	public void setBlaList(String blaList) {
-		this.blaList = blaList;
+	public void setrBlaList(String rBlaList) {
+		this.rBlaList = rBlaList;
 	}
-	public String getSancYn() {
-		return sancYn;
+	public String getrBlaDetailReason() {
+		return rBlaDetailReason;
 	}
-	public void setSancYn(String sancYn) {
-		this.sancYn = sancYn;
+	public void setrBlaDetailReason(String rBlaDetailReason) {
+		this.rBlaDetailReason = rBlaDetailReason;
 	}
-	public String getAnsDate() {
-		return ansDate;
+	public String getrSancYn() {
+		return rSancYn;
 	}
-	public void setAnsDate(String ansDate) {
-		this.ansDate = ansDate;
+	public void setrSancYn(String rSancYn) {
+		this.rSancYn = rSancYn;
 	}
-	public String getDelYn() {
-		return delYn;
+	public String getrAnsDate() {
+		return rAnsDate;
 	}
-	public void setDelYn(String delYn) {
-		this.delYn = delYn;
+	public void setrAnsDate(String rAnsDate) {
+		this.rAnsDate = rAnsDate;
 	}
-	public String getBlamerNo() {
-		return blamerNo;
+	public String getrBlaDetail() {
+		return rBlaDetail;
 	}
-	public void setBlamerNo(String blamerNo) {
-		this.blamerNo = blamerNo;
+	public void setrBlaDetail(String rBlaDetail) {
+		this.rBlaDetail = rBlaDetail;
 	}
-	public String getBlamerId() {
-		return blamerId;
+	public String getrDelYn() {
+		return rDelYn;
 	}
-	public void setBlamerId(String blamerId) {
-		this.blamerId = blamerId;
-	}
-	public String getMemNo() {
-		return memNo;
-	}
-	public void setMemNo(String memNo) {
-		this.memNo = memNo;
-	}
-	public String getMemId() {
-		return memId;
-	}
-	public void setMemId(String memId) {
-		this.memId = memId;
+	public void setrDelYn(String rDelYn) {
+		this.rDelYn = rDelYn;
 	}
 	
 	
-	public AdminReplyBlameVo(String blameNo, String replyNo, String postNo, String title, String con, String blameDate,
-			String blaList, String sancYn, String ansDate, String delYn, String blamerNo, String blamerId, String memNo,
-			String memId) {
+	public AdminReplyBlameVo(String rBlaNo, String rNo, String rBlamerNo, String rWriterNo, String rBlaCon,
+			String rBlaDate, String rBlaList, String rBlaDetailReason, String rSancYn, String rAnsDate,
+			String rBlaDetail, String rDelYn) {
 		super();
-		this.blameNo = blameNo;
-		this.replyNo = replyNo;
-		this.postNo = postNo;
-		this.title = title;
-		this.con = con;
-		this.blameDate = blameDate;
-		this.blaList = blaList;
-		this.sancYn = sancYn;
-		this.ansDate = ansDate;
-		this.delYn = delYn;
-		this.blamerNo = blamerNo;
-		this.blamerId = blamerId;
-		this.memNo = memNo;
-		this.memId = memId;
+		this.rBlaNo = rBlaNo;
+		this.rNo = rNo;
+		this.rBlamerNo = rBlamerNo;
+		this.rWriterNo = rWriterNo;
+		this.rBlaCon = rBlaCon;
+		this.rBlaDate = rBlaDate;
+		this.rBlaList = rBlaList;
+		this.rBlaDetailReason = rBlaDetailReason;
+		this.rSancYn = rSancYn;
+		this.rAnsDate = rAnsDate;
+		this.rBlaDetail = rBlaDetail;
+		this.rDelYn = rDelYn;
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "AdminBlameVo [blameNo=" + blameNo + ", replyNo=" + replyNo + ", postNo=" + postNo + ", title=" + title
-				+ ", con=" + con + ", blameDate=" + blameDate + ", blaList=" + blaList + ", sancYn=" + sancYn
-				+ ", ansDate=" + ansDate + ", delYn=" + delYn + ", blamerNo=" + blamerNo + ", blamerId=" + blamerId
-				+ ", memNo=" + memNo + ", memId=" + memId + "]";
+		return "AdminReplyBlameVo [rBlaNo=" + rBlaNo + ", rNo=" + rNo + ", rBlamerNo=" + rBlamerNo + ", rWriterNo="
+				+ rWriterNo + ", rBlaCon=" + rBlaCon + ", rBlaDate=" + rBlaDate + ", rBlaList=" + rBlaList
+				+ ", rBlaDetailReason=" + rBlaDetailReason + ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate
+				+ ", rBlaDetail=" + rBlaDetail + ", rDelYn=" + rDelYn + "]";
 	}
 	
 	
 	public AdminReplyBlameVo() {
 	}
-	
-	
-	
-	
 
+	
 }

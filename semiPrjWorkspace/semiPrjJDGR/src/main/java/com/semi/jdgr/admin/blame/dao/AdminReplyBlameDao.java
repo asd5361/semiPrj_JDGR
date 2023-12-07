@@ -8,17 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.semi.jdgr.admin.blame.vo.AdminBlameCategoryVo;
-import com.semi.jdgr.admin.blame.vo.AdminBlameVo;
+import com.semi.jdgr.admin.blame.vo.AdminReplyBlameVo;
 import com.semi.jdgr.page.vo.AdminBlamePageVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class AdminReplyBlameDao {
 
 	   //게시글 목록 조회
-	   public List<AdminBlameVo> selectBlameList(Connection conn, AdminBlamePageVo pvo) throws Exception{
+	   public List<AdminReplyBlameVo> selectBlameList(Connection conn, AdminBlamePageVo pvo) throws Exception{
 	      
 	      //SQL
-	      String sql = "SELECT * FROM    ( SELECT ROWNUM RNUM, T.* FROM ( SELECT B.NO ,B.CATEGORY_NO ,B.TITLE ,B.CONTENT ,B.WRITER_NO ,B.HIT ,B.ENROLL_DATE ,B.MODIFY_DATE ,B.STATUS ,M.NICK AS WRITER_NICK ,C.NAME AS CATEGORY_NAME FROM BOARD B JOIN MEMBER M ON B.WRITER_NO = M.NO JOIN CATEGORY C ON B.CATEGORY_NO = C.NO WHERE B.STATUS = 'O' ORDER BY NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+	      String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , T.* FROM ( SELECT RB.R_NO , RB.R_BLA_NO , RB.R_BLAMER_NO, RB.R_WRITER_NO, RB.R_BLA_CON, RB.R_BLA_DATE, RB.R_BLA_LIST, RB.R_SANC_YN, RB.R_ANS_DATE, RB.R_BLA_DETAIL, RB.R_DEL_YN , R.CON, M.MEM_NO AS BLAMER_NO, M.MEM_NO AS WRITER_NO FROM REPLY_BLAME RB JOIN REPLY R ON RB.R_NO = R.REPLY_NO JOIN MEMBER M ON RB.R_BLAMER_NO = M.MEM_NO JOIN MEMBER M ON RB.R_WRITER_NO = M.MEM_NO ORDER BY R_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
 	      PreparedStatement pstmt = conn.prepareStatement(sql);
 	      pstmt.setInt(1, pvo.getStartRow());
 	      pstmt.setInt(2, pvo.getLastRow());
@@ -26,40 +26,33 @@ public class AdminReplyBlameDao {
 	      
 	      
 	      //rs
-	      List<AdminBlameVo> blameVoList = new ArrayList<AdminBlameVo>();
+	      List<AdminReplyBlameVo> blameVoList = new ArrayList<AdminReplyBlameVo>();
 	      while(rs.next()) {
-	         
-	    	 String blameNo = rs.getString("BLAME_NO");
-	         String replyNo = rs.getString("REPLY_NO");
-	         String postNo = rs.getString("POST_NO");
-	         String title = rs.getString("TITLE");
-	         String con = rs.getString("CON");
-	         String blameDate = rs.getString("BLAME_DATE");
-	         String blaList = rs.getString("BLA_LIST");
-	         String sancYn = rs.getString("SANC_YN");
-	         String ansDate = rs.getString("ANS_DATE");
-	         String delYn = rs.getString("DEL_YN");
-	         String blamerNo = rs.getString("BLAMER_NO");
-	         String blamerId = rs.getString("BLAMER_ID");
-	         String memNo = rs.getString("MEM_NO");
-	         String memId = rs.getString("MEM_ID");
 
+	    	 String rBlaNo = rs.getString("R_BLA_NO");
+	         String rNo = rs.getString("R_NO");
+	         String rBlamerNo = rs.getString("R_BLAMER_NO");
+	         String rWriterNo = rs.getString("R_WRITER_NO");
+	         String rBlaCon = rs.getString("R_BLA_CON");
+	         String rBlaDate = rs.getString("R_BLA_DATE");
+	         String rBlaList = rs.getString("R_BLA_LIST");
+	         String rSancYn = rs.getString("R_SANC_YN");
+	         String rAnsDate = rs.getString("R_ANS_DATE");
+	         String rBlaDetail = rs.getString("R_BLA_DETAIL");
+	         String rDelYn = rs.getString("R_DEL_YN");
 	         
-	         AdminBlameVo vo = new AdminBlameVo();
-	         vo.setBlameNo(blameNo);
-	         vo.setReplyNo(replyNo);
-	         vo.setPostNo(postNo);
-	         vo.setTitle(title);
-	         vo.setCon(con);
-	         vo.setBlameDate(blameDate);
-	         vo.setBlaList(blaList);
-	         vo.setSancYn(sancYn);
-	         vo.setAnsDate(ansDate);
-	         vo.setDelYn(delYn);
-	         vo.setBlamerNo(blamerNo);
-	         vo.setBlamerId(blamerId);
-	         vo.setMemNo(memNo);
-	         vo.setMemId(memId);
+	         AdminReplyBlameVo vo = new AdminReplyBlameVo();
+	         	vo.setrBlaNo(rBlaNo);
+	         	vo.setrNo(rWriterNo);
+	         	vo.setrBlamerNo(rBlamerNo);
+	         	vo.setrWriterNo(rWriterNo);
+	         	vo.setrBlaCon(rBlaCon);
+	         	vo.setrBlaDate(rBlaDate);
+	         	vo.setrBlaList(rBlaList);
+	         	vo.setrSancYn(rSancYn);
+	         	vo.setrAnsDate(rAnsDate);
+	         	vo.setrBlaDetail(rBlaDetail);
+	         	vo.setrDelYn(rDelYn);
 	         
 	         blameVoList.add(vo);
 	         
@@ -78,7 +71,7 @@ public class AdminReplyBlameDao {
 	   public int selectBlameCount(Connection conn) throws Exception{
 		      
 		      //SQL
-		      String sql = "SELECT COUNT(*) as cnt FROM BLAME WHERE STATUS = 'O'";
+		      String sql = "SELECT COUNT(*) as cnt FROM REPLY_BLAME";
 		      PreparedStatement pstmt = conn.prepareStatement(sql);
 		      
 		      ResultSet rs = pstmt.executeQuery();
@@ -102,7 +95,7 @@ public class AdminReplyBlameDao {
 	   //신고 항목 리스트 조회
 	   public List<AdminBlameCategoryVo> getCategoryList(Connection conn) throws Exception {
 		   //SQL
-		   String sql = "SELECT * FROM CATEGORY ORDER BY NO";
+		   String sql = "SELECT * FROM BLAME_REASON ORDER BY BLA_REASON";
 		   PreparedStatement pstmt = conn.prepareStatement(sql);
 		   ResultSet rs = pstmt.executeQuery();
 		   //rs
@@ -125,48 +118,42 @@ public class AdminReplyBlameDao {
 	   
 
 	 //신고 목록 상세 조회(번호로)
-	   public AdminBlameVo selectBlameByNo(Connection conn, String no) throws Exception{
+	   public AdminReplyBlameVo selectBlameByNo(Connection conn, String rBlaNo) throws Exception{
 	      
 	      //SQL
-	      String sql = "SELECT * FROM CATEGORY ORDER BY NO";
+	      String sql = "SELECT RB.R_BLA_NO , RB.R_NO , RB.R_BLA_LIST , RB.R_BLAMER_NO , RB.R_WRITER_NO , RB.R_BLA_CON , RB.R_BLA_DATE , RB.R_SANC_YN , RB.R_ANS_DATE , RB.R_DEL_YN , RB.R_BLA_DETAIL_REASON , R.CON AS BLA_CON , M.MEM_NO AS BLAMER_NO , M.MEM_NO AS WRITER_NO FROM REPLY_BLAME RB JOIN REPLY R ON RB.R_NO = R.REPLY_NO JOIN BLAME_REASON BR ON RB.R_BLA_LIST = BR.BLA_REASON JOIN MEMBER M ON RB.R_BLAMER_NO = M.MEM_NO JOIN MEMBER M ON RB.R_WRITER_NO = M.MEM_NO WHERE RB.R_BLA_NO = ?";
 	      PreparedStatement pstmt = conn.prepareStatement(sql);
-	      pstmt.setString(1, no);
+	      pstmt.setString(1, rBlaNo);
 	      ResultSet rs = pstmt.executeQuery();
 	      
 	      //rs
-	      AdminBlameVo vo = null;
+	      AdminReplyBlameVo vo = null;
 	      if(rs.next()) {
-	    	 String blameNo = rs.getString("BLAME_NO");
-	         String replyNo = rs.getString("REPLY_NO");
-	         String postNo = rs.getString("POST_NO");
-	         String title = rs.getString("TITLE");
-	         String con = rs.getString("CON");
-	         String blameDate = rs.getString("BLAME_DATE");
-	         String blaList = rs.getString("BLA_LIST");
-	         String sancYn = rs.getString("SANC_YN");
-	         String ansDate = rs.getString("ANS_DATE");
-	         String delYn = rs.getString("DEL_YN");
-	         String blamerNo = rs.getString("BLAMER_NO");
-	         String blamerId = rs.getString("BLAMER_ID");
-	         String memNo = rs.getString("MEM_NO");
-	         String memId = rs.getString("MEM_ID");
+
+	         String rNo = rs.getString("R_NO");
+	         String rBlamerNo = rs.getString("R_BLAMER_NO");
+	         String rWriterNo = rs.getString("R_WRITER_NO");
+	         String rBlaCon = rs.getString("R_BLA_CON");
+	         String rBlaDate = rs.getString("R_BLA_DATE");
+	         String rBlaList = rs.getString("R_BLA_LIST");
+	         String rSancYn = rs.getString("R_SANC_YN");
+	         String rAnsDate = rs.getString("R_ANS_DATE");
+	         String rBlaDetail = rs.getString("R_BLA_DETAIL");
+	         String rDelYn = rs.getString("R_DEL_YN");
 
 	         
-	         vo = new AdminBlameVo();
-	         vo.setBlameNo(blameNo);
-	         vo.setReplyNo(replyNo);
-	         vo.setPostNo(postNo);
-	         vo.setTitle(title);
-	         vo.setCon(con);
-	         vo.setBlameDate(blameDate);
-	         vo.setBlaList(blaList);
-	         vo.setSancYn(sancYn);
-	         vo.setAnsDate(ansDate);
-	         vo.setDelYn(delYn);
-	         vo.setBlamerNo(blamerNo);
-	         vo.setBlamerId(blamerId);
-	         vo.setMemNo(memNo);
-	         vo.setMemId(memId);
+	         vo = new AdminReplyBlameVo();
+         	 vo.setrBlaNo(rBlaNo);
+         	 vo.setrNo(rWriterNo);
+         	 vo.setrBlamerNo(rBlamerNo);
+         	 vo.setrWriterNo(rWriterNo);
+         	 vo.setrBlaCon(rBlaCon);
+         	 vo.setrBlaDate(rBlaDate);
+         	 vo.setrBlaList(rBlaList);
+         	 vo.setrSancYn(rSancYn);
+         	 vo.setrAnsDate(rAnsDate);
+         	 vo.setrBlaDetail(rBlaDetail);
+         	 vo.setrDelYn(rDelYn);
 	         
 	      }
 	      //close
@@ -177,12 +164,12 @@ public class AdminReplyBlameDao {
 	   
 	   
 	 //신고 검색
-		public List<AdminBlameVo> search(Connection conn, Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
+		public List<AdminReplyBlameVo> search(Connection conn, Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
 			
 			String searchType = m.get("searchType");
 			
 			// SQL
-			String sql = "SELECT * FROM ( SELECT ROWNUM RNUM, T.* FROM ( SELECT B.NO , B.CATEGORY_NO , B.TITLE , B.CONTENT , B.WRITER_NO , B.HIT , B.ENROLL_DATE , B.MODIFY_DATE , B.STATUS , M.NICK AS WRITER_NICK , C.NAME AS CATEGORY_NAME FROM BOARD B JOIN MEMBER M ON B.WRITER_NO = M.NO JOIN CATEGORY C ON B.CATEGORY_NO = C.NO WHERE B.STATUS = 'O' AND " + searchType + " LIKE '%' || ?|| '%' ORDER BY NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+			String sql = "SELECT * FROM ( SELECT ROWNUM RNUM, T.* FROM ( SELECT RB.R_NO , RB.R_BLA_NO , RB.R_BLAMER_NO , RB.R_WRITER_NO , RB.R_BLA_CON , RB.R_BLA_DATE , RB.R_BLA_LIST , RB.R_SANC_YN , RB.R_ANS_DATE , RB.R_BLA_DETAIL , RB.R_DEL_YN , R.CON , M.MEM_NO AS BLAMER_NO , M.MEM.NO AS WRITER_NO FROM REPLY_BLAME RB JOIN REPLY R ON RB.R_NO = R.REPLY_NO JOIN MEMBER M ON RB.R_BLAMER_NO = M.MEM_NO JOIN MEMBER M ON RB.R_WRITER_NO = M.MEM_NO WHERE \\\" + searchType + \\\" LIKE '%' || ?|| '%' ORDER BY R_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m.get("searchValue"));
 			pstmt.setInt(2, pvo.getStartRow());
@@ -190,38 +177,32 @@ public class AdminReplyBlameDao {
 			ResultSet rs = pstmt.executeQuery();
 			
 			// rs
-		      List<AdminBlameVo> blameVoList = new ArrayList<AdminBlameVo>();
+		      List<AdminReplyBlameVo> blameVoList = new ArrayList<AdminReplyBlameVo>();
 		      while(rs.next()) {
-		    	  String blameNo = rs.getString("BLAME_NO");
-		         String replyNo = rs.getString("REPLY_NO");
-		         String postNo = rs.getString("POST_NO");
-		         String title = rs.getString("TITLE");
-		         String con = rs.getString("CON");
-		         String blameDate = rs.getString("BLAME_DATE");
-		         String blaList = rs.getString("BLA_LIST");
-		         String sancYn = rs.getString("SANC_YN");
-		         String ansDate = rs.getString("ANS_DATE");
-		         String delYn = rs.getString("DEL_YN");
-		         String blamerNo = rs.getString("BLAMER_NO");
-		         String blamerId = rs.getString("BLAMER_ID");
-		         String memNo = rs.getString("MEM_NO");
-		         String memId = rs.getString("MEM_ID");
+		    	 String rBlaNo = rs.getString("R_BLA_NO");
+		         String rNo = rs.getString("R_NO");
+		         String rBlamerNo = rs.getString("R_BLAMER_NO");
+		         String rWriterNo = rs.getString("R_WRITER_NO");
+		         String rBlaCon = rs.getString("R_BLA_CON");
+		         String rBlaDate = rs.getString("R_BLA_DATE");
+		         String rBlaList = rs.getString("R_BLA_LIST");
+		         String rSancYn = rs.getString("R_SANC_YN");
+		         String rAnsDate = rs.getString("R_ANS_DATE");
+		         String rBlaDetail = rs.getString("R_BLA_DETAIL");
+		         String rDelYn = rs.getString("R_DEL_YN");
 		         
-		         AdminBlameVo vo = new AdminBlameVo();
-		         vo.setBlameNo(blameNo);
-		         vo.setReplyNo(replyNo);
-		         vo.setPostNo(postNo);
-		         vo.setTitle(title);
-		         vo.setCon(con);
-		         vo.setBlameDate(blameDate);
-		         vo.setBlaList(blaList);
-		         vo.setSancYn(sancYn);
-		         vo.setAnsDate(ansDate);
-		         vo.setDelYn(delYn);
-		         vo.setBlamerNo(blamerNo);
-		         vo.setBlamerId(blamerId);
-		         vo.setMemNo(memNo);
-		         vo.setMemId(memId);
+		         AdminReplyBlameVo vo = new AdminReplyBlameVo();
+	         	 vo.setrBlaNo(rBlaNo);
+	         	 vo.setrNo(rWriterNo);
+	         	 vo.setrBlamerNo(rBlamerNo);
+	         	 vo.setrWriterNo(rWriterNo);
+	         	 vo.setrBlaCon(rBlaCon);
+	         	 vo.setrBlaDate(rBlaDate);
+	         	 vo.setrBlaList(rBlaList);
+	         	 vo.setrSancYn(rSancYn);
+	         	 vo.setrAnsDate(rAnsDate);
+	         	 vo.setrBlaDetail(rBlaDetail);
+	         	 vo.setrDelYn(rDelYn);
 		         
 		         blameVoList.add(vo);
 		      }
@@ -234,11 +215,11 @@ public class AdminReplyBlameDao {
 		}//search
 		
 		
-		// 게시글 갯수 조회 (검색값에 따라)
+		// 신고 댓글 갯수 조회 (검색값에 따라)
 		public int getBlameCountBySearch(Connection conn, Map<String, String> m) throws Exception {
 			
 			// SQL
-			String sql = "SELECT COUNT(*) FROM BOARD WHERE STATUS = 'O' AND " + m.get("searchType") + " LIKE '%' || ? || '%'";
+			String sql = "SELECT COUNT(*) FROM REPLY_BLAME WHERE " + m.get("searchType") + " LIKE '%' || ? || '%'";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m.get("searchValue"));
 			ResultSet rs = pstmt.executeQuery();

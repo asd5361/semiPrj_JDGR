@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.jdgr.admin.blame.service.AdminReplyBlameService;
-import com.semi.jdgr.admin.blame.vo.AdminBlameVo;
+import com.semi.jdgr.admin.blame.vo.AdminReplyBlameVo;
 
-@WebServlet("/admin/blame/blame_detail")
+@WebServlet("/admin/blame/r_blame_detail")
 public class AdminReplyBlameDetailController extends HttpServlet{
 
 	@Override
@@ -19,16 +19,16 @@ public class AdminReplyBlameDetailController extends HttpServlet{
 
 		try {
 			//data
-			String no = req.getParameter("no");
+			String rBlaNo = req.getParameter("rBlaNo");
 			
 			//service
 			AdminReplyBlameService abs = new AdminReplyBlameService();
-			AdminBlameVo vo = abs.selectBlameByNo(no);
+			AdminReplyBlameVo vo = abs.selectBlameByNo(rBlaNo);
 			
 			//result(==view)
 			req.setAttribute("vo", vo);
 			req.setAttribute("currPage", req.getParameter("currPage"));
-			req.getRequestDispatcher("/WEB-INF/views/admin/blame/blame_detail.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/views/admin/blame/r_blame_detail.jsp").forward(req, resp);
 
 		}catch(Exception e) {
 			System.out.println("신고 상세조회 중 에러 발생");

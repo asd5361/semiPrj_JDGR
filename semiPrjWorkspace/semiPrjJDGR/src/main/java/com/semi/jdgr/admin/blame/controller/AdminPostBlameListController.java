@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.semi.jdgr.admin.blame.service.AdminReplyBlameService;
-import com.semi.jdgr.admin.blame.vo.AdminReplyBlameVo;
+import com.semi.jdgr.admin.blame.service.AdminPostBlameService;
+import com.semi.jdgr.admin.blame.vo.AdminPostBlameVo;
 import com.semi.jdgr.page.vo.AdminBlamePageVo;
 
-@WebServlet("/admin/blame/r_blame_list")
-public class AdminReplyBlameListController extends HttpServlet{
+@WebServlet("/admin/blame/p_blame_list")
+public class AdminPostBlameListController extends HttpServlet{
 
 	//신고 목록 조회 화면
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			AdminReplyBlameService abs = new AdminReplyBlameService();
+			AdminPostBlameService abs = new AdminPostBlameService();
 			
 			//data
 			int listCount = abs.selectBlameCount();
@@ -34,12 +34,12 @@ public class AdminReplyBlameListController extends HttpServlet{
 			AdminBlamePageVo pvo = new AdminBlamePageVo(listCount, currentPage, pageLimit, blameLimit);
 			
 			//service
-			List<AdminReplyBlameVo> blameVoList = abs.selectBlameList(pvo);
+			List<AdminPostBlameVo> blameVoList = abs.selectBlameList(pvo);
 			
 			//result(==view)
 			req.setAttribute("blameVoList", blameVoList);
 			req.setAttribute("pvo", pvo);
-			req.getRequestDispatcher("/WEB-INF/views/admin/blame/r_blame_list.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/views/admin/blame/p_blame_list.jsp").forward(req, resp);
 
 		}catch(Exception e) {
 			System.out.println("[ERROR-BLAME001]신고 목록 조회 중 에러 발생 ...");
