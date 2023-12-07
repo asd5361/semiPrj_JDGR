@@ -3,7 +3,8 @@ package com.semi.jdgr.alarm.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.semi.jdgr.alarm.vo.AlarmVo;
 
@@ -11,13 +12,13 @@ public class AlarmDao {
 
 
 
-	public AlarmVo selectAlarm(Connection conn, String memNo) throws Exception {
+	public List<AlarmVo> selectAlarmList(Connection conn, String memNo) throws Exception {
 		String sql = "SELECT * FROM ALARM WHERE RECEIVER_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, memNo);
 		ResultSet rs = pstmt.executeQuery();
 		
-		AlarmVo alarmVo = null;
+		List<AlarmVo> alarmVoList = new ArrayList<AlarmVo>();
 		
 		while(rs.next()) {
 			String alarmNo = rs.getString("ALARM_NO");
@@ -28,7 +29,7 @@ public class AlarmDao {
 			String alarmDate = rs.getString("ALARM_DATE");
 			String activeYn = rs.getString("ACTIVE_YN");
 			
-			alarmVo = new AlarmVo();
+			AlarmVo alarmVo = new AlarmVo();
 			
 			alarmVo.setAlarmNo(alarmNo);
 			alarmVo.setReceiverNo(receiverNo);
@@ -38,26 +39,11 @@ public class AlarmDao {
 			alarmVo.setAlarmDate(alarmDate);
 			alarmVo.setActiveYn(activeYn);
 			
-			
+			alarmVoList.add(alarmVo);
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		return null;
+		return alarmVoList;
 	}
+
+	
 
 }

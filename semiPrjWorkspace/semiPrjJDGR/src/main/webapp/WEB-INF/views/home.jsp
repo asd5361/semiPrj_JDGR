@@ -244,70 +244,17 @@
 	
 	                                    <div class="pop_alarm_box">
 	                                        <ul>
+	                                        
+	                                        	<% for(AlarmVo alarmVo : alarmVoList){ %>
 	                                            <li>
 	                                                <span class="ico_reply"></span>
 	                                                <div class="txt">
-	                                                    <strong>유저닉네임</strong>
+	                                                    <strong><%= %></strong>
 	                                                    님이 글제목1에 댓글을 달았습니다.
 	                                                </div>
 	                                                <a href="" class="delete">삭제</a>
 	                                            </li>
-	                                            <li>
-	                                                <span class="ico_reply"></span>
-	                                                <div class="txt">
-	                                                    <strong>유저닉네임</strong>
-	                                                    님이 글제목1에 댓글을 달았습니다.
-	                                                </div>
-	                                                <a href="" class="delete">삭제</a>
-	                                            </li>
-	                                            <li>
-	                                                <span class="ico_subscribe"></span>
-	                                                <div class="txt">
-	                                                    <strong>유저닉네임</strong>
-	                                                    님이 내 블로그를 구독했습니다.
-	                                                </div>
-	                                                <a href="" class="delete">삭제</a>
-	                                            </li>
-	                                            <li>
-	                                                <span class="ico_like"></span>
-	                                                <div class="txt">
-	                                                    <strong>유저닉네임</strong>
-	                                                    님이 내 포스트에 공감을 했습니다.
-	                                                </div>
-	                                                <a href="" class="delete">삭제</a>
-	                                            </li>
-	                                            <li>
-	                                                <span class="ico_reply"></span>
-	                                                <div class="txt">
-	                                                    <strong>유저닉네임</strong>
-	                                                    님이 글제목1에 댓글을 달았습니다.
-	                                                </div>
-	                                                <a href="" class="delete">삭제</a>
-	                                            </li>
-	                                            <li>
-	                                                <span class="ico_reply"></span>
-	                                                <div class="txt">
-	                                                    <strong>유저닉네임</strong>
-	                                                    님이 글제목1에 댓글을 달았습니다.
-	                                                </div>
-	                                                <a href="" class="delete">삭제</a>
-	                                            </li>
-	                                            <li>
-	                                                <span class="ico_subscribe"></span>
-	                                                <div class="txt">
-	                                                    <strong>유저닉네임</strong>
-	                                                    님이 내 블로그를 구독했습니다.
-	                                                </div>
-	                                                <a href="" class="delete">삭제</a>
-	                                            </li>
-	                                            <li>
-	                                                <span class="ico_like"></span>
-	                                                <div class="txt">
-	                                                    <strong>유저닉네임</strong>
-	                                                    님이 내 포스트에 공감을 했습니다.
-	                                                </div>
-	                                                <a href="" class="delete">삭제</a>
-	                                            </li>
+	                                            <%} %>
 	                                        </ul>
 	                                    </div>
 	

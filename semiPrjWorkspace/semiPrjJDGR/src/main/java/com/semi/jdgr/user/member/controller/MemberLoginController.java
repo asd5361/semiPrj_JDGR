@@ -78,16 +78,17 @@ public class MemberLoginController extends HttpServlet {
 			}
 			// service
 			MemberVo loginMember = ms.login(vo);
-			AlarmService as = new AlarmService();
-			List<AlarmVo> alarmVoList = as.findMRSVoList();
-			AlarmVo alarmVo = as.selectAlarm(loginMember.getMemNo());
 			
 			// result (==view)
 			if (loginMember == null) {
 				session.setAttribute("alertMsg", "아이디 또는 비밀번호가 틀렸습니다.");
 				throw new Exception("로그인 실패 ...");
 			}
-
+			
+			AlarmService as = new AlarmService();
+			List<AlarmVo> alarmVoList = as.selectAlarmList(loginMember.getMemNo());
+			
+			session.setAttribute("alarmVoList", alarmVoList);
 			session.setAttribute("loginMember", loginMember);
 			resp.sendRedirect("/jdgr/home");
 

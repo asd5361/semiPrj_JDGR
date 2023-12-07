@@ -1,3 +1,4 @@
+<%@page import="com.semi.jdgr.alarm.vo.AlarmVo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
@@ -16,11 +17,12 @@
 	
 	// 로그인 멤버 블로그정보
 	BlogVo loginMemberBlogVo = null;
-	
+	List<AlarmVo> alarmVoList = null;
 	List<BlogVo> loginMemberBlogVoList = new ArrayList<BlogVo>();
 	if(loginMemberVo != null){
 		loginMemberBlogVo = (BlogVo) session.getAttribute("loginMemberBlogVo"); // 대표블로그 설정 가져오기
 		loginMemberBlogVoList = (List<BlogVo>) session.getAttribute("loginMemberBlogVoList"); // 블로그 리스트 가져오기
+		alarmVoList = (List<AlarmVo>) session.getAttribute("alarmVoList");
 	}
 	BlogVo blogUrlVo = (BlogVo) session.getAttribute("blogUrlVo"); // url에 맞는 블로그 정보
 	
