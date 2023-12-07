@@ -23,18 +23,22 @@ public class PostHeartControllerJOJ extends HttpServlet {
 		try {
 			// data
 //			String no = req.getParameter("no");
-			PostVo postDetailVo = (PostVo) req.getSession().getAttribute("POST_NO");
-			MemberVo loginMember = (MemberVo) req.getSession().getAttribute("loginMember");
-			if (loginMember == null) {
-				throw new Exception("로그인 먼저 진행하세요.");
-			}
+			PostVo postDetailVo = (PostVo) req.getSession().getAttribute("postDetailVo");
+//			MemberVo loginMember = (MemberVo) req.getSession().getAttribute("loginMember");
+			
+			System.out.println(postDetailVo.getPostNo());
+			MemberVo loginMember = new MemberVo();
+			loginMember.setMemNo("4");
+//			if (loginMember == null) {
+//				throw new Exception("로그인 먼저 진행하세요.");
+//			}
 			String no = postDetailVo.getPostNo();
 			String memberNo = loginMember.getMemNo();
 
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
 			boolean isOk = ps.checkHeart(no, memberNo);
-//			HttpSession session = req.getSession();
+			HttpSession session = req.getSession();
 			
 
 			// result
@@ -42,22 +46,20 @@ public class PostHeartControllerJOJ extends HttpServlet {
 			if (isOk) {
 				result = ps.AddHeart(no, memberNo);
 				if (result == 1) {
-					req.setAttribute("alertMsg1", "공감 추가");
-					resp.sendRedirect("/jdgr/post/detail.jsp");
-//					session.setAttribute("alertMsg1", "공감 추가");
-//					req.getSession().setAttribute("alertMsg1", "공감 추가");
+//					req.setAttribute("add", result);
+					session.setAttribute("add", result);
+					req.getSession().setAttribute("add", result);
 				}
 			} else {
 				int del = ps.delHeart(no, memberNo);
 				if (del == 1) {
-					req.setAttribute("alertMsg2", "취소");
-					resp.sendRedirect("/jdgr/post/detail.jsp");
-//					session.setAttribute("alertMsg1", "공감 취소");
-//					req.getSession().setAttribute("alertMsg2", "공감 취소");
+//					req.setAttribute("del", del);
+					session.setAttribute("del", del);
+					req.getSession().setAttribute("del", del);
 				}
 			}
 
-			resp.sendRedirect("/jdgr/post/detail");
+			resp.sendRedirect("/jdgr/post/detail?no=3");
 
 		} catch (Exception e) {
 			System.out.println("공감 오류 발생");
