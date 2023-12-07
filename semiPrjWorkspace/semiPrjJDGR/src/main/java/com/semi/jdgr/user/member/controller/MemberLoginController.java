@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.semi.jdgr.alarm.dao.AlarmDao;
+import com.semi.jdgr.alarm.service.AlarmService;
+import com.semi.jdgr.alarm.vo.AlarmVo;
 import com.semi.jdgr.user.member.service.MemberService;
 import com.semi.jdgr.user.member.vo.MemberPostSanctionVo;
 import com.semi.jdgr.user.member.vo.MemberReplySanctionVo;
@@ -28,7 +31,7 @@ public class MemberLoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		try {
-
+			
 			// data
 			String memberId = req.getParameter("memberId");
 			String memberPwd = req.getParameter("memberPwd");
@@ -38,37 +41,22 @@ public class MemberLoginController extends HttpServlet {
 			vo.setMemPwd(memberPwd);
 			
 			HttpSession session = req.getSession();
-
+			
 			MemberService ms = new MemberService();
 			List<MemberReplySanctionVo> mrsVoList = ms.findMRSVoList();
 			List<MemberPostSanctionVo> mpsVoList = ms.findMPSVoList();
 
-
-			System.out.println("cont"+mrsVoList);
-			
 			for (MemberReplySanctionVo mrsVo : mrsVoList) {
-				System.out.println("정지 목록 : "+mrsVo.getMemId());
-				
 				if (memberId.equals(mrsVo.getMemId())) {
-					System.out.println("이프문 안에"+mrsVo.getMemId());// 지울꺼
 					for (MemberPostSanctionVo mpsVo : mpsVoList) {
-						System.out.println("cont"+mpsVoList);
-
-						System.out.println("2번째 포문안에 :"+mpsVo.getMemId());// 지울꺼
-						
-						System.out.println("멤 아디"+memberId);
 						if (memberId.equals(mpsVo.getMemId())) {
 							//둘다 내역이 있으면 투데이에 양쪽 밴데이를 더해서 엔드데이로 만들기
 							LocalDate today = DateTemplate.findToday();
 							long mpsBanDay = mpsVo.getBanDay();
 							long mrsBanDay = mrsVo.getBanDay();
-							
 							int banDay = (int) (mpsBanDay + mrsBanDay);
-							
 							LocalDate endDate = today.plusDays(banDay);
-							
 							int comparisonResult = endDate.compareTo(today);
-							
 							if (comparisonResult >= 0) {
 								session.setAttribute("alertMsg", endDate + " 까지 정지된 ID입니다.");
 								System.out.println("에지님 정지 끝나는 날 : " +endDate);
@@ -90,7 +78,10 @@ public class MemberLoginController extends HttpServlet {
 			}
 			// service
 			MemberVo loginMember = ms.login(vo);
-
+			AlarmService as = new AlarmService();
+			List<AlarmVo> alarmVoList = as.findMRSVoList();
+			AlarmVo alarmVo = as.selectAlarm(loginMember.getMemNo());
+			
 			// result (==view)
 			if (loginMember == null) {
 				session.setAttribute("alertMsg", "아이디 또는 비밀번호가 틀렸습니다.");

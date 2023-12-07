@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.semi.jdgr.alarm.vo.AlarmVo;
 import com.semi.jdgr.post.service.PostServiceJOJ;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
@@ -28,6 +29,9 @@ public class PostHeartControllerJOJ extends HttpServlet {
 			
 			System.out.println(postDetailVo.getPostNo());
 			MemberVo loginMember = new MemberVo();
+			AlarmVo alarmVo = new AlarmVo();
+			
+			
 			loginMember.setMemNo("4");
 //			if (loginMember == null) {
 //				throw new Exception("로그인 먼저 진행하세요.");
@@ -35,11 +39,25 @@ public class PostHeartControllerJOJ extends HttpServlet {
 			String no = postDetailVo.getPostNo();
 			String memberNo = loginMember.getMemNo();
 
+			
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
 			boolean isOk = ps.checkHeart(no, memberNo);
-			HttpSession session = req.getSession();
 			
+			//알람에 인서트
+			String userNo = ps.findUserNo(postDetailVo.getUserNick());
+			
+			alarmVo.setReceiverNo(userNo);
+			alarmVo.setPostNo(postDetailVo.getPostNo());
+			alarmVo.setSenderNo(loginMember.getMemNo());
+			alarmVo.setAlarmType("HEART");
+			int insert = ps.insertHeartAlarm(alarmVo);
+			
+			if(insert != 1) {
+				throw new Exception("알람 인서트 실패");
+			}
+			
+			HttpSession session = req.getSession();			
 
 			// result
 			int result = 0;
