@@ -147,5 +147,25 @@ public class NoticeService {
 		
 		return result;
 	}
+	public int noticeWrite(NoticeVo vo) throws Exception {
+		
+		//conn
+		Connection conn =JDBCTemplate.getConnection();
+		//dao
+		NoticeDao dao = new NoticeDao();
+		int result = dao.noticeWrite(conn,vo);
+		
+		//tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
 
 }

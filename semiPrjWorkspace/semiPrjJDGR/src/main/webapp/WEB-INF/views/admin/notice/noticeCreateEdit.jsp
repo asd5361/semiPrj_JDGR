@@ -44,18 +44,18 @@
                                     <th scope="row"><label for="">공개여부</label></th>
                                     <td>
                                         <div class="form_box">
-                                            <select class="sel_box">
-                                                <option value="">공개</option>
-                                                <option value="">비공개</option>
+                                            <select class="sel_box" name="del">
+                                                <option value="Y">공개</option>
+                                                <option value="N">비공개</option>
                                             </select>
                                         </div>
                                     </td>
                                     <th scope="row"><label for="">고정여부</label></th>
                                     <td>
                                         <div class="form_box">
-                                            <select class="sel_box">
-                                                <option value="">고정</option>
-                                                <option value="">미고정</option>
+                                            <select class="sel_box" name="fixed">
+                                                <option value="Y">고정</option>
+                                                <option value="N">미고정</option>
                                             </select>
                                         </div>
                                     </td>
@@ -68,7 +68,7 @@
                                     <th scope="row"><label for="inp_03">제목</label></th>
                                     <td colspan="3">
                                         <div class="form_box">
-                                            <input type="text" id="inp_03"placeholder="제목 입력해주세요">
+                                            <input type="text" id="inp_03" name="title" placeholder="제목 입력해주세요">
                                         </div>
                                     </td>
                                 </tr>
@@ -76,7 +76,7 @@
                                     <th scope="row"><label for="inp_03">내용</label></th>
                                     <td colspan="3">
                                         <div class="form_box">
-                                            <textarea placeholder="공지사항 내용을 입력해주세요"></textarea>
+                                            <textarea placeholder="공지사항 내용을 입력해주세요" name="content"></textarea>
                                             <!-- <input type="text" id="inp_03"> -->
                                         </div>
                                     </td>
@@ -104,6 +104,7 @@
 <%@ include file="/WEB-INF/views/admin/common/footer.jsp" %>   
 
     <script>
+        console.log('pno='+'<%=pno%>');
 
         function sendPost(){
         let tableTag = document.querySelector(".tbl_box table");

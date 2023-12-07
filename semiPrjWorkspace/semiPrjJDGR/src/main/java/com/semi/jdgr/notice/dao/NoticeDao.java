@@ -258,5 +258,23 @@ public class NoticeDao {
 		
 		return result;
 	}
+	//공지사항 게시글 작성
+	public int noticeWrite(Connection conn, NoticeVo vo) throws SQLException {
+		
+		//sql
+		String sql ="INSERT INTO NOTICE(NOTICE_NO,ADMIN_NO,TITLE,CONTENT) VALUES (SEQ_NOTICE.NEXTVAL,?,?,?)";
+		PreparedStatement pstmt =conn.prepareStatement(sql);
+		pstmt.setString(1, vo.getAdminNo());
+		pstmt.setString(2, vo.getTitle());
+		pstmt.setString(3, vo.getContent());
+		
+		int result = pstmt.executeUpdate();
+		
+		//close
+		JDBCTemplate.close(pstmt);
+		
+		
+		return result;
+	}
 
 }
