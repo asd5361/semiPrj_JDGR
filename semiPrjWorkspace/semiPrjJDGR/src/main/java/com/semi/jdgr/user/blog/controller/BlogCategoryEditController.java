@@ -27,13 +27,13 @@ public class BlogCategoryEditController extends HttpServlet {
 			
 			// service
 			BlogService bs = new BlogService();
-			List<GroupVo> groupVo = bs.getEditGroupList(userUrl);
+			List<GroupVo> groupVoList = bs.getEditGroupList(userUrl);
 			
 			// result
 			BlogVo blogVo = new BlogVo();
 			blogVo.setBlogUrl(userUrl);
 
-			req.setAttribute("blogUserGroupData", groupVo);
+			req.setAttribute("blogUserGroupData", groupVoList);
 			req.setAttribute("blogUserData", blogVo);
 			req.setAttribute("blogClassName", "blog_set");
 			req.setAttribute("blogSideClassName", "category");
