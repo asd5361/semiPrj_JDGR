@@ -36,9 +36,9 @@
                                 <ul>
                                 	<% for(int i = 1; i <= blogUserGroupData.size(); i++){ %>
                                 	<li class="category">
-                                        <input type="radio" id="category<%= i %>" name="userCategoryNum" value="<%= <%= blogUserGroupData.get(i). %>" >
-                                        <input type="hidden" name="userCategoryValue" value="<%= blogUserGroupData.get(i).getGroupName() %>">
-                                        <label for="category<%= i %>"><%= blogUserGroupData.get(i).getGroupName() %></label>
+                                        <input type="radio" id="category<%= i %>" name="userCategoryNum" value="<%= blogUserGroupData.get(i - 1).getNo() %>" >
+                                        <input type="hidden" name="userCategoryValue" value="<%= blogUserGroupData.get(i - 1).getName() %>">
+                                        <label for="category<%= i %>"><%= blogUserGroupData.get(i - 1).getName() %></label>
                                     </li>
                                 	<% } %>
                                 </ul>
