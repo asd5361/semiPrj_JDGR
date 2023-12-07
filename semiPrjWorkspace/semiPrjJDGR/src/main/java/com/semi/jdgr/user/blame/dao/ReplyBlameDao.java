@@ -2,13 +2,14 @@ package com.semi.jdgr.user.blame.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import com.semi.jdgr.user.blame.vo.ReplyBlameVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class ReplyBlameDao {
 
-	public int blame(Connection conn, ReplyBlameVo vo) {
+	public int blame(Connection conn, ReplyBlameVo vo) throws Exception {
 
 		// sql
 		String sql = "INSERT INTO MEMBER ( NO ,ID ,PWD ,NICK ,PHONE ,EMAIL ,ADDRESS ,HOBBYS ) VALUES ( SEQ_MEMBER_NO.NEXTVAL , ? , ? , ? , ? , ? , ? , ? )";
@@ -27,21 +28,16 @@ public class ReplyBlameDao {
 		pstmt.setString(12, vo.getrBlaListStr());
 		int result = pstmt.executeUpdate();
 		
-
-		
-		
 		// close
 		JDBCTemplate.close(pstmt);
 		
 		return result;		
+		
 		//rs
 		
 		//close
 		
-	}
-	
-	//유저가 제출한 신고구분 / 상세내용 가져오기
+	}//blame
 	
 
-
-}
+}//class
