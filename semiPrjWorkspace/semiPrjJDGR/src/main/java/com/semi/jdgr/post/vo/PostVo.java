@@ -21,6 +21,7 @@ public class PostVo {
 	private String postTitle;
 	private String categoryName;
 	private String groupName;
+	private String blogUrl;
 
 	public PostVo() {
 	}
@@ -28,7 +29,7 @@ public class PostVo {
 	public PostVo(String postNo, String blogNo, String categoryNo, String groupNo, String title, String content,
 			String open, String inquiry, String enrollDate, String modifyDate, String postDelYn, String postImg,
 			String heartCnt, String replyCnt, String userNick, String userId, String postTitle, String categoryName,
-			String groupName) {
+			String groupName, String blogUrl) {
 		this.postNo = postNo;
 		this.blogNo = blogNo;
 		this.categoryNo = categoryNo;
@@ -48,6 +49,7 @@ public class PostVo {
 		this.postTitle = postTitle;
 		this.categoryName = categoryName;
 		this.groupName = groupName;
+		this.blogUrl = blogUrl;
 	}
 
 	public String getPostNo() {
@@ -202,6 +204,14 @@ public class PostVo {
 		this.groupName = groupName;
 	}
 
+	public String getBlogUrl() {
+		return blogUrl;
+	}
+
+	public void setBlogUrl(String blogUrl) {
+		this.blogUrl = blogUrl;
+	}
+
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", blogNo=" + blogNo + ", categoryNo=" + categoryNo + ", groupNo=" + groupNo
@@ -209,7 +219,7 @@ public class PostVo {
 				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", postDelYn=" + postDelYn
 				+ ", postImg=" + postImg + ", heartCnt=" + heartCnt + ", replyCnt=" + replyCnt + ", userNick="
 				+ userNick + ", userId=" + userId + ", postTitle=" + postTitle + ", categoryName=" + categoryName
-				+ ", groupName=" + groupName + "]";
+				+ ", groupName=" + groupName + ", blogUrl=" + blogUrl + "]";
 	}
 
 }
