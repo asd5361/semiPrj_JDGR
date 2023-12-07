@@ -3,10 +3,14 @@
     pageEncoding="UTF-8"%>
     
     <%
-    	PostVo postDetailVo = (PostVo) request.getAttribute("postDetailVo");
+    	PostVo postDetailVo = (PostVo) session.getAttribute("postDetailVo");
     	PostVo heartCnt = (PostVo) request.getAttribute("heartCnt");
     	PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
-    	request.getat
+//     	int add = (int) session.getAttribute("add");
+//     	int del = (int) session.getAttribute("del");
+    	Integer add = (Integer) request.getAttribute("add");
+    	Integer del = (Integer) request.getAttribute("del");
+    	
     %>
 
     <div class="container01">
@@ -43,7 +47,7 @@
             <div class="footer01">
                 <div class="foot01">
                     <div class="left02">
-                        <button id="like_btn" class="btn_k un_like" onclick="{clickEvent('like')}">공감<%= heartCnt.getPostNo() %></button>
+                        <button id="like_btn" class="btn_k un_like" onclick="clickEvent('like')">공감<%= heartCnt.getPostNo() %></button>
                         <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('rep')}">댓글<%= replyCnt.getPostNo() %></button>
                     </div>
                     <div class="right02">
@@ -78,35 +82,49 @@
     // }
     
     // 공감
-    function clickHeart() {
-    	const heart = document.querySelector();
-    }
+//     function clickHeart() {
+//     	const heart = document.querySelector();
+//     }
     
-    const p = new Promise( ( resolve , reject ) => {
-        console.log("공감");
-        const voList = 서버에서 데이터 받기();
-        if(voList.length > 0){
-            resolve(데이터);
-        }else{
-            reject();
-        }
-        resolve();  // 작업상태 변경
-    } )
-    .then( (데이터) => {
-        console.log("hello");
-    } )
-    .catch( () => {
-        console.log("bye");
-    } )
-    ;
+//     const p = new Promise( ( resolve , reject ) => {
+//         console.log("공감");
+//         if(voList.length > 0){
+//             resolve();
+//         }else{
+//             reject();
+//         }
+//         resolve();  // 작업상태 변경
+//     } )
+//     .then( (데이터) => {
+    	
+//         console.log("hello");
+//     } )
+//     .catch( () => {
+    	
+//         console.log("bye");
+//     } )
+//     ;
 
-    // 이미지 변경
+    // 공감
+    function aaa() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/post/heart";
+        form.method = "GET";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
+        
+    }
+ 	
+    // 이미지 변경	
     function clickEvent(mode) {
         switch (mode) {
             case 'like' :
                 const likeBtn = document.getElementById('like_btn');
                 likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
                 likeClick = !likeClick;
+                aaa()
             break;
             case 'plus' :
                 const plusBtn = document.getElementById('plus_btn');
@@ -124,23 +142,23 @@
     
     
  // 공감 중복체크
-	function checkHeartDup() {
+// 	function checkHeartDup() {
 		
-		const memberIdvalue = document.querySelector("main input[name=memberId]").value;
+// 		const memberIdvalue = document.querySelector("main input[name=memberId]").value;
 		
-		fetch("/app99/member/check/id?memberId=" + memberIdvalue)
-		.then( (resp) => { return resp.json() } )
-		.then( (data) => {
-			const result = data.msg;
-			const isOk = result == "ok";
-			if(isOk){
-				alert("사용가능");
-				window.idOk = true;
-			}else{
-				alert("사용불가");
-				window.idOk = false;
-			}
-		} );
+// 		fetch("/app99/member/check/id?memberId=" + memberIdvalue)
+// 		.then( (resp) => { return resp.json() } )
+// 		.then( (data) => {
+// 			const result = data.msg;
+// 			const isOk = result == "ok";
+// 			if(isOk){
+// 				alert("사용가능");
+// 				window.idOk = true;
+// 			}else{
+// 				alert("사용불가");
+// 				window.idOk = false;
+// 			}
+// 		} );
 </script>
 
 

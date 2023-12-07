@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.semi.jdgr.post.service.PostServiceJOJ;
 import com.semi.jdgr.post.vo.PostVo;
@@ -31,9 +32,14 @@ public class PostControllerJOJ extends HttpServlet{
 		
 		// result
 		System.out.println(postDetailVo);
-		System.out.println(heartCnt);
-		System.out.println(replyCnt);
-		req.setAttribute("postDetailVo", postDetailVo);
+		System.out.println(heartCnt.getPostNo());
+		System.out.println(replyCnt.getPostNo());
+		HttpSession session = req.getSession();
+		session.setAttribute("postDetailVo", postDetailVo);
+//		session.setAttribute("heartCnt", heartCnt);
+//		session.setAttribute("replyCnt", replyCnt);
+		
+//		req.setAttribute("postDetailVo", postDetailVo);
 		req.setAttribute("heartCnt", heartCnt);
 		req.setAttribute("replyCnt", replyCnt);
 		req.getRequestDispatcher("/WEB-INF/views/user/post/detail.jsp").forward(req, resp);
