@@ -8,11 +8,14 @@
     <%
     	List<PostVo> postVoList = (List<PostVo>)request.getAttribute("postVoList");
     	PageVo pvo = (PageVo)request.getAttribute("pvo");
+   
 //     	Map<String, String> searchMap = (Map<String,String>)request.getAttribute("searchMap");
     
     %>
 
 <%@include file = "/WEB-INF/views/admin/common/header.jsp" %>
+                
+            <h1>${ pvo }</h1>
                 
             <!-- container -->
             <div class="container">
@@ -101,15 +104,22 @@
 
                 <div class="paging_box mt30">
                     <ul>
-                        <li class="prev_all"><a href="/jdgr/admin/post/list" title="최신페이지로 이동"></a></li>
-                        <li class="prev"><a href="/jdgr/admin/post/list" title="이전페이지로 이동"></a></li>
-                        <li class="on"><a href="/jdgr/admin/post/list">1</a></li>
-                        <li><a href="/jdgr/admin/post/list">2</a></li>
-                        <li><a href="/jdgr/admin/post/list">3</a></li>
-                        <li><a href="/jdgr/admin/post/list">4</a></li>
-                        <li><a href="/jdgr/admin/post/list">5</a></li>
-                        <li class="next"><a href="/jdgr/admin/post/list" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="/jdgr/admin/post/list" title="마지막페이지로 이동"></a></li>
+                    <%if(pvo.getCurrentPage() != 1) {%>
+                        <li class="prev_all"><a href="/jdgr/admin/post/list?pno=1" title="최신페이지로 이동"></a></li>
+                        <li class="prev"><a href="/jdgr/admin/post/list?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
+                    <%} %>
+                    
+                    <%for(int i = pvo.getStartPage(); i<= pvo.getEndPage(); i++) {%>
+                    	<%if(i == pvo.getCurrentPage()) {%>      
+                        <li class="on"><a href="/jdgr/admin/post/list?pno=<%= i%>"><%= i%></a></li>
+                    	<%}else{ %>    
+                        <li><a href="/jdgr/admin/post/list?pno=<%= i%>"><%= i%></a></li>
+                    <%} }%>
+                    
+                    <%if(pvo.getEndPage() != pvo.getMaxPage()) {%>
+                        <li class="next"><a href="/jdgr/admin/post/list?pno=<%=pvo.getEndPage()+1 %>" title="다음페이지로 이동"></a></li>
+                        <li class="next_all"><a href="/jdgr/admin/post/list?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
+                    <%} %> 
                     </ul>
                 </div>
 
@@ -118,7 +128,7 @@
 <%@include file = "/WEB-INF/views/admin/common/footer.jsp" %>
 
 <script>
-	const trArr = document.querySelectorAll(".paging_box mt30 > ul > li");
+	const trArr = document.querySelectorAll(".tbl_box> table> tbody> tr");
 	for(let i = 0 ; i < trArr.length; ++i){
 		trArr[i].addEventListener('click' , handleClick);
 	}
@@ -126,7 +136,7 @@
 	function handleClick(event){
 		const tr = event.currentTarget;
 		const no = tr.children[0].innerText;
-		location.href = '/jsgr/admin/post/list?no=' + no + '&currPage=<%= pvo.getCurrentPage() %>';	
+		location.href = '/jdgr/admin/post/list?no=' + no + '&currPage=<%= pvo.getCurrentPage() %>';	
 	}
 
 </script>

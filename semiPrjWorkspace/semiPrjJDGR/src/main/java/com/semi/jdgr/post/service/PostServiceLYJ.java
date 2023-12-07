@@ -78,14 +78,14 @@ public class PostServiceLYJ {
 
 
 	// 게시글 갯수 조회(맨 처음에 보이는 전체 리스트 조회)
-	public int selectSearchBoardCount() throws Exception {
+	public int selectPostCount() throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// DAO
 		PostDaoLYJ dao = new PostDaoLYJ();
-		int cnt = dao.getBoardCountBySearch(conn);
+		int cnt = dao.selectPostCount(conn);
 		
 		// close
 		JDBCTemplate.close(conn);

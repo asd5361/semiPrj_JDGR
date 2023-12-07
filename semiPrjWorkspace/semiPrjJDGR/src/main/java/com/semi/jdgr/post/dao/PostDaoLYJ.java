@@ -205,9 +205,9 @@ public class PostDaoLYJ {
 
 	 
 	// 게시글 갯수 조회(맨 처음에 보이는 전체 리스트 조회)
-	public int getBoardCountBySearch(Connection conn) throws Exception {
+	public int selectPostCount(Connection conn) throws Exception {
 		// SQL
-		String sql = "SELECT COUNT(*) FROM POST WHERE DEL_YN = 'Y'";
+		String sql = "SELECT COUNT(*) FROM POST";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		

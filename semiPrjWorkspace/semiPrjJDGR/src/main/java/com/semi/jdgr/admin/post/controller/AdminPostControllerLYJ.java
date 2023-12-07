@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.semi.jdgr.csboard.vo.CsboardVo;
 import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.service.PostServiceLYJ;
 import com.semi.jdgr.post.vo.PostVo;
@@ -25,14 +26,17 @@ public class AdminPostControllerLYJ extends HttpServlet{
 		PostVo postVo = new PostVo();
 		try {
 			
-			int listCount = ps.selectSearchBoardCount();
-			int currentPage = 1;
-			if(req.getParameter("pno") != null) {
-				currentPage = Integer.parseInt(req.getParameter("pno"));
+			int listCount = ps.selectPostCount();
+			//data
+			String currentPage__ = req.getParameter("pno");
+			if(currentPage__ == null) {
+				currentPage__ = "1";
 			}
+			int currentPage = Integer.parseInt(currentPage__);	//현재 페이지
 			int pageLimit = 5;
 			int boardLimit = 10;
-			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);			
+			
 			
 			//service
 			List<PostVo> postVoList = ps.allSelectPostList(postVo);
@@ -57,16 +61,17 @@ public class AdminPostControllerLYJ extends HttpServlet{
 		
 		try {
 			
+			
+			int listCount = ps.selectPostCount();
 			//data
-//			int listCount = ps.selectPostCount(null);		//전체 게시글 갯수
-//			String currentPage_ = req.getParameter("pno");
-//			if(currentPage_ == null) {
-//				currentPage_ = "1";
-//			}
-//			int currentPage = Integer.parseInt(currentPage_);	//현재 페이지
-//			int pageLimit = 5;
-//			int boardLimit = 10;
-//			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+			String currentPage__ = req.getParameter("pno");
+			if(currentPage__ == null) {
+				currentPage__ = "1";
+			}
+			int currentPage = Integer.parseInt(currentPage__);	//현재 페이지
+			int pageLimit = 5;
+			int boardLimit = 10;
+			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);		
 			
 			
 			String memNick = req.getParameter("memNick");
@@ -75,7 +80,7 @@ public class AdminPostControllerLYJ extends HttpServlet{
 			
 			//result(==view)
 			req.setAttribute("postVoList", postVoList);
-//			req.setAttribute("pvo" , pvo);
+			req.setAttribute("pvo" , pvo);
 			 req.getRequestDispatcher("/WEB-INF/views/admin/post/list.jsp").forward(req, resp);
 			
 		}catch(Exception e) {
