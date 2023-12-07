@@ -3,8 +3,11 @@ package com.semi.jdgr.post.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import com.semi.jdgr.alarm.vo.AlarmVo;
 import com.semi.jdgr.post.vo.PostVo;
+import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class PostDaoJOJ {
@@ -255,6 +258,36 @@ public class PostDaoJOJ {
 
 		return del;
 
+	}
+
+	public int insertHeartAlarm(Connection conn, AlarmVo alarmVo) throws Exception {
+		String sql = "INSERT INTO MEMBER ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE ) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, alarmVo.getReceiverNo());
+		pstmt.setString(2, alarmVo.getPostNo());
+		pstmt.setString(3, alarmVo.getSenderNo());
+		pstmt.setString(4, alarmVo.getAlarmType());
+		
+		int result = pstmt.executeUpdate();
+
+		// close
+		JDBCTemplate.close(pstmt);
+
+		return result;
+	}
+
+	public String findUserNo(Connection conn, String userNick) throws Exception {
+		String sql = "SELECT MEM_NO FROM MEMBER WHERE MEM_NICK = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, userNick);
+		
+		ResultSet rs = pstmt.executeQuery();
+		String userNo = null;
+		if(rs.next()) {
+			userNo = rs.getString("MEM_NO");
+		}
+		
+		return userNo;
 	}
 
 
