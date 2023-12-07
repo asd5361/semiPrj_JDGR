@@ -11,13 +11,12 @@ public class ReplyBlameVo {
 	private String rWriterNo;
 	private String rBlaCon;
 	private String rBlaDate;
-	private String rBlaDetailReason;
+	private String[] rBlaList;
+	private String rBlaListStr;
 	private String rSancYn;
 	private String rAnsDate;
 	private String rBlaDetail;
 	private String rDelYn;
-	private String[] rBlaList;
-	private String rBlaListStr;
 	
 	
 	public String getrBlaNo() {
@@ -55,12 +54,6 @@ public class ReplyBlameVo {
 	}
 	public void setrBlaDate(String rBlaDate) {
 		this.rBlaDate = rBlaDate;
-	}
-	public String getrBlaDetailReason() {
-		return rBlaDetailReason;
-	}
-	public void setrBlaDetailReason(String rBlaDetailReason) {
-		this.rBlaDetailReason = rBlaDetailReason;
 	}
 	public String getrSancYn() {
 		return rSancYn;
@@ -106,7 +99,7 @@ public class ReplyBlameVo {
 	
 	
 	public ReplyBlameVo(String rBlaNo, String rNo, String rBlamerNo, String rWriterNo, String rBlaCon, String rBlaDate,
-			String rBlaDetailReason, String rSancYn, String rAnsDate, String rBlaDetail, String rDelYn,
+			String rSancYn, String rAnsDate, String rBlaDetail, String rDelYn,
 			String[] rBlaList, String rBlaListStr) {
 		super();
 		this.rBlaNo = rBlaNo;
@@ -115,7 +108,6 @@ public class ReplyBlameVo {
 		this.rWriterNo = rWriterNo;
 		this.rBlaCon = rBlaCon;
 		this.rBlaDate = rBlaDate;
-		this.rBlaDetailReason = rBlaDetailReason;
 		this.rSancYn = rSancYn;
 		this.rAnsDate = rAnsDate;
 		this.rBlaDetail = rBlaDetail;
@@ -128,8 +120,8 @@ public class ReplyBlameVo {
 	@Override
 	public String toString() {
 		return "ReplyBlameVo [rBlaNo=" + rBlaNo + ", rNo=" + rNo + ", rBlamerNo=" + rBlamerNo + ", rWriterNo="
-				+ rWriterNo + ", rBlaCon=" + rBlaCon + ", rBlaDate=" + rBlaDate + ", rBlaDetailReason="
-				+ rBlaDetailReason + ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate + ", rBlaDetail=" + rBlaDetail
+				+ rWriterNo + ", rBlaCon=" + rBlaCon + ", rBlaDate=" + rBlaDate
+				+ ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate + ", rBlaDetail=" + rBlaDetail
 				+ ", rDelYn=" + rDelYn + ", rBlaList=" + Arrays.toString(rBlaList) + ", rBlaListStr=" + rBlaListStr
 				+ "]";
 	}

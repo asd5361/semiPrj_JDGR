@@ -34,7 +34,6 @@ public class ReplyBlameController extends HttpServlet{
 			String rWriterNo = req.getParameter("rWriterNo");
 			String rBlaCon = req.getParameter("rBlaCon");
 			String rBlaDate = req.getParameter("rBlaDate");
-			String rBlaDetailReason = req.getParameter("rBlaDetailReason");
 			String rSancYn = req.getParameter("rSancYn");
 			String rAnsDate = req.getParameter("rAnsDate");
 			String rBlaDetail = req.getParameter("rBlaDetail");
@@ -48,7 +47,6 @@ public class ReplyBlameController extends HttpServlet{
 			vo.setrWriterNo(rWriterNo);
 			vo.setrBlaCon(rBlaCon);
 			vo.setrBlaDate(rBlaDate);
-			vo.setrBlaDetailReason(rBlaDetailReason);
 			vo.setrSancYn(rSancYn);
 			vo.setrAnsDate(rAnsDate);
 			vo.setrBlaDetail(rBlaDetail);
