@@ -1,6 +1,17 @@
 <%@page import="com.semi.jdgr.blog.vo.BlogVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+    String x = (String) session.getAttribute("alertMsg");
+	session.removeAttribute("alertMsg");
+	
+%>  
+
+<script>
+	<% if( x != null ){ %>
+	    alert('<%= x %>');
+	<% } %>
+</script>
 
 <!DOCTYPE html>
 <html lang="ko">

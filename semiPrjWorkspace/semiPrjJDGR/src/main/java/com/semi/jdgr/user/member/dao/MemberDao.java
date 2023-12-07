@@ -220,12 +220,22 @@ public class MemberDao {
 	        System.out.println("두 날짜 사이의 일 수 차이: " + daysDifference + "일");
 
 			MemberReplySanctionVo mrsVo = new MemberReplySanctionVo();
-
-			mrsVo.setMemId(memId);
-			mrsVo.setSancDate(endDate);
-			mrsVo.setBanDay(daysDifference);
 			
-			mrsVoList.add(mrsVo);
+			int comparisonResult = endDate.compareTo(today);
+
+			if (comparisonResult >= 0) {
+			    System.out.println("date가 더 늦은 날짜입니다.");
+			    mrsVo.setMemId(memId);
+				mrsVo.setSancDate(endDate);
+				mrsVo.setBanDay(daysDifference);
+				
+				mrsVoList.add(mrsVo);
+			} 
+			
+			
+			
+			
+			
 
 		}
 
