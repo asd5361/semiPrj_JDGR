@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <button class="btn_option"><img class="img01" src="../images/ico/ico_option.svg"><span></span></button> -->
+                    <button class="btn_option"><img class="img01" src="/jdgr/resources/user/images/ico/ico_option.svg"><span></span></button>
                 </div>
             </div>
             <br>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="right02">
                         <button id="plus_btn" class="btn_k un_plus" onclick="{clickEvent('plus')}">구독하기</button>
-                        <button class="btn_k" onclick="location=window.open('xxx.jsp', 'blamePage')"><img src="../images/ico/ico_declaration.svg" alt="신고">신고하기</button>
+                        <button class="btn_k" onclick="location=window.open('xxx.jsp', 'blamePage')"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button>
                     </div>    
                 </div>
             </div>
