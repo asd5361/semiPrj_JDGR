@@ -90,15 +90,6 @@ public class AdminPostBlameVo {
 	}
 	
 	
-	@Override
-	public String toString() {
-		return "AdminPostBlameVo [pBlaNo=" + pBlaNo + ", pNo=" + pNo + ", pBlamerNo=" + pBlamerNo + ", pWriterNo="
-				+ pWriterNo + ", pBlaTit=" + pBlaTit + ", pBlaDate=" + pBlaDate + ", pBlaList=" + pBlaList
-				+ ", pBlaDetailReason=" + pBlaDetailReason + ", pSancYn=" + pSancYn + ", pAnsDate=" + pAnsDate
-				+ ", pBlaDetail=" + pBlaDetail + ", pDelYn=" + pDelYn + "]";
-	}
-	
-	
 	public AdminPostBlameVo(String pBlaNo, String pNo, String pBlamerNo, String pWriterNo, String pBlaTit,
 			String pBlaDate, String pBlaList, String pBlaDetailReason, String pSancYn, String pAnsDate,
 			String pBlaDetail, String pDelYn) {
@@ -118,11 +109,19 @@ public class AdminPostBlameVo {
 	}
 	
 	
-	public AdminPostBlameVo() {
+	@Override
+	public String toString() {
+		return "AdminPostBlameVo [pBlaNo=" + pBlaNo + ", pNo=" + pNo + ", pBlamerNo=" + pBlamerNo + ", pWriterNo="
+				+ pWriterNo + ", pBlaTit=" + pBlaTit + ", pBlaDate=" + pBlaDate + ", pBlaList=" + pBlaList
+				+ ", pBlaDetailReason=" + pBlaDetailReason + ", pSancYn=" + pSancYn + ", pAnsDate=" + pAnsDate
+				+ ", pBlaDetail=" + pBlaDetail + ", pDelYn=" + pDelYn + "]";
 	}
 	
 	
+	public AdminPostBlameVo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
-
 	
 }

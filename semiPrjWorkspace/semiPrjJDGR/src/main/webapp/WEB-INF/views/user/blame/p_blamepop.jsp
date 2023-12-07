@@ -1,4 +1,6 @@
-<%@page import="com.semi.jdgr.admin.reply.vo.AdminReplyVo"%>
+<%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
+<%@page import="com.semi.jdgr.user.blame.vo.ReplyBlameVo" %>
+<%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
@@ -9,11 +11,14 @@
 <div id="pop_email" class="modal_bg">
     <div class="modal_box">
         <div class="modal_header">
-            <div class="rep_pos_pop"><h2>댓글 / 포스트 신고하기</h2></div>
+            <div class="rep_pos_pop"><h2>포스트 신고하기</h2></div>
             <button class="modal_close">닫기</button>
         </div>
         <hr>
-        <div class="writer_content"><h5>작성자 | <%= vo.getMemNick() %></h5><br><h5>내   용| <%= vo.getCon() %></h5>
+        <div class="writer_content">
+        <h5>작성자 |  + <%= vo.getMemNick() %></h5>
+        <br>
+        <h5>내   용| <%= vo.getCon() %><%=vo.getTitle() %></h5>
         </div>
         <hr>
         <div class="select_reason">사유선택</div>
@@ -23,44 +28,44 @@
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="0" class="report_reason">
-                            <label class="reason_content"  for="0">스팸홍보/도배글입니다.</label>
+                            <label class="reason_content"  for="0"><%= vo.get(0).getrBlaList() %></label>
 
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="1" class="report_reason">
-                            <label class="reason_content"  for="1">음란물입니다.</label>
+                            <label class="reason_content"  for="1"><%= vo.getrBlaList() %>.</label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="2" class="report_reason">
-                            <label class="reason_content"  for="2">불법정보를 포함하고 있습니다.</label>
+                            <label class="reason_content"  for="2"><%= vo.getrBlaList() %></label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="3" class="report_reason">
-                            <label class="reason_content" for="3">청소년에게 유해한 내용입니다.</label>
+                            <label class="reason_content" for="3"><%= vo.getrBlaList() %></label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="4" class="report_reason">
-                            <label class="reason_content"  for="4">욕설/생명경시/혐오/차별적 표현입니다.</label>
+                            <label class="reason_content"  for="4"><%= vo.getrBlaList() %></label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area">
                             <input type="radio" name="select" id="5" class="report_reason">
-                            <label class="reason_content"  for="5">개인정보 노출 게시물입니다.</label>
+                            <label class="reason_content"  for="5"><%= vo.getrBlaList() %></label>
                         </div>
                     </li>
                     <li class="list">
                         <div class="check_area_last">
                             <input type="radio" name="select" id="6" class="report_reason">
-                            <label class="reason_content"  for="6">불쾌한 표현이 있습니다.</label>
+                            <label class="reason_content"  for="6"><%= vo.getrBlaList() %></label>
                         </div>
                     </li>
                 </ul>
