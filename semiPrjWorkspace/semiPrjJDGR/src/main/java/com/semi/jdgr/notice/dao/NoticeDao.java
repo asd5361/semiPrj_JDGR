@@ -159,7 +159,7 @@ public class NoticeDao {
 	public NoticeVo noticeDetail(Connection conn, String boardno) throws SQLException {
 		
 		//sql
-		String sql ="SELECT * FROM NOTICE WHERE NOTICE_NO = ?";
+		String sql ="SELECT * FROM NOTICE LEFT JOIN(SELECT ADMIN_NO AS AMO,ADMIN_NAME FROM ADMIN) ON AMO = ADMIN_NO WHERE NOTICE_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1,boardno);
 		ResultSet rs = pstmt.executeQuery();
@@ -178,6 +178,7 @@ public class NoticeDao {
 			vo.setUpdateDate(rs.getString("UPDATE_DATE"));
 			vo.setFixedYn(rs.getString("FIXED_YN"));
 			vo.setDelYn(rs.getString("DEL_YN"));			
+			vo.setAdminName(rs.getString("ADMIN_NAME"));
 		}
 		
 		//result
@@ -209,7 +210,8 @@ public class NoticeDao {
 	public List<NoticeVo> selectAdminNoticeList(Connection conn, PageVo pvo) throws SQLException {
 		
 		//sql
-		String sql="SELECT * FROM (SELECT ROWNUM RNUM, N.* FROM (SELECT * FROM NOTICE ORDER BY NOTICE_NO DESC)N )WHERE RNUM BETWEEN ? AND ?";
+//		String sql="SELECT * FROM (SELECT ROWNUM RNUM, N.* FROM (SELECT * FROM NOTICE LEFT JOIN(SELECT ADMIN_NO AS AMO,ADMIN_NAME FROM ADMIN) ON AMO = ADMIN_NO ORDER BY NOTICE_NO DESC)N )WHERE RNUM BETWEEN ? AND ?";
+		String sql="SELECT * FROM ( SELECT ROWNUM RNUM, N.* FROM ( SELECT * FROM NOTICE LEFT JOIN( SELECT ADMIN_NO AS AMO,ADMIN_NAME FROM ADMIN) ON AMO = ADMIN_NO ORDER BY NOTICE_NO DESC)N )WHERE RNUM BETWEEN ? AND ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, pvo.getStartRow());
 		pstmt.setInt(2, pvo.getLastRow());
@@ -229,6 +231,8 @@ public class NoticeDao {
 			vo.setUpdateDate(rs.getString("UPDATE_DATE"));
 			vo.setFixedYn(rs.getString("FIXED_YN"));
 			vo.setDelYn(rs.getString("DEL_YN"));
+			vo.setAdminName(rs.getString("ADMIN_NAME"));
+			
 			
 			noticeVoList.add(vo);
 		}

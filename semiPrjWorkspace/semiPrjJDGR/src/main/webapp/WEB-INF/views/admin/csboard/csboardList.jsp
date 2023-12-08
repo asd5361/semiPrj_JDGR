@@ -68,14 +68,14 @@
                         <button class="btn_gray" onclick="reset()">초기화</button>
                     </div>
                     <div class="btn_box">
-                        <button class="btn_black">검색</button>
+                        <button class="btn_black" onclick="sendPost()">검색</button>
                     </div>
                 </div>
 
                 <!-- 테이블 -->
                 <div class="tbl_box data mt40">
                     <table>
-                        <caption>회원가입 테이블</caption>
+                        <caption>1:1문의 목록 테이블</caption>
                         <colgroup>
                             <col width="">
                             <col width="">
@@ -106,8 +106,8 @@
                             <tr>
 								<td><%=vo.getqNo() %></td>
 								<td><%=vo.getqTit() %></td>
-								<td><%=vo.getMemNo() %></td>
-								<td><%=vo.getqCon() %></td>
+								<td><%=vo.getMemNick() %></td>
+								<td><%=vo.getqConFirstLine()%></td>
 								<td><%=vo.getqWriteDate() %></td>
 								<td><%=vo.getAnsewrDate() %></td>
 								<td><%=vo.getAnsewrDate() %></td>
@@ -162,5 +162,13 @@
             for(let i=0; i<inputArr.length; i++){
                 inputArr[i].value = null;
             }
+        }
+        function sendPost(){
+            let divTag = document.querySelector(".search_box");
+            let formTag = document.createElement("form");
+            formTag.setAttribute('method','post');
+            formTag.setAttribute('action','/jdgr/csborad/search');
+            formTag.appendChild(divTag);
+            console.log(formTag);
         }
     </script>

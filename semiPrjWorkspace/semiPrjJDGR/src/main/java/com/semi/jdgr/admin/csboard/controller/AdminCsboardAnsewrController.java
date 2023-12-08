@@ -24,7 +24,6 @@ public class AdminCsboardAnsewrController extends HttpServlet{
 			String pno = req.getParameter("pno");
 			String ansewrDate = req.getParameter("ansDate");
 			String DateColumn = "UPDATE_DATE";
-			System.out.println(pno);
 
 			CsboardVo vo = new CsboardVo();
 			vo.setAdminNo(adminNo);

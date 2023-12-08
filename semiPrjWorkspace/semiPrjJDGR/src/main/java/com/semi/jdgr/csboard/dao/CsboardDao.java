@@ -221,7 +221,7 @@ public class CsboardDao {
 	//관리자 게시글 전체 조회
 	public List<CsboardVo> selectAdminCsboardList(Connection conn, PageVo pvo) throws SQLException {
 	//sql
-	String sql = "SELECT * FROM (SELECT ROWNUM RNUM, CSBOARD.* FROM ( SELECT * FROM CUSTOMER_CENTER ORDER BY Q_NO DESC) CSBOARD) WHERE RNUM BETWEEN ? AND ?";
+	String sql = "SELECT * FROM (SELECT ROWNUM RNUM, CSBOARD.* FROM ( SELECT * FROM CUSTOMER_CENTER JOIN(SELECT MEM_NO AS MNO, MEM_NICK FROM MEMBER) ON MNO = MEM_NO LEFT JOIN(SELECT ADMIN_NO AS AMO,ADMIN_NAME FROM ADMIN) ON AMO = ADMIN_NO ORDER BY Q_NO DESC) CSBOARD) WHERE RNUM BETWEEN ? AND ?";
 	PreparedStatement pstmt = conn.prepareStatement(sql);
 	pstmt.setInt(1, pvo.getStartRow());
 	pstmt.setInt(2, pvo.getLastRow());
@@ -242,7 +242,8 @@ public class CsboardDao {
 		vo.setUpdateDate(rs.getString("UPDATE_DATE"));
 		vo.setDelYn(rs.getString("DEL_YN"));
 		vo.setQuestionCategory(rs.getString("QUESTION_CATEGORY"));
-		
+		vo.setAdminName(rs.getString("ADMIN_NAME"));
+		vo.setMemNick(rs.getString("MEM_NICK")); 
 		csboardVoList.add(vo);
 	}
 	
@@ -252,11 +253,11 @@ public class CsboardDao {
 	
 	return csboardVoList;
 	}
-	//1:1문의 1개 상세 조회
+	//관리자 1:1문의 1개 상세 조회
 		public CsboardVo adminCsboardDetail(Connection conn, String board) throws SQLException {
 			
 			//sql
-			String sql = "SELECT * FROM CUSTOMER_CENTER WHERE Q_NO = ?";
+			String sql = "SELECT * FROM CUSTOMER_CENTER JOIN(SELECT MEM_NO AS MNO, MEM_NICK FROM MEMBER) ON MNO = MEM_NO LEFT JOIN(SELECT ADMIN_NO AS AMO,ADMIN_NAME FROM ADMIN) ON AMO = ADMIN_NO WHERE Q_NO = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board);
 			ResultSet rs = pstmt.executeQuery();
@@ -276,7 +277,8 @@ public class CsboardDao {
 				vo.setUpdateDate(rs.getString("UPDATE_DATE"));
 				vo.setDelYn(rs.getString("DEL_YN"));
 				vo.setQuestionCategory(rs.getString("QUESTION_CATEGORY"));
-				
+				vo.setAdminName(rs.getString("ADMIN_NAME"));
+				vo.setMemNick(rs.getString("MEM_NICK")); 				
 			}
 			//close
 			JDBCTemplate.close(rs);
@@ -296,9 +298,7 @@ public class CsboardDao {
 		pstmt.setString(2, vo.getAnsewr());
 		pstmt.setString(3, vo.getAdminNo());
 		pstmt.setString(4, vo.getqNo());
-		System.out.println(vo);
 		int result = pstmt.executeUpdate();
-		System.out.println(result);
 		//close
 		JDBCTemplate.close(pstmt);
 		

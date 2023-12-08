@@ -40,7 +40,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">작성자</label></th>
-                                    <td><%=vo.getMemNo() %></td>
+                                    <td><%=vo.getMemNick()%></td>
                                     <th scope="row"><label for="">담당 관리자</label></th>
                                     <td><%=vo.getAdminName() %></td>
                                 </tr>

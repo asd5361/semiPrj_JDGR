@@ -15,6 +15,9 @@ public class CsboardVo {
 	private String questionCategory;		//문의글 구분(문의/기능신고)
 	private String adminName;				//답변 관리자 이름
 	private String questionCategoryName;	//문의글 구분 이름
+	private String memNick;					//글 작성자 이름
+	private String delName;					//글 공개 구분 이름(삭제여부)
+	private String qConFirstLine;			//답변 내용 첫줄
 	
 	public CsboardVo() {
 		super();
@@ -66,6 +69,16 @@ public class CsboardVo {
 		return qCon;
 	}
 	public void setqCon(String qCon) {
+//		if(qCon != null) {
+//			String arr[]=qCon.split("\\n");
+//			this.qConFirstLine = arr[0];			
+//		}
+		/*
+		 * int index = submittedFileName.lastIndexOf(".");
+		    String ext = submittedFileName.substring(index);
+		 * 
+		 * 
+		 */
 		this.qCon = qCon;
 	}
 	public String getqWriteDate() {
@@ -96,6 +109,12 @@ public class CsboardVo {
 		return delYn;
 	}
 	public void setDelYn(String delYn) {
+		if(delYn.equals("Y")) {
+			this.delName = "공개";
+		}
+		if(delYn.equals("N")) {
+			this.delName = "비공개";
+		}
 		this.delYn = delYn;
 	}
 	public String getQuestionCategory() {
@@ -121,6 +140,21 @@ public class CsboardVo {
 	}
 	public void setAdminName(String adminName) {
 		this.adminName = adminName;
+	}
+	public String getMemNick() {
+		return memNick;
+	}
+
+	public void setMemNick(String memNick) {
+		this.memNick = memNick;
+	}
+
+	public String getDelName() {
+		return delName;
+	}
+
+	public String getqConFirstLine() {
+		return qConFirstLine;
 	}
 
 	@Override
