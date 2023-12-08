@@ -84,7 +84,7 @@
                         </thead>
                         <tbody>
                         <% for(PostVo vo : postVoList){ %>
-                            <tr>
+                            <tr onclick="redirectToOtherPage('<%= vo.getPostNo() %>','<%= vo.getUserNick() %>')">
                                 <td><%= vo.getUserNick() %></td>
                                 <td><%= vo.getBlogNo() %></td>
                                 <td><%= vo.getPostNo() %></td>
@@ -138,5 +138,13 @@
 //       const no = tr.children[0].innerText;
 <%--       location.href = '/jdgr/admin/post/list?no=' + no + '&currPage=<%= pvo.getCurrentPage() %>';    --%>
 //    }
+
+function redirectToOtherPage(postNo, userNick) {
+    // postNo와 userNick에 따라 이동할 URL을 생성하거나 처리합니다.
+    var newURL = '/jdgr/admin/post/detail?no=' + postNo  ;
+    window.location.href = newURL; // 해당 URL로 이동
+}
+
+
 </script>
             

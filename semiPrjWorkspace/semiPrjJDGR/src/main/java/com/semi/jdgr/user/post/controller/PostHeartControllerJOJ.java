@@ -77,7 +77,7 @@ public class PostHeartControllerJOJ extends HttpServlet {
 				}
 			}
 
-			resp.sendRedirect("/jdgr/post/detail?url=${blogUrlVo.blogUrl}&&no=3");
+			resp.sendRedirect("/jdgr/post/detail?url=${blogUrlVo.blogUrl}&&categoryNo=groupVo.getNo() %>");
 
 		} catch (Exception e) {
 			System.out.println("공감 오류 발생");

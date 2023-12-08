@@ -17,14 +17,41 @@ public class PostDaoJOJ {
 	// rs
 
 	// close
+	
+	// 포스트 넘버 가져오기
+	public PostVo postNo(Connection conn) throws Exception {
+		
+		// sql
+		String sql = "SELECT POST_NO FROM POST ORDER BY POST_NO DESC";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		PostVo postNoVo = null;
+		if(rs.next()) {
+			String pNo = rs.getString("POST_NO");
+			
+			postNoVo = new PostVo();
+			postNoVo.setPostNo(pNo);
+		}
+		
+
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return postNoVo;
+		
+	}// PostNo
 
 	// 포스트 상세보기 (화면)
-	public PostVo PostDetail(Connection conn, String no) throws Exception {
+	public PostVo PostDetail(Connection conn, String categoryNo, String BlogUrl) throws Exception {
 
 		// sql
-		String sql = "SELECT C.CATEGORY_NAME ,P.TITLE ,P.POST_IMG ,M.MEM_NICK ,P.ENROLL_DATE ,P.CONTENT ,H.POST_NO ,R.POST_NO,C.CATEGORY_NO FROM POST P JOIN CATEGORY_LIST C ON P.POST_NO = C.CATEGORY_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = REPLY_NO JOIN BLOG B ON P.POST_NO = B.BLOG_NO JOIN MEMBER M ON B.BLOG_NO = M.MEM_NO WHERE P.POST_NO = ?";
+		String sql = "SELECT C.CATEGORY_NAME ,P.TITLE ,P.POST_IMG ,P.POST_NO ,P.BLOG_NO ,P.GROUP_NO ,P.CONTENT ,M.MEM_NICK ,TO_CHAR(P.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE ,M.MEM_NO ,C.CATEGORY_NO ,B.BLOG_URL FROM POST P JOIN CATEGORY_LIST C ON P.CATEGORY_NO = C.CATEGORY_NO JOIN MYBLOG_CATEGORY Y ON P.GROUP_NO = Y.GROUP_NO JOIN BLOG B ON P.BLOG_NO = B.BLOG_NO JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE B.BLOG_URL = ? AND P.GROUP_NO = ? ORDER BY P.POST_NO DESC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
+		pstmt.setString(1, BlogUrl);
+		pstmt.setString(2, categoryNo);
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
@@ -37,8 +64,6 @@ public class PostDaoJOJ {
 			String userNick = rs.getString("MEM_NICK");
 			String enrollDate = rs.getString("ENROLL_DATE");
 			String content = rs.getString("CONTENT");
-//			String heartCnt = rs.getString("POST_NO");
-//			String replyCnt = rs.getString("POST_NO");
 
 			postDetailVo = new PostVo();
 			postDetailVo.setPostNo(postNo);
@@ -48,8 +73,7 @@ public class PostDaoJOJ {
 			postDetailVo.setUserNick(userNick);
 			postDetailVo.setEnrollDate(enrollDate);
 			postDetailVo.setContent(content);
-//			postDetailVo.setHeartCnt(heartCnt);
-//			postDetailVo.setReplyCnt(replyCnt);
+			
 
 		}
 
@@ -62,12 +86,12 @@ public class PostDaoJOJ {
 	}// PostDetail
 
 	// 조회수 증가
-	public int increaseHit(Connection conn, String no) throws Exception {
+	public int increaseHit(Connection conn, PostVo pNo) throws Exception {
 
 		// sql
 		String sql = "UPDATE POST SET INQUIRY = INQUIRY+1 WHERE POST_NO = ? AND OPEN = 'Y'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
+		pstmt.setString(1, pNo.getPostNo());
 		int result = pstmt.executeUpdate();
 
 		// rs
@@ -81,12 +105,12 @@ public class PostDaoJOJ {
 	}// increaseHit
 
 	// 공감수
-	public PostVo heartCnt(Connection conn, String no) throws Exception {
+	public PostVo heartCnt(Connection conn, PostVo pNo) throws Exception {
 
 		// sql
 		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM HEART WHERE POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
+		pstmt.setString(1, pNo.getPostNo());
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
@@ -107,12 +131,12 @@ public class PostDaoJOJ {
 	}// heartCnt
 	
 	// 댓글수
-	public PostVo ReplyCnt(Connection conn, String no) throws Exception {
+	public PostVo ReplyCnt(Connection conn, PostVo pNo) throws Exception {
 		
 		// sql
 		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM REPLY WHERE POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
+		pstmt.setString(1, pNo.getPostNo());
 		ResultSet rs = pstmt.executeQuery();
 		
 		// rs
@@ -137,7 +161,7 @@ public class PostDaoJOJ {
 	public PostVo AdminPostDetail(Connection conn, String no) throws Exception {
 
 		// sql
-		String sql = "SELECT P.POST_IMG, P.POST_NO ,P.BLOG_NO ,M.MEM_ID ,P.OPEN ,P.INQUIRY ,P.DEL_YN ,P.MODIFY_DATE ,H.POST_NO ,P.ENROLL_DATE ,R.POST_NO ,P.TITLE ,P.CONTENT FROM POST P JOIN CATEGORY_LIST C ON P.POST_NO = C.CATEGORY_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = REPLY_NO JOIN BLOG B ON P.POST_NO = B.BLOG_NO JOIN MEMBER M ON B.BLOG_NO = M.MEM_NO WHERE P.POST_NO = ?";
+		String sql = "SELECT P.POST_IMG ,P.POST_NO ,P.BLOG_NO ,M.MEM_ID ,P.OPEN ,P.INQUIRY ,P.DEL_YN ,TO_CHAR (P.MODIFY_DATE, 'YYYY-MM-DD') AS MODIFY_DATE ,H.POST_NO ,TO_CHAR (P.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE ,R.POST_NO ,P.TITLE ,P.CONTENT FROM POST P JOIN CATEGORY_LIST C ON P.POST_NO = C.CATEGORY_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = REPLY_NO JOIN BLOG B ON P.POST_NO = B.BLOG_NO JOIN MEMBER M ON B.BLOG_NO = M.MEM_NO WHERE P.POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, no);
 		ResultSet rs = pstmt.executeQuery();
@@ -261,7 +285,8 @@ public class PostDaoJOJ {
 	}
 
 	public int insertHeartAlarm(Connection conn, AlarmVo alarmVo) throws Exception {
-		String sql = "INSERT INTO MEMBER ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE ) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
+//		String sql = "INSERT INTO MEMBER ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE ) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
+		String sql = "INSERT INTO ALARM ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, alarmVo.getReceiverNo());
 		pstmt.setString(2, alarmVo.getPostNo());
@@ -289,6 +314,8 @@ public class PostDaoJOJ {
 		
 		return userNo;
 	}
+
+
 
 
 
