@@ -70,7 +70,10 @@ public class BlogWriteController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		try {
-
+			
+			// 로그인 멤버
+			MemberVo loginMember = (MemberVo) req.getSession().getAttribute("loginMember");
+			
 			// data
 			String categoryNo = req.getParameter("categoryNo");
 			String groupNo = req.getParameter("groupNo");
@@ -85,11 +88,9 @@ public class BlogWriteController extends HttpServlet {
 			postVo.setContent(content);
 			postVo.setBlogUrl(blogUrl);
 			
-			System.out.println(postVo);
-			
 			// service
 			PostServiceHJY ps = new PostServiceHJY();
-			int result = ps.postWrite(postVo);
+			int result = ps.postWrite(postVo, loginMember);
 			
 			// result
 			if(result != 1) {
