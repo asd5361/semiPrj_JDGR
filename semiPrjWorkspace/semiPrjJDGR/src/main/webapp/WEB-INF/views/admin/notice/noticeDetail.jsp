@@ -79,8 +79,7 @@
                                     <th scope="row"><label for="inp_03">내용</label></th>
                                     <td colspan="3">
                                         <div class="form_box">
-                                            <textarea name="content"><%=vo.getContent() %>
-                                            </textarea>
+                                            <textarea name="content"><%=vo.getContent() %></textarea>
                                             <!-- <input type="text" id="inp_03"> -->
                                         </div>
                                     </td>

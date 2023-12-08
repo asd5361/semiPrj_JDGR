@@ -75,7 +75,7 @@
                                     <th scope="row"><label for="inp_03">답변 내용</label></th>
                                     <td colspan="3">
                                          <div class="form_box">
-                                            <textarea name="ansewr"placeholder="답변 내용을 입력해주세요"></textarea>
+                                            <textarea name="ansewr"placeholder="답변 내용을 입력해주세요"><%=vo.getAnsewr() %></textarea>
                                         </div>
                                     </td>
                                 </tr>
