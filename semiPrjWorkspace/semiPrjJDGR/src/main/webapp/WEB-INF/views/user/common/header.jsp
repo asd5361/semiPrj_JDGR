@@ -1,3 +1,4 @@
+<%@page import="com.semi.jdgr.alarm.service.AlarmService"%>
 <%@page import="com.semi.jdgr.alarm.vo.AlarmVo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -19,10 +20,14 @@
 	BlogVo loginMemberBlogVo = null;
 	List<AlarmVo> alarmVoList = null;
 	List<BlogVo> loginMemberBlogVoList = new ArrayList<BlogVo>();
+	
+	
 	if(loginMemberVo != null){
 		loginMemberBlogVo = (BlogVo) session.getAttribute("loginMemberBlogVo"); // 대표블로그 설정 가져오기
 		loginMemberBlogVoList = (List<BlogVo>) session.getAttribute("loginMemberBlogVoList"); // 블로그 리스트 가져오기
-		alarmVoList = (List<AlarmVo>) session.getAttribute("alarmVoList");
+		AlarmService as = new AlarmService();
+ 		alarmVoList = (List<AlarmVo>) as.selectAlarmList(loginMemberVo.getMemNo());//회원의 읽지 않은 알람 가져오기
+		
 	}
 	BlogVo blogUrlVo = (BlogVo) session.getAttribute("blogUrlVo"); // url에 맞는 블로그 정보
 	
@@ -149,70 +154,37 @@
 	                        <!-- 알람 팝업 -->
 	                        <div class="pop_alarm">
 	                            <ul>
-	                                <li>
-	                                    <span class="ico_reply"></span>
-	                                    <div class="txt">
-	                                        <strong>유저닉네임</strong>
-	                                        님이 글제목1에 댓글을 달았습니다.
-	                                    </div>
-	                                    <a href="" class="delete">삭제</a>
-	                                </li>
-	                                <li>
-	                                    <span class="ico_reply"></span>
-	                                    <div class="txt">
-	                                        <strong>유저닉네임</strong>
-	                                        님이 글제목1에 댓글을 달았습니다.
-	                                    </div>
-	                                    <a href="" class="delete">삭제</a>
-	                                </li>
-	                                <li>
-	                                    <span class="ico_subscribe"></span>
-	                                    <div class="txt">
-	                                        <strong>유저닉네임</strong>
-	                                        님이 내 블로그를 구독했습니다.
-	                                    </div>
-	                                    <a href="" class="delete">삭제</a>
-	                                </li>
-	                                <li>
-	                                    <span class="ico_like"></span>
-	                                    <div class="txt">
-	                                        <strong>유저닉네임</strong>
-	                                        님이 내 포스트에 공감을 했습니다.
-	                                    </div>
-	                                    <a href="" class="delete">삭제</a>
-	                                </li>
-	                                <li>
-	                                    <span class="ico_reply"></span>
-	                                    <div class="txt">
-	                                        <strong>유저닉네임</strong>
-	                                        님이 글제목1에 댓글을 달았습니다.
-	                                    </div>
-	                                    <a href="" class="delete">삭제</a>
-	                                </li>
-	                                <li>
-	                                    <span class="ico_reply"></span>
-	                                    <div class="txt">
-	                                        <strong>유저닉네임</strong>
-	                                        님이 글제목1에 댓글을 달았습니다.
-	                                    </div>
-	                                    <a href="" class="delete">삭제</a>
-	                                </li>
-	                                <li>
-	                                    <span class="ico_subscribe"></span>
-	                                    <div class="txt">
-	                                        <strong>유저닉네임</strong>
-	                                        님이 내 블로그를 구독했습니다.
-	                                    </div>
-	                                    <a href="" class="delete">삭제</a>
-	                                </li>
-	                                <li>
-	                                    <span class="ico_like"></span>
-	                                    <div class="txt">
-	                                        <strong>유저닉네임</strong>
-	                                        님이 내 포스트에 공감을 했습니다.
-	                                    </div>
-	                                    <a href="" class="delete">삭제</a>
-	                                </li>
+	                                <% for(AlarmVo alarmVo : alarmVoList){ %>
+	                                            	<% if(alarmVo.getPostNo() != null) {%>
+	                                            <li>
+	                                            	<% if(alarmVo.getAlarmType().contains("댓글")) {%>
+	                                                	<span class="ico_reply" ></span>
+	                                            	<%} else if(alarmVo.getAlarmType().contains("공감")){%>
+	                                            		<span class="ico_like" ></span>
+	                                            	<%}else if(alarmVo.getAlarmType().contains("포스팅")){%>
+	                                            		<span style ="background-image: url(/jdgr/resources/user/images/ico/ico_write_b.svg) "></span>
+	                                            	<%}%>
+	                                                <div class="txt" onclick="goPost()" >
+	                                                    <strong><%=alarmVo.getUserNick() %></strong>
+	                                                   	님이 "<%=alarmVo.getPostTitle() %>" <%=alarmVo.getAlarmType() %>
+	                                                </div>
+	                                            
+	                                                <a href="" class="delete" >삭제</a>
+	                                            </li>
+	                                            	<%} else{%>
+	                                            <li>
+	                                                <span class="ico_subscribe"></span>
+	                                            	
+	                                                <div class="txt" onclick="goBlog()">
+	                                                    <strong><%=alarmVo.getUserNick() %></strong>
+	                                                    님이 <%=alarmVo.getAlarmType() %>
+	                                                </div>
+	                                            	
+	                                                <a href="" class="delete" >삭제</a>
+	                                            </li>
+	                                            	<%}%>
+	                                            	
+	                                            <%} %>
 	                            </ul>
 	                        </div>
 	                        <!-- //알람 팝업 -->

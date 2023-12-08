@@ -224,7 +224,7 @@
 							<% if(loginMemberBlogVoList != null){ %>
 								<div class="btn_util">
 		                            <a href="/jdgr/blog/view/<%= loginMemberBlogVo.getBlogUrl() %>" class="my_blog">내 블로그</a>
-		                            <a href="/jdgr/blog/write" class="my_write">글쓰기</a>
+		                            <a href="/jdgr/blog/write?url=<%= loginMemberBlogVo.getBlogUrl() %>" class="my_write">글쓰기</a>
 		                        </div>
 							<% } else { %>
 							<!-- 유저가 가지고있는 블로그가 없으면  -->
@@ -246,14 +246,35 @@
 	                                        <ul>
 	                                        
 	                                        	<% for(AlarmVo alarmVo : alarmVoList){ %>
+	                                            	<% if(alarmVo.getPostNo() != null) {%>
 	                                            <li>
-	                                                <span class="ico_reply"></span>
-	                                                <div class="txt">
-	                                                    <strong>박범렬</strong>
-	                                                    님이 글제목1에 댓글을 달았습니다.
+	                                            	<% if(alarmVo.getAlarmType().contains("댓글")) {%>
+	                                                	<span class="ico_reply" ></span>
+	                                            	<%} else if(alarmVo.getAlarmType().contains("공감")){%>
+	                                            		<span class="ico_like" ></span>
+	                                            	<%}else if(alarmVo.getAlarmType().contains("포스팅")){%>
+	                                            		<span style ="background-image: url(/jdgr/resources/user/images/ico/ico_write_b.svg) "></span>
+	                                            	<%}%>
+	                                                <div class="txt" onclick="goPost()">
+	                                                    <strong><%=alarmVo.getUserNick() %></strong>
+	                                                   	님이 "<%=alarmVo.getPostTitle() %>" <%=alarmVo.getAlarmType() %>
 	                                                </div>
+	                                            
 	                                                <a href="" class="delete">삭제</a>
 	                                            </li>
+	                                            	<%} else{%>
+	                                            <li>
+	                                                <span class="ico_subscribe"></span>
+	                                            	
+	                                                <div class="txt" onclick="goBlog()">
+	                                                    <strong><%=alarmVo.getUserNick() %></strong>
+	                                                    님이 <%=alarmVo.getAlarmType() %>
+	                                                </div>
+	                                            	
+	                                                <a href="" class="delete">삭제</a>
+	                                            </li>
+	                                            	<%}%>
+	                                            	
 	                                            <%} %>
 	                                        </ul>
 	                                    </div>
@@ -383,5 +404,8 @@ const swiper = new Swiper('.swiper-container', {
         prevEl: '.ico_prev',
     },
 });
-
+function goPost() {
+}
+function goBlog() {
+}
 </script>
