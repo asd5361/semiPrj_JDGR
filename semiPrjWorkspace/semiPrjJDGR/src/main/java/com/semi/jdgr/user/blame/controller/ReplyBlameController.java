@@ -15,7 +15,7 @@ import com.semi.jdgr.user.blame.vo.ReplyBlameVo;
 @WebServlet("/user/blame/r_blamepop")
 public class ReplyBlameController extends HttpServlet{
 	
-	//유저가 신고한 신고구분 가져오기
+	//신고하기 모달 화면
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("/WEB-INF/views/user/blame/r_blamepop.jsp").forward(req, resp);
@@ -34,11 +34,11 @@ public class ReplyBlameController extends HttpServlet{
 			String rWriterNo = req.getParameter("rWriterNo");
 			String rBlaCon = req.getParameter("rBlaCon");
 			String rBlaDate = req.getParameter("rBlaDate");
+			String rBlaList = req.getParameter("rBlaList");
 			String rSancYn = req.getParameter("rSancYn");
 			String rAnsDate = req.getParameter("rAnsDate");
 			String rBlaDetail = req.getParameter("rBlaDetail");
 			String rDelYn = req.getParameter("rDelYn");
-			String[] rBlaList = req.getParameterValues("rBlaList");
 			
 			ReplyBlameVo vo = new ReplyBlameVo();
 			vo.setrBlaNo(rBlaNo);
@@ -47,11 +47,11 @@ public class ReplyBlameController extends HttpServlet{
 			vo.setrWriterNo(rWriterNo);
 			vo.setrBlaCon(rBlaCon);
 			vo.setrBlaDate(rBlaDate);
+			vo.setrBlaList(rBlaList);
 			vo.setrSancYn(rSancYn);
 			vo.setrAnsDate(rAnsDate);
 			vo.setrBlaDetail(rBlaDetail);
 			vo.setrDelYn(rDelYn);
-			vo.setrBlaList(rBlaList);
 			
 			
 			//service

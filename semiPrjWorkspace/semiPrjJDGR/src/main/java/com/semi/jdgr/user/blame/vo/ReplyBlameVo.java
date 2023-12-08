@@ -11,8 +11,7 @@ public class ReplyBlameVo {
 	private String rWriterNo;
 	private String rBlaCon;
 	private String rBlaDate;
-	private String[] rBlaList;
-	private String rBlaListStr;
+	private String rBlaList;
 	private String rSancYn;
 	private String rAnsDate;
 	private String rBlaDetail;
@@ -55,6 +54,12 @@ public class ReplyBlameVo {
 	public void setrBlaDate(String rBlaDate) {
 		this.rBlaDate = rBlaDate;
 	}
+	public String getrBlaList() {
+		return rBlaList;
+	}
+	public void setrBlaList(String rBlaList) {
+		this.rBlaList = rBlaList;
+	}
 	public String getrSancYn() {
 		return rSancYn;
 	}
@@ -79,28 +84,10 @@ public class ReplyBlameVo {
 	public void setrDelYn(String rDelYn) {
 		this.rDelYn = rDelYn;
 	}
-	public String[] getrBlaList() {
-		return rBlaList;
-	}
-	public void setrBlaList(String[] rBlaList) {
-		if(rBlaList == null) {
-			this.rBlaListStr = "";
-			return;
-		}
-		this.rBlaList = rBlaList;
-		this.rBlaListStr = String.join(",", rBlaList);
-	}
-	public String getrBlaListStr() {
-		return rBlaListStr;
-	}
-	public void setrBlaListStr(String rBlaListStr) {
-		this.rBlaListStr = rBlaListStr;
-	}
 	
 	
 	public ReplyBlameVo(String rBlaNo, String rNo, String rBlamerNo, String rWriterNo, String rBlaCon, String rBlaDate,
-			String rSancYn, String rAnsDate, String rBlaDetail, String rDelYn,
-			String[] rBlaList, String rBlaListStr) {
+			String rBlaList, String rSancYn, String rAnsDate, String rBlaDetail, String rDelYn) {
 		super();
 		this.rBlaNo = rBlaNo;
 		this.rNo = rNo;
@@ -108,22 +95,20 @@ public class ReplyBlameVo {
 		this.rWriterNo = rWriterNo;
 		this.rBlaCon = rBlaCon;
 		this.rBlaDate = rBlaDate;
+		this.rBlaList = rBlaList;
 		this.rSancYn = rSancYn;
 		this.rAnsDate = rAnsDate;
 		this.rBlaDetail = rBlaDetail;
 		this.rDelYn = rDelYn;
-		this.rBlaList = rBlaList;
-		this.rBlaListStr = rBlaListStr;
 	}
 	
 	
 	@Override
 	public String toString() {
 		return "ReplyBlameVo [rBlaNo=" + rBlaNo + ", rNo=" + rNo + ", rBlamerNo=" + rBlamerNo + ", rWriterNo="
-				+ rWriterNo + ", rBlaCon=" + rBlaCon + ", rBlaDate=" + rBlaDate
-				+ ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate + ", rBlaDetail=" + rBlaDetail
-				+ ", rDelYn=" + rDelYn + ", rBlaList=" + Arrays.toString(rBlaList) + ", rBlaListStr=" + rBlaListStr
-				+ "]";
+				+ rWriterNo + ", rBlaCon=" + rBlaCon + ", rBlaDate=" + rBlaDate + ", rBlaList=" + rBlaList
+				+ ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate + ", rBlaDetail=" + rBlaDetail + ", rDelYn="
+				+ rDelYn + "]";
 	}
 	
 	
@@ -131,7 +116,5 @@ public class ReplyBlameVo {
 
 	}
 	
-	
-	
-	
+		
 }

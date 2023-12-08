@@ -9,7 +9,6 @@ public class AdminReplyBlameVo {
 	private String rBlaCon;
 	private String rBlaDate;
 	private String rBlaList;
-	private String rBlaDetailReason;
 	private String rSancYn;
 	private String rAnsDate;
 	private String rBlaDetail;
@@ -58,12 +57,6 @@ public class AdminReplyBlameVo {
 	public void setrBlaList(String rBlaList) {
 		this.rBlaList = rBlaList;
 	}
-	public String getrBlaDetailReason() {
-		return rBlaDetailReason;
-	}
-	public void setrBlaDetailReason(String rBlaDetailReason) {
-		this.rBlaDetailReason = rBlaDetailReason;
-	}
 	public String getrSancYn() {
 		return rSancYn;
 	}
@@ -91,7 +84,7 @@ public class AdminReplyBlameVo {
 	
 	
 	public AdminReplyBlameVo(String rBlaNo, String rNo, String rBlamerNo, String rWriterNo, String rBlaCon,
-			String rBlaDate, String rBlaList, String rBlaDetailReason, String rSancYn, String rAnsDate,
+			String rBlaDate, String rBlaList, String rSancYn, String rAnsDate,
 			String rBlaDetail, String rDelYn) {
 		super();
 		this.rBlaNo = rBlaNo;
@@ -101,7 +94,6 @@ public class AdminReplyBlameVo {
 		this.rBlaCon = rBlaCon;
 		this.rBlaDate = rBlaDate;
 		this.rBlaList = rBlaList;
-		this.rBlaDetailReason = rBlaDetailReason;
 		this.rSancYn = rSancYn;
 		this.rAnsDate = rAnsDate;
 		this.rBlaDetail = rBlaDetail;
@@ -113,7 +105,7 @@ public class AdminReplyBlameVo {
 	public String toString() {
 		return "AdminReplyBlameVo [rBlaNo=" + rBlaNo + ", rNo=" + rNo + ", rBlamerNo=" + rBlamerNo + ", rWriterNo="
 				+ rWriterNo + ", rBlaCon=" + rBlaCon + ", rBlaDate=" + rBlaDate + ", rBlaList=" + rBlaList
-				+ ", rBlaDetailReason=" + rBlaDetailReason + ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate
+				+ ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate
 				+ ", rBlaDetail=" + rBlaDetail + ", rDelYn=" + rDelYn + "]";
 	}
 	

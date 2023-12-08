@@ -23,13 +23,13 @@ public class ReplyBlameDao {
 		pstmt.setString(4, vo.getrWriterNo());
 		pstmt.setString(5, vo.getrBlaCon());
 		pstmt.setString(6, vo.getrBlaDate());
-		pstmt.setString(7, vo.getrBlaListStr());
+		pstmt.setString(7, vo.getrBlaList());
 		pstmt.setString(8, vo.getrSancYn());
 		pstmt.setString(9, vo.getrAnsDate());
 		pstmt.setString(10, vo.getrBlaDetail());
 		pstmt.setString(11, vo.getrDelYn());
 		int result = pstmt.executeUpdate();
-		
+
 		// close
 		JDBCTemplate.close(pstmt);
 		

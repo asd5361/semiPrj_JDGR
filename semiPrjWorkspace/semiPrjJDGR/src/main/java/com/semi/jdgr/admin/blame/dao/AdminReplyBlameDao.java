@@ -18,7 +18,7 @@ public class AdminReplyBlameDao {
 	   public List<AdminReplyBlameVo> selectBlameList(Connection conn, AdminBlamePageVo pvo) throws Exception{
 	      
 	      //SQL
-	      String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , T.* FROM ( SELECT RB.R_NO , RB.R_BLA_NO , RB.R_BLAMER_NO, RB.R_WRITER_NO, RB.R_BLA_CON, RB.R_BLA_DATE, RB.R_BLA_LIST, RB.R_SANC_YN, RB.R_ANS_DATE, RB.R_BLA_DETAIL, RB.R_DEL_YN , R.CON, M.MEM_NO AS BLAMER_NO, M.MEM_NO AS WRITER_NO FROM REPLY_BLAME RB JOIN REPLY R ON RB.R_NO = R.REPLY_NO JOIN MEMBER M ON RB.R_BLAMER_NO = M.MEM_NO JOIN MEMBER M ON RB.R_WRITER_NO = M.MEM_NO ORDER BY R_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+	      String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , T.* FROM ( SELECT RB.R_BLA_NO , RB.R_NO , RB.R_BLAMER_NO , RB.R_WRITER_NO , RB.R_BLA_CON , RB.R_BLA_DATE , RB.R_BLA_LIST , RB.R_SANC_YN , RB.R_ANS_DATE , RB.R_BLA_DETAIL , RB.R_DEL_YN , R.CON , M.MEM_NO AS BLAMER_NO , M.MEM_NO AS WRITER_NO FROM REPLY_BLAME RB JOIN REPLY R ON RB.R_NO = R.REPLY_NO JOIN MEMBER M ON RB.R_BLAMER_NO = M.MEM_NO JOIN MEMBER M ON RB.R_WRITER_NO = M.MEM_NO ORDER BY RB.R_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
 	      PreparedStatement pstmt = conn.prepareStatement(sql);
 	      pstmt.setInt(1, pvo.getStartRow());
 	      pstmt.setInt(2, pvo.getLastRow());
@@ -43,7 +43,7 @@ public class AdminReplyBlameDao {
 	         
 	         AdminReplyBlameVo vo = new AdminReplyBlameVo();
 	         	vo.setrBlaNo(rBlaNo);
-	         	vo.setrNo(rWriterNo);
+	         	vo.setrNo(rNo);
 	         	vo.setrBlamerNo(rBlamerNo);
 	         	vo.setrWriterNo(rWriterNo);
 	         	vo.setrBlaCon(rBlaCon);
@@ -129,7 +129,6 @@ public class AdminReplyBlameDao {
 	      //rs
 	      AdminReplyBlameVo vo = null;
 	      if(rs.next()) {
-
 	         String rNo = rs.getString("R_NO");
 	         String rBlamerNo = rs.getString("R_BLAMER_NO");
 	         String rWriterNo = rs.getString("R_WRITER_NO");
@@ -141,19 +140,18 @@ public class AdminReplyBlameDao {
 	         String rBlaDetail = rs.getString("R_BLA_DETAIL");
 	         String rDelYn = rs.getString("R_DEL_YN");
 
-	         
-	         vo = new AdminReplyBlameVo();
-         	 vo.setrBlaNo(rBlaNo);
-         	 vo.setrNo(rWriterNo);
-         	 vo.setrBlamerNo(rBlamerNo);
-         	 vo.setrWriterNo(rWriterNo);
-         	 vo.setrBlaCon(rBlaCon);
-         	 vo.setrBlaDate(rBlaDate);
-         	 vo.setrBlaList(rBlaList);
-         	 vo.setrSancYn(rSancYn);
-         	 vo.setrAnsDate(rAnsDate);
-         	 vo.setrBlaDetail(rBlaDetail);
-         	 vo.setrDelYn(rDelYn);
+     
+         	vo.setrBlaNo(rBlaNo);
+         	vo.setrNo(rNo);
+         	vo.setrBlamerNo(rBlamerNo);
+         	vo.setrWriterNo(rWriterNo);
+         	vo.setrBlaCon(rBlaCon);
+         	vo.setrBlaDate(rBlaDate);
+         	vo.setrBlaList(rBlaList);
+         	vo.setrSancYn(rSancYn);
+         	vo.setrAnsDate(rAnsDate);
+         	vo.setrBlaDetail(rBlaDetail);
+         	vo.setrDelYn(rDelYn);
 	         
 	      }
 	      //close
