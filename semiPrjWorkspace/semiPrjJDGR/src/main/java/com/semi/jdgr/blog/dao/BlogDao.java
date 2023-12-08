@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.blog.vo.GroupVo;
+import com.semi.jdgr.post.vo.CategoryVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -383,6 +384,85 @@ public class BlogDao {
 		JDBCTemplate.close(pstmt);
 		
 		return result;
+	}
+
+	// 블로그 그룹 카테고리 추가
+	public int createGroup(Connection conn, GroupVo groupVo, String blogNo) throws Exception {
+		
+		// sql
+		String sql = "INSERT INTO MYBLOG_CATEGORY (GROUP_NO, BLOG_NO, GROUP_NAME, GROUP_ORDER) VALUES (SEQ_GROUP_NO.NEXTVAL, ?, ?, ?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogNo);
+		pstmt.setString(2, groupVo.getName());
+		pstmt.setString(3, groupVo.getOrder());
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+	
+	// 블로그 그룹 카테고리 삭제
+	public int deleteGroup(Connection conn, GroupVo groupVo, String blogNo) throws Exception {
+		// sql
+		String sql = "UPDATE MYBLOG_CATEGORY SET DEL_YN = 'Y' WHERE BLOG_NO = ? AND GROUP_NAME = ? AND GROUP_ORDER = ? AND DEL_YN = 'N'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogNo);
+		pstmt.setString(2, groupVo.getName());
+		pstmt.setString(3, groupVo.getOrder());
+		int result = pstmt.executeUpdate();
+		System.out.println(result);
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+
+	// 블로그 그룹 카테고리 수정
+	public int editGroup(Connection conn, GroupVo groupVo, String blogNo) throws Exception {
+		// sql
+		String sql = "UPDATE MYBLOG_CATEGORY SET GROUP_NAME = ? WHERE BLOG_NO = ? AND GROUP_ORDER = ? AND DEL_YN = 'N'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, groupVo.getName());
+		pstmt.setString(2, blogNo);
+		pstmt.setString(3, groupVo.getOrder());
+		int result = pstmt.executeUpdate();
+		System.out.println(result);
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+
+	// 메인 포스트 카테고리 가져오기
+	public List<CategoryVo> getCategoryList(Connection conn) throws Exception {
+
+		// sql
+		String sql = "SELECT * FROM CATEGORY_LIST";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		List<CategoryVo> categoryVoList = new ArrayList<CategoryVo>();
+		while(rs.next()) {
+			String categoryNo = rs.getString("CATEGORY_NO");
+			String categoryName = rs.getString("CATEGORY_NAME");
+			
+			CategoryVo categoryVo = new CategoryVo();
+			categoryVo.setCategoryNo(categoryNo);
+			categoryVo.setCategoryName(categoryName);
+			
+			categoryVoList.add(categoryVo);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return categoryVoList;
 	}
 
 }

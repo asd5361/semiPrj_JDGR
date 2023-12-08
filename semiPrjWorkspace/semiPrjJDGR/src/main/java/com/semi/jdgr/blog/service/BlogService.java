@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import com.semi.jdgr.blog.dao.BlogDao;
 import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.blog.vo.GroupVo;
+import com.semi.jdgr.post.vo.CategoryVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -332,6 +333,98 @@ public class BlogService {
 		JDBCTemplate.close(conn);
 		
 		return groupVoList;
+	}
+
+	// 블로그 그룹 카테고리 추가하기
+	public List<GroupVo> createGroup(GroupVo groupVo, BlogVo blogVo) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		BlogVo userBlogVo = dao.getUserBlog(conn, blogVo.getBlogUrl()); // 블로그 정보 가져오기
+		int result = dao.createGroup(conn, groupVo, userBlogVo.getBlogNo());
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		List<GroupVo> groupVoList = dao.getGroupList(conn, userBlogVo); // 카테고리 그룹 리스트 가져오기
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return groupVoList;
+	}
+
+	// 블로그 그룹 카테고리 삭제하기
+	public List<GroupVo> deleteGroup(GroupVo groupVo, BlogVo blogVo) throws Exception {
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		BlogVo userBlogVo = dao.getUserBlog(conn, blogVo.getBlogUrl()); // 블로그 정보 가져오기
+		int result = dao.deleteGroup(conn, groupVo, userBlogVo.getBlogNo());
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		List<GroupVo> groupVoList = dao.getGroupList(conn, userBlogVo); // 카테고리 그룹 리스트 가져오기
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return groupVoList;
+	}
+
+	// 블로그 그룹 카테고리 수정하기
+	public List<GroupVo> editGroup(GroupVo groupVo, BlogVo blogVo) throws Exception {
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		BlogVo userBlogVo = dao.getUserBlog(conn, blogVo.getBlogUrl()); // 블로그 정보 가져오기
+		int result = dao.editGroup(conn, groupVo, userBlogVo.getBlogNo());
+		
+		// tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		List<GroupVo> groupVoList = dao.getGroupList(conn, userBlogVo); // 카테고리 그룹 리스트 가져오기
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return groupVoList;
+	}
+
+	// 메인 포스트 카테고리 가져오기
+	public List<CategoryVo> getCategoryList() throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		List<CategoryVo> categoryVoList = dao.getCategoryList(conn);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return categoryVoList;
 	}
 	
 }

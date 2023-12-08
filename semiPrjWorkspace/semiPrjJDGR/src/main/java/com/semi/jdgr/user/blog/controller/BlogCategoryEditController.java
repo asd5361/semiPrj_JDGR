@@ -1,6 +1,8 @@
 package com.semi.jdgr.user.blog.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.semi.jdgr.blog.service.BlogService;
 import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.blog.vo.GroupVo;
@@ -24,7 +27,6 @@ public class BlogCategoryEditController extends HttpServlet {
 			
 			// data
 			String userUrl = req.getParameter("url");
-			
 			// service
 			BlogService bs = new BlogService();
 			List<GroupVo> groupVoList = bs.getEditGroupList(userUrl);
@@ -53,24 +55,35 @@ public class BlogCategoryEditController extends HttpServlet {
 		
 		try {
 			// data
-			String groupOrder = req.getParameter("userCategoryNum");
-			String groupName = req.getParameter("userCategoryValue");
-			String editName = req.getParameter("editName");
-			String userUrl = req.getParameter("url"); // 하는중
-			
+			// 클라이언트로부터 전송된 JSON 데이터 읽기
+	        BufferedReader reader = req.getReader();
+	        StringBuilder jsonBuilder = new StringBuilder();
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            jsonBuilder.append(line);
+	        }
+	        // 데이터 객체로 변환
+	        Gson gson = new Gson();
+	        GroupVo groupVo = gson.fromJson(jsonBuilder.toString(), GroupVo.class);
+	        BlogVo blogVo = gson.fromJson(jsonBuilder.toString(), BlogVo.class);
+	        System.out.println(groupVo);
+	        System.out.println(blogVo);
+	        
 			// service
-			BlogService bs = new BlogService();
-			//GroupVo groupVo = bs.editGroup();
+	        BlogService bs = new BlogService();
+	        List<GroupVo> groupVoList = bs.editGroup(groupVo, blogVo);
 			
+	        String groupVoListJsonData = gson.toJson(groupVoList);
+	        System.out.println(groupVoListJsonData);
+	        
 			// result
+	        resp.setCharacterEncoding("UTF-8");
+	        PrintWriter out = resp.getWriter();
 			
-			req.setAttribute("blogClassName", "blog_set");
-			req.setAttribute("blogSideClassName", "category");
-			req.getRequestDispatcher("/WEB-INF/views/user/blogSet/category.jsp").forward(req, resp);
+			out.write(groupVoListJsonData);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-			req.getRequestDispatcher("/WEB-INF/views/user/blogSet/category.jsp").forward(req, resp);
 		}
 		
 	}

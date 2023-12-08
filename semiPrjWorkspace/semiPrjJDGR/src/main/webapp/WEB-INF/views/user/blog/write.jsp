@@ -1,6 +1,14 @@
+<%@page import="com.semi.jdgr.post.vo.CategoryVo"%>
+<%@page import="com.semi.jdgr.blog.vo.GroupVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
+
+<%
+	List<CategoryVo> categoryVoList = (List<CategoryVo>) request.getAttribute("categoryVoList");
+	List<GroupVo> groupVoList = (List<GroupVo>) request.getAttribute("groupVoList");
+%>
+
  <!-- summernote -->
 <script src="/jdgr/resources/user/js/jquery-3.6.0.js"></script>
 <script src="/jdgr/resources/user/summernote/summernote-lite.js"></script>
@@ -13,22 +21,28 @@
 
         <div class="write_box">
 
-            <form action="/blog/write" method="post">
+            <form action="/jdgr/blog/write" method="post">
                 <div class="inp_area">
                 	<label for="">구분</label>
                     <select name="categoryNo">
-                        <option value="1">사진, 게임 등</option>
+                       	<option value="0">선택</option>
+                    	<% for(CategoryVo vo : categoryVoList){ %>
+                        	<option value="<%= vo.getCategoryNo() %>"><%= vo.getCategoryName() %></option>
+                    	<% } %>
                     </select>
                 </div>
                 <div class="inp_area">
                 	<label for="">카테고리</label>
                     <select name="groupNo">
-                        <option value="1">유저가 만든 카테고리 없으면 디폴트에 넣기</option>
+                       	<option value="0">선택</option>
+                    	<% for(GroupVo vo : groupVoList){ %>
+                        	<option value="<%= vo.getNo() %>"><%= vo.getName() %></option>
+                    	<% } %>
                     </select>
                 </div>
                 <div class="inp_area">
                 	<label for="">제목</label>
-                	<input type="text" name="title" placeholder="오늘날짜">
+                	<input type="text" name="title" placeholder="제목을 입력해주세요." value="">
                 </div>
                 <div class="write_area">
                     <textarea id="summernote" name="content"></textarea>
@@ -37,7 +51,7 @@
             
 	            <div class="btn_area mt20">
 	                <button type="button" class="cancle">취소</button>
-	                <button type="submit" class="complete">등록</button>
+	                <button type="button" class="complete" onclick="ValidationCheck();">등록</button>
 	            </div>
             </form>
         </div>
@@ -105,7 +119,68 @@ const fontArr = ['NotoSansKR', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier
 			}
 		});
 	}
+
+</script>
+<script>
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1;
+    const day = currentDate.getDate();
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+    const seconds = currentDate.getSeconds();
+
+    const date = year + '년 ' +  month + '월 ' + day + '일 ' + hours + '시 ' + minutes + '분 ' + seconds + '초';
+    
+    const title = document.querySelector('input[name=title]');
+    title.value = date;
+
 </script>
 
-
 <%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
+<script>
+
+    // 검증
+    function ValidationCheck(){
+        const warningPopup = document.querySelector('.modal_bg.warning');
+        const warningTitle = document.querySelector('.modal_bg.warning .modal_content strong');
+        const warningContent = document.querySelector('.modal_bg.warning .modal_content span');
+
+        // 포스트 카테고리 선택 안할시
+        const categoryNoSelect = document.querySelector('select[name=categoryNo]');
+        if(categoryNoSelect.value == 0){
+            warningPopup.style.display = 'flex';
+            warningTitle.innerHTML = '구분을 선택해주세요.';
+            warningContent.innerHTML = '';
+            return false;
+        }
+
+        // 포스트 그룹 선택 안할시
+        const groupNoSelect = document.querySelector('select[name=groupNo]');
+        if(groupNoSelect.value == 0){
+            warningPopup.style.display = 'flex';
+            warningTitle.innerHTML = '카테고리를 선택해주세요.';
+            warningContent.innerHTML = '';
+            return false;
+        }
+
+        // 타이틀 빈칸 일시
+        const titleInp = document.querySelector('input[name=title]');
+        if(titleInp.value === ''){
+            warningPopup.style.display = 'flex';
+            warningTitle.innerHTML = '제목을 입력해주세요.';
+            warningContent.innerHTML = '';
+            return false;
+        }
+
+        // 내용 없을시
+        const contentInp = document.querySelector('textarea[name=content]');
+        if(contentInp.value === ''){
+            warningPopup.style.display = 'flex';
+            warningTitle.innerHTML = '내용을 입력해주세요.';
+            warningContent.innerHTML = '';
+            return false;
+        }
+
+    }
+</script>
