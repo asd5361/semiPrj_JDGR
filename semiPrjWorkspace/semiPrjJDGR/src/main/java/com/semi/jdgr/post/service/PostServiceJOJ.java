@@ -17,22 +17,42 @@ public class PostServiceJOJ {
 	// tx
 
 	// close
+	
+	// 포스트 넘버 가져오기
+	public PostVo PostNo() throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+
+		// dao
+		PostDaoJOJ dao = new PostDaoJOJ();
+		PostVo postNoVo = dao.postNo(conn);
+
+		// tx
+
+		// close
+		JDBCTemplate.close(conn);
+
+		return postNoVo;
+	}// PostNo
+
 
 	// 포스트 상세보기 (화면) (+조회수 증가) (+공감수)
-	public PostVo PostDetail(String no) throws Exception {
+	public PostVo PostDetail(PostVo pNo, String categoryNo, String BlogUrl) throws Exception {
 
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 
 		// dao
 		PostDaoJOJ dao = new PostDaoJOJ();
-		int result = dao.increaseHit(conn, no);
+		int result = dao.increaseHit(conn, pNo);
+		System.out.println(result);
 
 		PostVo postDetailVo = null;
 		if (result == 1) {
-			postDetailVo = dao.PostDetail(conn, no);
+			postDetailVo = dao.PostDetail(conn, categoryNo, BlogUrl);
 		}
-
+		
 		// tx
 		if (result == 1) {
 			JDBCTemplate.commit(conn);
@@ -48,14 +68,14 @@ public class PostServiceJOJ {
 	}// PostDetail
 
 	// 공감수
-	public PostVo heartCnt(String no) throws Exception {
+	public PostVo heartCnt(PostVo pNo) throws Exception {
 
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 
 		// dao
 		PostDaoJOJ dao = new PostDaoJOJ();
-		PostVo heartCnt = dao.heartCnt(conn, no);
+		PostVo heartCnt = dao.heartCnt(conn, pNo);
 
 		// tx
 
@@ -67,14 +87,14 @@ public class PostServiceJOJ {
 	}// heartHit
 
 	// 댓글수
-	public PostVo ReplyCnt(String no) throws Exception {
+	public PostVo ReplyCnt(PostVo pNo) throws Exception {
 
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 
 		// dao
 		PostDaoJOJ dao = new PostDaoJOJ();
-		PostVo replyCnt = dao.ReplyCnt(conn, no);
+		PostVo replyCnt = dao.ReplyCnt(conn, pNo);
 
 		// tx
 
@@ -227,5 +247,6 @@ public class PostServiceJOJ {
 		
 		return UserNo;
 	}
+
 
 }// class

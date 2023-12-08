@@ -26,30 +26,38 @@ public class PostControllerJOJ extends HttpServlet{
 		
 		try {
 			
-		// data (카테고리 넘버)
-		String no = req.getParameter("no"); 
+		
 		// url정보
-		String getBlogUrl = req.getParameter("url");
-		// 카테고리 정보
+		String BlogUrl = req.getParameter("url");
+		// data (카테고리 넘버)
+		String categoryNo = req.getParameter("categoryNo"); 
+		// data (포스트 넘버)
+//		String no = req.getParameter("no");
+		
+		System.out.println(BlogUrl);
+		System.out.println(categoryNo);
+		
 		
 		// service
 		PostServiceJOJ ps = new PostServiceJOJ();
-		PostVo postDetailVo = ps.PostDetail(no);
-		PostVo heartCnt = ps.heartCnt(no);
-		PostVo replyCnt = ps.ReplyCnt(no);
+		PostVo pNo = ps.PostNo();
+		PostVo postDetailVo = ps.PostDetail(pNo, categoryNo, BlogUrl);
+		PostVo heartCnt = ps.heartCnt(pNo);
+		PostVo replyCnt = ps.ReplyCnt(pNo);
+//		System.out.println(postDetailVo);
 		
 		// service
 		MemberVo loginMemberVo = (MemberVo) req.getSession().getAttribute("loginMember");
 		
 		BlogService bs = new BlogService();
-		BlogVo blogUrlVo = bs.getUserblog(getBlogUrl); // url에 맞는 블로그 가져오기
+		BlogVo blogUrlVo = bs.getUserblog(BlogUrl); // url에 맞는 블로그 가져오기
 //		List<GroupVo> groupVoList = bs.getGroupList(blogUrlVo); // 카테고리그룹 가져오기
 		
 		
 		// result
-		System.out.println(postDetailVo);
-		System.out.println(heartCnt.getPostNo());
-		System.out.println(replyCnt.getPostNo());
+//		System.out.println(postDetailVo);
+//		System.out.println(heartCnt.getPostNo());
+//		System.out.println(replyCnt.getPostNo());
 		HttpSession session = req.getSession();
 		session.setAttribute("postDetailVo", postDetailVo);
 //		session.setAttribute("heartCnt", heartCnt);
@@ -72,10 +80,7 @@ public class PostControllerJOJ extends HttpServlet{
 			req.getRequestDispatcher("/WEB-INF/views/user/common/error.jsp").forward(req, resp);
 		}
 		
-		
 	}// PostDetail
-	
-	
 	
 	// 포스트 상세보기 (로직)
 	@Override
@@ -88,7 +93,5 @@ public class PostControllerJOJ extends HttpServlet{
 		// result
 		
 	}
-	
-	
 
 }
