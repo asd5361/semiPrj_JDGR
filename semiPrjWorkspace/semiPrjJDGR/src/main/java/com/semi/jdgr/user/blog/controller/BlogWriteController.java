@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.semi.jdgr.blog.service.BlogService;
 import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.blog.vo.GroupVo;
+import com.semi.jdgr.post.service.PostServiceHJY;
 import com.semi.jdgr.post.vo.CategoryVo;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
@@ -41,7 +42,8 @@ public class BlogWriteController extends HttpServlet {
 			List<CategoryVo> categoryVoList = bs.getCategoryList(); // 포스트 카테고리 가져오기
 			
 			// result
-			
+
+			req.setAttribute("writeBlogVo", blogVo);
 			req.setAttribute("groupVoList", groupVoList);
 			req.setAttribute("categoryVoList", categoryVoList);
 			req.getRequestDispatcher("/WEB-INF/views/user/blog/write.jsp").forward(req, resp);
@@ -74,31 +76,50 @@ public class BlogWriteController extends HttpServlet {
 			String groupNo = req.getParameter("groupNo");
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
+			String blogUrl = req.getParameter("blogUrl");
 			
 			PostVo postVo = new PostVo();
 			postVo.setCategoryNo(categoryNo);
 			postVo.setGroupNo(groupNo);
-			postVo.setTitle(title);
+			postVo.setPostTitle(title);
 			postVo.setContent(content);
+			postVo.setBlogUrl(blogUrl);
 			
-			System.out.println(categoryNo);
-			System.out.println(groupNo);
-			System.out.println(title);
-			System.out.println(content);
+			System.out.println(postVo);
 			
 			// service
-			BlogService bs = new BlogService();
-			//int result = bs.postWrite(postVo);
+			PostServiceHJY ps = new PostServiceHJY();
+			int result = ps.postWrite(postVo);
 			
 			// result
-//			if(result != 1) {
-//				throw new Exception("result가 1이아님");
-//			}
-			//req.getSession().setAttribute("errorMsg", "게시글이 작성완료되었습니다.");
-//			resp.sendRedirect("/jdgr/blog/list");
+			if(result != 1) {
+				throw new Exception("result가 1이아님");
+			}
+
+			// 팝업메세지 전달
+			Map<String, String> popText = new HashMap<String, String>();
+			popText.put("completeId", "display: flex;");
+			popText.put("completeTitle", "포스트 작성이 완료되었습니다!");
+			popText.put("completeContent", "");
+			req.getSession().setAttribute("popText", popText);
+			
+			resp.sendRedirect("/jdgr/blog/view/" + blogUrl); // 임시로 블로그로 리다이렉트 포스트 카테고리그룹으로 해야됨
 			
 		} catch(Exception e) {
 			e.printStackTrace();
+			// 팝업메세지 전달
+			
+			// 에러 메시지 가져오기
+		    String errorMessage = e.getMessage();
+		    
+			Map<String, String> popText = new HashMap<String, String>();
+			popText.put("warningId", "display: flex;");
+			popText.put("warningTitle", errorMessage);
+			popText.put("warningContent", "다시 확인해주세요!");
+			req.getSession().setAttribute("popText", popText);
+			
+			req.setAttribute("blogClassName", "blog_set");
+			resp.sendRedirect("/jdgr/home"); // 블로그홈으로 리다이렉트
 		}
 		
 	}
