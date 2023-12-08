@@ -215,7 +215,15 @@
 	                            <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></div>
 	                            <div class="txt">
 	                                <strong><%= loginMemberVo.getMemNick() %></strong>
-	                                <span>오늘 <em><%= loginMemberBlogVo.getVisitCnt() %></em>명 방문</span>
+	                                <span>
+	                                	오늘 
+	                                	<em>
+	                                		<% if(loginMemberBlogVo != null){ %>
+		                                		<%= loginMemberBlogVo.getVisitCnt() %>
+	                                		<% } %> <!-- 오류부분 -->
+	                                	</em>
+	                                	명 방문
+	                                </span>
 	                            </div>
 	                            <a href="/jdgr/member/logout" class="btn_logout">로그아웃</a>
 	                        </div>
