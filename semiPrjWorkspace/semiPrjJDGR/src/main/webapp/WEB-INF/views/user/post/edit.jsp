@@ -5,8 +5,7 @@
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 
 <%
-	List<CategoryVo> categoryVoList = (List<CategoryVo>) request.getAttribute("categoryVoList");
-	List<GroupVo> groupVoList = (List<GroupVo>) request.getAttribute("groupVoList");
+	
 %>
 
  <!-- summernote -->
