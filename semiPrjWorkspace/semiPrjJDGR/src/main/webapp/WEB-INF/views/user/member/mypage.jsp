@@ -64,7 +64,7 @@
 	                                <div class="form_box">
 	                                    <div class="inp_btn">
 	                                        <input id = "cert" type="text" name="inputCheckNum" disabled>
-	                                        <button type="button" onclick="certification()">인증</button>
+	                                        <button type="button" onclick="certificationMypage()">인증</button>
 	                                    </div>
 	                                </div>
 	                            </td>

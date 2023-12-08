@@ -59,6 +59,26 @@ function certification() {
 
 
 	if (nowCeckNum === inputCheckNum) {
+		const email1 = document.querySelector("input[name=email1]").value;
+		const email2 = document.querySelector("input[name=email2]").value;
+		const email = email1 + "@" + email2;
+		document.getElementById("nowEmail").value = email;
+		
+		alert("인증 성공");
+	}
+	else {
+		alert("인증실패");
+
+	}
+	console.log(nowEmail);
+}
+
+function certificationMypage() {
+	const nowCeckNum = document.querySelector("#checkNum").value;
+	const inputCheckNum = document.querySelector("input[name=inputCheckNum]").value;
+
+
+	if (nowCeckNum === inputCheckNum) {
 		document.getElementById('pwd1').disabled = false;
 		document.getElementById('pwd2').disabled = false;
 		

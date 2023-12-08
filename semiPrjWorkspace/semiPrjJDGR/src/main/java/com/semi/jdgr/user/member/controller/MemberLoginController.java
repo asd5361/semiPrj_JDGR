@@ -85,10 +85,7 @@ public class MemberLoginController extends HttpServlet {
 				throw new Exception("로그인 실패 ...");
 			}
 			
-			AlarmService as = new AlarmService();
-			List<AlarmVo> alarmVoList = as.selectAlarmList(loginMember.getMemNo());
-			
-			session.setAttribute("alarmVoList", alarmVoList);
+
 			session.setAttribute("loginMember", loginMember);
 			resp.sendRedirect("/jdgr/home");
 
