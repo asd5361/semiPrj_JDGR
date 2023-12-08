@@ -249,7 +249,7 @@
 	                                            <li>
 	                                                <span class="ico_reply"></span>
 	                                                <div class="txt">
-	                                                    <strong><%= %></strong>
+	                                                    <strong>박범렬</strong>
 	                                                    님이 글제목1에 댓글을 달았습니다.
 	                                                </div>
 	                                                <a href="" class="delete">삭제</a>
