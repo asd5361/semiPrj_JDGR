@@ -10,13 +10,17 @@ public class NoticeVo {
 	private String updateDate;	//수정일
 	private String fixedYn;		//상단 고정 여부
 	private String delYn;		//글 공개 여부
+	private String adminName;	//작성한 관리자 이름
+	private String delName;		//공개 여부 이름
+	private String fixedName;	//고정 여부 이름
 	
 	public NoticeVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public NoticeVo(String noticeNo, String adminNo, String title, String content, String inquiry, String enrollDate,
-			String updateDate, String fixedYn, String delYn) {
+			String updateDate, String fixedYn, String delYn, String adminName, String delName, String fixedName) {
 		super();
 		this.noticeNo = noticeNo;
 		this.adminNo = adminNo;
@@ -27,7 +31,11 @@ public class NoticeVo {
 		this.updateDate = updateDate;
 		this.fixedYn = fixedYn;
 		this.delYn = delYn;
+		this.adminName = adminName;
+		this.delName = delName;
+		this.fixedName = fixedName;
 	}
+
 	public String getNoticeNo() {
 		return noticeNo;
 	}
@@ -74,14 +82,43 @@ public class NoticeVo {
 		return fixedYn;
 	}
 	public void setFixedYn(String fixedYn) {
+		if(fixedYn.equals("Y")) {
+			this.delName = "고정";
+		}
+		if(fixedYn.equals("N")) {
+			this.delName = "미고정";
+		}
 		this.fixedYn = fixedYn;
 	}
 	public String getDelYn() {
 		return delYn;
 	}
 	public void setDelYn(String delYn) {
+		if(delYn.equals("Y")) {
+			this.delName = "공개";
+		}
+		if(delYn.equals("N")) {
+			this.delName = "비공개";
+		}
 		this.delYn = delYn;
 	}
+	
+	public String getAdminName() {
+		return adminName;
+	}
+
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
+	}
+
+	public String getDelName() {
+		return delName;
+	}
+
+	public String getFixedName() {
+		return fixedName;
+	}
+
 	@Override
 	public String toString() {
 		return "NoticeVo [noticeNo=" + noticeNo + ", adminNo=" + adminNo + ", title=" + title + ", content=" + content

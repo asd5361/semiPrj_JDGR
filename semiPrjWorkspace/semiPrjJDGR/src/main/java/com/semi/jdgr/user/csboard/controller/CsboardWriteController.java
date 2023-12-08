@@ -35,14 +35,14 @@ public class CsboardWriteController extends HttpServlet{
 			vo.setqTit(req.getParameter("title"));
 			vo.setqCon(req.getParameter("content").replace("\r\n", "<br>"));
 
-//			//service
-//			CsboardService cs = new CsboardService();
-//			int result = cs.CsboardWrite(vo);
-//			
-//			//view
-//			if(result != 1) {
-//				throw new Exception();
-//			}
+			//service
+			CsboardService cs = new CsboardService();
+			int result = cs.CsboardWrite(vo);
+			
+			//view
+			if(result != 1) {
+				throw new Exception();
+			}
 			// 팝업메세지 전달
 			Map<String, String> popText = new HashMap<String, String>();
 			popText.put("completeId", "display: flex;");

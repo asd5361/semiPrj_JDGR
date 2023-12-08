@@ -109,13 +109,13 @@
 							<tr>
 								<td><%= vo.getNoticeNo()%></td>
 								<td><%= vo.getTitle()%></td>
-								<td><%= vo.getAdminNo() %></td>
+								<td><%= vo.getAdminName() %></td>
 								<td><%= vo.getContent() %></td>
 								<td><%= vo.getInquiry()%></td>
 								<td><%= vo.getEnrollDate()%></td>
 								<td><%= vo.getUpdateDate() %></td>
-								<td><%= vo.getFixedYn() %></td>
-								<td><%= vo.getDelYn() %></td>     
+								<td><%= vo.getFixedName() %></td>
+								<td><%= vo.getDelName() %></td>     
 							</tr>
 <%} %>
                         </tbody>
