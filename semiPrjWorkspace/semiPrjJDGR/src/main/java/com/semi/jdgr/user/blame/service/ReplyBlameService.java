@@ -13,12 +13,12 @@ public class ReplyBlameService {
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
 		
-		//세부사유 작성
-		String detailContent = vo.getrBlaDetail();
-		boolean detailContentOk = detailContent.matches("[a-z0-9]{0,100}");
-		if(!detailContentOk) {
-			throw new Exception("세부 사유를 작성하세요");
-		}
+//		//세부사유 작성
+//		String detailContent = vo.getrBlaDetail();
+//		boolean detailContentOk = detailContent.matches("[a-z0-9]{0,100}");
+//		if(!detailContentOk) {
+//			throw new Exception("세부 사유를 작성하세요");
+//		}
 		
 		
 		//dao

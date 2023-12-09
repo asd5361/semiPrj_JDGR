@@ -1,6 +1,7 @@
 package com.semi.jdgr.admin.blame.service;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,14 +49,14 @@ public class AdminPostBlameService {
 	}//selectBlameCount
 	
 	
-	//신고 항목 리스트 조회(카테고리)
-	public List<AdminBlameCategoryVo> getCategoryList() throws Exception {
+	//신고 항목 카테고리 조회(신고항목별, 제재 여부, 답변 여부, 처리 여부)
+	public List<AdminPostBlameVo> getBlameList() throws Exception {
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		//dao
 		AdminPostBlameDao dao = new AdminPostBlameDao();
-		List<AdminBlameCategoryVo> voList = dao.getCategoryList(conn);
+		List<AdminPostBlameVo> voList = dao.getBlameList(conn);
 		
 		//close
 		JDBCTemplate.close(conn);
@@ -65,31 +66,62 @@ public class AdminPostBlameService {
 	
 	
 	//신고 목록 상세조회
-	public AdminPostBlameVo selectBlameByNo(String pBlaNo) throws Exception {
+	public Map<String, Object> selectBlameDetail() throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
 		AdminPostBlameDao dao = new AdminPostBlameDao();
-		AdminPostBlameVo vo = dao.selectBlameByNo(conn, pBlaNo);
+		AdminPostBlameVo vo = dao.selectBlameDetail(conn);
 
 		
 		// close
 		JDBCTemplate.close(conn);
 		
-		return vo;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		
+		return map;
 	}//selectBlameByNo
 	
 	
-	// 신고 목록 검색
-	public List<AdminPostBlameVo> search(Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
+	//제재 여부, 답변 여부, 처리여부 null값에서 데이터 입력(게시글 수정)
+	public int editBlame(AdminPostBlameVo vo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		AdminPostBlameDao dao = new AdminPostBlameDao();
+		int result = dao.updateBlame(conn , vo);
+		
+		//tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	
+	// 신고 목록 검색(신고 번호 / 포스트 번호(신고되지 않은 포스트는 조회되지 않게) / 작성자(신고되지 않은 포스트 작성자 조회되지 않게)
+	// 신고자(신고하지 않은 일반 유저 조회되지 않게) / 제목 / 날짜 설정.. / 리스트 / 상세내용 / 답변일자.. / 
+	public List<AdminPostBlameVo> searchBlame(Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
+		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// DAO
 		AdminPostBlameDao dao = new AdminPostBlameDao();
-		List<AdminPostBlameVo> blameVoList = dao.search(conn , m, pvo);
+		List<AdminPostBlameVo> blameVoList = dao.searchBlame(conn , m, pvo);
 		
 		//close
 		JDBCTemplate.close(conn);

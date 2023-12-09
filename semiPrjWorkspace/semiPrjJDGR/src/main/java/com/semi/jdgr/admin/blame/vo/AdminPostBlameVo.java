@@ -9,7 +9,6 @@ public class AdminPostBlameVo {
 	private String pBlaTit;
 	private String pBlaDate;
 	private String pBlaList;
-	private String pBlaDetailReason;
 	private String pSancYn;
 	private String pAnsDate;
 	private String pBlaDetail;
@@ -58,12 +57,6 @@ public class AdminPostBlameVo {
 	public void setpBlaList(String pBlaList) {
 		this.pBlaList = pBlaList;
 	}
-	public String getpBlaDetailReason() {
-		return pBlaDetailReason;
-	}
-	public void setpBlaDetailReason(String pBlaDetailReason) {
-		this.pBlaDetailReason = pBlaDetailReason;
-	}
 	public String getpSancYn() {
 		return pSancYn;
 	}
@@ -91,8 +84,7 @@ public class AdminPostBlameVo {
 	
 	
 	public AdminPostBlameVo(String pBlaNo, String pNo, String pBlamerNo, String pWriterNo, String pBlaTit,
-			String pBlaDate, String pBlaList, String pBlaDetailReason, String pSancYn, String pAnsDate,
-			String pBlaDetail, String pDelYn) {
+			String pBlaDate, String pBlaList, String pSancYn, String pAnsDate, String pBlaDetail, String pDelYn) {
 		super();
 		this.pBlaNo = pBlaNo;
 		this.pNo = pNo;
@@ -101,7 +93,6 @@ public class AdminPostBlameVo {
 		this.pBlaTit = pBlaTit;
 		this.pBlaDate = pBlaDate;
 		this.pBlaList = pBlaList;
-		this.pBlaDetailReason = pBlaDetailReason;
 		this.pSancYn = pSancYn;
 		this.pAnsDate = pAnsDate;
 		this.pBlaDetail = pBlaDetail;
@@ -109,19 +100,19 @@ public class AdminPostBlameVo {
 	}
 	
 	
+	public AdminPostBlameVo() {
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "AdminPostBlameVo [pBlaNo=" + pBlaNo + ", pNo=" + pNo + ", pBlamerNo=" + pBlamerNo + ", pWriterNo="
 				+ pWriterNo + ", pBlaTit=" + pBlaTit + ", pBlaDate=" + pBlaDate + ", pBlaList=" + pBlaList
-				+ ", pBlaDetailReason=" + pBlaDetailReason + ", pSancYn=" + pSancYn + ", pAnsDate=" + pAnsDate
-				+ ", pBlaDetail=" + pBlaDetail + ", pDelYn=" + pDelYn + "]";
+				+ ", pSancYn=" + pSancYn + ", pAnsDate=" + pAnsDate + ", pBlaDetail=" + pBlaDetail + ", pDelYn="
+				+ pDelYn + "]";
 	}
 	
 	
-	public AdminPostBlameVo() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	
 	
 }
