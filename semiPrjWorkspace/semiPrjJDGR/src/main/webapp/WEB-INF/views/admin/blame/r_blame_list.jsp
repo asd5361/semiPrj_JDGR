@@ -26,13 +26,13 @@
                     <div class="search_item">
                         <label for="sel_01">신고자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" id="inp_02" name="blamer" value="<%= (searchMap != null) ? searchMap.get("blamer") : "" %>">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">작성자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" id="inp_02" name="writer" ">
                         </div>
                     </div>
                     <div class="search_item">
@@ -84,13 +84,96 @@
                 <!-- 버튼 -->
                 <div class="btn_box_group right">
                     <div class="btn_box">
-                        <button class="btn_gray">답변 일자</button>
+                        <button class="btn_gray" onclick="resetSearch()">초기화</button>
                     </div>
                     <div class="btn_box">
-                        <button class="btn_black">검색</button>
+                        <button class="btn_black" onclick="search()">검색</button>
                     </div>
                 </div>
+				<script>
+				    function resetSearch() {
+				        // 초기화 로직 추가
+				        document.getElementById('inp_02').value = '';
+				        // 나머지 검색 조건에 대한 초기화 로직 추가
+				        // ...
+				    }
+				
+				    function search() {
+				        // 검색 조건을 가져오기
+				        var blamer = document.getElementById('inp_02_blamer').value;
+// 				        var writer = document.getElementById('inp_02_writer').value;
+				        // (다른 검색 조건들도 필요에 따라 추가)
 
+				        // 검색 조건을 객체로 만들기
+				        var searchParams = {
+				            blamer: blamer,
+// 				            writer: writer
+				            // (다른 검색 조건들도 필요에 따라 추가)
+				        };
+
+				        // 서버로 전송할 URL 설정 (서버의 실제 URL에 맞게 수정해야 함)
+				        var url = '/jdgr/admin/blame/r_blame_list/search';
+
+				        // Ajax 요청
+				        var xhr = new XMLHttpRequest();
+				        xhr.open('POST', url, true);
+				        xhr.setRequestHeader('Content-Type', 'application/json');
+
+				        xhr.onload = function () {
+				            if (xhr.status === 200) {
+				                // 응답을 JSON으로 파싱
+				                var response = JSON.parse(xhr.responseText);
+
+				                // 테이블을 채우는 함수 호출
+				                populateTable(response);
+				            } else {
+				                console.error('서버 에러:', xhr.status);
+				            }
+				        };
+
+				        var requestBody = JSON.stringify(searchParams);
+				        xhr.send(requestBody);
+				    }
+
+				    // 서버 응답을 기반으로 테이블을 채우는 함수
+				    function populateTable(data) {
+				        var table = document.getElementById('blameTable');
+				        var tbody = document.createElement('tbody');
+
+				        // 데이터를 반복하여 행을 추가
+				        for (var i = 0; i < data.length; i++) {
+				            var vo = data[i];
+				            var row = document.createElement('tr');
+
+				            // 각 열 데이터를 채워넣기
+				            var columns = [
+				                vo.rBlaNo,
+				                vo.rBlamerNo,
+				                vo.rWriterNo,
+				                vo.rBlaCon,
+				                vo.rBlaDate,
+				                vo.rBlaList,
+				                vo.rSancYn,
+				                vo.rAnsDate,
+				                vo.rDelYn
+				            ];
+
+				            for (var j = 0; j < columns.length; j++) {
+				                var cell = document.createElement('td');
+				                cell.textContent = columns[j];
+				                row.appendChild(cell);
+				            }
+
+				            tbody.appendChild(row);
+				        }
+
+				        // 테이블의 기존 tbody 삭제 후 새로운 tbody 추가
+				        table.removeChild(table.getElementsByTagName('tbody')[0]);
+				        table.appendChild(tbody);
+				    }
+
+
+				</script>
                 <!-- 테이블 -->
                 <div class="tbl_box data mt40">
                     <table>

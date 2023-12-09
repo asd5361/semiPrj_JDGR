@@ -23,7 +23,7 @@ public class PostBlameDao {
 		pstmt.setString(4, vo.getpWriterNo());
 		pstmt.setString(5, vo.getpBlaTit());
 		pstmt.setString(6, vo.getpBlaDate());
-		pstmt.setString(7, vo.getpBlaListStr());
+		pstmt.setString(7, vo.getpBlaList());
 		pstmt.setString(8, vo.getpSancYn());
 		pstmt.setString(9, vo.getpAnsDate());
 		pstmt.setString(10, vo.getpBlaDetail());
