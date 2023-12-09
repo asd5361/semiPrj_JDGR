@@ -13,6 +13,12 @@ public class PostBlameService {
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
 		
+		//신고 리스트 버튼 클릭
+		String blameReason = vo.getpBlaList();
+		if(blameReason == null) {
+			throw new Exception("포스트에 해당되는 신고 항목을 선택하세요.");
+		}
+		
 		//세부사유 작성
 		String detailContent = vo.getpBlaDetail();
 		boolean detailContentOk = detailContent.matches("[a-z0-9]{0,100}");

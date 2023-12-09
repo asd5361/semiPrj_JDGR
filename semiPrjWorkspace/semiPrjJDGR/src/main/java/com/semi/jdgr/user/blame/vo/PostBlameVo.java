@@ -11,8 +11,7 @@ public class PostBlameVo {
 	private String pWriterNo;
 	private String pBlaTit;
 	private String pBlaDate;
-	private String[] pBlaList;
-	private String pBlaListStr;
+	private String pBlaList;
 	private String pSancYn;
 	private String pAnsDate;
 	private String pBlaDetail;
@@ -55,22 +54,11 @@ public class PostBlameVo {
 	public void setpBlaDate(String pBlaDate) {
 		this.pBlaDate = pBlaDate;
 	}
-	public String[] getpBlaList() {
+	public String getpBlaList() {
 		return pBlaList;
 	}
-	public void setpBlaList(String[] pBlaList) {
-		if(pBlaList == null) {
-			this.pBlaListStr = "";
-			return;
-		}
+	public void setpBlaList(String pBlaList) {
 		this.pBlaList = pBlaList;
-		this.pBlaListStr = String.join(",", pBlaList);
-	}
-	public String getpBlaListStr() {
-		return pBlaListStr;
-	}
-	public void setpBlaListStr(String pBlaListStr) {
-		this.pBlaListStr = pBlaListStr;
 	}
 	public String getpSancYn() {
 		return pSancYn;
@@ -96,8 +84,10 @@ public class PostBlameVo {
 	public void setpDelYn(String pDelYn) {
 		this.pDelYn = pDelYn;
 	}
+	
+	
 	public PostBlameVo(String pBlaNo, String pNo, String pBlamerNo, String pWriterNo, String pBlaTit, String pBlaDate,
-			String[] pBlaList, String pBlaListStr, String pSancYn, String pAnsDate, String pBlaDetail, String pDelYn) {
+			String pBlaList, String pSancYn, String pAnsDate, String pBlaDetail, String pDelYn) {
 		super();
 		this.pBlaNo = pBlaNo;
 		this.pNo = pNo;
@@ -105,25 +95,27 @@ public class PostBlameVo {
 		this.pWriterNo = pWriterNo;
 		this.pBlaTit = pBlaTit;
 		this.pBlaDate = pBlaDate;
+		this.pBlaList = pBlaList;
 		this.pSancYn = pSancYn;
 		this.pAnsDate = pAnsDate;
 		this.pBlaDetail = pBlaDetail;
 		this.pDelYn = pDelYn;
-		this.pBlaList = pBlaList;
-		this.pBlaListStr = pBlaListStr;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "PostBlameVo [pBlaNo=" + pBlaNo + ", pNo=" + pNo + ", pBlamerNo=" + pBlamerNo + ", pWriterNo="
-				+ pWriterNo + ", pBlaTit=" + pBlaTit + ", pBlaDate=" + pBlaDate + ", pBlaList="
-				+ Arrays.toString(pBlaList) + ", pBlaListStr=" + pBlaListStr + ", pSancYn=" + pSancYn + ", pAnsDate="
-				+ pAnsDate + ", pBlaDetail=" + pBlaDetail + ", pDelYn=" + pDelYn + "]";
-	}
-	public PostBlameVo() {
-		super();
-		// TODO Auto-generated constructor stub
+				+ pWriterNo + ", pBlaTit=" + pBlaTit + ", pBlaDate=" + pBlaDate + ", pBlaList=" + pBlaList
+				+ ", pSancYn=" + pSancYn + ", pAnsDate=" + pAnsDate + ", pBlaDetail=" + pBlaDetail + ", pDelYn="
+				+ pDelYn + "]";
 	}
 	
+	
+	public PostBlameVo() {
+
+	
+	}
 	
 	
 	

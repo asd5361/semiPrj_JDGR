@@ -11,6 +11,8 @@
     %>
     
 <!--     로그인 안 했을 경우 신고 제한 -->
+
+
 <link rel="stylesheet" href="/jdgr/resources/user/css/blamepop.css">
 <button class="modal_open" data-target="#pop_email">신고하기</button>
 <!-- 레이어팝업 모달 -->
@@ -109,7 +111,7 @@
         formData.append('selectedReason', selectedReasonValue);
         formData.append('detailContent', detailContent);
 
-        fetch("/jdgr/admin/blame/r_blame_list" + selectedReason)
+        fetch("/jdgr/admin/blame/r_blame_data" + selectedReason)
         .then( (resp) => {return resp.json() } )
         .then( (data) => {
 			const result = data.msg;
