@@ -25,7 +25,6 @@ public class PostControllerJOJ extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		try {
-			
 		
 		// url정보
 		String BlogUrl = req.getParameter("url");
@@ -40,10 +39,10 @@ public class PostControllerJOJ extends HttpServlet{
 		
 		// service
 		PostServiceJOJ ps = new PostServiceJOJ();
-		PostVo pNo = ps.PostNo();
-		PostVo postDetailVo = ps.PostDetail(pNo, categoryNo, BlogUrl);
-		PostVo heartCnt = ps.heartCnt(pNo);
-		PostVo replyCnt = ps.ReplyCnt(pNo);
+		PostVo postNoVo = ps.PostNo();
+		PostVo postDetailVo = ps.PostDetail(categoryNo, BlogUrl);
+		PostVo heartCnt = ps.heartCnt(postNoVo);
+		PostVo replyCnt = ps.ReplyCnt(postNoVo);
 //		System.out.println(postDetailVo);
 		
 		// service
@@ -56,8 +55,8 @@ public class PostControllerJOJ extends HttpServlet{
 		
 		// result
 //		System.out.println(postDetailVo);
-//		System.out.println(heartCnt.getPostNo());
-//		System.out.println(replyCnt.getPostNo());
+		System.out.println(heartCnt.getPostNo());
+		System.out.println(replyCnt.getPostNo());
 		HttpSession session = req.getSession();
 		session.setAttribute("postDetailVo", postDetailVo);
 //		session.setAttribute("heartCnt", heartCnt);
