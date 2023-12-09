@@ -51,7 +51,7 @@
             
 	            <div class="btn_area mt20">
 	                <button type="button" class="cancle">취소</button>
-	                <button class="complete" onclick="ValidationCheck();">등록</button>
+	                <button class="complete" onclick="return ValidationCheck();">등록</button>
 	            </div>
 	            <input type="hidden" name="blogUrl" value="${writeBlogVo.blogUrl}">
             </form>

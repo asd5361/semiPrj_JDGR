@@ -27,16 +27,20 @@
                 </div> 
                 
                 <div class="right01">
-                    <div class="set">
-                        <div class="reply_pop">
-                            <a href=""></a>
-                            <div class="pop_content">
-                                <a href="" class="edit">수정하기</a>
-                                <a href="" class="delete">삭제하기</a>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn_option"><img class="img01" src="/jdgr/resources/user/images/ico/ico_option.svg"><span></span></button>
+                	<% if(loginMemberVo != null){%>
+			           <% if(blogUrlVo.getMemNo().equals(loginMemberVo.getMemNo())){ %>
+			           <div class="set">
+	                        <div class="reply_pop">
+	                            <a href=""></a>
+	                            <div class="pop_content">
+	                                <a href="/jdgr/post/edit?postNo=<%= postDetailVo.getPostNo() %>&&url=<%= blogUrlVo.getBlogUrl() %>" class="edit">수정하기</a>
+	                                <a href="/jdgr/post/delete?postNo=<%= postDetailVo.getPostNo() %>&&url=<%= blogUrlVo.getBlogUrl() %>" class="delete">삭제하기</a>
+	                            </div>
+	                        </div>
+	                    </div>
+			           <% } %>
+			        <% } %>
+                    
                 </div>
             </div>
             <br>

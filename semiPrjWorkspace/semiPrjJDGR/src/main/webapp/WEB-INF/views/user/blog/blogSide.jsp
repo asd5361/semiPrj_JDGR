@@ -23,11 +23,13 @@
             <strong>${blogUrlVo.memNick}</strong>
             <span>${blogUrlVo.memId}</span>
         </div>
-        <% if(blogUrlVo.getMemNo().equals(loginMemberVo.getMemNo())){ %>
-        <div class="btn_area">
-            <a href="/jdgr/blog/write?url=${blogUrlVo.blogUrl}" class="write">글쓰기</a>
-            <a href="/jdgr/blogSet/blogInfo?url=${blogUrlVo.blogUrl}" class="set">블로그·관리</a>
-        </div>
+        <% if(loginMemberVo != null){%>
+           <% if(blogUrlVo.getMemNo().equals(loginMemberVo.getMemNo())){ %>
+           <div class="btn_area">
+               <a href="/jdgr/blog/write?url=${blogUrlVo.blogUrl}" class="write">글쓰기</a>
+               <a href="/jdgr/blogSet/blogInfo?url=${blogUrlVo.blogUrl}" class="set">블로그·관리</a>
+           </div>
+           <% } %>
         <% } %>
     </div>
 

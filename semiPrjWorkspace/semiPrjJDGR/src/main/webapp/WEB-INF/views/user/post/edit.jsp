@@ -1,3 +1,4 @@
+<%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@page import="com.semi.jdgr.post.vo.CategoryVo"%>
 <%@page import="com.semi.jdgr.blog.vo.GroupVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -5,7 +6,9 @@
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 
 <%
-	
+	List<CategoryVo> categoryVoList = (List<CategoryVo>) request.getAttribute("categoryVoList");
+	List<GroupVo> groupVoList = (List<GroupVo>) request.getAttribute("groupVoList");
+	PostVo postVo = (PostVo) request.getAttribute("postVo");
 %>
 
  <!-- summernote -->
@@ -20,13 +23,17 @@
 
         <div class="write_box">
 
-            <form action="/jdgr/blog/write" method="post">
+            <form action="/jdgr/post/edit" method="post">
                 <div class="inp_area">
                 	<label for="">구분</label>
                     <select name="categoryNo">
                        	<option value="0">선택</option>
                     	<% for(CategoryVo vo : categoryVoList){ %>
-                        	<option value="<%= vo.getCategoryNo() %>"><%= vo.getCategoryName() %></option>
+    	                	<% if(postVo.getCategoryNo().equals(vo.getCategoryNo())){ %>
+                        	<option value="<%= vo.getCategoryNo() %>" selected><%= vo.getCategoryName() %></option>                    	
+	                    	<% } else { %>
+                        	<option value="<%= vo.getCategoryNo() %>"><%= vo.getCategoryName() %></option>                    	
+	                    	<% } %>
                     	<% } %>
                     </select>
                 </div>
@@ -35,24 +42,29 @@
                     <select name="groupNo">
                        	<option value="0">선택</option>
                     	<% for(GroupVo vo : groupVoList){ %>
-                        	<option value="<%= vo.getNo() %>"><%= vo.getName() %></option>
+                    		<% if(postVo.getGroupNo().equals(vo.getNo())){ %>
+                        	<option value="<%= vo.getNo() %>" selected><%= vo.getName() %></option>                    	
+	                    	<% } else { %>
+                        	<option value="<%= vo.getNo() %>"><%= vo.getName() %></option>                    	
+	                    	<% } %>
                     	<% } %>
                     </select>
                 </div>
                 <div class="inp_area">
                 	<label for="">제목</label>
-                	<input type="text" name="title" placeholder="제목을 입력해주세요." value="">
+                	<input type="text" name="title" placeholder="제목을 입력해주세요." value="<%= postVo.getPostTitle() %>">
                 </div>
                 <div class="write_area">
-                    <textarea id="summernote" name="content"></textarea>
+                    <textarea id="summernote" name="content"><%= postVo.getContent() %></textarea>
                 </div>
             
             
 	            <div class="btn_area mt20">
 	                <button type="button" class="cancle">취소</button>
-	                <button class="complete" onclick="ValidationCheck();">등록</button>
+	                <button class="complete" onclick="return ValidationCheck();">등록</button>
 	            </div>
-	            <input type="hidden" name="blogUrl" value="${writeBlogVo.blogUrl}">
+	            <input type="hidden" name="postNo" value="<%= postVo.getPostNo() %>">
+	            <input type="hidden" name="url" value="<%= postVo.getBlogUrl() %>">
             </form>
         </div>
 
