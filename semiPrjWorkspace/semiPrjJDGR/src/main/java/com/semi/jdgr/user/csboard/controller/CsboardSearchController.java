@@ -51,7 +51,7 @@ public class CsboardSearchController extends HttpServlet{
 		}catch(Exception e) {
 			e.printStackTrace();
 			req.setAttribute("errorMsg", "[ERROR] 1:1문의 검색 기능 에러 발생");
-			req.getRequestDispatcher("/WEB-INF/views/user/common/error.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/views/admin/common/error.jsp").forward(req, resp);
 		}
 		
 		
