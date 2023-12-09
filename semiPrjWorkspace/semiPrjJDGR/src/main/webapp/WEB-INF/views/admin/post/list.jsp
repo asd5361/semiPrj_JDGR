@@ -13,9 +13,7 @@
     
     %>
 
-<%@include file = "/WEB-INF/views/admin/common/header.jsp" %>
-                
-            <h1>${ pvo }</h1>
+<%@include file = "/WEB-INF/views/admin/common/header.jsp" %>                
                 
             <!-- container -->
             <div class="container">
@@ -29,13 +27,13 @@
                     <div class="search_item">
                         <label for="sel_01">작성자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02" name="memNick">
+                            <input onkeypress="inputMove();" type="text" id="inp_02" name="memName">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">제목</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02" name="aa">
+                            <input type="text" id="inp_03" name="title" >
                         </div>
                     </div>
 
@@ -84,8 +82,8 @@
                         </thead>
                         <tbody>
                         <% for(PostVo vo : postVoList){ %>
-                            <tr onclick="redirectToOtherPage('<%= vo.getPostNo() %>','<%= vo.getUserNick() %>')">
-                                <td><%= vo.getUserNick() %></td>
+                            <tr onclick="redirectToOtherPage('<%= vo.getPostNo() %>','<%= vo.getMemName() %>')">
+                                <td><%= vo.getMemName() %></td>
                                 <td><%= vo.getBlogNo() %></td>
                                 <td><%= vo.getPostNo() %></td>
                                 <td><%= vo.getCategoryNo() %></td>
@@ -136,13 +134,20 @@
 //    function handleClick(event){
 //       const tr = event.currentTarget;
 //       const no = tr.children[0].innerText;
-<%--       location.href = '/jdgr/admin/post/list?no=' + no + '&currPage=<%= pvo.getCurrentPage() %>';    --%>
+// <%--       location.href = '/jdgr/admin/post/list?no=' + no + '&currPage=<%= pvo.getCurrentPage() %>';    --%>
 //    }
 
 function redirectToOtherPage(postNo, userNick) {
     // postNo와 userNick에 따라 이동할 URL을 생성하거나 처리합니다.
     var newURL = '/jdgr/admin/post/detail?no=' + postNo  ;
     window.location.href = newURL; // 해당 URL로 이동
+}
+
+
+function inputMove() {
+    console.log("ggg");
+	document.querySelector("input[name=title]").readOnly = true;
+	
 }
 
 
