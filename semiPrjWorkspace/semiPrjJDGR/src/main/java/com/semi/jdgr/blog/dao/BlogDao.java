@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.blog.vo.GroupVo;
+import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.vo.CategoryVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
@@ -412,7 +414,6 @@ public class BlogDao {
 		pstmt.setString(2, groupVo.getName());
 		pstmt.setString(3, groupVo.getOrder());
 		int result = pstmt.executeUpdate();
-		System.out.println(result);
 		
 		// close
 		JDBCTemplate.close(pstmt);
@@ -429,7 +430,6 @@ public class BlogDao {
 		pstmt.setString(2, blogNo);
 		pstmt.setString(3, groupVo.getOrder());
 		int result = pstmt.executeUpdate();
-		System.out.println(result);
 		
 		// close
 		JDBCTemplate.close(pstmt);
@@ -463,6 +463,289 @@ public class BlogDao {
 		JDBCTemplate.close(pstmt);
 		
 		return categoryVoList;
+	}
+	
+	// 구독한 블로그 정보 가져오기
+	public List<BlogVo> getFollowBlogList(Connection conn, String blogUrl) throws Exception {
+		
+		// sql
+		String sql = "SELECT B.BLOG_NO , B.MEM_NO , F.MEM_NO AS FOLLOW_USER_NO , F.BLOG_NO AS FOLLOW_BLOG_NO , (SELECT BL.BLOG_URL FROM BLOG BL JOIN MEMBER M ON M.MEM_NO = BL.MEM_NO WHERE BL.BLOG_NO = F.BLOG_NO) AS FOLLOW_BLOG_URL , (SELECT M.MEM_NICK FROM BLOG BL JOIN MEMBER M ON M.MEM_NO = BL.MEM_NO WHERE BL.BLOG_NO = F.BLOG_NO) AS FOLLOW_NICK , (SELECT BL.BLOG_TITLE FROM BLOG BL JOIN MEMBER M ON M.MEM_NO = BL.MEM_NO WHERE BL.BLOG_NO = F.BLOG_NO) AS FOLLOW_BLOG_TITLE FROM BLOG B JOIN FOLLOW F ON F.MEM_NO = B.MEM_NO WHERE B.BLOG_URL = ? ORDER BY B.BLOG_NO";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, blogUrl);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		List<BlogVo> blogVoList = new ArrayList<BlogVo>();
+		while(rs.next()) {
+			String followBlogNo = rs.getString("FOLLOW_BLOG_NO");
+			String followBlogUrl = rs.getString("FOLLOW_BLOG_URL");
+			String followNick = rs.getString("FOLLOW_NICK");
+			String followblogTitle = rs.getString("FOLLOW_BLOG_TITLE");
+			
+			BlogVo blogVo = new BlogVo();
+			blogVo.setBlogNo(followBlogNo);
+			blogVo.setBlogUrl(followBlogUrl);
+			blogVo.setMemNick(followNick);
+			blogVo.setBlogTitle(followblogTitle);
+			
+			blogVoList.add(blogVo);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+
+		return blogVoList;
+	}
+	
+	
+	// ------------------------------------------------------------------------------- admin
+	
+	// 모든 블로그 조회
+	public List<BlogVo> getAllBlogInfo(Connection conn, PageVo pvo) throws Exception {
+
+		// sql
+		String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , T.* FROM ( SELECT B.BLOG_NO ,B.OPEN_YN ,B.LAYOUT ,B.SKIN ,B.CLOCK_YN ,B.MAP_YN ,B.R_COMMENTS_YN ,B.FOLLOW_BLOG_YN ,B.VISITORS_CNT_YN ,B.BLOG_IMG ,B.R_COMMENTS ,B.VISIT_CNT ,B.BLOG_MAIN ,B.REP_YN ,B.BLOG_TITLE ,B.BLOG_URL ,M.MEM_NO ,M.MEM_NICK ,M.MEM_ID FROM BLOG B JOIN MEMBER M ON B.MEM_NO = M.MEM_NO ORDER BY B.BLOG_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, pvo.getStartRow());
+		pstmt.setInt(2, pvo.getLastRow());
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		List<BlogVo> blogVoList = new ArrayList<BlogVo>();
+		while(rs.next()) {
+			String blogNo = rs.getString("BLOG_NO");
+			String memNo = rs.getString("MEM_NO");
+			String memNick = rs.getString("MEM_NICK");
+			String memId = rs.getString("MEM_ID");
+			String openYn = rs.getString("OPEN_YN");
+			String layout = rs.getString("LAYOUT");
+			String skin = rs.getString("SKIN");
+			String clockYn = rs.getString("CLOCK_YN");
+			String mapYn = rs.getString("MAP_YN");
+			String rCommentsYn = rs.getString("R_COMMENTS_YN");
+			String followBlogYn = rs.getString("FOLLOW_BLOG_YN");
+			String visitorsCntYn = rs.getString("VISITORS_CNT_YN");
+			String blogImg = rs.getString("BLOG_IMG");
+			String rComments = rs.getString("R_COMMENTS");
+			String visitCnt = rs.getString("VISIT_CNT");
+			String blogMain = rs.getString("BLOG_MAIN");
+			String repYn = rs.getString("REP_YN");
+			String blogTitle = rs.getString("BLOG_TITLE");
+			String blogUrl = rs.getString("BLOG_URL");
+			
+			BlogVo vo = new BlogVo(blogNo, memNo, memNick, memId, blogTitle, openYn, layout, skin, clockYn, mapYn, rCommentsYn, followBlogYn, visitorsCntYn, blogImg, rComments, visitCnt, blogMain, repYn, blogUrl);
+			
+			blogVoList.add(vo);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return blogVoList;
+	}
+
+	// 전체 블로그 개수
+	public int selectBlogCount(Connection conn) throws Exception {
+		
+		// sql
+		String sql = "SELECT COUNT(*) as cnt FROM BLOG";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		  
+		ResultSet rs = pstmt.executeQuery();
+		  
+		// rs
+		int cnt = 0;
+		if(rs.next()) {
+			cnt = rs.getInt(1);
+		}
+		  
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		  
+		return cnt;
+	}
+
+	// 블로그 넘버로 블로그 정보 가져오기
+	public BlogVo selectBlogByNo(Connection conn, String no) throws Exception {
+
+		// sql
+		String sql = "SELECT * FROM BLOG B JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE B.BLOG_NO = ? ORDER BY B.BLOG_NO DESC";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		BlogVo blogVo = null;
+		if(rs.next()) {
+			String blogNo = rs.getString("BLOG_NO");
+			String memNo = rs.getString("MEM_NO");
+			String memNick = rs.getString("MEM_NICK");
+			String memId = rs.getString("MEM_ID");
+			String openYn = rs.getString("OPEN_YN");
+			String layout = rs.getString("LAYOUT");
+			String skin = rs.getString("SKIN");
+			String clockYn = rs.getString("CLOCK_YN");
+			String mapYn = rs.getString("MAP_YN");
+			String rCommentsYn = rs.getString("R_COMMENTS_YN");
+			String followBlogYn = rs.getString("FOLLOW_BLOG_YN");
+			String visitorsCntYn = rs.getString("VISITORS_CNT_YN");
+			String blogImg = rs.getString("BLOG_IMG");
+			String rComments = rs.getString("R_COMMENTS");
+			String visitCnt = rs.getString("VISIT_CNT");
+			String blogMain = rs.getString("BLOG_MAIN");
+			String repYn = rs.getString("REP_YN");
+			String blogTitle = rs.getString("BLOG_TITLE");
+			String blogUrl = rs.getString("BLOG_URL");
+			
+			blogVo = new BlogVo(blogNo, memNo, memNick, memId, blogTitle, openYn, layout, skin, clockYn, mapYn, rCommentsYn, followBlogYn, visitorsCntYn, blogImg, rComments, visitCnt, blogMain, repYn, blogUrl);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return blogVo;
+	}
+
+	public int selectSearchBlogCount(Connection conn, Map<String, String> param) throws Exception {
+
+		// sql 동적으로 처리
+		String addQuery = "";
+		if(param.get("memId") != null && !param.get("memId").isEmpty()) {
+			addQuery += " AND M.MEM_ID LIKE ?";
+		}
+		if(param.get("memNick") != null && !param.get("memNick").isEmpty()) {
+			addQuery += " AND M.MEM_NICK LIKE ?";
+		}
+		if(param.get("blogTitle") != null && !param.get("blogTitle").isEmpty()) {
+			addQuery += " AND B.BLOG_TITLE LIKE ?";
+		}
+		if(param.get("blogUrl") != null && !param.get("blogUrl").isEmpty()) {
+			addQuery += " AND B.BLOG_URL LIKE ?";
+		}
+		if(param.get("blogRep") != null && !param.get("blogRep").isEmpty()) {
+			addQuery += " AND B.REP_YN = ?";
+		}
+		
+		// sql
+		String sql = "SELECT COUNT(*) FROM BLOG B JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE 1 = 1" + addQuery;
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		// 동적 바인딩
+		int index = 1;
+		if(param.get("memId") != null && !param.get("memId").isEmpty()) {
+			pstmt.setString(index++, "%" + param.get("memId") + "%");
+		}
+		if(param.get("memNick") != null && !param.get("memNick").isEmpty()) {
+			pstmt.setString(index++, "%" + param.get("memNick") + "%");
+		}
+		if(param.get("blogTitle") != null && !param.get("blogTitle").isEmpty()) {
+			pstmt.setString(index++, "%" + param.get("blogTitle") + "%");
+		}
+		if(param.get("blogUrl") != null && !param.get("blogUrl").isEmpty()) {
+			pstmt.setString(index++, "%" + param.get("blogUrl") + "%");
+		}
+		if(param.get("blogRep") != null && !param.get("blogRep").isEmpty()) {
+			pstmt.setString(index++, param.get("blogRep"));
+		}
+		
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		int cnt = 0;
+		if(rs.next()) {
+			cnt = rs.getInt(1);
+		}
+
+		System.out.println("검색결과 개수 : " + cnt);
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return cnt;
+	}
+
+	// 블로그 관리 검색하기
+	public List<BlogVo> adminBlogSearch(Connection conn, Map<String, String> param, PageVo pvo) throws Exception {
+		// sql 동적으로 처리
+		String addQuery = "";
+		if(param.get("memId") != null && !param.get("memId").isEmpty()) {
+			addQuery += " AND M.MEM_ID LIKE ?";
+		}
+		if(param.get("memNick") != null && !param.get("memNick").isEmpty()) {
+			addQuery += " AND M.MEM_NICK LIKE ?";
+		}
+		if(param.get("blogTitle") != null && !param.get("blogTitle").isEmpty()) {
+			addQuery += " AND B.BLOG_TITLE LIKE ?";
+		}
+		if(param.get("blogUrl") != null && !param.get("blogUrl").isEmpty()) {
+			addQuery += " AND B.BLOG_URL LIKE ?";
+		}
+		if(param.get("blogRep") != null && !param.get("blogRep").isEmpty()) {
+			addQuery += " AND B.REP_YN = ?";
+		}
+		
+		// sql
+		String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , T.* FROM ( SELECT B.BLOG_NO ,B.OPEN_YN ,B.LAYOUT ,B.SKIN ,B.CLOCK_YN ,B.MAP_YN ,B.R_COMMENTS_YN ,B.FOLLOW_BLOG_YN ,B.VISITORS_CNT_YN ,B.BLOG_IMG ,B.R_COMMENTS ,B.VISIT_CNT ,B.BLOG_MAIN ,B.REP_YN ,B.BLOG_TITLE ,B.BLOG_URL ,M.MEM_NO ,M.MEM_NICK ,M.MEM_ID FROM BLOG B JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE 1 = 1" + addQuery + " ORDER BY B.BLOG_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		// 동적 바인딩
+		int index = 1;
+		if(param.get("memId") != null && !param.get("memId").isEmpty()) {
+			pstmt.setString(index++, "%" + param.get("memId") + "%");
+		}
+		if(param.get("memNick") != null && !param.get("memNick").isEmpty()) {
+			pstmt.setString(index++, "%" + param.get("memNick") + "%");
+		}
+		if(param.get("blogTitle") != null && !param.get("blogTitle").isEmpty()) {
+			pstmt.setString(index++, "%" + param.get("blogTitle") + "%");
+		}
+		if(param.get("blogUrl") != null && !param.get("blogUrl").isEmpty()) {
+			pstmt.setString(index++, "%" + param.get("blogUrl") + "%");
+		}
+		if(param.get("blogRep") != null && !param.get("blogRep").isEmpty()) {
+			pstmt.setString(index++, param.get("blogRep"));
+		}
+		pstmt.setInt(index++, pvo.getStartRow());
+		pstmt.setInt(index++, pvo.getLastRow());
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		List<BlogVo> blogVoList = new ArrayList<BlogVo>();
+		while(rs.next()) {
+			String blogNo = rs.getString("BLOG_NO");
+			String memNo = rs.getString("MEM_NO");
+			String memNick = rs.getString("MEM_NICK");
+			String memId = rs.getString("MEM_ID");
+			String openYn = rs.getString("OPEN_YN");
+			String layout = rs.getString("LAYOUT");
+			String skin = rs.getString("SKIN");
+			String clockYn = rs.getString("CLOCK_YN");
+			String mapYn = rs.getString("MAP_YN");
+			String rCommentsYn = rs.getString("R_COMMENTS_YN");
+			String followBlogYn = rs.getString("FOLLOW_BLOG_YN");
+			String visitorsCntYn = rs.getString("VISITORS_CNT_YN");
+			String blogImg = rs.getString("BLOG_IMG");
+			String rComments = rs.getString("R_COMMENTS");
+			String visitCnt = rs.getString("VISIT_CNT");
+			String blogMain = rs.getString("BLOG_MAIN");
+			String repYn = rs.getString("REP_YN");
+			String blogTitle = rs.getString("BLOG_TITLE");
+			String blogUrl = rs.getString("BLOG_URL");
+			
+			BlogVo blogVo = new BlogVo(blogNo, memNo, memNick, memId, blogTitle, openYn, layout, skin, clockYn, mapYn, rCommentsYn, followBlogYn, visitorsCntYn, blogImg, rComments, visitCnt, blogMain, repYn, blogUrl);
+			blogVoList.add(blogVo);
+		}
+		
+		// close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return blogVoList;
 	}
 
 }

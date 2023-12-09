@@ -76,7 +76,6 @@ public class BlogInfoEditController extends HttpServlet {
 			String blogTitle = req.getParameter("blogTitle");
 			Part blogImg = req.getPart("blogImg");
 			String blogUrl = req.getParameter("blogUrl");
-			System.out.println(blogImg);
 			String fileUrl = null;
 			// 파일 설정
 			String submittedFileName = blogImg.getSubmittedFileName(); // 파일 이름 가져오기
@@ -98,7 +97,7 @@ public class BlogInfoEditController extends HttpServlet {
 				while((size = in.read(buf)) != -1) {
 					out.write(buf, 0, size);
 				}
-				fileUrl = sep + "jdgr" + path + fileName;
+				fileUrl = "/jdgr" + path + fileName;
 			}
 			
 			BlogVo blogVo = new BlogVo();

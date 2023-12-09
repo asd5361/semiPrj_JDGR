@@ -36,7 +36,6 @@ public class BlogCategoryDeleteController extends HttpServlet {
 	        Gson gson = new Gson();
 	        GroupVo groupVo = gson.fromJson(jsonBuilder.toString(), GroupVo.class);
 	        BlogVo blogVo = gson.fromJson(jsonBuilder.toString(), BlogVo.class);
-	        System.out.println(groupVo);
 			// service
 	        BlogService bs = new BlogService();
 	        List<GroupVo> groupVoList = bs.deleteGroup(groupVo, blogVo);

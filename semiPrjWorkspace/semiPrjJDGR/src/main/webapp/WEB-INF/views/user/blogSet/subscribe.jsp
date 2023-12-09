@@ -5,6 +5,9 @@
 <% 
 	// 블로그 관리정보 vo
 	BlogVo userSetblogVo = (BlogVo) request.getAttribute("blogUserData");
+
+	// 블로그 구독 리스트
+	List<BlogVo> followUserBlogVoList = (List<BlogVo>) request.getAttribute("followUserBlogVoList");
 %>
 <!-- main -->
 <main>
@@ -41,6 +44,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            	<% for(BlogVo vo : followUserBlogVoList){ %>
                                 <tr>
                                     <td>
                                         <div class="chk_box solo">
@@ -52,9 +56,9 @@
                                     </td>
                                     <td>
                                         <div class="info">
-                                            <a href="">
-                                                <strong>구독한사람닉네임</strong>
-                                                <span>블로그명입니다.</span>
+                                            <a href="/jdgr/blog/view/<%= vo.getBlogUrl() %>" target="_blank">
+                                                <strong><%= vo.getMemNick() %></strong>
+                                                <span><%= vo.getBlogTitle() %></span>
                                             </a>
                                         </div>
                                     </td>
@@ -64,121 +68,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div class="chk_box solo">
-                                            <span>
-                                                <input type="checkbox" id="chk_03">
-                                                <label for="chk_03">&nbsp;</label>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="info">
-                                            <a href="">
-                                                <strong>구독한사람닉네임</strong>
-                                                <span>블로그명입니다.</span>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="gd_btn">
-                                            <button>구독삭제</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="chk_box solo">
-                                            <span>
-                                                <input type="checkbox" id="chk_04">
-                                                <label for="chk_04">&nbsp;</label>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="info">
-                                            <a href="">
-                                                <strong>구독한사람닉네임</strong>
-                                                <span>블로그명입니다.</span>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="gd_btn">
-                                            <button>구독삭제</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="chk_box solo">
-                                            <span>
-                                                <input type="checkbox" id="chk_05">
-                                                <label for="chk_05">&nbsp;</label>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="info">
-                                            <a href="">
-                                                <strong>구독한사람닉네임</strong>
-                                                <span>블로그명입니다.</span>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="gd_btn">
-                                            <button>구독삭제</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="chk_box solo">
-                                            <span>
-                                                <input type="checkbox" id="chk_06">
-                                                <label for="chk_06">&nbsp;</label>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="info">
-                                            <a href="">
-                                                <strong>구독한사람닉네임</strong>
-                                                <span>블로그명입니다.</span>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="gd_btn">
-                                            <button>구독삭제</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="chk_box solo">
-                                            <span>
-                                                <input type="checkbox" id="chk_07">
-                                                <label for="chk_07">&nbsp;</label>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="info">
-                                            <a href="">
-                                                <strong>구독한사람닉네임</strong>
-                                                <span>블로그명입니다.</span>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="gd_btn">
-                                            <button>구독삭제</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                            	<% } %>
                             </tbody>
                         </table>
                         <div class="gd_chk_btn">
@@ -187,24 +77,24 @@
                         </div>
                     </div>
 
-                    <div class="paging_box mt30">
-                        <ul>
-                            <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                            <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                            <li class="on"><a href="">1</a></li>
-                            <li><a href="">2</a></li>
-                            <li><a href="">3</a></li>
-                            <li><a href="">4</a></li>
-                            <li><a href="">5</a></li>
-                            <li><a href="">6</a></li>
-                            <li><a href="">7</a></li>
-                            <li><a href="">8</a></li>
-                            <li><a href="">9</a></li>
-                            <li><a href="">10</a></li>
-                            <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                            <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
-                        </ul>
-                    </div>
+<!--                     <div class="paging_box mt30"> -->
+<!--                         <ul> -->
+<!--                             <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li> -->
+<!--                             <li class="prev"><a href="" title="이전페이지로 이동"></a></li> -->
+<!--                             <li class="on"><a href="">1</a></li> -->
+<!--                             <li><a href="">2</a></li> -->
+<!--                             <li><a href="">3</a></li> -->
+<!--                             <li><a href="">4</a></li> -->
+<!--                             <li><a href="">5</a></li> -->
+<!--                             <li><a href="">6</a></li> -->
+<!--                             <li><a href="">7</a></li> -->
+<!--                             <li><a href="">8</a></li> -->
+<!--                             <li><a href="">9</a></li> -->
+<!--                             <li><a href="">10</a></li> -->
+<!--                             <li class="next"><a href="" title="다음페이지로 이동"></a></li> -->
+<!--                             <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li> -->
+<!--                         </ul> -->
+<!--                     </div> -->
 
                 </div>
 

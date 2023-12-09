@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import com.semi.jdgr.blog.dao.BlogDao;
 import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.blog.vo.GroupVo;
+import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.vo.CategoryVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
@@ -200,7 +201,6 @@ public class BlogService {
         Pattern blogImgRegex = Pattern.compile("^(jpg|jpeg|png|gif|svg)$"); // 이미지파일만 받기
         
         // 이미지 경로
-        System.out.println(blogVo.getBlogImg());
         String blogImgPath = blogVo.getBlogImg();
         if(blogImgPath != null && !blogImgPath.isEmpty()) {
         	String sep = File.separator;
@@ -425,6 +425,115 @@ public class BlogService {
 		JDBCTemplate.close(conn);
 		
 		return categoryVoList;
+	}
+
+	
+	// ------------------------------------------------------------------------------- admin
+	
+	// 모든 블로그 조회
+	public List<BlogVo> getAllBlogInfo(PageVo pvo) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		List<BlogVo> blogVoList = dao.getAllBlogInfo(conn, pvo);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return blogVoList;
+	}
+
+	// 전체 블로그 개수
+	public int selectBlogCount() throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		int cnt = dao.selectBlogCount(conn);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
+	}
+	
+	// 블로그 넘버로 블로그 정보 가져오기
+	public BlogVo selectBlogByNo(String no) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		BlogVo blogVo = dao.selectBlogByNo(conn, no);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return blogVo;
+	}
+
+	// 검색값에 따른 블로그 개수 조회
+	public int selectSearchBlogCount(Map<String, String> param) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+
+		// 검증
+		if(param.get("blogRep").equals("0")) {
+			param.put("blogRep", "");
+		}
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		int cnt = dao.selectSearchBlogCount(conn, param);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
+	}
+
+	// 블로그 관리 검색하기
+	public List<BlogVo> adminBlogSearch(Map<String, String> param, PageVo pvo) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// 검증
+		if(param.get("blogRep").equals("0")) {
+			param.put("blogRep", "");
+		}
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		List<BlogVo> blogVoList = dao.adminBlogSearch(conn, param, pvo);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return blogVoList;
+	}
+
+	// 구독한 블로그 정보 가져오기
+	public List<BlogVo> getFollowBlogList(String blogUrl) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		List<BlogVo> blogVoList = dao.getFollowBlogList(conn, blogUrl);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return blogVoList;
 	}
 	
 }

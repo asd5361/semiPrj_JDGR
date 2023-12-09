@@ -26,9 +26,6 @@ public class PostDaoHJY {
 		
 		int result = pstmt.executeUpdate();
 		
-		
-		
-		
 		// close
 		JDBCTemplate.close(pstmt);
 		
@@ -57,10 +54,21 @@ public class PostDaoHJY {
 			String delYn = rs.getString("DEL_YN");
 			String postImg = rs.getString("POST_IMG");
 			
-			insertPostVo = new PostVo(postNo, blogNo, categoryNo, groupNo, title, content, open, inquiry, enrollDate, modifyDate, delYn, postImg, enrollDate, modifyDate, delYn, postImg, title, categoryNo, groupNo, blogNo);
+			insertPostVo = new PostVo();
+			insertPostVo.setPostNo(postNo);
+			insertPostVo.setBlogNo(blogNo);
+			insertPostVo.setCategoryNo(categoryNo);
+			insertPostVo.setGroupNo(groupNo);
+			insertPostVo.setPostTitle(title);
+			insertPostVo.setContent(content);
+			insertPostVo.setOpen(open);
+			insertPostVo.setInquiry(inquiry);
+			insertPostVo.setEnrollDate(enrollDate);
+			insertPostVo.setModifyDate(modifyDate);
+			insertPostVo.setPostDelYn(delYn);
+			insertPostVo.setPostImg(postImg);
 		}
 		
-		System.out.println("포스트넘버" + insertPostVo.getPostNo());
 
 		// close
 		JDBCTemplate.close(rs);
@@ -93,7 +101,19 @@ public class PostDaoHJY {
 			String delYn = rs.getString("DEL_YN");
 			String postImg = rs.getString("POST_IMG");
 			
-			postVo = new PostVo(postNo, blogNo, categoryNo, groupNo, title, content, open, inquiry, enrollDate, modifyDate, delYn, postImg, enrollDate, modifyDate, delYn, postImg, title, categoryNo, groupNo, blogNo);
+			postVo = new PostVo();
+			postVo.setPostNo(postNo);
+			postVo.setBlogNo(blogNo);
+			postVo.setCategoryNo(categoryNo);
+			postVo.setGroupNo(groupNo);
+			postVo.setPostTitle(title);
+			postVo.setContent(content);
+			postVo.setOpen(open);
+			postVo.setInquiry(inquiry);
+			postVo.setEnrollDate(enrollDate);
+			postVo.setModifyDate(modifyDate);
+			postVo.setPostDelYn(delYn);
+			postVo.setPostImg(postImg);
 		}
 		
 		// close

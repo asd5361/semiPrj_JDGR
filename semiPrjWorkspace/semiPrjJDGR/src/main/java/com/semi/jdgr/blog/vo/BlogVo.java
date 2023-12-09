@@ -21,6 +21,7 @@ public class BlogVo {
 	private String blogMain;
 	private String repYn;
 	private String blogUrl;
+	
 	public String getBlogNo() {
 		return blogNo;
 	}
@@ -163,6 +164,28 @@ public class BlogVo {
 	public BlogVo() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public BlogVo(String blogNo, String memNo, String blogTitle, String openYn, String layout, String skin,
+			String clockYn, String mapYn, String rCommentsYn, String followBlogYn, String visitorsCntYn, String blogImg,
+			String rComments, String visitCnt, String blogMain, String repYn, String blogUrl) {
+		super();
+		this.blogNo = blogNo;
+		this.memNo = memNo;
+		this.blogTitle = blogTitle;
+		this.openYn = openYn;
+		this.layout = layout;
+		this.skin = skin;
+		this.clockYn = clockYn;
+		this.mapYn = mapYn;
+		this.rCommentsYn = rCommentsYn;
+		this.followBlogYn = followBlogYn;
+		this.visitorsCntYn = visitorsCntYn;
+		this.blogImg = blogImg;
+		this.rComments = rComments;
+		this.visitCnt = visitCnt;
+		this.blogMain = blogMain;
+		this.repYn = repYn;
+		this.blogUrl = blogUrl;
 	}
 
 }
