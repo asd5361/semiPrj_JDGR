@@ -13,14 +13,14 @@ import com.semi.jdgr.util.JDBCTemplate;
 public class PostServiceLYJ {
    
    //맨 처음에 보이는 전체 리스트 조회
-   public List<PostVo> allSelectPostList() throws Exception {
+   public List<PostVo> allSelectPostList(PageVo pvo) throws Exception {
       
       // conn
       Connection conn = JDBCTemplate.getConnection();
       
       // dao
       PostDaoLYJ dao = new PostDaoLYJ();
-      List<PostVo> postVoList = dao.allSelectPostList(conn);
+      List<PostVo> postVoList = dao.allSelectPostList(conn,pvo);
       
       
       // 공감수 조회하는 쿼리문 실행
@@ -46,14 +46,14 @@ public class PostServiceLYJ {
    
 
    //포스트 관리 목록 조회(관리자)
-   public List<PostVo> selectPostList(String memNick) throws Exception {
+   public List<PostVo> selectPostList(String memName) throws Exception {
       
       // conn
       Connection conn = JDBCTemplate.getConnection();
       
       // dao
       PostDaoLYJ dao = new PostDaoLYJ();
-      List<PostVo> postVoList = dao.selectPostList(conn, memNick);
+      List<PostVo> postVoList = dao.selectPostList(conn, memName);
       
       
       // 공감수 조회하는 쿼리문 실행

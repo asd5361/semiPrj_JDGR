@@ -24,8 +24,10 @@ public class AdminPostControllerLYJ extends HttpServlet{
    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       
       try {
+            	 
+		int listCount = ps.selectPostCount();
+		
          
-         int listCount = ps.selectPostCount();
          //data
          String currentPage__ = req.getParameter("pno");
          if(currentPage__ == null) {
@@ -38,9 +40,9 @@ public class AdminPostControllerLYJ extends HttpServlet{
          
          
          //service
-         List<PostVo> postVoList = ps.allSelectPostList();
+         List<PostVo> postVoList = ps.allSelectPostList(pvo);
          
-         System.out.println(pvo);
+         
          System.out.println("===============");
          for (PostVo vo : postVoList) {
             System.out.println(vo);
@@ -79,9 +81,9 @@ public class AdminPostControllerLYJ extends HttpServlet{
          PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);      
          
          
-         String memNick = req.getParameter("memNick");
+         String memName = req.getParameter("memName");
          //service
-         List<PostVo> postVoList = ps.selectPostList(memNick);
+         List<PostVo> postVoList = ps.selectPostList(memName);
          
          //result(==view)
          req.setAttribute("postVoList", postVoList);
