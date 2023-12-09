@@ -45,9 +45,10 @@
                         <label for="sel_01">문의 분류</label>
                         <div class="form_box">
                             <select class="sel_box" name="csSel">
-                                <option value="">일반문의</option>
-                                <option value="">기능문의</option>
-                                <option value="">신고문의</option>
+                                <option value="">구분없음</option>
+                                <option value="NM">일반문의</option>
+                                <option value="SM">기능문의</option>
+                                <option value="PM">신고문의</option>
                             </select>
                         </div>
                     </div>
@@ -55,8 +56,9 @@
                         <label for="sel_01">답변여부</label>
                         <div class="form_box">
                             <select class="sel_box" name="ansSel">
-                                <option value="">답변완료</option>
-                                <option value="">미답변</option>
+                                <option value="">구분없음</option>
+                                <option value="Y">답변완료</option>
+                                <option value="N">미답변</option>
                             </select>
                         </div>
                     </div>
@@ -163,11 +165,12 @@
                 inputArr[i].value = null;
             }
         }
+        //검색 버튼
         function sendPost(){
             let divTag = document.querySelector(".search_box");
             let formTag = document.createElement("form");
             formTag.setAttribute('method','post');
-            formTag.setAttribute('action','/jdgr/csborad/search');
+            formTag.setAttribute('action','/jdgr/csborad/search?pno=');
             formTag.appendChild(divTag);
             console.log(formTag);
         }

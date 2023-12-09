@@ -304,5 +304,9 @@ public class CsboardDao {
 		
 		return result;
 	}
+	public int AdminSelectCsboardCount(Connection conn, CsboardVo vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

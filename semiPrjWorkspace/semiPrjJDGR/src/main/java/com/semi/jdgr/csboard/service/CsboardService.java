@@ -186,6 +186,36 @@ public class CsboardService {
 		
 		return result;
 	}
+	//관리자 1:1 문의 검색 갯수
+	public int AdminSelectCsboardCount(CsboardVo vo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		CsboardDao dao = new CsboardDao();
+		int result = dao.AdminSelectCsboardCount(conn, vo);
+		
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		//close
+		JDBCTemplate.close(conn);
+		
+		return result;
+		
+	}
+	
+	//관리자 1:1 문의 검색 /*************************************************여기부터**/
+	public List<CsboardVo> AdminCSboardSearchController(CsboardVo vo) {
+		
+		
+		return null;
+		
+	}
+	
 
 
 
