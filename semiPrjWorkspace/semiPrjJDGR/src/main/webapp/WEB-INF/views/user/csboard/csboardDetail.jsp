@@ -39,7 +39,7 @@
                             <th>
                                 <div>
                                     <div>
-                                        <img src="/jdgr/resources/user/images/ico/ico_people.svg"> 관리자
+                                        <img src="/jdgr/resources/user/images/ico/ico_people.svg"> <%=csboardVo.getAdminName() %>
                                     </div>
                                     <div>
                                         <%= csboardVo.getQuestionCategoryName() %>

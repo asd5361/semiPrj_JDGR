@@ -13,12 +13,11 @@ import com.semi.jdgr.csboard.service.CsboardService;
 import com.semi.jdgr.csboard.vo.CsboardVo;
 import com.semi.jdgr.page.vo.PageVo;
 
-@WebServlet("/csborad/search")
-public class AdminCSboardSearchController extends HttpServlet {
+@WebServlet("/admin/csboard/search")
+public class AdminCsboardSearchController extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			CsboardService cs = new CsboardService();
 			
@@ -27,23 +26,25 @@ public class AdminCSboardSearchController extends HttpServlet {
 			searchVo.setqTit(req.getParameter("title"));
 			searchVo.setqCon(req.getParameter("content"));
 			searchVo.setMemNick(req.getParameter("writer"));
-			searchVo.setqWriteDate(req.getParameter("updateDate"));
+			searchVo.setAnsewr(req.getParameter("ansContent"));
 			searchVo.setQuestionCategory(req.getParameter("csSel"));
 			searchVo.setAnsewrDate(req.getParameter("ansSel"));		//답변 유무 값
-			
-			int listConnt = cs.AdminSelectCsboardCount(searchVo);
+
+			int listCount = cs.adminSelectCsboardCount(searchVo);
 			String currentPage__ = req.getParameter("pno");
 			if(currentPage__ == null) {
 				currentPage__ = "1";
 			}
-			
-			int currentPage = Integer.parseInt(currentPage__);
+
+			int currentPage = Integer.parseInt(currentPage__); //현재 페이지
 			int pageLimit = 10;
 			int boardLimit = 10;
-			PageVo pvo = new PageVo(listConnt, currentPage, pageLimit, boardLimit);
+			PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+
+			
 			
 			//service
-			List<CsboardVo> csboardVoList =  cs.AdminCSboardSearchController(searchVo);
+			List<CsboardVo> csboardVoList =  cs.adminCsboardSearchController(searchVo,pvo);
 			
 			if(csboardVoList == null) {
 				throw new Exception();
@@ -51,9 +52,9 @@ public class AdminCSboardSearchController extends HttpServlet {
 			
 			//result
 			req.setAttribute("searchVo", searchVo);
-			req.setAttribute("pvo", pvo);
+			req.setAttribute("pageVo", pvo);
 			req.setAttribute("csboardVoList", csboardVoList);
-			req.getRequestDispatcher("/WEB-INF/views/admin/common/error.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/views/admin/csboard/csboardList.jsp").forward(req, resp);
 		
 		}catch(Exception e) {
 			e.printStackTrace();
