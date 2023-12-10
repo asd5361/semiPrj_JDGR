@@ -39,7 +39,8 @@
                             <th>
                                 <div>
                                     <div>
-                                        <img src="/jdgr/resources/user/images/ico/ico_people.svg"> <%=csboardVo.getAdminName() %>
+<% String x = csboardVo.getAdminName();  if(x == null){  x = "미지정"; }%>
+                                        <img src="/jdgr/resources/user/images/ico/ico_people.svg"><%=x %>
                                     </div>
                                     <div>
                                         <%= csboardVo.getQuestionCategoryName() %>

@@ -12,7 +12,7 @@ public class NoticeDao {
 	public List<NoticeVo> selectNoticeTopList(Connection conn) throws SQLException {
 		
 		//sql
-		String sql="SELECT * FROM (SELECT * FROM NOTICE WHERE DEL_YN ='Y'ORDER BY FIXED_YN DESC, NOTICE_NO DESC) WHERE ROWNUM <=5";
+		String sql="SELECT * FROM (SELECT * FROM NOTICE WHERE DEL_YN ='Y'ORDER BY DECODE(FIXED_YN,'Y',1), NOTICE_NO DESC) WHERE ROWNUM <=5";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		List<NoticeVo> noticeVoList = new ArrayList<NoticeVo>();
@@ -44,7 +44,7 @@ public class NoticeDao {
 	//게시글 전체 조회
 	public List<NoticeVo> selectNoticeList(Connection conn, PageVo pvo) throws SQLException {
 		//페이징 처리 까지 완료
-		String sql="SELECT * FROM (SELECT ROWNUM RNUM, N.* FROM (SELECT * FROM NOTICE WHERE DEL_YN = 'Y' ORDER BY NOTICE_NO DESC)N )WHERE RNUM BETWEEN ? AND ?";
+		String sql="SELECT * FROM (SELECT ROWNUM RNUM, N.* FROM (SELECT * FROM NOTICE WHERE DEL_YN = 'Y' ORDER BY DECODE(FIXED_YN,'Y',1), NOTICE_NO DESC)N )WHERE RNUM BETWEEN ? AND ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, pvo.getStartRow());
 		pstmt.setInt(2, pvo.getLastRow());
@@ -349,6 +349,19 @@ public class NoticeDao {
 		JDBCTemplate.close(pstmt);
 		
 		return noticeVoList;
+	}
+	//조회수 증가
+	public int increaseHit(Connection conn, String boardno) throws SQLException {
+		//sql
+		String sql = "UPDATE NOTICE SET INQUIRY = INQUIRY+1 WHERE NOTICE_NO = ? AND DEL_YN = 'Y'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, boardno);
+		int result = pstmt.executeUpdate();
+		
+		//close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
 	}
 
 }

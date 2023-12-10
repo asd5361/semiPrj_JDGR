@@ -42,6 +42,10 @@ public class CsboardListController extends HttpServlet{
 			if(csboardVoList == null) {
 				throw new Exception();
 			}
+			Map<String, String> popText = new HashMap<String, String>();
+			popText.put("warningTitle", "비밀글");
+			popText.put("warningContent", "본인이 작성한 1:1문의가 아니라면 보실 수 없습니다.");
+			req.getSession().setAttribute("popText", popText);
 			req.setAttribute("pageVo", pvo);
 			req.setAttribute("csboardVoList", csboardVoList);
 			req.getRequestDispatcher("/WEB-INF/views/user/csboard/csboardList.jsp").forward(req, resp);

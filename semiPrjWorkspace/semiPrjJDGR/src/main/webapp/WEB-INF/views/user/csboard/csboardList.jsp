@@ -51,8 +51,8 @@
                         </tr>
                     </thead>
                     <tbody>
-<%for(CsboardVo vo : csboardVoList){%>
-	                    <tr>
+<%for(CsboardVo vo : csboardVoList){ %>
+						<tr> 
 	                        <td><%= vo.getqNo()%></td>
 	                        <td><img class="q_icon" src="/jdgr/resources/user/images/ico/ico_secret.svg"> <%=vo.getqTit() %></td>
 	                        <td><%=vo.getqWriteDate() %></td>
@@ -96,7 +96,17 @@
     <!-- //main -->
 	
 	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
+	
+	
     <script>
+        //cs 팝업 분리
+        function cs_modal(){
+            document.querySelector("#pop_warning").style.display ='flex';
+            body.style.overflow = 'hidden';
+            document.querySelector("#pop_warning").querySelector('.modal_close').focus();
+        }
+
+
         const trArr = document.querySelectorAll(".tbl_box> table> tbody> tr");
         for(let i = 0; i<trArr.length; i++){
             trArr[i].addEventListener('click',handleClick);
@@ -104,8 +114,33 @@
         function handleClick(event){
             const tr = event.currentTarget;          // 이벤트가 발생 된 tr 요소를 선택함
             const no = tr.children[0].innerText;    //글번호를 가져옴
-            location.href = '/jdgr/csboard/detail?no='+no+'&currPage=<%=pvo.getCurrentPage()%>'
+            //내 글 아니면 팝업 띄우기 위해 class 추가
+            tr.classList.add('modal_open');
+            tr.setAttribute('data-target', '#pop_warning');
+<% if(loginMemberVo != null){ %>
+            //글의 작성자 번호 담을 변수 선언
+			let csMemNo ='';
+    <%for(CsboardVo vo : csboardVoList){%>
+            //tr에서 얻은 글번호와 전체 글 목록의 글번호가 일치하면 글의 작성자 번호 변수의 대입.
+            if('<%=vo.getqNo()%>'=== no ){
+                csMemNo = '<%=vo.getMemNo()%>';
+            }
+    <%} %>
+            //로그인 유저 번호 와 글의 작성자 번호가 일치하면 상세보기로 이동.
+            const memNo = '<%= loginMemberVo.getMemNo() %>';
+			if(memNo === csMemNo){
+            	location.href = '/jdgr/csboard/detail?no='+no+'&currPage=<%=pvo.getCurrentPage()%>';				
+			}else{
+                cs_modal();
+            }
+<%}else{%>
+            cs_modal();
+<%}%>
         }
+		
+	
+
+
 <%if(searchValue != null){%>
         function setSearchArea(){
             const searchValueTag = document.querySelector(".q_box form div input[name=searchValue]")
