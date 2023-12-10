@@ -19,14 +19,14 @@
             </ul>
         </dd>
     </dl>
-<!--     <dl> -->
-<!--         <dt>구독 관리</dt> -->
-<!--         <dd> -->
-<!--             <ul> -->
-<%--                 <li class="<%= "subscribe".equals(blogSideClassName) ? "on" : "" %>"><a href="/jdgr/blogSet/subscribe?url=${blogUserData.blogUrl}">구독한 블로그</a></li> --%>
-<!--             </ul> -->
-<!--         </dd> -->
-<!--     </dl> -->
+    <dl>
+        <dt>구독 관리</dt>
+        <dd>
+            <ul>
+                <li class="<%= "subscribe".equals(blogSideClassName) ? "on" : "" %>"><a href="/jdgr/blogSet/subscribe?url=${blogUserData.blogUrl}">구독한 블로그</a></li>
+            </ul>
+        </dd>
+    </dl>
     <dl>
         <dt>꾸미기 설정</dt>
         <dd>

@@ -59,12 +59,6 @@ public class BlogLayoutEditController extends HttpServlet {
 			String map = req.getParameter("map");
 			String blogUrl = req.getParameter("blogUrl");
 			
-			System.out.println(comments);
-			System.out.println(followBlog);
-			System.out.println(visitorsCnt);
-			System.out.println(clock);
-			System.out.println(map);
-			
 			BlogVo blogVo = new BlogVo();
 			blogVo.setLayout(layout);
 			blogVo.setrCommentsYn(comments);

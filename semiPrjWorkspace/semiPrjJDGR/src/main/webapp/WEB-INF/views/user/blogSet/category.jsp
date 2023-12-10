@@ -94,7 +94,12 @@
 
     function categoryAdd(){
     	const categoryLastLi = document.querySelector('.category_left ul li:last-child input[type=radio]');
-        let nextValue = Number(categoryLastLi.value);
+        let nextValue;
+    	if(categoryLastLi){
+    		nextValue = Number(categoryLastLi.value)    		
+    	} else {
+    		nextValue = 0;
+    	}
         nextValue++;
 
         const categoryLi = document.createElement('li');

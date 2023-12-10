@@ -795,6 +795,10 @@
     padding: 5px 10px;
     text-align: left;
 }
+.detail_box .tbl_box td img {
+	display: block;
+	max-width: 100%;
+}
 
 .tbl_box.data {
     border-top: 1px solid #333;
@@ -803,10 +807,13 @@
     padding: 10px;
 }
 .tbl_box.data table td {
-    padding: 7px 0;
+    padding: 7px 5px;
 }
 .tbl_box.data table tbody tr{
     cursor: pointer;
+}
+.tbl_box.data table tbody tr:hover td {
+	background-color: #eee;
 }
 /* chklist */
 .chklist_box {
