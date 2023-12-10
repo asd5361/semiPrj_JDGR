@@ -1,3 +1,4 @@
+<%@page import="com.semi.jdgr.user.blame.service.ReplyBlameService"%>
 <%@page import="com.semi.jdgr.user.reply.vo.ReplyVo"%>
 <%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="com.semi.jdgr.user.blame.vo.ReplyBlameVo"%>
@@ -10,6 +11,8 @@
     	ReplyBlameVo writer = (ReplyBlameVo) request.getAttribute("writer");
      	ReplyBlameVo content = (ReplyBlameVo) request.getAttribute("content");
     	Map<String, String> searchMap = (Map<String, String>)request.getAttribute("searchMap");
+    	ReplyBlameService blameService = new ReplyBlameService();
+    	List<String> reasons = blameService.blameList();
     %>
     
 <!--     로그인 안 했을 경우 신고 제한 -->

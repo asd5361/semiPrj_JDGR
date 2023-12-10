@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.semi.jdgr.admin.blame.vo.AdminPostBlameVo;
 import com.semi.jdgr.user.blame.vo.ReplyBlameVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -34,13 +35,31 @@ public class ReplyBlameDao {
 		JDBCTemplate.close(pstmt);
 		
 		return result;		
-		
-		//rs
-		
-		//close
-		
-	}//blame
+
+	}
+
+
+	//BLA_LIST 불러와서 모달창 띄우기
+	public List<String> blameList(Connection conn) throws Exception {
+		   //SQL
+		   String sql = "SELECT BLA_REASON FROM BLAME_REASON";
+		   PreparedStatement pstmt = conn.prepareStatement(sql);
+		   ResultSet rs = pstmt.executeQuery();
+		   //rs
+		   List<String> reasonList = new ArrayList<>();
+		   while(rs.next()) {
+			   String rBlaList = rs.getString("BLA_REASON");
+			   
+			   ReplyBlameVo vo = new ReplyBlameVo();
+			   vo.setrBlaList(rBlaList);
+		   }
+		   
+		   //close
+		   JDBCTemplate.close(rs);
+		   JDBCTemplate.close(pstmt);
+		   
+		   return reasonList;
+	}
 	
-
-
 }//class
+   

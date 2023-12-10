@@ -1,11 +1,14 @@
 package com.semi.jdgr.admin.blame.service;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.semi.jdgr.admin.blame.dao.AdminPostBlameDao;
 import com.semi.jdgr.admin.blame.dao.AdminReplyBlameDao;
 import com.semi.jdgr.admin.blame.vo.AdminBlameCategoryVo;
+import com.semi.jdgr.admin.blame.vo.AdminPostBlameVo;
 import com.semi.jdgr.admin.blame.vo.AdminReplyBlameVo;
 import com.semi.jdgr.page.vo.AdminBlamePageVo;
 import com.semi.jdgr.util.JDBCTemplate;
@@ -48,14 +51,14 @@ public class AdminReplyBlameService {
 	}//selectBlameCount
 	
 	
-	//신고 항목 리스트 조회(카테고리)
-	public List<AdminBlameCategoryVo> getCategoryList() throws Exception {
+	//신고 항목 카테고리 조회(신고항목별, 제재 여부, 답변 여부, 처리 여부)
+	public List<AdminReplyBlameVo> getBlameList() throws Exception {
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		//dao
 		AdminReplyBlameDao dao = new AdminReplyBlameDao();
-		List<AdminBlameCategoryVo> voList = dao.getCategoryList(conn);
+		List<AdminReplyBlameVo> voList = dao.getBlameList(conn);
 		
 		//close
 		JDBCTemplate.close(conn);
@@ -65,31 +68,62 @@ public class AdminReplyBlameService {
 	
 	
 	//신고 목록 상세조회
-	public AdminReplyBlameVo selectBlameByNo(String rBlaNo) throws Exception {
+	public Map<String, Object> selectBlameDetail() throws Exception {
 		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// dao
 		AdminReplyBlameDao dao = new AdminReplyBlameDao();
-		AdminReplyBlameVo vo = dao.selectBlameByNo(conn, rBlaNo);
+		AdminReplyBlameVo vo = dao.selectBlameDetail(conn);
 
 		
 		// close
 		JDBCTemplate.close(conn);
 		
-		return vo;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("vo", vo);
+		
+		return map;
 	}//selectBlameByNo
 	
 	
-	// 신고 목록 검색
-	public List<AdminReplyBlameVo> search(Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
+	//제재 여부, 답변 여부, 처리여부 null값에서 데이터 입력(게시글 수정)
+	public int editBlame(AdminReplyBlameVo vo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		AdminReplyBlameDao dao = new AdminReplyBlameDao();
+		int result = dao.updateBlame(conn , vo);
+		
+		//tx
+		if(result == 1) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return result;
+		
+	}
+	
+	
+	
+	
+	// 신고 목록 검색(신고 번호 / 포스트 번호(신고되지 않은 포스트는 조회되지 않게) / 작성자(신고되지 않은 포스트 작성자 조회되지 않게)
+	// 신고자(신고하지 않은 일반 유저 조회되지 않게) / 제목 / 날짜 설정.. / 리스트 / 상세내용 / 답변일자.. / 
+	public List<AdminReplyBlameVo> searchBlame(Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		// DAO
 		AdminReplyBlameDao dao = new AdminReplyBlameDao();
-		List<AdminReplyBlameVo> blameVoList = dao.search(conn , m, pvo);
+		List<AdminReplyBlameVo> blameVoList = dao.searchBlame(conn , m, pvo);
 		
 		//close
 		JDBCTemplate.close(conn);

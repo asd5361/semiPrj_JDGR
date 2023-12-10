@@ -98,6 +98,7 @@ public class AdminPostBlameDao {
 		   String sql = "SELECT * FROM POST_BLAME ORDER BY P_BLA_LIST";
 		   PreparedStatement pstmt = conn.prepareStatement(sql);
 		   ResultSet rs = pstmt.executeQuery();
+		   
 		   //rs
 		   List<AdminPostBlameVo> voList = new ArrayList<AdminPostBlameVo>();
 		   while(rs.next()) {
@@ -107,6 +108,7 @@ public class AdminPostBlameDao {
 			   vo.setpBlaList(pBlaList);
 			   voList.add(vo);
 		   }
+		   
 		   //close
 		   JDBCTemplate.close(rs);
 		   JDBCTemplate.close(pstmt);
@@ -119,7 +121,7 @@ public class AdminPostBlameDao {
 	   public AdminPostBlameVo selectBlameDetail(Connection conn) throws Exception{
 	      
 	      //SQL
-	      String sql = "SELECT PB.P_BLA_NO , PB.P_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN FROM POST_BLAME PB ;";
+	      String sql = "SELECT PB.P_BLA_NO , PB.P_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST, PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN FROM POST_BLAME PB";
 	      PreparedStatement pstmt = conn.prepareStatement(sql);
 	      ResultSet rs = pstmt.executeQuery();
 	      
@@ -184,7 +186,7 @@ public class AdminPostBlameDao {
 			String searchType = m.get("searchType");
 			
 			// SQL
-			String sql = "SELECT PB.P_BLA_NO , PB.P_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN FROM POST_BLAME PB WHERE \" + searchType + \" LIKE '%' || ? || '%' ORDER BY PB.P_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+			String sql = "SELECT PB.P_BLA_NO, PB.P_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN FROM POST_BLAME PB WHERE \\\" + searchType + \\\" LIKE '%' || ? || '%' ORDER BY PB.P_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m.get("searchValue"));
 			pstmt.setInt(2, pvo.getStartRow());
