@@ -31,7 +31,6 @@ public class PostControllerJOJ extends HttpServlet{
 		// data (카테고리 넘버)
 		String categoryNo = req.getParameter("categoryNo"); 
 		// data (포스트 넘버)
-//		String no = req.getParameter("no");
 		
 		System.out.println(BlogUrl);
 		System.out.println(categoryNo);
@@ -39,22 +38,18 @@ public class PostControllerJOJ extends HttpServlet{
 		
 		// service
 		PostServiceJOJ ps = new PostServiceJOJ();
-		PostVo postNoVo = ps.PostNo();
 		PostVo postDetailVo = ps.PostDetail(categoryNo, BlogUrl);
-		PostVo heartCnt = ps.heartCnt(postNoVo);
-		PostVo replyCnt = ps.ReplyCnt(postNoVo);
-//		System.out.println(postDetailVo);
+		PostVo heartCnt = ps.PostDetailHeartCnt(postDetailVo);
+		PostVo replyCnt = ps.PostDetailReplyCnt(postDetailVo);
 		
 		// service
 		MemberVo loginMemberVo = (MemberVo) req.getSession().getAttribute("loginMember");
 		
 		BlogService bs = new BlogService();
 		BlogVo blogUrlVo = bs.getUserblog(BlogUrl); // url에 맞는 블로그 가져오기
-//		List<GroupVo> groupVoList = bs.getGroupList(blogUrlVo); // 카테고리그룹 가져오기
 		
 		
 		// result
-//		System.out.println(postDetailVo);
 		System.out.println(heartCnt.getPostNo());
 		System.out.println(replyCnt.getPostNo());
 		HttpSession session = req.getSession();
@@ -63,7 +58,6 @@ public class PostControllerJOJ extends HttpServlet{
 //		session.setAttribute("replyCnt", replyCnt);
 		
 		req.setAttribute("blogClassName", "blog");
-//		req.setAttribute("groupVoList", groupVoList);
 		req.getSession().setAttribute("blogUrlVo", blogUrlVo); // url 블로그 저장
 		
 //		req.setAttribute("postDetailVo", postDetailVo);
@@ -73,9 +67,9 @@ public class PostControllerJOJ extends HttpServlet{
 		req.getRequestDispatcher("/WEB-INF/views/user/blog/blogView.jsp").forward(req, resp);
 		
 		}catch(Exception e) {
-			System.out.println("포스트 상세보기 실패");
+			System.out.println("블로그 포스트 상세보기 실패");
 			e.printStackTrace();
-			req.setAttribute("errorMsg", "포스트 상세보기 실패");
+			req.setAttribute("errorMsg", "블로그 포스트 상세보기 실패");
 			req.getRequestDispatcher("/WEB-INF/views/user/common/error.jsp").forward(req, resp);
 		}
 		

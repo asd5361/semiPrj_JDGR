@@ -18,44 +18,40 @@ import com.semi.jdgr.user.member.vo.MemberVo;
 @WebServlet("/post/view")
 public class PostViewControllerJOJ extends HttpServlet {
 
-	// 포스트 목록에서 상세보기 화면
+	// 포스트 상세보기 화면 (포스트 넘버로 조회)
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		try {
 
 			// data (포스트 넘버)
-			String no = req.getParameter("no");
-			// data (블로그 URL)
-			String BlogUrl = req.getParameter("url");
+			String pNo = req.getParameter("postNo");
 
+			System.out.println(pNo);
 
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
-			PostVo PostListDetailVo = ps.PostListDetail(no, BlogUrl);
-			PostVo heartCnt = ps.heartListCnt(no);
-			PostVo replyCnt = ps.ReplyListCnt(no);
+//			PostVo postVo = ps.PostNoVo(postNo); // 포스트 VO 가져오기 (BLOG_URL , GROUP_NO , POST_NO)
+			PostVo postListDetailVo = ps.PostListDetail(pNo); // 포스트 VO로 받아온 값으로 detail 쿼리문 실행
+			PostVo postListDetailHeartCnt = ps.PostListDetailHeartCnt(pNo); // 포스트 VO안에 POST_NO 으로 공감수 가져오기
+			PostVo postListDetailReplyCnt = ps.PostListDetailReplyCnt(pNo); // 포스트 VO안에 POST_NO 으로 댓글수 가져오기
 
 			// service
 			MemberVo loginMemberVo = (MemberVo) req.getSession().getAttribute("loginMember");
 
-
 			// result
-			System.out.println(PostListDetailVo);
-			System.out.println(heartCnt.getPostNo());
-			System.out.println(replyCnt.getPostNo());
+			System.out.println(postListDetailVo.getBlogUrl());
+			System.out.println(postListDetailVo.getGroupNo());
+			System.out.println(postListDetailVo.getPostNo());
+			System.out.println(postListDetailHeartCnt.getPostNo());
+			System.out.println(postListDetailReplyCnt.getPostNo());
 			HttpSession session = req.getSession();
-			session.setAttribute("PostListDetailVo", PostListDetailVo);
-//			session.setAttribute("heartCnt", heartCnt);
-//			session.setAttribute("replyCnt", replyCnt);
+			session.setAttribute("postListDetailVo", postListDetailVo);
 
-			req.setAttribute("blogClassName", "blog");
-
-//			req.setAttribute("postDetailVo", postDetailVo);
-			req.setAttribute("heartCnt", heartCnt);
-			req.setAttribute("replyCnt", replyCnt);
-			req.getRequestDispatcher("/WEB-INF/views/user/post/detail.jsp").forward(req, resp);
-//			req.getRequestDispatcher("/WEB-INF/views/user/blog/blogView.jsp").forward(req, resp);
+			req.setAttribute("postListDetailHeartCnt", postListDetailHeartCnt);
+			req.setAttribute("postListDetailReplyCnt", postListDetailReplyCnt);
+//			req.getRequestDispatcher("/WEB-INF/views/user/post/detail.jsp").forward(req, resp);
+			req.getRequestDispatcher("/WEB-INF/views/user/blog/blogView.jsp").forward(req, resp);
 
 		} catch (Exception e) {
 			System.out.println("포스트 상세보기 실패");
@@ -65,7 +61,7 @@ public class PostViewControllerJOJ extends HttpServlet {
 		}
 
 	}// PostDetail
-
+	
 	// 포스트 상세보기 (로직)
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

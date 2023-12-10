@@ -12,97 +12,7 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class PostDaoJOJ {
 
-	// sql
-
-	// rs
-
-	// close
-	
-	// 포스트 목록에서 상세보기 화면
-	public PostVo PostListDetail(Connection conn, String no, String BlogUrl) throws Exception {
-		
-		// sql
-		String sql = "SELECT P.POST_IMG ,P.TITLE ,P.CONTENT ,P.POST_NO ,P.BLOG_NO ,B.BLOG_URL ,P.GROUP_NO ,C.CATEGORY_NAME ,M.MEM_ID ,M.MEM_NICK ,P.OPEN ,P.DEL_YN ,TO_CHAR (P.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE ,TO_CHAR (P.MODIFY_DATE, 'YYYY-MM-DD') AS MODIFY_DATE ,P.INQUIRY AS HIT_CNT ,H.POST_NO AS HEART_CNT ,R.POST_NO AS REPLY_CNT FROM POST P JOIN CATEGORY_LIST C ON P.CATEGORY_NO = C.CATEGORY_NO JOIN MYBLOG_CATEGORY Y ON P.GROUP_NO = Y.GROUP_NO JOIN BLOG B ON P.BLOG_NO = B.BLOG_NO JOIN HEART H ON P.POST_NO = H.POST_NO JOIN REPLY R ON P.POST_NO = R.POST_NO JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE P.OPEN = 'Y' AND P.DEL_YN = 'N' AND P.POST_NO = ? AND B.BLOG_URL = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
-		pstmt.setString(2, BlogUrl);
-		ResultSet rs = pstmt.executeQuery();
-
-		// rs
-		PostVo PostListDetailVo = null;
-		if (rs.next()) {
-			String postImg = rs.getString("POST_IMG");
-			String postTitle = rs.getString("TITLE");
-			String content = rs.getString("CONTENT");
-			String postNo = rs.getString("POST_NO");
-			String blogNo = rs.getString("BLOG_NO");
-			String blogUrl = rs.getString("BLOG_URL");
-			String groupNo = rs.getString("GROUP_NO");
-			String categoryName = rs.getString("CATEGORY_NAME");
-			String userId = rs.getString("MEM_ID");
-			String userNick = rs.getString("MEM_NICK");
-			String open = rs.getString("OPEN");
-			String delYn = rs.getString("DEL_YN");
-			String modifyDate = rs.getString("MODIFY_DATE");
-			String enrollDate = rs.getString("ENROLL_DATE");
-			String inquiryCnt = rs.getString("HIT_CNT");
-			String heartCnt = rs.getString("HEART_CNT");
-			String replyCnt = rs.getString("REPLY_CNT");
-			
-			PostListDetailVo = new PostVo();
-			PostListDetailVo.setPostImg(postImg);
-			PostListDetailVo.setPostNo(postNo);
-			PostListDetailVo.setPostTitle(postTitle);
-			PostListDetailVo.setContent(content);
-			PostListDetailVo.setBlogNo(blogNo);
-			PostListDetailVo.setBlogUrl(blogUrl);
-			PostListDetailVo.setCategoryName(groupNo);
-			PostListDetailVo.setCategoryName(categoryName);
-			PostListDetailVo.setCategoryName(userId);
-			PostListDetailVo.setUserNick(userNick);
-			PostListDetailVo.setOpen(open);
-			PostListDetailVo.setPostDelYn(delYn);
-			PostListDetailVo.setModifyDate(modifyDate);
-			PostListDetailVo.setEnrollDate(enrollDate);
-			PostListDetailVo.setInquiry(inquiryCnt);
-			PostListDetailVo.setHeartCnt(heartCnt);
-			PostListDetailVo.setReplyCnt(replyCnt);
-		}
-
-		// close
-		JDBCTemplate.close(pstmt);
-		JDBCTemplate.close(rs);
-
-		return PostListDetailVo;
-	}
-	
-	// 포스트 넘버 가져오기
-	public PostVo postNo(Connection conn) throws Exception {
-		
-		// sql
-		String sql = "SELECT POST_NO FROM POST ORDER BY POST_NO DESC";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-
-		// rs
-		PostVo postVo = null;
-		if(rs.next()) {
-			String no = rs.getString("POST_NO");
-			
-			postVo = new PostVo();
-			postVo.setPostNo(no);
-		}
-		
-
-		// close
-		JDBCTemplate.close(pstmt);
-		JDBCTemplate.close(rs);
-
-		return postVo;
-		
-	}// PostNo
-
-	// 포스트 상세보기 (화면) (블로그 카테고리 상세보기용)
+	// 포스트 상세보기 (블로그 카테고리 상세보기용)
 	public PostVo PostDetail(Connection conn, String categoryNo, String BlogUrl) throws Exception {
 
 		// sql
@@ -143,19 +53,71 @@ public class PostDaoJOJ {
 		return postDetailVo;
 
 	}// PostDetail
+	
+	
+	// 공감수 (블로그 카테고리 상세보기용)
+	public PostVo PostDetailHeartCnt(Connection conn, PostVo postDetailVo) throws Exception {
 
-	// 조회수 증가
-	public int increaseHit(Connection conn, String no) throws Exception {
+		// sql
+		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM HEART WHERE POST_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, postDetailVo.getPostNo());
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		PostVo heartCnt = null;
+		if(rs.next()) {
+			String postNo = rs.getString("POST_NO");
+			
+			heartCnt = new PostVo();
+			heartCnt.setPostNo(postNo);
+		}
+
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return heartCnt;
+
+	}// heartCnt
+	
+	// 댓글수 (블로그 카테고리 상세보기용)
+	public PostVo PostDetailReplyCnt(Connection conn, PostVo postDetailVo) throws Exception {
+		
+		// sql
+		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM REPLY WHERE POST_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, postDetailVo.getPostNo());
+		ResultSet rs = pstmt.executeQuery();
+		
+		// rs
+		PostVo replyCnt = null;
+		if(rs.next()) {
+			String postNo = rs.getString("POST_NO");
+			
+			replyCnt = new PostVo();
+			replyCnt.setPostNo(postNo);
+		}
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+		
+		return replyCnt;
+		
+	}// FollowCnt
+	
+	// 조회수 증가 (블로그 카테고리 상세보기용)
+	public int PostDetailIncreaseHit(Connection conn, PostVo postDetailVo) throws Exception {
 
 		// sql
 		String sql = "UPDATE POST SET INQUIRY = INQUIRY+1 WHERE POST_NO = ? AND OPEN = 'Y'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
+		pstmt.setString(1, postDetailVo.getPostNo());
 		int result = pstmt.executeUpdate();
 
 		// rs
 		
-
 		// close
 		JDBCTemplate.close(pstmt);
 
@@ -163,13 +125,102 @@ public class PostDaoJOJ {
 
 	}// increaseHit
 	
-	// 공감수 (목록조회)
-	public PostVo heartListCnt(Connection conn, String no) throws Exception {
+	
+//	---------------------------------------------------------------------
+	
+	
+	// 포스트 VO 가져오기 포스트 넘버가 0,null 일때 (BLOG_URL , GROUP_NO , POST_NO)
+	public PostVo PostNoVo(Connection conn, String postNo) throws Exception {
+		// sql
+		String sql = "SELECT B.BLOG_URL, P.GROUP_NO, P.POST_NO FROM POST P JOIN MYBLOG_CATEGORY Y ON P.GROUP_NO = Y.GROUP_NO JOIN BLOG B ON P.BLOG_NO = B.BLOG_NO WHERE P.POST_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, postNo);
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		PostVo postVo = null;
+		if(rs.next()) {
+			String blogUrl = rs.getString("BLOG_URL");
+			String groupNo = rs.getString("GROUP_NO");
+			String postPno = rs.getString("POST_NO");
+			
+			postVo = new PostVo();
+			postVo.setBlogUrl(blogUrl);
+			postVo.setGroupNo(groupNo);
+			postVo.setPostNo(postPno);
+		}
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return postVo;
+		
+	}// PostNo
+	
+	
+	
+	// 포스트 목록에서 상세보기 화면
+	public PostVo PostListDetail(Connection conn, String pNo) throws Exception {
+		
+		// sql
+		String sql = "SELECT P.POST_IMG ,P.TITLE ,P.CONTENT ,P.POST_NO ,P.BLOG_NO ,B.BLOG_URL ,P.GROUP_NO ,C.CATEGORY_NAME ,M.MEM_ID ,M.MEM_NICK ,P.OPEN ,P.DEL_YN ,TO_CHAR (P.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE ,TO_CHAR (P.MODIFY_DATE, 'YYYY-MM-DD') AS MODIFY_DATE ,P.INQUIRY AS HIT_CNT FROM POST P JOIN CATEGORY_LIST C ON P.CATEGORY_NO = C.CATEGORY_NO JOIN MYBLOG_CATEGORY Y ON P.GROUP_NO = Y.GROUP_NO JOIN BLOG B ON P.BLOG_NO = B.BLOG_NO JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE P.OPEN = 'Y' AND P.DEL_YN = 'N' AND P.POST_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, pNo);
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		PostVo PostListDetailVo = null;
+		if (rs.next()) {
+			String postImg = rs.getString("POST_IMG");
+			String postTitle = rs.getString("TITLE");
+			String content = rs.getString("CONTENT");
+			String postNo = rs.getString("POST_NO");
+			String blogNo = rs.getString("BLOG_NO");
+			String blogUrl = rs.getString("BLOG_URL");
+			String groupNo = rs.getString("GROUP_NO");
+			String categoryName = rs.getString("CATEGORY_NAME");
+			String userId = rs.getString("MEM_ID");
+			String userNick = rs.getString("MEM_NICK");
+			String open = rs.getString("OPEN");
+			String delYn = rs.getString("DEL_YN");
+			String modifyDate = rs.getString("MODIFY_DATE");
+			String enrollDate = rs.getString("ENROLL_DATE");
+			String inquiryCnt = rs.getString("HIT_CNT");
+			
+			PostListDetailVo = new PostVo();
+			PostListDetailVo.setPostImg(postImg);
+			PostListDetailVo.setPostNo(postNo);
+			PostListDetailVo.setPostTitle(postTitle);
+			PostListDetailVo.setContent(content);
+			PostListDetailVo.setBlogNo(blogNo);
+			PostListDetailVo.setBlogUrl(blogUrl);
+			PostListDetailVo.setCategoryName(groupNo);
+			PostListDetailVo.setCategoryName(categoryName);
+			PostListDetailVo.setCategoryName(userId);
+			PostListDetailVo.setUserNick(userNick);
+			PostListDetailVo.setOpen(open);
+			PostListDetailVo.setPostDelYn(delYn);
+			PostListDetailVo.setModifyDate(modifyDate);
+			PostListDetailVo.setEnrollDate(enrollDate);
+			PostListDetailVo.setInquiry(inquiryCnt);
+		}
+
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return PostListDetailVo;
+	}
+	
+	
+	// 공감수 (목록보기용)
+	public PostVo PostListDetailHeartCnt(Connection conn, String pNo) throws Exception {
 		
 		// sql
 		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM HEART WHERE POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
+		pstmt.setString(1, pNo);
 		ResultSet rs = pstmt.executeQuery();
 		
 		// rs
@@ -189,39 +240,14 @@ public class PostDaoJOJ {
 		
 	}// heartCnt
 	
-	// 공감수
-		public PostVo heartCnt(Connection conn, PostVo PostVoNo) throws Exception {
 
-			// sql
-			String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM HEART WHERE POST_NO = ?";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, PostVoNo.getPostNo());
-			ResultSet rs = pstmt.executeQuery();
-
-			// rs
-			PostVo heartCnt = null;
-			if(rs.next()) {
-				String postNo = rs.getString("POST_NO");
-				
-				heartCnt = new PostVo();
-				heartCnt.setPostNo(postNo);
-			}
-
-			// close
-			JDBCTemplate.close(pstmt);
-			JDBCTemplate.close(rs);
-
-			return heartCnt;
-
-		}// heartCnt
-	
-	// 댓글수 (목록조회)
-	public PostVo ReplyCnt(Connection conn, String no) throws Exception {
+	// 댓글수 (목록보기용)
+	public PostVo PostListDetailReplyCnt(Connection conn, String pNo) throws Exception {
 		
 		// sql
 		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM REPLY WHERE POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
+		pstmt.setString(1, pNo);
 		ResultSet rs = pstmt.executeQuery();
 		
 		// rs
@@ -241,31 +267,24 @@ public class PostDaoJOJ {
 		
 	}// FollowCnt
 	
-	// 댓글수 
-	public PostVo ReplyCnt(Connection conn, PostVo PostNoVo) throws Exception {
-		
+	
+	// 조회수 증가 (목록보기용)
+	public int PostListDetailIncreaseHit(Connection conn, String pNo) throws Exception {
+
 		// sql
-		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM REPLY WHERE POST_NO = ?";
+		String sql = "UPDATE POST SET INQUIRY = INQUIRY+1 WHERE POST_NO = ? AND OPEN = 'Y'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, PostNoVo.getPostNo());
-		ResultSet rs = pstmt.executeQuery();
-		
+		pstmt.setString(1, pNo);
+		int result = pstmt.executeUpdate();
+
 		// rs
-		PostVo replyCnt = null;
-		if(rs.next()) {
-			String postNo = rs.getString("POST_NO");
-			
-			replyCnt = new PostVo();
-			replyCnt.setPostNo(postNo);
-		}
 		
 		// close
 		JDBCTemplate.close(pstmt);
-		JDBCTemplate.close(rs);
-		
-		return replyCnt;
-		
-	}// FollowCnt
+
+		return result;
+
+	}// increaseHit
 	
 
 	// 관리자 상세보기
