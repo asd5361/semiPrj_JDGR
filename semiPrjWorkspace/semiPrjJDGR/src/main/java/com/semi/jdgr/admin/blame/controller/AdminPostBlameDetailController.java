@@ -19,14 +19,11 @@ public class AdminPostBlameDetailController extends HttpServlet{
 		
 		try {
 			//data
-			String pBlaNo = req.getParameter("pBlaNo");
 			
 			//service
 			AdminPostBlameService abs =  new AdminPostBlameService();
-			AdminPostBlameVo vo = abs.selectBlameByNo(pBlaNo);
 			
 			//result(==view)
-			req.setAttribute("vo", vo);
 			req.setAttribute("currPage", req.getParameter("currPage"));
 			req.getRequestDispatcher("/WEB-INF/views/admin/blame/p_blame_detail.jsp").forward(req, resp);	
 		}catch(Exception e) {

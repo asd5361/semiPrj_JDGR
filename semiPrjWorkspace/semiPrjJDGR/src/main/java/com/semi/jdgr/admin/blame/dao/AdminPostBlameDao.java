@@ -14,11 +14,11 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class AdminPostBlameDao {
 
-	   //게시글 목록 조회
+	   //포스트 신고 목록 조회
 	   public List<AdminPostBlameVo> selectBlameList(Connection conn, AdminBlamePageVo pvo) throws Exception{
 	      
 	      //SQL
-	      String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , T.* FROM ( SELECT PB.P_NO , PB.P_BLA_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN , P.TITLE , M.MEM_NO AS BLAMER_NO , M.MEM_NO AS WRITER_NO FROM POST_BLAME PB JOIN POST P ON PB.P_NO = P.POST_NO JOIN MEMBER M ON PB.P_BLAMER_NO = M.MEM_NO JOIN MEMBER M ON PB.P_WRITER_NO = M.MEM_NO ORDER BY P_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+	      String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , T.* FROM ( SELECT PB.P_BLA_NO , PB.P_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN FROM POST_BLAME PB JOIN POST P ON PB.P_NO = P.POST_NO JOIN MEMBER M ON PB.P_BLAMER_NO = M.MEM_NO JOIN MEMBER M ON PB.P_WRITER_NO = M.MEM_NO ORDER BY PB.P_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
 	      PreparedStatement pstmt = conn.prepareStatement(sql);
 	      pstmt.setInt(1, pvo.getStartRow());
 	      pstmt.setInt(2, pvo.getLastRow());
@@ -92,21 +92,19 @@ public class AdminPostBlameDao {
 		   }
 	   
 	   
-	   //신고 항목 리스트 조회
-	   public List<AdminBlameCategoryVo> getCategoryList(Connection conn) throws Exception {
+	   //신고 항목 카테고리 조회(신고항목별, 제재 여부, 답변 여부, 처리 여부)
+	   public List<AdminPostBlameVo> getBlameList(Connection conn) throws Exception {
 		   //SQL
-		   String sql = "SELECT * FROM BLAME_REASON ORDER BY BLA_REASON";
+		   String sql = "SELECT * FROM POST_BLAME ORDER BY P_BLA_LIST";
 		   PreparedStatement pstmt = conn.prepareStatement(sql);
 		   ResultSet rs = pstmt.executeQuery();
 		   //rs
-		   List<AdminBlameCategoryVo> voList = new ArrayList<AdminBlameCategoryVo>();
+		   List<AdminPostBlameVo> voList = new ArrayList<AdminPostBlameVo>();
 		   while(rs.next()) {
-			   String no = rs.getString("NO");
-			   String name = rs.getString("NAME");
+			   String pBlaList = rs.getString("P_BLA_LIST");
 			   
-			   AdminBlameCategoryVo vo = new AdminBlameCategoryVo();
-			   vo.setNo(no);
-			   vo.setName(name);
+			   AdminPostBlameVo vo = new AdminPostBlameVo();
+			   vo.setpBlaList(pBlaList);
 			   voList.add(vo);
 		   }
 		   //close
@@ -117,19 +115,18 @@ public class AdminPostBlameDao {
 	   }//getCategoryList
 	   
 
-	 //신고 목록 상세 조회(번호로)
-	   public AdminPostBlameVo selectBlameByNo(Connection conn, String pBlaNo) throws Exception{
+	   //신고 목록 상세 조회(번호로)
+	   public AdminPostBlameVo selectBlameDetail(Connection conn) throws Exception{
 	      
 	      //SQL
-	      String sql = "SELECT PB.P_BLA_NO , PB.P_NO , PB.P_BLA_LIST , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_DEL_YN , PB.P_BLA_DETAIL_REASON , P.TITLE AS BLA_TIT , M.MEM_NO AS BLAMER_NO , M.MEM_NO AS WRITER_NO FROM POST_BLAME PB JOIN POST P ON PB.P_NO = P.POST_NO JOIN BLAME_REASON BR ON PB.P_BLA_LIST = BR.BLA_REASON JOIN MEMBER M ON PB.P_BLAMER_NO = M.MEM_NO JOIN MEMBER M ON PB.P_WRITER_NO = M.MEM_NO WHERE PB.P_BLA_NO = ?";
+	      String sql = "SELECT PB.P_BLA_NO , PB.P_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN FROM POST_BLAME PB ;";
 	      PreparedStatement pstmt = conn.prepareStatement(sql);
-	      pstmt.setString(1, pBlaNo);
 	      ResultSet rs = pstmt.executeQuery();
 	      
 	      //rs
 	      AdminPostBlameVo vo = null;
 	      if(rs.next()) {
-
+	    	 String pBlaNo = rs.getString("P_BLA_NO");
 	         String pNo = rs.getString("P_NO");
 	         String pBlamerNo = rs.getString("P_BLAMER_NO");
 	         String pWriterNo = rs.getString("P_WRITER_NO");
@@ -163,13 +160,31 @@ public class AdminPostBlameDao {
 	   }//selectBlameByNo
 	   
 	   
-	 //신고 검색
-		public List<AdminPostBlameVo> search(Connection conn, Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
+	   
+	   
+	   //제재 여부, 답변 여부, 처리여부 null값에서 데이터 입력(게시글 수정)
+	   public int updateBlame(Connection conn, AdminPostBlameVo vo) throws Exception {
+		   // SQL
+		   String sql = "UPDATE POST_BLAME SET P_SANC_YN = ? WHERE P_SANC_YN = ?";
+		   PreparedStatement pstmt = conn.prepareStatement(sql);
+		   pstmt.setString(1, vo.getpSancYn());
+		   int result = pstmt.executeUpdate();
+		   
+		   // close
+		   JDBCTemplate.close(pstmt);
+		   
+		   return result; 
+	   	}
+	   
+	   
+		// 신고 목록 검색(신고 번호 / 포스트 번호(신고되지 않은 포스트는 조회되지 않게) / 작성자(신고되지 않은 포스트 작성자 조회되지 않게)
+		// 신고자(신고하지 않은 일반 유저 조회되지 않게) / 제목 / 날짜 설정.. / 리스트 / 상세내용 / 답변일자.. / 
+		public List<AdminPostBlameVo> searchBlame(Connection conn, Map<String, String> m , AdminBlamePageVo pvo) throws Exception {
 			
 			String searchType = m.get("searchType");
 			
 			// SQL
-			String sql = "SELECT * FROM ( SELECT ROWNUM RNUM, T.* FROM ( SELECT PB.P_NO , PB.P_BLA_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN , P.TITLE , M.MEM_NO AS BLAMER_NO , M.MEM.NO AS WRITER_NO FROM POST_BLAME PB JOIN POST P ON PB.P_NO = P.POST_NO JOIN MEMBER M ON PB.P_BLAMER_NO = M.MEM_NO JOIN MEMBER M ON PB.P_WRITER_NO = M.MEM_NO WHERE \\\" + searchType + \\\" LIKE '%' || ?|| '%' ORDER BY P_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+			String sql = "SELECT PB.P_BLA_NO , PB.P_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN FROM POST_BLAME PB WHERE \" + searchType + \" LIKE '%' || ? || '%' ORDER BY PB.P_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m.get("searchValue"));
 			pstmt.setInt(2, pvo.getStartRow());

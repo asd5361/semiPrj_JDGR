@@ -84,7 +84,7 @@
                 <!-- 버튼 -->
                 <div class="btn_box_group right">
                     <div class="btn_box">
-                        <button class="btn_gray">답변 일자</button>
+                        <button class="btn_gray">초기화</button>
                     </div>
                     <div class="btn_box">
                         <button class="btn_black">검색</button>
@@ -121,17 +121,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                       
                         <% for(AdminPostBlameVo vo : blameVoList){ %>
                             <tr>
-                                <td><%= vo.getpBlaNo() %></td>
-                                <td><%= vo.getpBlamerNo() %></td>
-                                <td><%= vo.getpWriterNo() %></td>
-                                <td><%= vo.getpBlaTit() %></td>
-                                <td><%= vo.getpBlaDate() %></td>
-                                <td><%= vo.getpBlaList() %></td>
-                                <td><%= vo.getpSancYn() %></td>
-                                <td><%= vo.getpAnsDate() %></td>
-                                <td><%= vo.getpDelYn() %></td>
+                                <td><a href="/jdgr/admin/blame/p_blame_detail?no=<%= vo.getpBlaNo() %>"><%= vo.getpBlaNo() %></td>
+                                <td><a href="/jdgr/admin/blame/p_blame_detail?no=<%= vo.getpBlaNo() %>"><%= vo.getpBlamerNo() %></td>
+                                <td><a href="/jdgr/admin/blame/p_blame_detail?no=<%= vo.getpBlaNo() %>"><%= vo.getpWriterNo() %></td>
+                                <td><a href="/jdgr/admin/blame/p_blame_detail?no=<%= vo.getpBlaNo() %>"><%= vo.getpBlaTit() %></td>
+                                <td><a href="/jdgr/admin/blame/p_blame_detail?no=<%= vo.getpBlaNo() %>"><%= vo.getpBlaDate() %></td>
+                                <td><a href="/jdgr/admin/blame/p_blame_detail?no=<%= vo.getpBlaNo() %>"><%= vo.getpBlaList() %></td>
+                                <td><a href="/jdgr/admin/blame/p_blame_detail?no=<%= vo.getpBlaNo() %>"><%= vo.getpSancYn() %></td>
+                                <td><a href="/jdgr/admin/blame/p_blame_detail?no=<%= vo.getpBlaNo() %>"><%= vo.getpAnsDate() %></td>
+                                <td><a href="/jdgr/admin/blame/p_blame_detail?no=<%= vo.getpBlaNo() %>"><%= vo.getpDelYn() %></td>
                             </tr>
                         <%} %>
                             
@@ -144,20 +145,21 @@
                     <ul>
                         <%if(pvo.getStartPage() != 1) {%>
                         <li class="prev_all"><a href="/jdgr/admin/blame/p_blame_list/list?pno=1" title="최신페이지로 이동"></a></li>
-                        <li class="prev"><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
+                        <li class="prev"><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동">이전</a></li>
 
-<%} %>
-
-<%for(int i = pvo.getStartPage(); i<=pvo.getEndPage(); i++) {%>
-	<%if(i == pvo.getCurrentPage()) {%>
-						<li class="on"><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=i%>"><%=i %></a></li>
-	<%}else{ %>
-						<li><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=i%>"><%=i %></a></li>
-<%} } %>
-<%if(pvo.getEndPage() != pvo.getMaxPage()) {%>
-                        <li class="next"><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=pvo.getEndPage()+1 %>" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
-<%} %>
+						<%} %>
+						
+						<%for(int i = pvo.getStartPage(); i<=pvo.getEndPage(); i++) {%>
+							<%if(i == pvo.getCurrentPage()) {%>
+								<li class="on"><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=i%>"><%=i %></a></li>
+							<%}else{ %>
+								<li><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=i%>"><%=i %></a></li>
+						<%} %>
+							<% } %>
+						<%if(pvo.getEndPage() != pvo.getMaxPage()) {%>
+	                        <li class="next"><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=pvo.getEndPage()+1 %>" title="다음페이지로 이동">다음</a></li>
+	                        <li class="next_all"><a href="/jdgr/admin/blame/p_blame_list/list?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
+						<%} %>			
                     </ul>
                 </div>
 

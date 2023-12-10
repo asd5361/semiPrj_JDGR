@@ -1,3 +1,4 @@
+<%@page import="com.semi.jdgr.user.reply.vo.ReplyVo"%>
 <%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="com.semi.jdgr.user.blame.vo.ReplyBlameVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +6,7 @@
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
     
      <%
+     	ReplyVo replyNo = (ReplyVo) request.getAttribute("replyNo");
     	ReplyBlameVo writer = (ReplyBlameVo) request.getAttribute("writer");
      	ReplyBlameVo content = (ReplyBlameVo) request.getAttribute("content");
     	Map<String, String> searchMap = (Map<String, String>)request.getAttribute("searchMap");
@@ -24,9 +26,11 @@
         </div>
         <hr>
         <div class="writer_content">
-<%--         <h5>작성자 |</h5><h5><%= writer.getrWriterNo() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 --> --%>
+        <h5>작성자 |</h5><h5></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
+<%--         <%= writer.getrWriterNo() %> --%>
         <br>
-<%--         <h5>내   용| </h5><h5><%= writer.getrBlaCon() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 --> --%>
+        <h5>내   용| </h5><h5></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
+<%--         <%= writer.getrBlaCon() %> --%>
         </div>
         <hr>
         <div class="select_reason">사유선택</div>
@@ -111,20 +115,41 @@
         formData.append('selectedReason', selectedReasonValue);
         formData.append('detailContent', detailContent);
 
-        fetch("/jdgr/admin/blame/r_blame_data" + selectedReason)
-        .then( (resp) => {return resp.json() } )
-        .then( (data) => {
-			const result = data.msg;
-			const isOk = result == "ok";
-			if(isOk){
-				alert("신고 완료");
-				window.idOk = true;
-			}else{
-				alert("신고 오류");
-				window.idOk = false;
-			}
-        }
-        );
+     // fetch 코드 추가
+        fetch("/jdgr/user/blame/r_blamepop", {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('서버 응답이 올바르지 않습니다.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const result = data.msg;
+            const isOk = result === "ok";
+            if (isOk) {
+                alert("신고 완료");
+                // 원하는 추가 작업 수행
+            } else {
+                alert("신고 오류");
+                // 원하는 추가 작업 수행
+            }
+        })
+        .catch(error => {
+            console.error('오류 발생:', error);
+            alert('서버 통신 중 오류가 발생했습니다.');
+        });
+
+        // 모달 닫기
+        closePopup();
+    }
+
+    function closePopup() {
+        // 모달 닫기
+        var modal = document.getElementById('pop_email');
+        modal.style.display = 'none';
     }
 //             console.log('서버 응답:', data);
 //             // 성공 또는 실패에 따른 처리

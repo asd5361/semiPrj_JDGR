@@ -15,20 +15,18 @@ public class PostBlameDao {
 	public int blame(Connection conn, PostBlameVo vo) throws Exception {
 
 		// sql
-		String sql = "INSERT INTO POST_BLAME (P_BLA_NO, P_NO, P_BLAMER_NO, P_WRITER_NO, P_BLA_TIT, P_BLA_DATE, P_BLA_LIST, P_SANC_YN, P_ANS_DATE, P_BLA_DETAIL, P_DEL_YN) VALUES(?, ?, ?, ?, ?, TIMESTAMP '2023-11-29 15:01:00', ?, ?, TIMESTAMP '2023-11-29 15:01:00', ?, ?)";
+		String sql = "INSERT INTO POST_BLAME (P_BLA_NO, P_NO, P_BLAMER_NO, P_WRITER_NO, P_BLA_TIT, P_BLA_DATE, P_BLA_LIST, P_SANC_YN, P_ANS_DATE, P_BLA_DETAIL, P_DEL_YN) VALUES(SEQ_POST_BLAME.NEXTVAL, ?, ?, ?, ?, SYSTIMESTAMP, ?, ?, SYSTIMESTAMP, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, vo.getpBlaNo());
-		pstmt.setString(2, vo.getpNo());
-		pstmt.setString(3, vo.getpBlamerNo());
-		pstmt.setString(4, vo.getpWriterNo());
-		pstmt.setString(5, vo.getpBlaTit());
-		pstmt.setString(6, vo.getpBlaDate());
-		pstmt.setString(7, vo.getpBlaList());
-		pstmt.setString(8, vo.getpSancYn());
-		pstmt.setString(9, vo.getpAnsDate());
-		pstmt.setString(10, vo.getpBlaDetail());
-		pstmt.setString(11, vo.getpDelYn());
+		pstmt.setString(1, vo.getpNo());
+		pstmt.setString(2, vo.getpBlamerNo());
+		pstmt.setString(3, vo.getpWriterNo());
+		pstmt.setString(4, vo.getpBlaTit());
+		pstmt.setString(5, vo.getpBlaList());
+		pstmt.setString(6, vo.getpSancYn());
+		pstmt.setString(7, vo.getpBlaDetail());
+		pstmt.setString(8, vo.getpDelYn());
 		int result = pstmt.executeUpdate();
+		
 		
 		// close
 		JDBCTemplate.close(pstmt);

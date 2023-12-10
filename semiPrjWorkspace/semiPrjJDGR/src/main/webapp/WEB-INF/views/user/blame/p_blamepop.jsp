@@ -1,3 +1,4 @@
+<%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="com.semi.jdgr.user.blame.vo.PostBlameVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,8 +6,9 @@
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
     
      <%
+     	PostVo postNo = (PostVo) request.getAttribute("postNo");
     	PostBlameVo writer = (PostBlameVo) request.getAttribute("writer");
-     	PostBlameVo content = (PostBlameVo) request.getAttribute("content");
+     	PostBlameVo title = (PostBlameVo) request.getAttribute("title");
      	Map<String, String> searchMap = (Map<String, String>)request.getAttribute("searchMap");
     %>
     
@@ -83,34 +85,68 @@
             <input type="text" class="detail_content" placeholder=" 세부 내용 작성">
         </div>
         <div class="modal_footer">
-            <button class="modal_close btn_black" >신고하기</button>
+            <button class="modal_close btn_black" onclick="submitReport()">신고하기</button>
         </div>
     </div>
 </div>
 <script>
-// onclick="submitReport()"
-//     function submitReport() {
-//         // 선택된 라디오 버튼의 값 가져오기
-//         const selectedReason = document.querySelector('input[name="select"]:checked').value;
+    function submitReport() {
+        // 선택된 라디오 버튼의 값 가져오기
+        const selectedReason = document.querySelector('input[name="select"]:checked').value;
 
-//         // 만약 라디오 버튼이 선택되지 않은 경우, 경고 메시지를 표시하고 함수 종료
-//         if (!selectedReason) {
-//             alert('신고 사유를 선택하세요.');
-//             return;
-//         }
+        // 만약 라디오 버튼이 선택되지 않은 경우, 경고 메시지를 표시하고 함수 종료
+        if (!selectedReason) {
+            alert('신고 사유를 선택하세요.');
+            return;
+        }
 
-//         // 선택된 라디오 버튼의 값
-//         const selectedReason = selectedReason.value;
+        // 선택된 라디오 버튼의 값
+        const selectedReasonValue = selectedReason.value;
 
-//         // 세부 내용 가져오기
-//         const detailContent = document.querySelector('.detail_content').value;
+        // 세부 내용 가져오기
+        const detailContent = document.querySelector('.detail_content').value;
 
-//         // 서버로 데이터 전송
-//         const formData = new FormData();
-//         formData.append('selectedReason', selectedReason);
-//         formData.append('detailContent', detailContent);
+        // 서버로 데이터 전송
+        const formData = new FormData();
+        formData.append('selectedReason', selectedReasonValue);
+        formData.append('detailContent', detailContent);
 
-//         fetch("/jdgr/admin/blame/r_blame_data" +selectedReason)
+        // fetch 코드 추가
+        fetch("/jdgr/user/blame/p_blamepop", {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('서버 응답이 올바르지 않습니다.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const result = data.msg;
+            const isOk = result === "ok";
+            if (isOk) {
+                alert("신고 완료");
+                // 원하는 추가 작업 수행
+            } else {
+                alert("신고 오류");
+                // 원하는 추가 작업 수행
+            }
+        })
+        .catch(error => {
+            console.error('오류 발생:', error);
+            alert('서버 통신 중 오류가 발생했습니다.');
+        });
+
+        // 모달 닫기
+        closePopup();
+    }
+
+    function closePopup() {
+        // 모달 닫기
+        var modal = document.getElementById('pop_email');
+        modal.style.display = 'none';
+    }
 //         .then( (resp) => {return resp.json() } )
 //         .then( (data) => {
 // 			const result = data.msg;
