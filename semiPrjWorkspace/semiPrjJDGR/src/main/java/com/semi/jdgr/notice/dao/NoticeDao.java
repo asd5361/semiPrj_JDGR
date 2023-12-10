@@ -280,5 +280,75 @@ public class NoticeDao {
 		
 		return result;
 	}
+	
+	
+	//관리자 공지사항 검색 조회 갯수
+	public int adminNoticeSearchCount(Connection conn, NoticeVo searchVo) throws SQLException {
+		
+		//sql
+		String sql ="SELECT COUNT(*) FROM NOTICE LEFT JOIN( SELECT ADMIN_NO AS AMO,ADMIN_NAME FROM ADMIN) ON AMO = ADMIN_NO WHERE TITLE LIKE '%'||?||'%' AND CONTENT LIKE '%'||?||'%' AND ADMIN_NAME LIKE '%'||?||'%' AND FIXED_YN LIKE '%'||?||'%' AND DEL_YN LIKE '%'||?||'%' ORDER BY NOTICE_NO DESC";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, searchVo.getTitle() );
+		pstmt.setString(2, searchVo.getContent() );
+		pstmt.setString(3, searchVo.getAdminName() );
+		pstmt.setString(4, searchVo.getFixedYn() );
+		pstmt.setString(5, searchVo.getDelYn() );
+
+		ResultSet rs = pstmt.executeQuery();
+		int cnt = 0;
+		
+		//rs
+		while(rs.next()) {
+			cnt = rs.getInt(1);
+		}
+		
+		//close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);		
+		
+		return cnt;
+	}
+	
+	
+	//관리자 공지사항 검색 조회
+	public List<NoticeVo> adminNoticeSearch(Connection conn, NoticeVo searchVo, PageVo pvo) throws SQLException {
+		//sql
+		String sql="SELECT * FROM ( SELECT ROWNUM RNUM, N.* FROM ( SELECT * FROM NOTICE LEFT JOIN( SELECT ADMIN_NO AS AMO,ADMIN_NAME FROM ADMIN) ON AMO = ADMIN_NO WHERE TITLE LIKE '%'||?||'%' AND CONTENT LIKE '%'||?||'%' AND ADMIN_NAME LIKE '%'||?||'%' AND FIXED_YN LIKE '%'||?||'%' AND DEL_YN LIKE '%'||?||'%' ORDER BY NOTICE_NO DESC)N ) WHERE RNUM BETWEEN ? AND ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, searchVo.getTitle() );
+		pstmt.setString(2, searchVo.getContent() );
+		pstmt.setString(3, searchVo.getAdminName() );
+		pstmt.setString(4, searchVo.getFixedYn() );
+		pstmt.setString(5, searchVo.getDelYn() );
+		pstmt.setInt(6, pvo.getStartRow());
+		pstmt.setInt(7, pvo.getLastRow());
+		ResultSet rs = pstmt.executeQuery();
+		List<NoticeVo> noticeVoList = new ArrayList<NoticeVo>();
+		
+		//rs
+		while(rs.next()) {
+			NoticeVo vo = new NoticeVo();
+			
+			vo.setNoticeNo(rs.getString("NOTICE_NO"));
+			vo.setAdminNo(rs.getString("ADMIN_NO"));
+			vo.setTitle(rs.getString("TITLE"));
+			vo.setContent(rs.getString("CONTENT"));
+			vo.setInquiry(rs.getString("INQUIRY"));
+			vo.setEnrollDate(rs.getString("ENROLL_DATE"));
+			vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+			vo.setFixedYn(rs.getString("FIXED_YN"));
+			vo.setDelYn(rs.getString("DEL_YN"));
+			vo.setAdminName(rs.getString("ADMIN_NAME"));
+			
+			
+			noticeVoList.add(vo);
+		}
+		
+		//close
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return noticeVoList;
+	}
 
 }

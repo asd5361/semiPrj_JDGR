@@ -61,7 +61,7 @@
                                         </div>
                                     </td>
                                     <th scope="row"><label for="">답변 수정 일자</label></th>
-                                    <td>2023.11.22 23:30</td>
+                                    <td><%=vo.getUpdateDate()%></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="inp_03">제목</label></th>

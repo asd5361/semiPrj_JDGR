@@ -5,6 +5,7 @@
     pageEncoding="UTF-8"%>
 <% List<CsboardVo> csboardVoList = (List<CsboardVo>)request.getAttribute("csboardVoList"); %>
 <% PageVo pvo = (PageVo)request.getAttribute("pageVo"); %>
+<% CsboardVo searchVo = (CsboardVo)request.getAttribute("searchVo"); %>
 
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
 
@@ -16,6 +17,7 @@
                 </div>
                 
                 <!-- 검색박스 예시 -->
+                <div class="aa"></div>
                 <div class="search_box">
                     <div class="search_item">
                         <label for="sel_01">제목</label>
@@ -36,9 +38,9 @@
                         </div>
                     </div>
                     <div class="search_item">
-                        <label for="sel_01">답변 일자</label>
+                        <label for="sel_01">답변 내용</label>
                         <div class="form_box">
-                            <input type="text" name="updateDate" id="inp_02">
+                            <input type="text" name="ansContent" id="inp_02">
                         </div>
                     </div>
                     <div class="search_item">
@@ -160,18 +162,64 @@
         // 초기화 버튼
         function reset(){
             const inputArr = document.querySelectorAll(".form_box input");
-            
+            const csSelOptionArr = document.querySelectorAll("select[name=csSel] option");
+            const ansSelOptionArr = document.querySelectorAll("select[name=ansSel] option");      
+
             for(let i=0; i<inputArr.length; i++){
                 inputArr[i].value = null;
             }
+
+            csSelOptionArr[0].selected = true;
+            ansSelOptionArr[0].selected = true;
+            sendPost(); //검색결과도 같이 초기화 하기 위해 사용함
         }
         //검색 버튼
         function sendPost(){
+            let aaTag = document.querySelector(".aa");
             let divTag = document.querySelector(".search_box");
             let formTag = document.createElement("form");
-            formTag.setAttribute('method','post');
-            formTag.setAttribute('action','/jdgr/csborad/search?pno=');
+            formTag.setAttribute('method','get');
+            formTag.setAttribute('action','/jdgr/admin/csboard/search?pno=1');
             formTag.appendChild(divTag);
-            console.log(formTag);
+            aaTag.appendChild(formTag);
+            formTag.submit();
         }
+<%if(searchVo != null){%>
+        //검색 후에도 검색어 남기기
+		function setSearchArea(){
+            const titleIntput = document.querySelector(".search_box input[name=title]");
+            const contentIntput = document.querySelector(".search_box input[name=content]");
+            const writerIntput = document.querySelector(".search_box input[name=writer]");
+            const ansContentIntput = document.querySelector(".search_box input[name=ansContent]");
+            const csSelOptionArr = document.querySelectorAll("select[name=csSel] option");
+            const ansSelOptionArr = document.querySelectorAll("select[name=ansSel] option");
+
+            
+            titleIntput.value = '<%=searchVo.getqTit()%>';
+            contentIntput.value = '<%=searchVo.getqCon()%>';
+            writerIntput.value = '<%=searchVo.getMemNick()%>';
+            ansContentIntput.value = '<%=searchVo.getAnsewr()%>';
+            for(let i = 0; i< csSelOptionArr.length; ++i){
+                if(csSelOptionArr[i].value == '<%=searchVo.getQuestionCategory()%>'){
+                    csSelOptionArr[i].selected = true;
+                } 
+            }
+            for(let i = 0; i< ansSelOptionArr.length; ++i){
+                if(ansSelOptionArr[i].value == '<%=searchVo.getAnsewrDate()%>'){
+                    ansSelOptionArr[i].selected = true;
+                } 
+            }
+        }
+        setSearchArea();
+
+        function setPageArea(){
+            const aTagArr = document.querySelectorAll(".paging_box ul li a");
+            for(let i=0; i<aTagArr.length; ++i){
+                aTagArr[i].href = aTagArr[i].href.replace('list','search');
+                aTagArr[i].href += '&title=<%=searchVo.getqTit()%>&content=<%=searchVo.getqCon()%>&writer=<%=searchVo.getMemNick()%>&ansContent=<%=searchVo.getAnsewr()%>&csSel=<%=searchVo.getQuestionCategory()%>&ansSel=<%=searchVo.getAnsewrDate()%>';
+            }
+        }
+        setPageArea();
+<%}%>
+
     </script>

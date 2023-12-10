@@ -167,5 +167,34 @@ public class NoticeService {
 		
 		return result;
 	}
+	public int adminNoticeSearchCount(NoticeVo searchVo) throws Exception {
+
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		int cnt = dao.adminNoticeSearchCount(conn,searchVo);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return cnt;
+	}
+	
+	public List<NoticeVo> adminNoticeSearch(NoticeVo searchVo, PageVo pvo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		List<NoticeVo> noticeVoList = dao.adminNoticeSearch(conn,searchVo, pvo);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return noticeVoList;
+	}
 
 }
