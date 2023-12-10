@@ -13,6 +13,7 @@ import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.blog.vo.GroupVo;
 import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.vo.CategoryVo;
+import com.semi.jdgr.user.follow.vo.FollowVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -427,6 +428,45 @@ public class BlogService {
 		return categoryVoList;
 	}
 
+	// 구독한 블로그 정보 가져오기
+	public List<BlogVo> getFollowBlogList(String blogUrl) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		List<BlogVo> blogVoList = dao.getFollowBlogList(conn, blogUrl);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return blogVoList;
+	}
+
+	// 구독한 블로그 삭제
+	public int deleteSubscribeList(FollowVo[] dataArray) throws Exception {
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		BlogDao dao = new BlogDao();
+		int result = dao.deleteSubscribeList(conn, dataArray);
+		
+		// tx
+		if(result == dataArray.length) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return result;
+		
+	}
+
 	
 	// ------------------------------------------------------------------------------- admin
 	
@@ -513,22 +553,6 @@ public class BlogService {
 		// dao
 		BlogDao dao = new BlogDao();
 		List<BlogVo> blogVoList = dao.adminBlogSearch(conn, param, pvo);
-		
-		// close
-		JDBCTemplate.close(conn);
-		
-		return blogVoList;
-	}
-
-	// 구독한 블로그 정보 가져오기
-	public List<BlogVo> getFollowBlogList(String blogUrl) throws Exception {
-
-		// conn
-		Connection conn = JDBCTemplate.getConnection();
-		
-		// dao
-		BlogDao dao = new BlogDao();
-		List<BlogVo> blogVoList = dao.getFollowBlogList(conn, blogUrl);
 		
 		// close
 		JDBCTemplate.close(conn);

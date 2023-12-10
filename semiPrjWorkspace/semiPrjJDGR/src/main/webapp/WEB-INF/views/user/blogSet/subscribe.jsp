@@ -49,8 +49,8 @@
                                     <td>
                                         <div class="chk_box solo">
                                             <span>
-                                                <input type="checkbox" id="chk_02">
-                                                <label for="chk_02">&nbsp;</label>
+                                                <input type="checkbox" id="chk_0<%= vo.getBlogNo() %>">
+                                                <label for="chk_0<%= vo.getBlogNo() %>">&nbsp;</label>
                                             </span>
                                         </div>
                                     </td>
@@ -61,6 +61,8 @@
                                                 <span><%= vo.getBlogTitle() %></span>
                                             </a>
                                         </div>
+                                        <input type="hidden" name="memNo" value="<%= vo.getMemNo() %>">
+                                        <input type="hidden" name="FollowMem" value="<%= vo.getBlogNo() %>">
                                     </td>
                                     <td>
                                         <div class="gd_btn">
@@ -73,7 +75,7 @@
                         </table>
                         <div class="gd_chk_btn">
                             <a href="" class="allchk_Btn">전체선택</a>
-                            <a href="">선택삭제</a>
+                            <a href="" class="selectDelete_Btn">선택삭제</a>
                         </div>
                     </div>
 
@@ -150,6 +152,77 @@ checkboxes.forEach(checkbox => {
     });
 });
 
+
+//여러 행 삭제 버튼 클릭 이벤트 처리
+document.querySelector('.selectDelete_Btn').addEventListener('click', (e) => {
+	e.preventDefault();
+    // 선택된 항목 정보를 저장할 배열
+    const selectedItems = [];
+
+    // 각 체크박스의 클릭 이벤트 처리
+    document.querySelectorAll('tbody input[type="checkbox"]').forEach((checkbox, index) => {
+        if (checkbox.checked) {
+            const memNo = document.querySelectorAll('input[name="memNo"]')[index].value;
+            const FollowMem = document.querySelectorAll('input[name="FollowMem"]')[index].value;
+            selectedItems.push({ memNo, FollowMem });
+        }
+    });
+
+    // AJAX를 사용하여 선택된 항목들을 서버로 전송
+    fetch('/jdgr/blogSet/subscribe/delete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(selectedItems)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // 서버 응답 처리
+        console.log(data);
+        // 선택된 항목들 초기화
+        selectedItems.length = 0;
+        // 선택된 항목들 삭제 후 페이지 리로드 또는 UI 갱신 등 추가 처리
+        location.reload(); // 예시로 페이지 리로드
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+// 구독삭제 버튼
+document.querySelector('.gd_btn button').addEventListener('click', (e) => {
+	e.preventDefault();
+    // 선택된 항목 정보를 저장할 배열
+    const selectedItems = [];
+
+    // 해당 체크박스 데이터에 추가
+    const memNo = e.target.parentNode.parentNode.parentNode.querySelector('input[name="memNo"]').value;
+    const FollowMem = e.target.parentNode.parentNode.parentNode.querySelector('input[name="FollowMem"]').value;
+    selectedItems.push({ memNo, FollowMem });
+    console.log(selectedItems);
+
+    // AJAX를 사용하여 선택된 항목들을 서버로 전송
+    fetch('/jdgr/blogSet/subscribe/delete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(selectedItems)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // 서버 응답 처리
+        console.log(data);
+        // 선택된 항목들 초기화
+        selectedItems.length = 0;
+        // 선택된 항목들 삭제 후 페이지 리로드 또는 UI 갱신 등 추가 처리
+        location.reload(); // 예시로 페이지 리로드
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
 
 </script>
 <%@ include file="/WEB-INF/views/user/common/footer.jsp" %>

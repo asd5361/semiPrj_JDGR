@@ -8,10 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
+
 import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.blog.vo.GroupVo;
 import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.vo.CategoryVo;
+import com.semi.jdgr.user.follow.vo.FollowVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -478,12 +481,14 @@ public class BlogDao {
 		List<BlogVo> blogVoList = new ArrayList<BlogVo>();
 		while(rs.next()) {
 			String followBlogNo = rs.getString("FOLLOW_BLOG_NO");
+			String followUserNo = rs.getString("FOLLOW_USER_NO");
 			String followBlogUrl = rs.getString("FOLLOW_BLOG_URL");
 			String followNick = rs.getString("FOLLOW_NICK");
 			String followblogTitle = rs.getString("FOLLOW_BLOG_TITLE");
 			
 			BlogVo blogVo = new BlogVo();
 			blogVo.setBlogNo(followBlogNo);
+			blogVo.setMemNo(followUserNo);
 			blogVo.setBlogUrl(followBlogUrl);
 			blogVo.setMemNick(followNick);
 			blogVo.setBlogTitle(followblogTitle);
@@ -496,6 +501,36 @@ public class BlogDao {
 		JDBCTemplate.close(pstmt);
 
 		return blogVoList;
+	}
+
+	// 구독한 블로그 삭제
+	public int deleteSubscribeList(Connection conn, FollowVo[] dataArray) throws Exception {
+		
+		// 데이터가 있는만큼 쿼리문 추가
+		String addQuery = "";
+		for(int i = 0; i < dataArray.length; i++) {
+			addQuery += "(?, ?)";
+			if(i < dataArray.length - 1) {
+				addQuery += ", ";
+			}
+		}
+		// sql
+		String sql = "DELETE FROM FOLLOW WHERE (BLOG_NO, MEM_NO) IN (" + addQuery + ")";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		// 값 바인딩
+		int idx = 1;
+		for (FollowVo vo : dataArray) {
+			pstmt.setString(idx++, vo.getFollowMem());
+            pstmt.setString(idx++, vo.getMemNo());
+		}
+		
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
 	}
 	
 	
