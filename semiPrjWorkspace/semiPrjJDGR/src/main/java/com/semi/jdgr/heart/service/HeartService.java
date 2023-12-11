@@ -1,12 +1,32 @@
 package com.semi.jdgr.heart.service;
 
 import java.sql.Connection;
+import java.util.List;
 
 import com.semi.jdgr.alarm.vo.AlarmVo;
+import com.semi.jdgr.heart.dao.HeartDao;
+import com.semi.jdgr.heart.vo.HeartVo;
 import com.semi.jdgr.post.dao.PostDaoJOJ;
+import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class HeartService {
+	
+	// 공감 리스트 가져오기
+	public List<HeartVo> HeartList(String no) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+
+		// dao
+		HeartDao dao = new HeartDao();
+		List<HeartVo> heartVoList = dao.HeartList(conn, no);
+
+		// close
+		JDBCTemplate.close(conn);
+
+		return heartVoList;
+	}
 
 	// 공감체크 기능
 	public boolean checkHeart(String no, String memberNo) throws Exception {
@@ -15,7 +35,7 @@ public class HeartService {
 		Connection conn = JDBCTemplate.getConnection();
 
 		// dao
-		PostDaoJOJ dao = new PostDaoJOJ();
+		HeartDao dao = new HeartDao();
 		boolean heartCheck = dao.checkHeart(conn, no, memberNo);
 
 		// tx
@@ -33,7 +53,7 @@ public class HeartService {
 		Connection conn = JDBCTemplate.getConnection();
 
 		// dao
-		PostDaoJOJ dao = new PostDaoJOJ();
+		HeartDao dao = new HeartDao();
 		int add = dao.AddHeart(conn, no, memberNo);
 
 		// tx
@@ -56,7 +76,7 @@ public class HeartService {
 		Connection conn = JDBCTemplate.getConnection();
 
 		// dao
-		PostDaoJOJ dao = new PostDaoJOJ();
+		HeartDao dao = new HeartDao();
 		int del = dao.delHeart(conn, no, memberNo);
 
 		// tx
@@ -72,14 +92,17 @@ public class HeartService {
 		return del;
 
 	}
-	
+
+
+
+	// 공감 알림테이블로 저장
 	public int insertHeartAlarm(AlarmVo alarmVo) throws Exception {
 
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 
 		// dao
-		PostDaoJOJ dao = new PostDaoJOJ();
+		HeartDao dao = new HeartDao();
 		int result = dao.insertHeartAlarm(conn, alarmVo);
 
 		// tx
@@ -94,5 +117,5 @@ public class HeartService {
 
 		return result;
 	}
-	
+
 }

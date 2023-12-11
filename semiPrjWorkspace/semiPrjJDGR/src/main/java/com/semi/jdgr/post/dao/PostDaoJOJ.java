@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.semi.jdgr.alarm.vo.AlarmVo;
+import com.semi.jdgr.heart.vo.HeartVo;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class PostDaoJOJ {
-	
+
 	// 포스트 VO 준비 (포스트 넘버로 조회)
 	public PostVo PostInfo(Connection conn, String pNo) throws Exception {
 
@@ -84,7 +87,7 @@ public class PostDaoJOJ {
 			postDetailVo.setGroupNo(groupNo);
 			postDetailVo.setCategoryNo(categoryNo);
 			postDetailVo.setCategoryName(categoryName);
-			postDetailVo.setUserId(userNo);
+			postDetailVo.setUserNo(userNo);
 			postDetailVo.setUserId(userId);
 			postDetailVo.setUserNick(userNick);
 			postDetailVo.setOpen(open);
@@ -102,58 +105,6 @@ public class PostDaoJOJ {
 		return postDetailVo;
 
 	}// PostDetail
-
-	// 공감수 (블로그 카테고리 상세보기용)
-	public PostVo PostDetailHeartCnt(Connection conn, PostVo postDetailVo) throws Exception {
-
-		// sql
-		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM HEART WHERE POST_NO = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, postDetailVo.getPostNo());
-		ResultSet rs = pstmt.executeQuery();
-
-		// rs
-		PostVo heartCnt = null;
-		if (rs.next()) {
-			String postNo = rs.getString("POST_NO");
-
-			heartCnt = new PostVo();
-			heartCnt.setPostNo(postNo);
-		}
-
-		// close
-		JDBCTemplate.close(pstmt);
-		JDBCTemplate.close(rs);
-
-		return heartCnt;
-
-	}// heartCnt
-
-	// 댓글수 (블로그 카테고리 상세보기용)
-	public PostVo PostDetailReplyCnt(Connection conn, PostVo postDetailVo) throws Exception {
-
-		// sql
-		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM REPLY WHERE POST_NO = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, postDetailVo.getPostNo());
-		ResultSet rs = pstmt.executeQuery();
-
-		// rs
-		PostVo replyCnt = null;
-		if (rs.next()) {
-			String postNo = rs.getString("POST_NO");
-
-			replyCnt = new PostVo();
-			replyCnt.setPostNo(postNo);
-		}
-
-		// close
-		JDBCTemplate.close(pstmt);
-		JDBCTemplate.close(rs);
-
-		return replyCnt;
-
-	}// FollowCnt
 
 	// 조회수 증가 (블로그 카테고리 상세보기용)
 	public int PostDetailIncreaseHit(Connection conn, PostVo postDetailVo) throws Exception {
@@ -238,163 +189,57 @@ public class PostDaoJOJ {
 		return result;
 	}
 
-	// 공감체크 기능
-	public boolean checkHeart(Connection conn, String no, String memberNo) throws Exception {
+	// 댓글수
+	public PostVo PostDetailReplyCnt(Connection conn, PostVo postDetailVo) throws Exception {
 
 		// sql
-		String sql = "SELECT * FROM HEART WHERE POST_NO = ? AND MEM_NO = ?";
+		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM REPLY WHERE POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
-		pstmt.setString(2, memberNo);
+		pstmt.setString(1, postDetailVo.getPostNo());
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
-		boolean heartCheck = true;
+		PostVo replyCnt = null;
 		if (rs.next()) {
-			heartCheck = false;
+			String postNo = rs.getString("POST_NO");
+
+			replyCnt = new PostVo();
+			replyCnt.setPostNo(postNo);
 		}
 
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
 
-		return heartCheck;
+		return replyCnt;
 
-	}// checkHeartDup
+	}// FollowCnt
 
-	// 공감추가 기능
-	public int AddHeart(Connection conn, String no, String memberNo) throws Exception {
-
-		// sql
-		String sql = "INSERT INTO HEART (POST_NO, MEM_NO) VALUES (?, ?)";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
-		pstmt.setString(2, memberNo);
-		int add = pstmt.executeUpdate();
-
-		// rs
-
-		// close
-		JDBCTemplate.close(pstmt);
-
-		return add;
-
-	}// AddHeary
-
-	// 공감삭제 기능
-	public int delHeart(Connection conn, String no, String memberNo) throws Exception {
+	// 공감수
+	public PostVo PostDetailHeartCnt(Connection conn, PostVo postDetailVo) throws Exception {
 
 		// sql
-		String sql = "DELETE FROM HEART WHERE POST_NO = ? AND MEM_NO = ?";
+		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM HEART WHERE POST_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, no);
-		pstmt.setString(2, memberNo);
-		int del = pstmt.executeUpdate();
-
-		// rs
-
-		// close
-		JDBCTemplate.close(pstmt);
-
-		return del;
-
-	}
-	
-	// 구독체크 기능
-	public boolean checkFollow(Connection conn, String blogNo, String memberNo) throws Exception {
-
-		// sql
-		String sql = "SELECT * FROM FOLLOW WHERE BLOG_NO = ? AND MEM_NO = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, blogNo);
-		pstmt.setString(2, memberNo);
+		pstmt.setString(1, postDetailVo.getPostNo());
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
-		boolean followCheck = true;
+		PostVo heartCnt = null;
 		if (rs.next()) {
-			followCheck = false;
+			String postNo = rs.getString("POST_NO");
+
+			heartCnt = new PostVo();
+			heartCnt.setPostNo(postNo);
 		}
 
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
 
-		return followCheck;
+		return heartCnt;
 
-	}// checkFollow
-
-	// 구독추가 기능
-	public int AddFollow(Connection conn, String blogNo, String memberNo) throws Exception {
-
-		// sql
-		String sql = "INSERT INTO FOLLOW (BLOG_NO, MEM_NO) VALUES (?, ?)";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, blogNo);
-		pstmt.setString(2, memberNo);
-		int add = pstmt.executeUpdate();
-
-		// rs
-
-		// close
-		JDBCTemplate.close(pstmt);
-
-		return add;
-
-	}// AddHeary
-
-	// 구독삭제 기능
-	public int delFollow(Connection conn, String blogNo, String memberNo) throws Exception {
-
-		// sql
-		String sql = "DELETE FROM FOLLOW WHERE BLOG_NO = ? AND MEM_NO = ?";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, blogNo);
-		pstmt.setString(2, memberNo);
-		int del = pstmt.executeUpdate();
-
-		// rs
-
-		// close
-		JDBCTemplate.close(pstmt);
-
-		return del;
-
-	}
-
-	public int insertFollowAlarm(Connection conn, AlarmVo alarmVo) throws Exception {
-//		String sql = "INSERT INTO MEMBER ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE ) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
-		String sql = "INSERT INTO ALARM ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, alarmVo.getReceiverNo());
-		pstmt.setString(2, alarmVo.getPostNo());
-		pstmt.setString(3, alarmVo.getSenderNo());
-		pstmt.setString(4, alarmVo.getAlarmType());
-
-		int result = pstmt.executeUpdate();
-
-		// close
-		JDBCTemplate.close(pstmt);
-
-		return result;
-	}
-	
-	public int insertHeartAlarm(Connection conn, AlarmVo alarmVo) throws Exception {
-//		String sql = "INSERT INTO MEMBER ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE ) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
-		String sql = "INSERT INTO ALARM ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, alarmVo.getReceiverNo());
-		pstmt.setString(2, alarmVo.getPostNo());
-		pstmt.setString(3, alarmVo.getSenderNo());
-		pstmt.setString(4, alarmVo.getAlarmType());
-		
-		int result = pstmt.executeUpdate();
-		
-		// close
-		JDBCTemplate.close(pstmt);
-		
-		return result;
-	}
+	}// heartCnt
 
 	public String findUserNo(Connection conn, String userNick) throws Exception {
 		String sql = "SELECT MEM_NO FROM MEMBER WHERE MEM_NICK = ?";

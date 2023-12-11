@@ -1,6 +1,7 @@
 package com.semi.jdgr.heart.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,14 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.semi.jdgr.alarm.vo.AlarmVo;
+import com.semi.jdgr.heart.service.HeartService;
+import com.semi.jdgr.heart.vo.HeartVo;
 import com.semi.jdgr.post.service.PostServiceJOJ;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 
-@WebServlet("/heart")
+@WebServlet("/post/heart")
 public class HeartController extends HttpServlet{
 
-		// 공감기능
+	// 공감기능
 		@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -39,20 +42,35 @@ public class HeartController extends HttpServlet{
 				}
 				String no = postDetailVo.getPostNo();
 				String memberNo = loginMember.getMemNo();
-
+				
+				if(loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
+					throw new Exception("본인이 작성한 포스트 입니다.");
+				};
+				
+				
+				
+				System.out.println(postDetailVo);
+				System.out.println("로그인 멤 번호" + loginMember.getMemNo());
+				System.out.println("포스트 멤 번호" + postDetailVo.getUserNo());
 				
 				// service
-				PostServiceJOJ ps = new PostServiceJOJ();
-				boolean isOk = ps.checkHeart(no, memberNo);
+				HeartService hs = new HeartService();
+				
+				// 공감 중복체크
+				boolean isOk = hs.checkHeart(no, memberNo);
+				
+				// 공감 vo 불러오기
+				List<HeartVo> heartVoList = hs.HeartList(no);
 				
 				//알람에 인서트
+				PostServiceJOJ ps = new PostServiceJOJ();
 				String userNo = ps.findUserNo(postDetailVo.getUserNick());
 				
 				alarmVo.setReceiverNo(userNo);
 				alarmVo.setPostNo(postDetailVo.getPostNo());
 				alarmVo.setSenderNo(loginMember.getMemNo());
 				alarmVo.setAlarmType("HEART");
-				int insert = ps.insertHeartAlarm(alarmVo);
+				int insert = hs.insertHeartAlarm(alarmVo);
 				
 				if(insert != 1) {
 					throw new Exception("알람 인서트 실패");
@@ -63,14 +81,14 @@ public class HeartController extends HttpServlet{
 				// result
 				int add = 0;
 				if (isOk) {
-					add = ps.AddHeart(no, memberNo);
+					add = hs.AddHeart(no, memberNo);
 					if (add == 1) {
 //						req.setAttribute("add", add);
 						session.setAttribute("add", add);
 						req.getSession().setAttribute("add", add);
 					}
 				} else {
-					int del = ps.delHeart(no, memberNo);
+					int del = hs.delHeart(no, memberNo);
 					if (del == 1) {
 //						req.setAttribute("del", del);
 						session.setAttribute("del", del);
@@ -79,6 +97,9 @@ public class HeartController extends HttpServlet{
 						throw new Exception("공감 기능 오류 발생");
 					}
 				}
+				
+				session.setAttribute("heartVoList", heartVoList);
+				req.getSession().setAttribute("heartVoList", heartVoList);
 
 //				resp.sendRedirect("/jdgr/post/detail?url=${blogUrlVo.blogUrl}&&categoryNo=groupVo.getNo() %>");
 				resp.sendRedirect("/jdgr/post/detail?url=" + postDetailVo.getBlogUrl() + "&&categoryNo=" + postDetailVo.getGroupNo());
@@ -89,7 +110,7 @@ public class HeartController extends HttpServlet{
 				req.setAttribute("errorMsg", "공감 오류 발생");
 				req.getRequestDispatcher("/WEB-INF/views/user/common/error.jsp").forward(req, resp);
 			}
-		
-	}
+
+		}// doGet
 	
 }
