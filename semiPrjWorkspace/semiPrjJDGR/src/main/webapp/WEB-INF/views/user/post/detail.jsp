@@ -147,17 +147,17 @@
         form.submit();
     }
     
-    // 신고
-    function blame() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/user/blame/p_blamepop" + <%=postDetailVo.getUserNo()%>"&&" + ;
+//     // 신고
+//     function blame() {
+//     	const form = document.createElement("form");
+<%--         form.action = "/jdgr/user/blame/p_blamepop" + <%=postDetailVo.getUserNo()%>"&&" + ; --%>
         
-        form.method = "POST";
+//         form.method = "POST";
         
-        document.body.appendChild(form);
+//         document.body.appendChild(form);
         
-        form.submit();
-    }
+//         form.submit();
+//     }
     
     
     // function likeClickEvent() {

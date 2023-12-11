@@ -44,9 +44,9 @@ public class FollowController extends HttpServlet {
 			String blogNo = postDetailVo.getBlogNo();
 			String memberNo = loginMember.getMemNo();
 
-			if(loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
-				throw new Exception("본인 블로그 입니다.");
-			};
+//			if(loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
+//				throw new Exception("본인 블로그 입니다.");
+//			};
 			
 			// service
 			FollowService fs = new FollowService();

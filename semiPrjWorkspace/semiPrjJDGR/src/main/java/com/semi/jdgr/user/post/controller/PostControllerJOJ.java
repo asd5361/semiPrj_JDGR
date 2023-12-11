@@ -31,13 +31,15 @@ public class PostControllerJOJ extends HttpServlet {
 			// data (카테고리 넘버)
 			String GroupNo = req.getParameter("GroupNo");
 			// data (포스트 넘버)
+			String pNo = req.getParameter("pNo");
 
 			System.out.println(BlogUrl);
 			System.out.println(GroupNo);
+			System.out.println(pNo);
 
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
-			PostVo postDetailVo = ps.PostDetail(GroupNo, BlogUrl);
+			PostVo postDetailVo = ps.PostDetail(pNo, GroupNo, BlogUrl);
 			PostVo heartCnt = ps.PostDetailHeartCnt(postDetailVo);
 			PostVo replyCnt = ps.PostDetailReplyCnt(postDetailVo);
 

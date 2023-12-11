@@ -42,9 +42,9 @@ public class HeartController extends HttpServlet {
 			String no = postDetailVo.getPostNo();
 			String memberNo = loginMember.getMemNo();
 
-			if (loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
-				throw new Exception("본인이 작성한 포스트 입니다.");
-			}
+//			if (loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
+//				throw new Exception("본인이 작성한 포스트 입니다.");
+//			}
 			
 			System.out.println(postDetailVo);
 			System.out.println("로그인 멤 번호" + loginMember.getMemNo());

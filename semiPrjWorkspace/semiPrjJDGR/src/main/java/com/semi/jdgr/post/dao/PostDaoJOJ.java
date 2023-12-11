@@ -106,7 +106,66 @@ public class PostDaoJOJ {
 
 	}// PostDetail
 	
-	// 포스트 상세보기 (블로그 전체보기 상세보기용) (+조회수 증가) (+공감수) (+댓글수)
+	// 포스트 상세보기 (pNo 받아서 값 전달하기) (+조회수 증가) (+공감수) (+댓글수)
+	public PostVo GetPnoPostDetail(Connection conn, String pNo) throws Exception {
+		
+		// sql
+		String sql = "SELECT P.POST_IMG ,P.TITLE ,P.CONTENT ,P.POST_NO ,P.BLOG_NO ,B.BLOG_URL ,P.GROUP_NO ,C.CATEGORY_NO ,C.CATEGORY_NAME ,M.MEM_ID ,M.MEM_NO ,M.MEM_NICK ,P.OPEN ,P.DEL_YN ,TO_CHAR (P.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE ,TO_CHAR (P.MODIFY_DATE, 'YYYY-MM-DD') AS MODIFY_DATE ,P.INQUIRY AS HIT_CNT FROM POST P JOIN CATEGORY_LIST C ON P.CATEGORY_NO = C.CATEGORY_NO JOIN MYBLOG_CATEGORY Y ON P.GROUP_NO = Y.GROUP_NO JOIN BLOG B ON P.BLOG_NO = B.BLOG_NO JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE P.OPEN = 'Y' AND P.DEL_YN = 'N' AND P.POST_NO = ? ORDER BY P.POST_NO DESC";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, pNo);
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		PostVo postDetailVo = null;
+		if (rs.next()) {
+			String postImg = rs.getString("POST_IMG");
+			String postTitle = rs.getString("TITLE");
+			String content = rs.getString("CONTENT");
+			String postNo = rs.getString("POST_NO");
+			String blogNo = rs.getString("BLOG_NO");
+			String blogUrl = rs.getString("BLOG_URL");
+			String groupNo = rs.getString("GROUP_NO");
+			String categoryNo = rs.getString("CATEGORY_NO");
+			String categoryName = rs.getString("CATEGORY_NAME");
+			String userNo = rs.getString("MEM_NO");
+			String userId = rs.getString("MEM_ID");
+			String userNick = rs.getString("MEM_NICK");
+			String open = rs.getString("OPEN");
+			String delYn = rs.getString("DEL_YN");
+			String modifyDate = rs.getString("MODIFY_DATE");
+			String enrollDate = rs.getString("ENROLL_DATE");
+			String inquiryCnt = rs.getString("HIT_CNT");
+
+			postDetailVo = new PostVo();
+			postDetailVo.setPostImg(postImg);
+			postDetailVo.setPostNo(postNo);
+			postDetailVo.setPostTitle(postTitle);
+			postDetailVo.setContent(content);
+			postDetailVo.setBlogNo(blogNo);
+			postDetailVo.setBlogUrl(blogUrl);
+			postDetailVo.setGroupNo(groupNo);
+			postDetailVo.setCategoryNo(categoryNo);
+			postDetailVo.setCategoryName(categoryName);
+			postDetailVo.setUserNo(userNo);
+			postDetailVo.setUserId(userId);
+			postDetailVo.setUserNick(userNick);
+			postDetailVo.setOpen(open);
+			postDetailVo.setPostDelYn(delYn);
+			postDetailVo.setModifyDate(modifyDate);
+			postDetailVo.setEnrollDate(enrollDate);
+			postDetailVo.setInquiry(inquiryCnt);
+
+		}
+
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return postDetailVo;
+
+	}
+	
+	// 포스트 상세보기 (BlogUrl 받아서 값 전달하기) (+조회수 증가) (+공감수) (+댓글수)
 	public PostVo GetUrlPostDetail(Connection conn, String BlogUrl) throws Exception {
 		
 		// sql
@@ -313,8 +372,6 @@ public class PostDaoJOJ {
 
 		return userNo;
 	}
-
-	
 
 
 }// class

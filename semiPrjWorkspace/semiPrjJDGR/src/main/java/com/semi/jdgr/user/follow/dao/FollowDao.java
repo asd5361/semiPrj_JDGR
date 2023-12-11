@@ -137,12 +137,11 @@ public class FollowDao {
 	// 구독 알림테이블로 저장
 	public int insertFollowAlarm(Connection conn, AlarmVo alarmVo) throws Exception {
 //		String sql = "INSERT INTO MEMBER ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE ) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
-		String sql = "INSERT INTO ALARM ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
+		String sql = "INSERT INTO ALARM ( ALARM_NO ,RECEIVER_NO ,SENDER_NO ,ALARM_TYPE) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, alarmVo.getReceiverNo());
-		pstmt.setString(2, alarmVo.getPostNo());
-		pstmt.setString(3, alarmVo.getSenderNo());
-		pstmt.setString(4, alarmVo.getAlarmType());
+		pstmt.setString(2, alarmVo.getSenderNo());
+		pstmt.setString(3, alarmVo.getAlarmType());
 
 		int result = pstmt.executeUpdate();
 
