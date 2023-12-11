@@ -10,6 +10,21 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class ReplyBlameService {
 
+	
+	public ReplyBlameVo getReplyInfo(ReplyBlameVo vo) throws Exception {
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		ReplyBlameDao dao = new ReplyBlameDao();
+		ReplyBlameVo rvo = dao.getReplyInfo(conn, vo);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return rvo;	
+	}
+	
 	public int blame(ReplyBlameVo vo) throws Exception {
 		
 		//conn
@@ -61,5 +76,8 @@ public class ReplyBlameService {
 		return voList;
 				
 	}//blameList
+
+
+
 	
 }

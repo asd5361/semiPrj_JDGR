@@ -13,8 +13,32 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class ReplyBlameDao {
 
+	
+	public ReplyBlameVo getReplyInfo(Connection conn, ReplyBlameVo vo) throws Exception {
+		String sql = "SELECT BLA_REASON FROM BLAME_REASON";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		//rs
+		ReplyBlameVo getReplyInfo = null;
+		while(rs.next()) {
+			String rBlaList = rs.getString("BLA_REASON");
+			
+			getReplyInfo = new ReplyBlameVo();
+			getReplyInfo.setrBlaList(rBlaList);
+		}
+		//close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+		
+		return getReplyInfo;
+	}
+	
+	
+	
+	
 	public int blame(Connection conn, ReplyBlameVo vo) throws Exception {
-
+		
 		// sql
 		String sql = "INSERT INTO REPLY_BLAME (R_BLA_NO, R_NO, R_BLAMER_NO, R_WRITER_NO, R_BLA_CON, R_BLA_DATE, R_BLA_LIST, R_SANC_YN, R_ANS_DATE, R_BLA_DETAIL, R_DEL_YN) VALUES(SEQ_POST_BLAME.NEXTVAL, ?, ?, ?, ?, SYSTIMESTAMP, ?, ?, SYSTIMESTAMP, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -60,6 +84,8 @@ public class ReplyBlameDao {
 		   
 		   return reasonList;
 	}
+
+
 	
 }//class
    

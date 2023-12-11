@@ -8,8 +8,8 @@
     
      <%
      	ReplyVo replyNo = (ReplyVo) request.getAttribute("replyNo");
-    	ReplyBlameVo writer = (ReplyBlameVo) request.getAttribute("writer");
-     	ReplyBlameVo content = (ReplyBlameVo) request.getAttribute("content");
+    	ReplyVo writer = (ReplyVo) request.getAttribute("writer");
+     	ReplyVo content = (ReplyVo) request.getAttribute("content");
     	Map<String, String> searchMap = (Map<String, String>)request.getAttribute("searchMap");
     	ReplyBlameService blameService = new ReplyBlameService();
     	List<String> reasons = blameService.blameList();
@@ -29,8 +29,8 @@
         </div>
         <hr>
         <div class="writer_content">
-        <h5>작성자 |</h5><h5></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
-<%--         <%= writer.getrWriterNo() %> --%>
+        <h5>작성자 |</h5><h5> <%= writer.getReplyMem() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
+       
         <br>
         <h5>내   용| </h5><h5></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
 <%--         <%= writer.getrBlaCon() %> --%>
