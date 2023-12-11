@@ -29,20 +29,19 @@ public class PostControllerJOJ extends HttpServlet{
 		// url정보
 		String BlogUrl = req.getParameter("url");
 		// data (카테고리 넘버)
-		String categoryNo = req.getParameter("categoryNo"); 
+		String CategoryNo = req.getParameter("categoryNo"); 
 		// data (포스트 넘버)
 		
 		System.out.println(BlogUrl);
-		System.out.println(categoryNo);
+		System.out.println(CategoryNo);
 		
 		
 		// service
 		PostServiceJOJ ps = new PostServiceJOJ();
-		PostVo postDetailVo = ps.PostDetail(categoryNo, BlogUrl);
+		PostVo postDetailVo = ps.PostDetail(CategoryNo, BlogUrl);
 		PostVo heartCnt = ps.PostDetailHeartCnt(postDetailVo);
 		PostVo replyCnt = ps.PostDetailReplyCnt(postDetailVo);
 		
-		// service
 		MemberVo loginMemberVo = (MemberVo) req.getSession().getAttribute("loginMember");
 		
 		BlogService bs = new BlogService();
@@ -50,6 +49,11 @@ public class PostControllerJOJ extends HttpServlet{
 		
 		
 		// result
+		System.out.println("PostControllerJOJ실행");
+		System.out.println(postDetailVo);
+		System.out.println(postDetailVo.getPostNo());
+		System.out.println(postDetailVo.getBlogUrl());
+		System.out.println(postDetailVo.getGroupNo());
 		System.out.println(heartCnt.getPostNo());
 		System.out.println(replyCnt.getPostNo());
 		HttpSession session = req.getSession();

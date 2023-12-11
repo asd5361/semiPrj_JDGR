@@ -6,8 +6,6 @@
     	PostVo postDetailVo = (PostVo) session.getAttribute("postDetailVo");
     	PostVo heartCnt = (PostVo) request.getAttribute("heartCnt");
     	PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
-//     	int add = (int) session.getAttribute("add");
-//     	int del = (int) session.getAttribute("del");
     	Integer add = (Integer) request.getAttribute("add");
     	Integer del = (Integer) request.getAttribute("del");
     	
@@ -52,11 +50,11 @@
                 <div class="foot01">
                     <div class="left02">
                         <button id="like_btn" class="btn_k un_like" onclick="clickEvent('like')">공감<%= heartCnt.getPostNo() %></button>
-                        <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('rep')}">댓글<%= replyCnt.getPostNo() %></button>
+                        <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('reply')}">댓글<%= replyCnt.getPostNo() %></button>
                     </div>
                     <div class="right02">
-                        <button id="plus_btn" class="btn_k un_plus" onclick="{clickEvent('plus')}">구독하기</button>
-                        <button class="btn_k" onclick="location=window.open('xxx.jsp', 'blamePage')"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button>
+                        <button id="plus_btn" class="btn_k un_plus" onclick="{clickEvent('follow')}">구독하기</button>
+                        <button class="btn_k" onclick="{clickEvent('blame')}"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button>
                     </div>    
                 </div>
             </div>
@@ -110,7 +108,7 @@
 //     ;
 
     // 공감
-    function aaa() {
+    function heart() {
     	const form = document.createElement("form");
         form.action = "/jdgr/post/heart";
         form.method = "GET";
@@ -118,7 +116,28 @@
         document.body.appendChild(form);
         
         form.submit();
+    }
+    
+    // 구독
+    function follow() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/post/follow";
+        form.method = "GET";
         
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
+    
+    // 신고
+    function blame() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/user/blame/p_blamepop";
+        form.method = "POST";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
     }
  	
     // 이미지 변경	
@@ -128,18 +147,23 @@
                 const likeBtn = document.getElementById('like_btn');
                 likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
                 likeClick = !likeClick;
-                aaa()
+                heart()
             break;
-            case 'plus' :
+            case 'follow' :
                 const plusBtn = document.getElementById('plus_btn');
                 plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
                 plusClick = !plusClick;
+                follow()
             break;
-            case 'rep' :
+            case 'reply' :
                 const repBtn = document.getElementById('rep_btn');
                 repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
                 repClick = !repClick;
             break;
+            case 'blame' :
+            	blame()
+            break;
+            	
         }
         
     }

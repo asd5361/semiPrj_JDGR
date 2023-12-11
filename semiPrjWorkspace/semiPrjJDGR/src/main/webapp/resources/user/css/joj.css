@@ -117,3 +117,7 @@ button.btn_k.plus {
     background: url(../images/ico/ico_v2.svg) no-repeat left;
 }
 
+button.btn_k.rep {
+    background: url(../images/ico/ico_reply_b.svg) no-repeat left;
+}
+
