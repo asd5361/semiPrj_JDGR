@@ -42,8 +42,8 @@
 <!-- 							data-target="#pop_complete" -->
 					</div>
 					<ul class="etc_btn">
-						<li><a href="">회원가입</a></li>
-						<li><a href="">아이디 찾기</a></li>
+						<li><a href="/jdgr/member/join">회원가입</a></li>
+						<li><a href="/jdgr/member/findid">아이디 찾기</a></li>
 					</ul>
 				</div>
 			</form>

@@ -90,9 +90,8 @@
 			<div class="btn_area">
 				<button type="submit">가입하기</button>
 				<ul class="etc_btn">
-					<li><a href="">회원가입</a></li>
-					<li><a href="">아이디 찾기</a></li>
-					<li><a href="">비밀번호 찾기</a></li>
+					<li><a href="/jdgr/member/findid">아이디 찾기</a></li>
+					<li><a href="/jdgr/member/findpwd">비밀번호 찾기</a></li>
 				</ul>
 			</div>
 			<input type="hidden" id="checkNum"> 
