@@ -20,7 +20,7 @@ public class NoticeVo {
 	}
 	
 	public NoticeVo(String noticeNo, String adminNo, String title, String content, String inquiry, String enrollDate,
-			String updateDate, String fixedYn, String delYn, String adminName, String delName, String fixedName) {
+			String updateDate, String fixedYn, String delYn, String adminName) {
 		super();
 		this.noticeNo = noticeNo;
 		this.adminNo = adminNo;
@@ -32,8 +32,6 @@ public class NoticeVo {
 		this.fixedYn = fixedYn;
 		this.delYn = delYn;
 		this.adminName = adminName;
-		this.delName = delName;
-		this.fixedName = fixedName;
 	}
 
 	public String getNoticeNo() {
@@ -83,10 +81,10 @@ public class NoticeVo {
 	}
 	public void setFixedYn(String fixedYn) {
 		if(fixedYn.equals("Y")) {
-			this.delName = "고정";
+			this.fixedName = "고정";
 		}
 		if(fixedYn.equals("N")) {
-			this.delName = "미고정";
+			this.fixedName = "미고정";
 		}
 		this.fixedYn = fixedYn;
 	}
