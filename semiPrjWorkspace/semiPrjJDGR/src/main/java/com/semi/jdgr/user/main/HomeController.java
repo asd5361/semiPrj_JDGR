@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.semi.jdgr.blog.service.BlogService;
 import com.semi.jdgr.blog.vo.BlogVo;
+import com.semi.jdgr.post.service.PostServiceLYJ;
+import com.semi.jdgr.post.vo.CategoryVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 
 @WebServlet("/home")
@@ -24,7 +26,15 @@ public class HomeController extends HttpServlet{
 			// 로그인 세션 가져오기
 			HttpSession session = req.getSession();
 			MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+
+			PostServiceLYJ ps = new PostServiceLYJ();
+			List<CategoryVo> categoryVoList = ps.selectCategory();
 			
+			if(categoryVoList == null) {
+				throw new Exception();
+				
+			}
+			 req.setAttribute("categoryVoList", categoryVoList);
 			
 			// 블로그 정보,리스트 세션에 저장하기
 			BlogService bs = new BlogService();
