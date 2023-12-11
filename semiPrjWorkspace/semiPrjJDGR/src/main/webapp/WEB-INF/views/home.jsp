@@ -1,9 +1,12 @@
+<%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 
+		<% PostVo postListDetailVo = (PostVo) session.getAttribute("postListDetailVo"); %>
+     	
 <!-- main -->
 <main>
     <div class="inner">
@@ -17,7 +20,8 @@
                 <div class="swiper-container">
                     <ul class="swiper-wrapper">
                         <li class="swiper-slide">
-                            <a href="">
+<%--                             <a href="/jdgr/post/view?pNo=<%= postListDetailVo.getPostNo() %>"> --%>
+                            <a href="/jdgr/post/view?pNo=7">
                                 <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
                                 <div class="txt">
                                     <div class="info">

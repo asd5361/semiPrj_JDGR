@@ -14,10 +14,10 @@ import com.semi.jdgr.post.service.PostServiceJOJ;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 
-@WebServlet("/post/heart")
-public class PostHeartControllerJOJ extends HttpServlet {
+@WebServlet("/post/follow")
+public class PostFollowControllerJOJ extends HttpServlet {
 
-	// 공감기능
+	// 구독기능
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -26,9 +26,9 @@ public class PostHeartControllerJOJ extends HttpServlet {
 			PostVo postDetailVo = (PostVo) req.getSession().getAttribute("postDetailVo");
 			MemberVo loginMember = (MemberVo) req.getSession().getAttribute("loginMember");
 			
-			System.out.println("공감기능 실행");
+			System.out.println("구독기능 실행");
 			System.out.println(postDetailVo);
-			System.out.println(postDetailVo.getPostNo());
+			System.out.println(postDetailVo.getBlogNo());
 //			MemberVo loginMember = new MemberVo();
 			AlarmVo alarmVo = new AlarmVo();
 			
@@ -37,19 +37,16 @@ public class PostHeartControllerJOJ extends HttpServlet {
 			if (loginMember == null) {
 				throw new Exception("로그인 먼저 진행하세요.");
 			}
-			String no = postDetailVo.getPostNo();
+			String blogNo = postDetailVo.getBlogNo();
 			String memberNo = loginMember.getMemNo();
-			
-			if(loginMember.getMemNo() == (postDetailVo.getUserNo())) {
-				throw new Exception("본인이 작성한 포스트 입니다.");
+
+			if(loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
+				throw new Exception("본인 블로그 입니다.");
 			};
-			System.out.println(postDetailVo);
-			System.out.println("로그인 멤 번호" + loginMember.getMemNo());
-			System.out.println("포스트 멤 번호" + postDetailVo.getUserNo());
 			
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
-			boolean isOk = ps.checkHeart(no, memberNo);
+			boolean isOk = ps.checkFollow(blogNo, memberNo);
 			
 			//알람에 인서트
 			String userNo = ps.findUserNo(postDetailVo.getUserNick());
@@ -57,7 +54,7 @@ public class PostHeartControllerJOJ extends HttpServlet {
 			alarmVo.setReceiverNo(userNo);
 			alarmVo.setPostNo(postDetailVo.getPostNo());
 			alarmVo.setSenderNo(loginMember.getMemNo());
-			alarmVo.setAlarmType("HEART");
+			alarmVo.setAlarmType("FOLLOW");
 			int insert = ps.insertHeartAlarm(alarmVo);
 			
 			if(insert != 1) {
@@ -69,30 +66,31 @@ public class PostHeartControllerJOJ extends HttpServlet {
 			// result
 			int add = 0;
 			if (isOk) {
-				add = ps.AddHeart(no, memberNo);
+				add = ps.AddFollow(blogNo, memberNo);
 				if (add == 1) {
 //					req.setAttribute("add", add);
 					session.setAttribute("add", add);
 					req.getSession().setAttribute("add", add);
 				}
 			} else {
-				int del = ps.delHeart(no, memberNo);
+				int del = ps.delFollow(blogNo, memberNo);
 				if (del == 1) {
 //					req.setAttribute("del", del);
 					session.setAttribute("del", del);
 					req.getSession().setAttribute("del", del);
 			} else {
-					throw new Exception("공감 기능 오류 발생");
+					throw new Exception("구독 기능 오류 발생");
 				}
-			}
+			}  
+				
 
 //			resp.sendRedirect("/jdgr/post/detail?url=${blogUrlVo.blogUrl}&&categoryNo=groupVo.getNo() %>");
 			resp.sendRedirect("/jdgr/post/detail?url=" + postDetailVo.getBlogUrl() + "&&categoryNo=" + postDetailVo.getGroupNo());
 
 		} catch (Exception e) {
-			System.out.println("공감 오류 발생");
+			System.out.println("구독 오류 발생");
 			e.printStackTrace();
-			req.setAttribute("errorMsg", "공감 오류 발생");
+			req.setAttribute("errorMsg", "구독 오류 발생");
 			req.getRequestDispatcher("/WEB-INF/views/user/common/error.jsp").forward(req, resp);
 		}
 
