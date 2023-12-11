@@ -259,9 +259,10 @@
 	                                            	<%}else if(alarmVo.getAlarmType().contains("포스팅")){%>
 	                                            		<span style ="background-image: url(/jdgr/resources/user/images/ico/ico_write_b.svg) "></span>
 	                                            	<%}%>
-	                                                <div class="txt" onclick="goPost()">
+	                                                <div class="txt">
 	                                                    <strong><%=alarmVo.getUserNick() %></strong>
 	                                                   	님이 "<%=alarmVo.getPostTitle() %>" <%=alarmVo.getAlarmType() %>
+	                                                   	<input type="hidden" id="postNo2" name = "postNo2" value="<%=alarmVo.getPostNo()%>">
 	                                                </div>
 	                                            
 	                                                <a href="" class="delete">삭제</a>
@@ -398,6 +399,34 @@
 <%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
 
 <script>
+const divArr2 = document.querySelectorAll("div.txt");
+for(let i = 0 ; i < divArr2.length; ++i){
+	divArr2[i].addEventListener('click' , goPost2);
+}
+
+function goPost2(event) {
+		const li2 = event.currentTarget;
+    	
+    	const postNo2 = li2.children[1].value;
+    	console.log(postNo2);
+
+    	const form2 = document.createElement("form");
+    	form2.action = "/jdgr/post/view";
+    	form2.method = "GET";
+
+    	
+    	
+    	const input2 = document.createElement("input");
+        input2.type = "hidden";
+        input2.name = "pNo";
+        input2.value = postNo2;
+
+        form2.appendChild(input2);
+        document.body.appendChild(form2);
+    	form2.submit();
+}function goBlog() {
+	
+}
 const swiper = new Swiper('.swiper-container', {
     direction: 'horizontal', // 수평 슬라이드
     slidesPerView: 4,
@@ -408,8 +437,5 @@ const swiper = new Swiper('.swiper-container', {
         prevEl: '.ico_prev',
     },
 });
-function goPost() {
-}
-function goBlog() {
-}
+
 </script>
