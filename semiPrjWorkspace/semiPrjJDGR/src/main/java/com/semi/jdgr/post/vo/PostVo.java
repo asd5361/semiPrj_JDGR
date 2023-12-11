@@ -6,7 +6,7 @@ public class PostVo {
 	private String blogNo;
 	private String categoryNo;
 	private String groupNo;
-	private String title;
+	private String blogTitle;
 	private String content;
 	private String open;
 	private String inquiry;
@@ -28,7 +28,7 @@ public class PostVo {
 	public PostVo() {
 	}
 
-	public PostVo(String postNo, String blogNo, String categoryNo, String groupNo, String title, String content,
+	public PostVo(String postNo, String blogNo, String categoryNo, String groupNo, String blogTitle, String content,
 			String open, String inquiry, String enrollDate, String modifyDate, String postDelYn, String postImg,
 			String heartCnt, String replyCnt, String memName, String userNick, String userId, String userNo,
 			String postTitle, String categoryName, String groupName, String blogUrl) {
@@ -36,7 +36,7 @@ public class PostVo {
 		this.blogNo = blogNo;
 		this.categoryNo = categoryNo;
 		this.groupNo = groupNo;
-		this.title = title;
+		this.blogTitle = blogTitle;
 		this.content = content;
 		this.open = open;
 		this.inquiry = inquiry;
@@ -88,12 +88,12 @@ public class PostVo {
 		this.groupNo = groupNo;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getBlogTitle() {
+		return blogTitle;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setBlogTitle(String blogTitle) {
+		this.blogTitle = blogTitle;
 	}
 
 	public String getContent() {
@@ -235,7 +235,7 @@ public class PostVo {
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", blogNo=" + blogNo + ", categoryNo=" + categoryNo + ", groupNo=" + groupNo
-				+ ", title=" + title + ", content=" + content + ", open=" + open + ", inquiry=" + inquiry
+				+ ", blogTitle=" + blogTitle + ", content=" + content + ", open=" + open + ", inquiry=" + inquiry
 				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", postDelYn=" + postDelYn
 				+ ", postImg=" + postImg + ", heartCnt=" + heartCnt + ", replyCnt=" + replyCnt + ", memName=" + memName
 				+ ", userNick=" + userNick + ", userId=" + userId + ", userNo=" + userNo + ", postTitle=" + postTitle
