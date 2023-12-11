@@ -26,25 +26,25 @@
                     <div class="search_item">
                         <label for="sel_01">신고자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02" name="blamer" value="<%= (searchMap != null) ? searchMap.get("blamer") : "" %>">
+                            <input type="text" id="blamer" name="blamer" value="<%= (searchMap != null) ? searchMap.get("blamer") : "" %>">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">작성자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02" name="writer" ">
+                            <input type="text" id="writer" name="writer" value="<%= (searchMap != null) ? searchMap.get("writer") : "" %>">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">댓글 내용</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" id="content"  name="content" value="<%= (searchMap != null) ? searchMap.get("content") : "" %>">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">신고 일자</label>
                         <div class="form_box">
-                            <input type="text" id="inp_02">
+                            <input type="text" id="blameDate"   name="blameDate" value="<%= (searchMap != null) ? searchMap.get("blameDate") : "" %>">
                         </div>
                     </div>
                     <div class="search_item">
@@ -54,6 +54,10 @@
                                 <option value="">1</option>
                                 <option value="">2</option>
                                 <option value="">3</option>
+                                <option value="">4</option>
+                                <option value="">5</option>
+                                <option value="">6</option>
+                                <option value="">7</option>
                             </select>
                         </div>
                     </div>
@@ -70,13 +74,13 @@
                     <div class="search_item">
                         <label for="sel_01">답변 일자</label>
                         <div class="form_box">
-                                <input type="text" id="inp_02">
+                                <input type="text" id="answerDate"   name="answerDate" value="<%= (searchMap != null) ? searchMap.get("answerDate") : "" %>">
                         </div>
                     </div>
                     <div class="search_item">
                         <label for="sel_01">처리 일자</label>
                         <div class="form_box">
-                                <input type="text" id="inp_02">
+                                <input type="text" id="delDate"   name="delDate" value="<%= (searchMap != null) ? searchMap.get("delDate") : "" %>">
                         </div>
                     </div>
                 </div>
@@ -93,7 +97,12 @@
 				<script>
 				    function resetSearch() {
 				        // 초기화 로직 추가
-				        document.getElementById('inp_02').value = '';
+				        document.getElementById('blamer').value = '';
+				        document.getElementById('writer').value = '';
+				        document.getElementById('content').value = '';
+				        document.getElementById('blameDate').value = '';
+				        document.getElementById('answerDate').value = '';
+				        document.getElementById('delDate').value = '';
 				        // 나머지 검색 조건에 대한 초기화 로직 추가
 				        // ...
 				    }
@@ -101,6 +110,11 @@
 				    function search() {
 				        // 검색 조건을 가져오기
 				        var blamer = document.getElementById('inp_02_blamer').value;
+				        var writer = document.getElementById('inp_02_writer').value;
+				        var content = document.getElementById('inp_02_content').value;
+				        var blameDate = document.getElementById('inp_02_blameDate').value;
+				        var answerDate = document.getElementById('inp_02_answerDate').value;
+				        var delDate = document.getElementById('inp_02_delDate').value;
 // 				        var writer = document.getElementById('inp_02_writer').value;
 				        // (다른 검색 조건들도 필요에 따라 추가)
 
@@ -177,19 +191,7 @@
                 <!-- 테이블 -->
                 <div class="tbl_box data mt40">
                     <table>
-                        <caption>회원가입 테이블</caption>
-                        <colgroup>
-                            <col width="">
-                            <col width="">
-                            <col width="">
-                            <col width="">
-                            <col width="">
-                            <col width="">
-                            <col width="">
-                            <col width="">
-                            <col width="">
-                            <col width="">
-                        </colgroup>
+
                         <thead>
                             <tr>
                                 <th scope="col">번호</th>
@@ -206,15 +208,15 @@
                         <tbody>
                         <% for(AdminReplyBlameVo vo : blameVoList){ %>
                             <tr>
-                                <td><%= vo.getrBlaNo() %></td>
-                                <td><%= vo.getrBlamerNo() %></td>
-                                <td><%= vo.getrWriterNo() %></td>
-                                <td><%= vo.getrBlaCon() %></td>
-                                <td><%= vo.getrBlaDate() %></td>
-                                <td><%= vo.getrBlaList() %></td>
-                                <td><%= vo.getrSancYn() %></td>
-                                <td><%= vo.getrAnsDate() %></td>
-                                <td><%= vo.getrDelYn() %></td>
+                                <td><a href="/jdgr/admin/blame/r_blame_detail?no=<%= vo.getrBlaNo() %>"><%= vo.getrBlaNo() %></td>
+                                <td><a href="/jdgr/admin/blame/r_blame_detail?no=<%= vo.getrBlamerNo() %>"><%= vo.getrBlamerNo() %></td>
+                                <td><a href="/jdgr/admin/blame/r_blame_detail?no=<%= vo.getrWriterNo() %>"><%= vo.getrWriterNo() %></td>
+                                <td><a href="/jdgr/admin/blame/r_blame_detail?no=<%= vo.getrBlaCon() %>"><%= vo.getrBlaCon() %></td>
+                                <td><a href="/jdgr/admin/blame/r_blame_detail?no=<%= vo.getrBlaDate() %>"><%= vo.getrBlaDate() %></td>
+                                <td><a href="/jdgr/admin/blame/r_blame_detail?no=<%= vo.getrBlaList() %>"><%= vo.getrBlaList() %></td>
+                                <td><a href="/jdgr/admin/blame/r_blame_detail?no=<%= vo.getrSancYn() %>"><%= vo.getrSancYn() %></td>
+                                <td><a href="/jdgr/admin/blame/r_blame_detail?no=<%= vo.getrAnsDate() %>"><%= vo.getrAnsDate() %></td>
+                                <td><a href="/jdgr/admin/blame/r_blame_detail?no=<%= vo.getrDelYn() %>"><%= vo.getrDelYn() %></td>
                             </tr>
                         <%} %>
                             
