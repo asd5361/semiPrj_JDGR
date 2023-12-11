@@ -13,8 +13,38 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class HeartDao {
 
+//	// 공감 리스트 가져오기
+//	public List<HeartVo> HeartList(Connection conn, String no) throws Exception {
+//
+//		// sql
+//		String sql = "SELECT * FROM HEART WHERE POST_NO = ?";
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		pstmt.setString(1, no);
+//		ResultSet rs = pstmt.executeQuery();
+//
+//		// rs
+//		List<HeartVo> heartVoList = new ArrayList<HeartVo>();
+//		while (rs.next()) {
+//			String postNo = rs.getString("POST_NO");
+//			String userNo = rs.getString("MEM_NO");
+//
+//			HeartVo heartVo = new HeartVo();
+//			heartVo.setPostNo(postNo);
+//			heartVo.setMemNo(userNo);
+//
+//			heartVoList.add(heartVo);
+//		}
+//
+//		// close
+//		JDBCTemplate.close(pstmt);
+//		JDBCTemplate.close(rs);
+//
+//		return heartVoList;
+//
+//	}// HeartList
+	
 	// 공감 리스트 가져오기
-	public List<HeartVo> HeartList(Connection conn, String no) throws Exception {
+	public HeartVo HeartList(Connection conn, String no) throws Exception {
 
 		// sql
 		String sql = "SELECT * FROM HEART WHERE POST_NO = ?";
@@ -23,23 +53,22 @@ public class HeartDao {
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
-		List<HeartVo> heartVoList = new ArrayList<HeartVo>();
+		HeartVo heartVo = null;
 		while (rs.next()) {
 			String postNo = rs.getString("POST_NO");
 			String userNo = rs.getString("MEM_NO");
 
-			HeartVo heartVo = new HeartVo();
+			heartVo = new HeartVo();
 			heartVo.setPostNo(postNo);
 			heartVo.setMemNo(userNo);
 
-			heartVoList.add(heartVo);
 		}
 
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
 
-		return heartVoList;
+		return heartVo;
 
 	}// HeartList
 

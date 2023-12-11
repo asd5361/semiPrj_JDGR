@@ -12,20 +12,36 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class HeartService {
 	
+//	// 공감 리스트 가져오기
+//	public List<HeartVo> HeartList(String no) throws Exception {
+//
+//		// conn
+//		Connection conn = JDBCTemplate.getConnection();
+//
+//		// dao
+//		HeartDao dao = new HeartDao();
+//		List<HeartVo> heartVoList = dao.HeartList(conn, no);
+//
+//		// close
+//		JDBCTemplate.close(conn);
+//
+//		return heartVoList;
+//	}
+	
 	// 공감 리스트 가져오기
-	public List<HeartVo> HeartList(String no) throws Exception {
-
+	public HeartVo HeartList(String no) throws Exception {
+		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
-
+		
 		// dao
 		HeartDao dao = new HeartDao();
-		List<HeartVo> heartVoList = dao.HeartList(conn, no);
-
+		HeartVo heartVo = dao.HeartList(conn, no);
+		
 		// close
 		JDBCTemplate.close(conn);
-
-		return heartVoList;
+		
+		return heartVo;
 	}
 
 	// 공감체크 기능

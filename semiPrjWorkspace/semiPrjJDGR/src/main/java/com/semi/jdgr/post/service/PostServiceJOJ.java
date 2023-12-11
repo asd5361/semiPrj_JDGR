@@ -31,14 +31,22 @@ public class PostServiceJOJ {
 	}// PostDetail
 
 	// 포스트 상세보기 (블로그 카테고리 상세보기용) (+조회수 증가) (+공감수) (+댓글수)
-	public PostVo PostDetail(String CategoryNo, String BlogUrl) throws Exception {
+	public PostVo PostDetail(String GroupNo, String BlogUrl) throws Exception {
 
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 
 		// dao
 		PostDaoJOJ dao = new PostDaoJOJ();
-		PostVo postDetailVo = dao.PostDetail(conn, CategoryNo, BlogUrl);
+		
+		PostVo postDetailVo = null;
+		if (GroupNo == null) {
+			System.out.println("2222");
+			postDetailVo = dao.GetUrlPostDetail(conn, BlogUrl);
+		} else {
+			postDetailVo = dao.PostDetail(conn, GroupNo, BlogUrl);
+		}
+		
 		int result = dao.PostDetailIncreaseHit(conn, postDetailVo);
 
 		// tx

@@ -45,7 +45,7 @@ public class PostViewControllerJOJ extends HttpServlet {
 //			HttpSession session = req.getSession();
 //			session.setAttribute("postInfo", postInfo);
 
-			req.getRequestDispatcher("/post/detail?url=" + postInfoVo.getBlogUrl() + "&&categoryNo=" + postInfoVo.getGroupNo()).forward(req, resp);
+			req.getRequestDispatcher("/post/detail?url=" + postInfoVo.getBlogUrl() + "&&GroupNo=" + postInfoVo.getGroupNo()).forward(req, resp);
 
 		} catch (Exception e) {
 			System.out.println("포스트 상세보기 실패");
