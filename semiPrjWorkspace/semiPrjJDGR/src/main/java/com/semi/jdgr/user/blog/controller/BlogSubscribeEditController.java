@@ -23,6 +23,8 @@ public class BlogSubscribeEditController extends HttpServlet {
 			
 			// data
 			String blogUrl = req.getParameter("url");
+			BlogVo blogUserData = new BlogVo();
+			blogUserData.setBlogUrl(blogUrl);
 			
 			// service
 			BlogService bs = new BlogService();
@@ -30,7 +32,7 @@ public class BlogSubscribeEditController extends HttpServlet {
 			
 			
 			// result
-			
+			req.setAttribute("blogUserData", blogUserData);
 			req.setAttribute("followUserBlogVoList", blogVoList);
 			req.setAttribute("blogClassName", "blog_set");
 			req.setAttribute("blogSideClassName", "subscribe");
