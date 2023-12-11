@@ -55,11 +55,15 @@
                                     <!-- <td><img src="/jdgr/resources/user/images/ico/ico_fix.svg" alt="고정표시"></td> -->
 <%for(NoticeVo vo : noticeVoList){%>
 								<tr>
-									<td><%= vo.getNoticeNo()%></td>           
+									<%if(vo.getFixedYn().equals("Y")){ %>
+										<td class="fixedTdTag"><img src="/jdgr/resources/user/images/ico/ico_fix.svg" alt="고정표시" ><%= vo.getNoticeNo()%></td> 
+									<%}else{%>
+									<td><%= vo.getNoticeNo()%></td>
+									<%} %>
                                     <td><%= vo.getTitle()%></td>
                                     <td><%= vo.getEnrollDate()%></td>
                                     <td><%= vo.getInquiry()%></td>
-                                </tr>
+                                </tr>	
 <%} %>  
                             </tbody>
                         </table>

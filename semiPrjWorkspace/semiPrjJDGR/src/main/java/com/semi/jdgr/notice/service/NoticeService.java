@@ -3,6 +3,7 @@ package com.semi.jdgr.notice.service;
 import java.sql.Connection;
 import java.util.List;
 
+import com.semi.jdgr.csboard.vo.CsboardVo;
 import com.semi.jdgr.notice.dao.NoticeDao;
 import com.semi.jdgr.notice.vo.NoticeVo;
 import com.semi.jdgr.page.vo.PageVo;
@@ -83,6 +84,7 @@ public class NoticeService {
 		
 		return cnt;
 	}
+	//공지사항 상세 조회 + 조회수 증가
 	public NoticeVo noticeDetail(String boardno) throws Exception {
 		
 		//conn
@@ -90,7 +92,12 @@ public class NoticeService {
 		
 		//dao
 		NoticeDao dao = new NoticeDao();
-		NoticeVo vo = dao.noticeDetail(conn,boardno);
+		int result = dao.increaseHit(conn,boardno);
+		 NoticeVo vo = null;
+		 
+		if(result == 1) {
+			vo = dao.noticeDetail(conn,boardno);
+		}
 		
 		//close
 		JDBCTemplate.close(conn);
