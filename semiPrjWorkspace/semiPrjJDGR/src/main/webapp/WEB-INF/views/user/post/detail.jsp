@@ -1,13 +1,25 @@
+<%@page import="com.semi.jdgr.blog.vo.BlogVo"%>
+<%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
+<%@page import="com.semi.jdgr.user.follow.vo.FollowVo"%>
+<%@page import="com.semi.jdgr.heart.vo.HeartVo"%>
+<%@page import="java.util.List"%>
 <%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
     <%
+    	// 포스트 상세보기 정부 출력
     	PostVo postDetailVo = (PostVo) session.getAttribute("postDetailVo");
     	PostVo heartCnt = (PostVo) request.getAttribute("heartCnt");
     	PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
+    	
+    	// 공감and구독 중복체크
     	Integer add = (Integer) request.getAttribute("add");
     	Integer del = (Integer) request.getAttribute("del");
+    	
+    	// 공감and구독 vo 가져와서 js 처리
+    	List<HeartVo> heartVoList = (List<HeartVo>) session.getAttribute("heartVoList");
+    	List<FollowVo> followVoList = (List<FollowVo>) session.getAttribute("followVoList");
     	
     %>
 
@@ -50,7 +62,9 @@
                 <div class="foot01">
                     <div class="left02">
                         <button id="like_btn" class="btn_k un_like" onclick="clickEvent('like')">공감<%= heartCnt.getPostNo() %></button>
-                        <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('reply')}">댓글<%= replyCnt.getPostNo() %></button>
+                        <div class="btn_area">
+                        <button id="rep_btn" class="btn_k un_rep" onclick="clickEvent('reply')">댓글<%= replyCnt.getPostNo() %></button>
+                        </div>
                     </div>
                     <div class="right02">
                         <button id="plus_btn" class="btn_k un_plus" onclick="{clickEvent('follow')}">구독하기</button>
@@ -61,10 +75,91 @@
     </div>
 
 <script>
+
+	// 댓글창
+	let ReplyList = false;
+
+	function toggleReplyList() {
+    const replyList = document.getElementById('replyList');
+    ReplyList = !ReplyList;
+
+    if (ReplyList) {
+    	replyList.style.display = 'block';
+    } else {
+    	replyList.style.display = 'none';
+    }
+}
+
+
     let likeClick = true;
     let plusClick = true;
     let repClick = true;
-
+    let repListClick = true;
+    
+    // 이미지 변경	
+    function clickEvent(mode) {
+        switch (mode) {
+        
+            case 'like' :
+                const likeBtn = document.getElementById('like_btn');
+                likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
+                likeClick = !likeClick;
+                heart()
+            break;
+                
+            case 'follow' :
+                const plusBtn = document.getElementById('plus_btn');
+                plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
+                plusClick = !plusClick;
+                follow()
+            break;
+                
+            case 'reply' :
+                const repBtn = document.getElementById('rep_btn');
+                repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
+                repClick = !repClick;
+                toggleReplyList()
+            break;
+                
+        }
+        
+    }
+    
+    // 공감
+    function heart() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/post/heart";
+        form.method = "GET";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
+    
+    // 구독
+    function follow() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/post/follow";
+        form.method = "GET";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
+    
+    // 신고
+    function blame() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/user/blame/p_blamepop" + <%=postDetailVo.getUserNo()%>"&&" + ;
+        
+        form.method = "POST";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
+    
+    
     // function likeClickEvent() {
     //     const likeBtn = document.getElementById('like_btn');
     //     likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
@@ -107,67 +202,6 @@
 //     } )
 //     ;
 
-    // 공감
-    function heart() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/post/heart";
-        form.method = "GET";
-        
-        document.body.appendChild(form);
-        
-        form.submit();
-    }
-    
-    // 구독
-    function follow() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/post/follow";
-        form.method = "GET";
-        
-        document.body.appendChild(form);
-        
-        form.submit();
-    }
-    
-    // 신고
-    function blame() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/user/blame/p_blamepop";
-        form.method = "POST";
-        
-        document.body.appendChild(form);
-        
-        form.submit();
-    }
- 	
-    // 이미지 변경	
-    function clickEvent(mode) {
-        switch (mode) {
-            case 'like' :
-                const likeBtn = document.getElementById('like_btn');
-                likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
-                likeClick = !likeClick;
-                heart()
-            break;
-            case 'follow' :
-                const plusBtn = document.getElementById('plus_btn');
-                plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
-                plusClick = !plusClick;
-                follow()
-            break;
-            case 'reply' :
-                const repBtn = document.getElementById('rep_btn');
-                repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
-                repClick = !repClick;
-            break;
-            case 'blame' :
-            	blame()
-            break;
-            	
-        }
-        
-    }
-    
     
  // 공감 중복체크
 // 	function checkHeartDup() {

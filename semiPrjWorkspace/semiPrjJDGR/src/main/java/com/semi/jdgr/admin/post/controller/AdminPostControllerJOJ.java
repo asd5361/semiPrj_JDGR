@@ -26,8 +26,8 @@ public class AdminPostControllerJOJ extends HttpServlet{
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
 			PostVo adminPostDetailVo = ps.AdminPostDetail(no);
-			PostVo heartCnt = ps.heartCnt(no);
-			PostVo replyCnt = ps.ReplyCnt(no);
+			PostVo heartCnt = ps.PostDetailHeartCnt(adminPostDetailVo);
+			PostVo replyCnt = ps.PostDetailReplyCnt(adminPostDetailVo);
 			
 			// result
 			System.out.println(adminPostDetailVo);
@@ -72,7 +72,9 @@ public class AdminPostControllerJOJ extends HttpServlet{
 			if(result != 1) {
 				throw new Exception();
 			}
-			resp.sendRedirect("/jdgr/admin/post/detail?no=" + no);
+//			resp.sendRedirect("/jdgr/admin/post/detail?no=" + no);
+			resp.sendRedirect("/jdgr/admin/post/list");
+//			req.getRequestDispatcher("/admin/post/list").forward(req, resp);
 			
 		}catch (Exception e) {
 			e.printStackTrace();

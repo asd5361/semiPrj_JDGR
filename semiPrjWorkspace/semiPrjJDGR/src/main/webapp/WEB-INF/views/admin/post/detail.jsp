@@ -1,154 +1,200 @@
+<%@page import="com.semi.jdgr.user.follow.vo.FollowVo"%>
+<%@page import="com.semi.jdgr.heart.vo.HeartVo"%>
+<%@page import="java.util.List"%>
 <%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%
+    	// 포스트 상세보기 정부 출력
+    	PostVo postDetailVo = (PostVo) session.getAttribute("postDetailVo");
+    	PostVo heartCnt = (PostVo) request.getAttribute("heartCnt");
+    	PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
+    	
+    	// 공감and구독 중복체크
+    	Integer add = (Integer) request.getAttribute("add");
+    	Integer del = (Integer) request.getAttribute("del");
+    	
+    	// 공감and구독 vo 가져와서 js 처리
+    	List<HeartVo> heartVoList = (List<HeartVo>) session.getAttribute("heartVoList");
+    	List<FollowVo> followVoList = (List<FollowVo>) session.getAttribute("followVoList");
+    %>
 
-<%@include file = "/WEB-INF/views/admin/common/header.jsp" %>
-
-<%
-PostVo adminPostDetailVo = (PostVo) request.getAttribute("adminPostDetailVo");
-PostVo heartCnt = (PostVo) request.getAttribute("heartCnt");
-PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
-%>
-
-        <!-- container -->
-        <div class="container">
-
-            <!-- 내용 -->
+    <div class="container01">
+        <div class="header01">
+            <div><%= postDetailVo.getCategoryName() %></div>
             
+            <div><h1><%= postDetailVo.getPostTitle() %></h1></div>
 
-            <!-- 제목 -->
-            <div class="tit_box">
-                <h2>포스팅 상세 관리</h2>
-            </div>
-
-            <form action="/jdgr/admin/post/detail"  method="POST">
-
-            <!-- 가로 테이블 -->
-            <div class="detail_box">
-                <!-- 테이블 -->
-                <div class="tbl_group">
-            
-                    <div class="tbl_box">
-                        <table>
-                            <caption>회원목록 상세 테이블</caption>
-                            <colgroup>
-                                <col width="15%"/>
-                                <col width="35%"/>
-                                <col width="15%"/>
-                                <col width="35%"/>
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <th rowspan="4" scope="row"><label for="">포스트 대표 이미지</label></th>
-                                    <td rowspan="4" scope="row"><img src= <%= adminPostDetailVo.getPostImg() %> alt="이미지없음"></td>
-                                </tr>
-                                <tr>
-                                    <th><label for="">포스트 번호</label></th>
-                                    <td><%= adminPostDetailVo.getPostNo() %>
-                                        <input type="hidden" name="postNo" value="<%= adminPostDetailVo.getPostNo() %>">
-                                    </td>
-                                </tr> 
-                                <tr>
-                                    <th scope="row"><label for="">회원ID</label></th>
-                                    <td><%= adminPostDetailVo.getUserId() %></td>
-                                   
-                                </tr>
-                                <tr>
-
-                                    <th scope="row"><label for="">공개여부</label></th>
-                                    <td>
-                                        <div class="form_box">
-                                            <select class="sel_box" id="open" name="open">
-                                                <option value="N">N</option>
-                                                <option value="Y">Y</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><label for="">조회수</label></th>
-                                    <td><%= adminPostDetailVo.getInquiry() %></td>
-                                    <th scope="row"><label for="">삭제여부</label></th>
-                                    <td>
-                                        <div class="form_box">
-                                            <select class="sel_box" id="del" name="postDelYn">
-                                                <option value="N">N</option>
-                                                <option value="Y">Y</option>
-                                            </select>
-                                        </div>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <th scope="row"><label for="">수정일자</label></th>
-                                    <td><%= adminPostDetailVo.getModifyDate() %></td>
-                                    <th scope="row"><label for="">공감수</label></th>
-                                    <td>
-                                        <%=heartCnt.getPostNo() %>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><label for="">등록일자</label></th>
-                                    <td><%= adminPostDetailVo.getEnrollDate() %></td>
-                                    <th scope="row"><label for="">댓글수</label></th>
-                                    <td><%= replyCnt.getPostNo() %></td>
-                                </tr>
-                                <tr>
-                                    <th colspan="1" scope="row"><label for="" name="">제목</label></th>
-                                    <td colspan="3">
-                                        <%= adminPostDetailVo.getPostTitle() %>
-                                    </td>                                    
-                                </tr>
-                                <tr>
-                                    <th colspan="1" scope="row"><label for="" name="">내용</label></th>
-                                    <td colspan="3">
-                                        <%= adminPostDetailVo.getContent() %>
-                                    </td>                                    
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="head01">
+                <div class="left01">
+                    <span><img class="user" src=<%= postDetailVo.getPostImg() %> alt="유저프로필사진"></span>
+                    <span class="nick"><%= postDetailVo.getUserNick() %></span>
+                    <span><%= postDetailVo.getEnrollDate() %></span>
+                </div> 
+                
+                <div class="right01">
+                	<% if(loginMemberVo != null){%>
+			           <% if(blogUrlVo.getMemNo().equals(loginMemberVo.getMemNo())){ %>
+			           <div class="set">
+	                        <div class="reply_pop">
+	                            <a href=""></a>
+	                            <div class="pop_content">
+	                                <a href="/jdgr/post/edit?postNo=<%= postDetailVo.getPostNo() %>&&url=<%= blogUrlVo.getBlogUrl() %>" class="edit">수정하기</a>
+	                                <a href="/jdgr/post/delete?postNo=<%= postDetailVo.getPostNo() %>&&url=<%= blogUrlVo.getBlogUrl() %>" class="delete">삭제하기</a>
+	                            </div>
+	                        </div>
+	                    </div>
+			           <% } %>
+			        <% } %>
                     
                 </div>
-
-                <div class="btn_box_group right mt20">
-                    <div class="btn_box">
-                        <a href="/jdgr/admin/post/list" class="btn_grayline">목록보기</a>
-                    </div>
-                    <div class="btn_box">
-                        <!-- <a href="" class="btn_blue" value="open">수정하기</a> -->
-                         <button type="submit" class="btn_blue">수정하기</button>
-                    </div>
-                </div>
-
             </div>
-            </form>
+            <br>
         </div>
-        <!-- //container -->
-
-<%@include file = "/WEB-INF/views/admin/common/footer.jsp" %>
-
+        
+            <div class="text01"><%= postDetailVo.getContent() %></div>
+        
+            <div class="footer01">
+                <div class="foot01">
+                    <div class="left02">
+                        <button id="like_btn" class="btn_k un_like" onclick="clickEvent('like')">공감<%= heartCnt.getPostNo() %></button>
+                        <button id="rep_btn" class="btn_k un_rep"  onclick="{clickEvent('reply')}">댓글<%= replyCnt.getPostNo() %></button>
+                    </div>
+                    <div class="right02">
+                        <button id="plus_btn" class="btn_k un_plus" onclick="{clickEvent('follow')}">구독하기</button>
+                        <button class="btn_k" onclick="{clickEvent('blame')}"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button>
+                    </div>    
+                </div>
+            </div>
+    </div>
 
 <script>
+    let likeClick = true;
+    let plusClick = true;
+    let repClick = true;
 
-	//관리자 포스팅 관리 공개여부
-    const openArr = document.querySelectorAll("#open option");
-    const openType = "<%= adminPostDetailVo.getOpen() %>";
-    for(let i = 0; i < openArr.length; ++i){
-        if( openArr[i].value === openType ) {
-            openArr[i].selected = true;
-            break;
-        };
-    };
+    // function likeClickEvent() {
+    //     const likeBtn = document.getElementById('like_btn');
+    //     likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
+    //     likeClick = !likeClick;
+    // }
+
+
+    // function plusClickEvent() {
+    //     const plusBtn = document.getElementById('plus_btn');
+
+    //     if(plusClick){
+    //         plusBtn.className = "btn_k plus";
+    //     } else {c
+    //         plusBtn.className = "btn_k";
+    //     }
+    //     plusClick = !plusClick;
+    // }
     
-    // 관리자 포스팅 관리 삭제여부
-    const delArr = document.querySelectorAll("#del option");
-    const delType = "<%= adminPostDetailVo.getPostDelYn() %>";
-    for(let i = 0; i < delArr.length; ++i){
-        if( delArr[i].value === delType ) {
-        	delArr[i].selected = true;
-            break;
-        };
-    };
+    // 공감
+//     function clickHeart() {
+//     	const heart = document.querySelector();
+//     }
+    
+//     const p = new Promise( ( resolve , reject ) => {
+//         console.log("공감");
+//         if(voList.length > 0){
+//             resolve();
+//         }else{
+//             reject();
+//         }
+//         resolve();  // 작업상태 변경
+//     } )
+//     .then( (데이터) => {
+    	
+//         console.log("hello");
+//     } )
+//     .catch( () => {
+    	
+//         console.log("bye");
+//     } )
+//     ;
 
+    // 공감
+    function heart() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/post/heart";
+        form.method = "GET";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
+    
+    // 구독
+    function follow() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/post/follow";
+        form.method = "GET";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
+    
+    // 신고
+    function blame() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/user/blame/p_blamepop" + <%=postDetailVo.getUserNo()%>;
+        form.method = "POST";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
+ 	
+    // 이미지 변경	
+    function clickEvent(mode) {
+        switch (mode) {
+            case 'like' :
+                const likeBtn = document.getElementById('like_btn');
+                likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
+                likeClick = !likeClick;
+                heart()
+            break;
+            case 'follow' :
+                const plusBtn = document.getElementById('plus_btn');
+                plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
+                plusClick = !plusClick;
+                follow()
+            break;
+            case 'reply' :
+                const repBtn = document.getElementById('rep_btn');
+                repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
+                repClick = !repClick;
+            break;
+            case 'blame' :
+            	blame()
+            break;
+            	
+        }
+        
+    }
+    
+ // 공감 중복체크
+// 	function checkHeartDup() {
+		
+// 		const memberIdvalue = document.querySelector("main input[name=memberId]").value;
+		
+// 		fetch("/app99/member/check/id?memberId=" + memberIdvalue)
+// 		.then( (resp) => { return resp.json() } )
+// 		.then( (data) => {
+// 			const result = data.msg;
+// 			const isOk = result == "ok";
+// 			if(isOk){
+// 				alert("사용가능");
+// 				window.idOk = true;
+// 			}else{
+// 				alert("사용불가");
+// 				window.idOk = false;
+// 			}
+// 		} );
 </script>
+
+

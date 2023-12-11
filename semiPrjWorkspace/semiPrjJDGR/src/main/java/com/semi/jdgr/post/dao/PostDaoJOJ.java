@@ -47,13 +47,13 @@ public class PostDaoJOJ {
 	}
 
 	// 포스트 상세보기
-	public PostVo PostDetail(Connection conn, String CategoryNo, String BlogUrl) throws Exception {
+	public PostVo PostDetail(Connection conn, String GroupNo, String BlogUrl) throws Exception {
 
 		// sql
 		String sql = "SELECT P.POST_IMG ,P.TITLE ,P.CONTENT ,P.POST_NO ,P.BLOG_NO ,B.BLOG_URL ,P.GROUP_NO ,C.CATEGORY_NO ,C.CATEGORY_NAME ,M.MEM_ID ,M.MEM_NO ,M.MEM_NICK ,P.OPEN ,P.DEL_YN ,TO_CHAR (P.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE ,TO_CHAR (P.MODIFY_DATE, 'YYYY-MM-DD') AS MODIFY_DATE ,P.INQUIRY AS HIT_CNT FROM POST P JOIN CATEGORY_LIST C ON P.CATEGORY_NO = C.CATEGORY_NO JOIN MYBLOG_CATEGORY Y ON P.GROUP_NO = Y.GROUP_NO JOIN BLOG B ON P.BLOG_NO = B.BLOG_NO JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE P.OPEN = 'Y' AND P.DEL_YN = 'N' AND B.BLOG_URL = ? AND P.GROUP_NO = ? ORDER BY P.POST_NO DESC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, BlogUrl);
-		pstmt.setString(2, CategoryNo);
+		pstmt.setString(2, GroupNo);
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
@@ -105,6 +105,65 @@ public class PostDaoJOJ {
 		return postDetailVo;
 
 	}// PostDetail
+	
+	// 포스트 상세보기 (블로그 전체보기 상세보기용) (+조회수 증가) (+공감수) (+댓글수)
+	public PostVo GetUrlPostDetail(Connection conn, String BlogUrl) throws Exception {
+		
+		// sql
+				String sql = "SELECT P.POST_IMG ,P.TITLE ,P.CONTENT ,P.POST_NO ,P.BLOG_NO ,B.BLOG_URL ,P.GROUP_NO ,C.CATEGORY_NO ,C.CATEGORY_NAME ,M.MEM_ID ,M.MEM_NO ,M.MEM_NICK ,P.OPEN ,P.DEL_YN ,TO_CHAR (P.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE ,TO_CHAR (P.MODIFY_DATE, 'YYYY-MM-DD') AS MODIFY_DATE ,P.INQUIRY AS HIT_CNT FROM POST P JOIN CATEGORY_LIST C ON P.CATEGORY_NO = C.CATEGORY_NO JOIN MYBLOG_CATEGORY Y ON P.GROUP_NO = Y.GROUP_NO JOIN BLOG B ON P.BLOG_NO = B.BLOG_NO JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE P.OPEN = 'Y' AND P.DEL_YN = 'N' AND B.BLOG_URL = ? ORDER BY P.POST_NO DESC";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, BlogUrl);
+				ResultSet rs = pstmt.executeQuery();
+
+				// rs
+				PostVo postDetailVo = null;
+				if (rs.next()) {
+					String postImg = rs.getString("POST_IMG");
+					String postTitle = rs.getString("TITLE");
+					String content = rs.getString("CONTENT");
+					String postNo = rs.getString("POST_NO");
+					String blogNo = rs.getString("BLOG_NO");
+					String blogUrl = rs.getString("BLOG_URL");
+					String groupNo = rs.getString("GROUP_NO");
+					String categoryNo = rs.getString("CATEGORY_NO");
+					String categoryName = rs.getString("CATEGORY_NAME");
+					String userNo = rs.getString("MEM_NO");
+					String userId = rs.getString("MEM_ID");
+					String userNick = rs.getString("MEM_NICK");
+					String open = rs.getString("OPEN");
+					String delYn = rs.getString("DEL_YN");
+					String modifyDate = rs.getString("MODIFY_DATE");
+					String enrollDate = rs.getString("ENROLL_DATE");
+					String inquiryCnt = rs.getString("HIT_CNT");
+
+					postDetailVo = new PostVo();
+					postDetailVo.setPostImg(postImg);
+					postDetailVo.setPostNo(postNo);
+					postDetailVo.setPostTitle(postTitle);
+					postDetailVo.setContent(content);
+					postDetailVo.setBlogNo(blogNo);
+					postDetailVo.setBlogUrl(blogUrl);
+					postDetailVo.setGroupNo(groupNo);
+					postDetailVo.setCategoryNo(categoryNo);
+					postDetailVo.setCategoryName(categoryName);
+					postDetailVo.setUserNo(userNo);
+					postDetailVo.setUserId(userId);
+					postDetailVo.setUserNick(userNick);
+					postDetailVo.setOpen(open);
+					postDetailVo.setPostDelYn(delYn);
+					postDetailVo.setModifyDate(modifyDate);
+					postDetailVo.setEnrollDate(enrollDate);
+					postDetailVo.setInquiry(inquiryCnt);
+
+				}
+
+				// close
+				JDBCTemplate.close(pstmt);
+				JDBCTemplate.close(rs);
+
+				return postDetailVo;
+		
+	}
 
 	// 조회수 증가 (블로그 카테고리 상세보기용)
 	public int PostDetailIncreaseHit(Connection conn, PostVo postDetailVo) throws Exception {
@@ -169,7 +228,7 @@ public class PostDaoJOJ {
 		return adminPostDetailVo;
 
 	}// AdminPostDetail
-
+	
 	// 관리자 상세보기 (공개여부 , 삭제여부 수정)
 	public int AdminPostEdit(Connection conn, PostVo vo) throws Exception {
 
@@ -254,5 +313,8 @@ public class PostDaoJOJ {
 
 		return userNo;
 	}
+
+	
+
 
 }// class

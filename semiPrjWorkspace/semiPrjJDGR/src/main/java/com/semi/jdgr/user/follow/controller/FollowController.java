@@ -97,7 +97,7 @@ public class FollowController extends HttpServlet {
 			req.getSession().setAttribute("followVoList", followVoList);
 
 //			resp.sendRedirect("/jdgr/post/detail?url=${blogUrlVo.blogUrl}&&categoryNo=groupVo.getNo() %>");
-			resp.sendRedirect("/jdgr/post/detail?url=" + postDetailVo.getBlogUrl() + "&&categoryNo=" + postDetailVo.getGroupNo());
+			resp.sendRedirect("/jdgr/post/detail?url=" + postDetailVo.getBlogUrl() + "&&GroupNo=" + postDetailVo.getGroupNo());
 
 		} catch (Exception e) {
 			System.out.println("구독 오류 발생");

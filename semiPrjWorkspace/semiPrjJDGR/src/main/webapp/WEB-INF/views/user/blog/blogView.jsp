@@ -94,7 +94,7 @@
                     수정취소 :: li에 edit class 제거됨 reply_edit class에 display none / 나머지 block
                     삭제하기 :: li에 delete class 추가됨 blind div태그 추가됨
                 -->
-                <div class="b_post_reply">
+                <div id="replyList" class="b_post_reply" style="display : none">
                     <ul>
                         <li>
                             <div class="reply_pop">
@@ -319,6 +319,8 @@
         <!-- //blog_layout -->
 
     </div>
+    
+   
 </main>
 <!-- //main -->
 
