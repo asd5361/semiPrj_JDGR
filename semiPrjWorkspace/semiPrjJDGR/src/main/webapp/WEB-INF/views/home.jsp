@@ -1,6 +1,17 @@
+<%@page import="com.semi.jdgr.page.vo.PageVo"%>
+<%@page import="com.semi.jdgr.post.vo.PostVo"%>
+<%@page import="java.util.List"%>
 <%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%
+       List<PostVo> postVoList = (List<PostVo>)request.getAttribute("postVoList");
+       PageVo pvo = (PageVo)request.getAttribute("pvo");
+   
+//        Map<String, String> searchMap = (Map<String,String>)request.getAttribute("searchMap");
+    
+    %>
 
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 
@@ -173,24 +184,38 @@
                 </ul>
 
                 <!-- 카테고리별 블로그 포스트 -->
-
+                <div class="postbox">
+                        <div class="postImg"><%= vo.getPostImg() %></div>
+                        <div class="postWrite"> 
+                            <div class="postWriteNick">
+                                <div class="postNickimg"><img src="../images/ico/ico_people.svg"></div>
+                                <div class="postNickname"><%= vo.getUserNick() %></div>
+                            </div>    
+                            <div class="postWriteLink"><%= vo.getContent() %></div>
+                            <div class="postWrite12">
+                                <div class="postWrite1"><img src="../images/ico/ico_like.svg"><%= vo.getheartCnt() %></div>
+                                <div class="postWrite2"><img src="../images/ico/ico_reply.svg"><%= vo.getreplyCnt() %></div>
+                            </div>         
+                        </div>
+                    </div>
+                    
+      
                 <!-- 페이징 -->
                 <div class="paging_box">
                     <ul>
-                        <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                        <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                        <li class="on"><a href="">1</a></li>
-                        <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li><a href="">6</a></li>
-                        <li><a href="">7</a></li>
-                        <li><a href="">8</a></li>
-                        <li><a href="">9</a></li>
-                        <li><a href="">10</a></li>
-                        <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
+                    <%if(pvo.getCurrentPage() != 1) {%>
+                        <li class="prev_all"><a href="/jdgr/home?pno=1" title="최신페이지로 이동"></a></li>
+                        <li class="prev"><a href="/jdgr/home?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
+                        <%} %>
+                        
+                        <%for(int i = pvo.getStartPage(); i<= pvo.getEndPage(); i++) {%>
+                        	<%if(i == pvo.getCurrentPage()) {%>   
+                        	<li class="on"><a href="/jdgr/home?pno=<%= i%>"><%= i%></a></li>
+                        	<%}else{ %>  
+                        	<li><a href="/jdgr/home?pno=<%= i%>"><%= i%></a></li>
+                        <%} }%>
+                        <li class="next"><a href="/jdgr/home?pno=<%=pvo.getCurrentPage()+1 %>" title="다음페이지로 이동"></a></li>
+                        <li class="next_all"><a href="/jdgr/home?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
                     </ul>
                 </div>
             </div>
