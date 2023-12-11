@@ -58,8 +58,8 @@
 					인증하기</button>
 			</div>
 			<ul class="etc_btn">
-				<li><a href="">회원가입</a></li>
-				<li><a href="">비밀번호 찾기</a></li>
+				<li><a href="/jdgr/member/join">회원가입</a></li>
+				<li><a href="/jdgr/member/findpwd">비밀번호 찾기</a></li>
 			</ul>
 		</div>
 

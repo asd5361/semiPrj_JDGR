@@ -36,15 +36,15 @@ function sendEmailMypage() {
 				document.getElementById("checkNum").value = checkNum;
 				document.getElementById('cert').disabled = false;
 				var confirmationMsg = document.getElementById('confirmationMsg');
-        if (confirmationMsg) {
-            confirmationMsg.style.display = 'block';
-        }
-
-        // '인증번호 입력' 부분을 보이게 설정
-        var certInputRow = document.getElementById('certInputRow');
-        if (certInputRow) {
-            certInputRow.style.display = '';
-        }
+	        if (confirmationMsg) {
+	            confirmationMsg.style.display = 'block';
+			    }
+		
+		        // '인증번호 입력' 부분을 보이게 설정
+		        var certInputRow = document.getElementById('certInputRow');
+		        if (certInputRow) {
+		            certInputRow.style.display = '';
+		        }
 
 			} else {
 				alert("인증번호 전송 실패");

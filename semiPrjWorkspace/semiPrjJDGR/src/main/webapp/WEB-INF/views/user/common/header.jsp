@@ -164,9 +164,11 @@
 	                                            	<%}else if(alarmVo.getAlarmType().contains("포스팅")){%>
 	                                            		<span style ="background-image: url(/jdgr/resources/user/images/ico/ico_write_b.svg) "></span>
 	                                            	<%}%>
-	                                                <div class="txt" onclick="goPost()" >
+	                                                <div class="txt" >
 	                                                    <strong><%=alarmVo.getUserNick() %></strong>
 	                                                   	님이 "<%=alarmVo.getPostTitle() %>" <%=alarmVo.getAlarmType() %>
+	                                                   	<input type="hidden" id="postNo" name = "postNo" value="<%=alarmVo.getPostNo()%>"> 
+
 	                                                </div>
 	                                            
 	                                                <a href="" class="delete" >삭제</a>
@@ -214,4 +216,37 @@
 		    <!-- //blog_header -->
 	    <% } %>
     <% } %>
+    
+    <script>
+    const divArr = document.querySelectorAll("div.txt");
+    for(let i = 0 ; i < divArr.length; ++i){
+    	divArr[i].addEventListener('click' , goPost);
+    }
+
+    function goPost(event) {
+    		const li = event.currentTarget;
+        	
+        	const postNo = li.children[1].value;
+        	console.log(postNo);
+
+        	const form = document.createElement("form");
+        	form.action = "/jdgr/post/view";
+        	form.method = "GET";
+
+        	
+        	
+        	const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "pNo";
+            input.value = postNo;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+        	form.submit();
+    }
+    function goBlog() {
+    	
+    }
+    </script>
+
     

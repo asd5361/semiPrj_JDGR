@@ -32,10 +32,10 @@
 
         <!-- 버튼 -->
         <div class="btn_area">
-            <a href="">로그인 하러가기</a>
+            <a href="/jdgr/member/login">로그인 하러가기</a>
             <ul class="etc_btn">
-                <li><a href="">회원가입</a></li>
-                <li><a href="">비밀번호 찾기</a></li>
+                <li><a href="/jdgr/member/join">회원가입</a></li>
+                <li><a href="/jdgr/member/findpwd">비밀번호 찾기</a></li>
             </ul>
         </div>
 
