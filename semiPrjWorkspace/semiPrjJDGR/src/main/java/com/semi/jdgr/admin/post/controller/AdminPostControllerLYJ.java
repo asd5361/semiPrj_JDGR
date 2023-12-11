@@ -62,7 +62,7 @@ public class AdminPostControllerLYJ extends HttpServlet{
       }   
    }
    
-   //관리자 포스트 목록 관리(10개 조회하기)
+   //작성자 이름 검색 시 관리자 포스트 목록 조회
    @Override
    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       
