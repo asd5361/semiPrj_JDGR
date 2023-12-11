@@ -168,6 +168,7 @@
 	                                                    <strong><%=alarmVo.getUserNick() %></strong>
 	                                                   	님이 "<%=alarmVo.getPostTitle() %>" <%=alarmVo.getAlarmType() %>
 	                                                   	<input type="hidden" id="postNo" name = "postNo" value="<%=alarmVo.getPostNo()%>"> 
+
 	                                                </div>
 	                                            
 	                                                <a href="" class="delete" >삭제</a>
