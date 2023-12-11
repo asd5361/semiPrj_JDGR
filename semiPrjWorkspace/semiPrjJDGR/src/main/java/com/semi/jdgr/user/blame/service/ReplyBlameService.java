@@ -58,7 +58,7 @@ public class ReplyBlameService {
 
 	
 	//bla_reason 리스트 불러와서 모달창에 띄우기
-	public List<String> blameList() throws Exception {
+	public List<ReplyBlameVo> blameList() throws Exception {
 		
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
@@ -66,7 +66,7 @@ public class ReplyBlameService {
 		
 		//dao
 		ReplyBlameDao dao =  new ReplyBlameDao();
-		List<String> voList = dao.blameList(conn);		
+		List<ReplyBlameVo> voList = dao.blameList(conn);		
 		
 
 		

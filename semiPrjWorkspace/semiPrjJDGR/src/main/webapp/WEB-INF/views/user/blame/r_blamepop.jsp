@@ -1,3 +1,4 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="com.semi.jdgr.user.blame.service.ReplyBlameService"%>
 <%@page import="com.semi.jdgr.user.reply.vo.ReplyVo"%>
 <%@page import="com.semi.jdgr.page.vo.PageVo"%>
@@ -7,12 +8,10 @@
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
     
      <%
-     	ReplyVo replyNo = (ReplyVo) request.getAttribute("replyNo");
-    	ReplyVo writer = (ReplyVo) request.getAttribute("writer");
-     	ReplyVo content = (ReplyVo) request.getAttribute("content");
-    	Map<String, String> searchMap = (Map<String, String>)request.getAttribute("searchMap");
-    	ReplyBlameService blameService = new ReplyBlameService();
-    	List<String> reasons = blameService.blameList();
+     	ReplyVo vo = (ReplyVo) request.getAttribute("vo");
+     	Map<String, String> searchMap = (Map<String, String>)request.getAttribute("searchMap");
+    	ReplyBlameService rbs = new ReplyBlameService();
+    	List<ReplyBlameVo> rvo = (List<ReplyBlameVo>)request.getAttribute("rvo");
     %>
     
 <!--     로그인 안 했을 경우 신고 제한 -->
@@ -29,69 +28,45 @@
         </div>
         <hr>
         <div class="writer_content">
-        <h5>작성자 |</h5><h5> <%= writer.getReplyMem() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
-       
+        <h5>작성자 |<%= vo.getReplyMem() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
+        
         <br>
-        <h5>내   용| </h5><h5></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
-<%--         <%= writer.getrBlaCon() %> --%>
+        <h5>내   용| <%= vo.getCon() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
+        
         </div>
         <hr>
+        <form>
         <div class="select_reason">사유선택</div>
-<div class="modal_container">
+		<div class="modal_container">
             <div class="reason_detail">
                 <ul>
-                    <li class="list">
+                <% int i = 0 ; %>
+                <% for( ReplyBlameVo num : rvo){ %>
+                	<li class="list">
                         <div class="check_area">
-                            <input type="radio" name="select" id="0" class="report_reason">
-                            <label class="reason_content"  for="0">스팸홍보/도배글입니다.</label>
+                            <input type="radio" name="rBlaList" id="<%= i %>" class="report_reason"  value="<%= num.getrBlaList() %>">
+                            <label class="reason_content"  for="<%=i %>">
+                            	<%= num.getrBlaList() %>
+                          
+                           	</label>
 
                         </div>
                     </li>
-                    <li class="list">
-                        <div class="check_area">
-                            <input type="radio" name="select" id="1" class="report_reason">
-                            <label class="reason_content"  for="1">음란물입니다.</label>
-                        </div>
-                    </li>
-                    <li class="list">
-                        <div class="check_area">
-                            <input type="radio" name="select" id="2" class="report_reason">
-                            <label class="reason_content"  for="2">불법정보를 포함하고 있습니다.</label>
-                        </div>
-                    </li>
-                    <li class="list">
-                        <div class="check_area">
-                            <input type="radio" name="select" id="3" class="report_reason">
-                            <label class="reason_content" for="3">청소년에게 유해한 내용입니다.</label>
-                        </div>
-                    </li>
-                    <li class="list">
-                        <div class="check_area">
-                            <input type="radio" name="select" id="4" class="report_reason">
-                            <label class="reason_content"  for="4">욕설/생명경시/혐오/차별적 표현입니다.</label>
-                        </div>
-                    </li>
-                    <li class="list">
-                        <div class="check_area">
-                            <input type="radio" name="select" id="5" class="report_reason">
-                            <label class="reason_content"  for="5">개인정보 노출 위험이 있습니다.</label>
-                        </div>
-                    </li>
-                    <li class="list">
-                        <div class="check_area_last">
-                            <input type="radio" name="select" id="6" class="report_reason">
-                            <label class="reason_content"  for="6">불쾌한 표현이 있습니다.</label>
-                        </div>
-                    </li>
+                
+                <%i++; } %>
+     
                 </ul>
             </div>
         </div>
         <div class="detail_reason">
-            <input type="text" class="detail_content" placeholder=" 세부 내용 작성">
+            <input type="text" class="detail_content" name="rBlaDetail" placeholder=" 세부 내용 작성">
+            <input type="hidden" name="rWriterNo" value=<%= vo.getReplyMem() %>>
+            <input type="hidden" name="rBlaCon" value=<%= vo.getCon() %>>
         </div>
         <div class="modal_footer">
             <button class="modal_close btn_black" onclick="submitReport()">신고하기</button>
         </div>
+    </form>
     </div>
 </div>
 
