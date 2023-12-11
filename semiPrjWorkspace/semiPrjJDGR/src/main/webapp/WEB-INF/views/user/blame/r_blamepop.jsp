@@ -89,9 +89,16 @@
         const detailContent = document.querySelector('.detail_content').value;
 
         // 서버로 데이터 전송
+        //------------------------------
+        //gpt
         const formData = new FormData();
-        formData.append('selectedReason', selectedReasonValue);
-        formData.append('detailContent', detailContent);
+        formData.append('rNo', '<%= vo.getReplyNo() %>');  // 댓글 번호 추가
+        formData.append('rBlaList', selectedReasonValue);
+        formData.append('rBlaDetail', detailContent);
+        //-------------------------------
+//         const formData = new FormData();
+//         formData.append('selectedReason', selectedReasonValue);
+//         formData.append('detailContent', detailContent);
 
      // fetch 코드 추가
         fetch("/jdgr/user/blame/r_blamepop", {

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.semi.jdgr.user.blame.service.ReplyBlameService;
 import com.semi.jdgr.user.blame.vo.ReplyBlameVo;
+import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.user.reply.vo.ReplyVo;
 
 @WebServlet("/user/blame/r_blamepop")
@@ -23,13 +24,31 @@ public class ReplyBlameController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			//data
-			ReplyVo vo = new ReplyVo();
 			
-			vo.setReplyNo("3");	
-			vo.setReplyMem("2");
-			vo.setCon("내용");
+//			MemberVo memberVo = (MemberVo) req.getSession().getAttribute("loginMember");
+//			if(memberVo == null) {
+//				throw new Exception("로그인이 필요한 서비스입니다.");
+//			}
+			
+			
+			//data
 
+			//GPT
+			// doGet 메서드에서 vo 객체 생성 및 댓글 정보 설정
+			ReplyVo vo = new ReplyVo();
+			vo.setReplyNo(req.getParameter("replyNo"));	
+			vo.setReplyMem(req.getParameter("replyMem"));
+			vo.setCon(req.getParameter("con"));
+
+			// 댓글 정보를 모달에 전달
+			req.setAttribute("vo", vo);
+//			---------------
+//			ReplyVo vo = new ReplyVo();
+//			
+//			vo.setReplyNo("3");	
+//			vo.setReplyMem("2");
+//			vo.setCon("내용");
+			
 //			String replyNo = req.getParameter("replyNo");
 //			String postNo = req.getParameter("postNo");
 //			String replyMem = req.getParameter("replyMem");
@@ -44,8 +63,8 @@ public class ReplyBlameController extends HttpServlet{
 //			vo.setCon(con);
 			
 			//service
-			ReplyBlameService rbs = new ReplyBlameService();
-			List<ReplyBlameVo> rvo = rbs.blameList();
+			ReplyBlameService rbs = new ReplyBlameService();	
+			List<ReplyBlameVo> rvo = rbs.blameList();			//신고 구분 목록 가져오기
 					
 			
 			//result(==view)
@@ -72,8 +91,8 @@ public class ReplyBlameController extends HttpServlet{
 
 		try {
 			//data
-
-			
+			HttpSession session = req.getSession(false);
+			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 			String rBlaList = req.getParameter("rBlaList");
 			String rBlaDetail = req.getParameter("rBlaDetail");
 			String rWriterNo = req.getParameter("rWriterNo");
