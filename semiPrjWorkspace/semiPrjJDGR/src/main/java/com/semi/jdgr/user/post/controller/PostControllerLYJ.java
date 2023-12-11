@@ -63,42 +63,5 @@ public class PostControllerLYJ extends HttpServlet {
 	      }   
 	   }
 	   
-	   
-	 //유저 홈화면에 관리자 포스트 목록 관리(5개 조회하기)
-	   @Override
-	   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	      
-	      try {
-	         
-	         
-	         int listCount = ps.selectUserPostCount();
-	         //data
-	         String currentPage__ = req.getParameter("pno");
-	         if(currentPage__ == null) {
-	            currentPage__ = "1";
-	         }
-	         int currentPage = Integer.parseInt(currentPage__);   //현재 페이지
-	         int pageLimit = 10;
-	         int boardLimit = 5;
-	         PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);      
-	         
-	         
-	         String memName = req.getParameter("memName");
-	         //service
-	         List<PostVo> postVoList = ps.selectPostList(memName);
-	         
-	         //result(==view)
-	         req.setAttribute("postVoList", postVoList);
-	         req.setAttribute("pvo" , pvo);
-	          req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
-	         
-	      }catch(Exception e) {
-	         System.out.println("[ERROR-B001]포스트 관리 목록 조회 중 에러 발생 ...");
-	         e.printStackTrace();
-	         req.setAttribute("errorMsg", "포스트 관리 목록 조회 에러");
-	         req.getRequestDispatcher("/WEB-INF/views/admin/common/error.jsp").forward(req, resp);
-	      }
-	         
-	   }
-
-}
+	  	 
+}//class

@@ -87,7 +87,7 @@
                                 <td><%= vo.getBlogNo() %></td>
                                 <td><%= vo.getPostNo() %></td>
                                 <td><%= vo.getCategoryNo() %></td>
-                                <td><%= vo.getTitle() %></td>
+                                <td><%= vo.getBlogTitle() %></td>
                                 <td><%= vo.getInquiry() %></td>
                                 <td><%= vo.getHeartCnt() %></td>
                                 <td><%= vo.getReplyCnt() %></td>

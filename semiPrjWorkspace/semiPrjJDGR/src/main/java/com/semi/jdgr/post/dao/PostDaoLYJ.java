@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.semi.jdgr.page.vo.PageVo;
+import com.semi.jdgr.post.vo.CategoryVo;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -46,7 +47,7 @@ public class PostDaoLYJ {
            postVo.setBlogNo(blogNo);
            postVo.setPostNo(postNo);
            postVo.setCategoryNo(categoryName);
-           postVo.setTitle(title);
+           postVo.setBlogTitle(title);
            postVo.setInquiry(inquiry);
 
 
@@ -138,7 +139,7 @@ public class PostDaoLYJ {
            postVo.setBlogNo(blogNo);
            postVo.setPostNo(postNo);
            postVo.setCategoryNo(categoryName);
-           postVo.setTitle(title);
+           postVo.setBlogTitle(title);
            postVo.setInquiry(inquiry);
 
 
@@ -228,10 +229,11 @@ public class PostDaoLYJ {
    public List<PostVo> allSelectUserPostList(Connection conn, PageVo pvo) throws Exception {
       
       //SQL
-      String sql = "SELECT * FROM ( SELECT  ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NICK , P.CONTENT, P.POST_IMG FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE DEL_YN = 'Y' ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ? ;";
+      String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NICK , P.CONTENT, P.POST_IMG FROM POST P JOIN BLOG  B ON  P .BLOG_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE P.DEL_YN = 'N' AND CL.CATEGORY_NO = ? ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ? ;";
       PreparedStatement pstmt = conn.prepareStatement(sql);
-      pstmt.setInt(1,pvo.getStartRow());
-      pstmt.setInt(2,pvo.getLastRow());
+//      pstmt.setInt(1,pvo.getCateg()r);o
+      pstmt.setInt(2,pvo.getStartRow());
+      pstmt.setInt(3,pvo.getLastRow());
       ResultSet rs = pstmt.executeQuery();
       
       //rs
@@ -347,5 +349,48 @@ public class PostDaoLYJ {
 	            postVoList.add(postVo);
 	            
 	       }
+	       JDBCTemplate.close(rs);
+	       JDBCTemplate.close(pstmt);
+	       
+	       return postVoList;
+	       
+	    }
+
+
+	    
+	    public List<CategoryVo> selectCategory(Connection conn) throws Exception {
+			String sql = "SELECT * FROM CATEGORY_LIST";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			
+			//rs
+			List<CategoryVo> categoryVoList = new ArrayList<CategoryVo>();
+			
+			CategoryVo categoryVo = new CategoryVo();
+			
+			categoryVo.setCategoryNo("0");
+			categoryVo.setCategoryName("전체");
+			
+			categoryVoList.add(categoryVo);
+			
+			while(rs.next()) {
+			
+				String categoryNo = rs.getString("CATEGORY_NO");
+				String categoryName = rs.getString("CATEGORY_NAME");
+				
+				
+				categoryVo.setCategoryNo(categoryNo);
+				categoryVo.setCategoryName(categoryName);
+				
+				categoryVoList.add(categoryVo);
+				
+				}
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			
+			return categoryVoList;
+		}
+
+
  
 }//class

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import com.semi.jdgr.post.vo.CategoryVo;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.notice.dao.NoticeDao;
 import com.semi.jdgr.page.vo.PageVo;
@@ -142,6 +143,24 @@ public class PostServiceLYJ {
       
       return cnt;
    }
+   
+ 
+
+
+
+public List<CategoryVo> selectCategory() throws Exception {
+	
+	//conn
+	Connection conn = JDBCTemplate.getConnection();
+	
+	//DAO
+	PostDaoLYJ dao = new PostDaoLYJ();
+	List<CategoryVo> categoryVoList = dao.selectCategory(conn);
+	
+	JDBCTemplate.close(conn);
+	
+	return categoryVoList;
+}
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
