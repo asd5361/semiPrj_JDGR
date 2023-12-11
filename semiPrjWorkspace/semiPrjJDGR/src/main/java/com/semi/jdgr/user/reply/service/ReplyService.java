@@ -8,7 +8,7 @@ import com.semi.jdgr.user.reply.vo.ReplyVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class ReplyService {
-
+	//댓글 작성
 	public int write(ReplyVo vo) throws Exception {
 	
 		// conn
@@ -40,12 +40,12 @@ public class ReplyService {
 			
 			// DAO
 			ReplyDao dao = new ReplyDao();
-			List<ReplyVo> list = dao.getReplyList(conn, no);
+			List<ReplyVo> replyVoList = dao.getReplyList(conn, no);
 			
 			// close
 			JDBCTemplate.close(conn);
 			
-			return list;
+			return replyVoList;
 		}
 	
 }

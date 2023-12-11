@@ -17,8 +17,7 @@ public class ReplyDao {
 	public int write(Connection conn, ReplyVo vo) throws Exception {
 	
 		// SQL
-		String sql = "INSERT INTO REPLY ( REPLY_NO ,POST_NO ,REPLY_MEM ,CON, WRITE_DATE, UPDATE_DATE, DEL_YN )"
-				+ " VALUES ( SEQ_REPLY_NO.NEXTVAL , ? , ? , ?, SYSTIMESTAMP, 'N', 'N' )";
+		String sql = "INSERT INTO REPLY ( REPLY_NO ,POST_NO ,REPLY_MEM ,CON) VALUES ( SEQ_REPLY_NO.NEXTVAL , ? , ? , ?)";
 
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, vo.getPostNo());
@@ -30,6 +29,7 @@ public class ReplyDao {
 		JDBCTemplate.close(pstmt);
 		
 		return result;
+		
 	}//write
 
 	
@@ -37,28 +37,34 @@ public class ReplyDao {
 	public List<ReplyVo> getReplyList(Connection conn, String replyNo) throws Exception{
 		
 		// SQL
-		String sql = "SELECT REPLY_NO ,POST_NO ,REPLY_MEM ,CON ,WRITE_DATE ,UPDATE_DATE, DEL_YN FROM REPLY WHERE REPLY_NO = ? ORDER BY NO DESC";
+		String sql = "SELECT REPLY_NO ,POST_NO ,REPLY_MEM ,CON ,WRITE_DATE ,UPDATE_DATE, DEL_YN FROM REPLY WHERE REPLY_NO = ? ORDER BY REPLY_NO DESC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, replyNo);
 		ResultSet rs = pstmt.executeQuery();
 		
 		// rs
-		List<ReplyVo> voList = new ArrayList<ReplyVo>();
+		List<ReplyVo> replyVoList = new ArrayList<ReplyVo>();
 		while(rs.next()) {
-			String no = rs.getString("NO");
+			String no = rs.getString("REPLY_NO");
 			String postNo = rs.getString("POST_NO");
 			String replyMem = rs.getString("REPLY_MEM");
 			String con = rs.getString("CON");
 			String writeDate = rs.getString("WRITE_DATE");
 			
-			ReplyVo vo = new ReplyVo(no, replyNo, postNo, replyMem, con, writeDate);
-			voList.add(vo);
+			ReplyVo vo = new ReplyVo();
+			vo.setReplyNo(no);
+			vo.setPostNo(postNo);
+			vo.setReplyMem(replyMem);
+			vo.setCon(con);
+			vo.setWriteDate(writeDate);
+			
+			replyVoList.add(vo);
 		}
 		
 		// close
 		JDBCTemplate.close(rs);
 		JDBCTemplate.close(pstmt);
 		
-		return voList;
+		return replyVoList;
 	}//getReplyList
 }
