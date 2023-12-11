@@ -16,8 +16,11 @@ public class ReplyBlameVo {
 	private String rAnsDate;
 	private String rBlaDetail;
 	private String rDelYn;
-	
-	
+	private String replyNo;
+	private String postNo;
+	private String replyMem;
+	private String parentsNo;
+	private String con;
 	public String getrBlaNo() {
 		return rBlaNo;
 	}
@@ -84,10 +87,39 @@ public class ReplyBlameVo {
 	public void setrDelYn(String rDelYn) {
 		this.rDelYn = rDelYn;
 	}
-	
-	
+	public String getReplyNo() {
+		return replyNo;
+	}
+	public void setReplyNo(String replyNo) {
+		this.replyNo = replyNo;
+	}
+	public String getPostNo() {
+		return postNo;
+	}
+	public void setPostNo(String postNo) {
+		this.postNo = postNo;
+	}
+	public String getReplyMem() {
+		return replyMem;
+	}
+	public void setReplyMem(String replyMem) {
+		this.replyMem = replyMem;
+	}
+	public String getParentsNo() {
+		return parentsNo;
+	}
+	public void setParentsNo(String parentsNo) {
+		this.parentsNo = parentsNo;
+	}
+	public String getCon() {
+		return con;
+	}
+	public void setCon(String con) {
+		this.con = con;
+	}
 	public ReplyBlameVo(String rBlaNo, String rNo, String rBlamerNo, String rWriterNo, String rBlaCon, String rBlaDate,
-			String rBlaList, String rSancYn, String rAnsDate, String rBlaDetail, String rDelYn) {
+			String rBlaList, String rSancYn, String rAnsDate, String rBlaDetail, String rDelYn, String replyNo,
+			String postNo, String replyMem, String parentsNo, String con) {
 		super();
 		this.rBlaNo = rBlaNo;
 		this.rNo = rNo;
@@ -100,21 +132,26 @@ public class ReplyBlameVo {
 		this.rAnsDate = rAnsDate;
 		this.rBlaDetail = rBlaDetail;
 		this.rDelYn = rDelYn;
+		this.replyNo = replyNo;
+		this.postNo = postNo;
+		this.replyMem = replyMem;
+		this.parentsNo = parentsNo;
+		this.con = con;
 	}
-	
-	
 	@Override
 	public String toString() {
 		return "ReplyBlameVo [rBlaNo=" + rBlaNo + ", rNo=" + rNo + ", rBlamerNo=" + rBlamerNo + ", rWriterNo="
 				+ rWriterNo + ", rBlaCon=" + rBlaCon + ", rBlaDate=" + rBlaDate + ", rBlaList=" + rBlaList
 				+ ", rSancYn=" + rSancYn + ", rAnsDate=" + rAnsDate + ", rBlaDetail=" + rBlaDetail + ", rDelYn="
-				+ rDelYn + "]";
+				+ rDelYn + ", replyNo=" + replyNo + ", postNo=" + postNo + ", replyMem=" + replyMem + ", parentsNo="
+				+ parentsNo + ", con=" + con + "]";
 	}
-	
-	
 	public ReplyBlameVo() {
-
+		super();
+		// TODO Auto-generated constructor stub
 	}
+	
+	
 	
 		
 }
