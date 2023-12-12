@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.semi.jdgr.alarm.vo.AlarmVo;
 import com.semi.jdgr.heart.vo.HeartVo;
+import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
@@ -109,6 +110,7 @@ public class PostDaoJOJ {
 	// 포스트 상세보기 (pNo 받아서 값 전달하기) (+조회수 증가) (+공감수) (+댓글수)
 	public PostVo GetPnoPostDetail(Connection conn, String pNo) throws Exception {
 		
+		
 		// sql
 		String sql = "SELECT P.POST_IMG ,P.TITLE ,P.CONTENT ,P.POST_NO ,P.BLOG_NO ,B.BLOG_URL ,P.GROUP_NO ,C.CATEGORY_NO ,C.CATEGORY_NAME ,M.MEM_ID ,M.MEM_NO ,M.MEM_NICK ,P.OPEN ,P.DEL_YN ,TO_CHAR (P.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE ,TO_CHAR (P.MODIFY_DATE, 'YYYY-MM-DD') AS MODIFY_DATE ,P.INQUIRY AS HIT_CNT FROM POST P JOIN CATEGORY_LIST C ON P.CATEGORY_NO = C.CATEGORY_NO JOIN MYBLOG_CATEGORY Y ON P.GROUP_NO = Y.GROUP_NO JOIN BLOG B ON P.BLOG_NO = B.BLOG_NO JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE P.OPEN = 'Y' AND P.DEL_YN = 'N' AND P.POST_NO = ? ORDER BY P.POST_NO DESC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -156,7 +158,7 @@ public class PostDaoJOJ {
 			postDetailVo.setInquiry(inquiryCnt);
 
 		}
-
+		
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
@@ -226,7 +228,7 @@ public class PostDaoJOJ {
 
 	// 조회수 증가 (블로그 카테고리 상세보기용)
 	public int PostDetailIncreaseHit(Connection conn, PostVo postDetailVo) throws Exception {
-
+		System.out.println("dao = " + postDetailVo);
 		// sql
 		String sql = "UPDATE POST SET INQUIRY = INQUIRY+1 WHERE POST_NO = ? AND OPEN = 'Y'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -372,6 +374,89 @@ public class PostDaoJOJ {
 
 		return userNo;
 	}
+	
+	// 전체 포스트 갯수
+		public int getPostVoListCount(Connection conn, String GroupNo) throws Exception {
+			
+			
+			// sql
+			String sql = "SELECT COUNT(*) as cnt FROM POST WHERE GROUP_NO = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, GroupNo);
+			ResultSet rs = pstmt.executeQuery();
+			  
+			// rs
+			int cnt = 0;
+			if(rs.next()) {
+				cnt = rs.getInt(1);
+			}
+			
+			// close
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			  
+			return cnt;
+		}
+
+		// 페이지에 맞는 포스트 List 가져오기
+		public List<PostVo> getPostVoList(Connection conn, String categoryNo, PageVo pvo) throws Exception {
+
+			// sql
+			String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , T.* FROM ( SELECT P.POST_IMG ,P.TITLE ,P.CONTENT ,P.POST_NO ,P.BLOG_NO ,B.BLOG_URL ,P.GROUP_NO ,C.CATEGORY_NO ,C.CATEGORY_NAME ,M.MEM_ID ,M.MEM_NO ,M.MEM_NICK ,P.OPEN ,P.DEL_YN ,TO_CHAR (P.ENROLL_DATE, 'YYYY-MM-DD') AS ENROLL_DATE ,TO_CHAR (P.MODIFY_DATE, 'YYYY-MM-DD') AS MODIFY_DATE ,P.INQUIRY AS HIT_CNT FROM POST P JOIN CATEGORY_LIST C ON P.CATEGORY_NO = C.CATEGORY_NO JOIN MYBLOG_CATEGORY Y ON P.GROUP_NO = Y.GROUP_NO JOIN BLOG B ON P.BLOG_NO = B.BLOG_NO JOIN MEMBER M ON B.MEM_NO = M.MEM_NO WHERE P.OPEN = 'Y' AND P.DEL_YN = 'N' AND P.GROUP_NO = ? ORDER BY P.POST_NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, categoryNo);
+			pstmt.setInt(2, pvo.getStartRow());
+			pstmt.setInt(3, pvo.getLastRow());
+			ResultSet rs = pstmt.executeQuery();
+			
+			// rs
+			List<PostVo> postVoList = new ArrayList<PostVo>();
+			while(rs.next()) {
+				String postImg = rs.getString("POST_IMG");
+				String postTitle = rs.getString("TITLE");
+				String content = rs.getString("CONTENT");
+				String postNo = rs.getString("POST_NO");
+				String blogNo = rs.getString("BLOG_NO");
+				String blogUrl = rs.getString("BLOG_URL");
+				String groupNo = rs.getString("GROUP_NO");
+				String categoryName = rs.getString("CATEGORY_NAME");
+				String userNo = rs.getString("MEM_NO");
+				String userId = rs.getString("MEM_ID");
+				String userNick = rs.getString("MEM_NICK");
+				String open = rs.getString("OPEN");
+				String delYn = rs.getString("DEL_YN");
+				String modifyDate = rs.getString("MODIFY_DATE");
+				String enrollDate = rs.getString("ENROLL_DATE");
+				String inquiryCnt = rs.getString("HIT_CNT");
+
+				PostVo postDetailVo = new PostVo();
+				postDetailVo.setPostImg(postImg);
+				postDetailVo.setPostNo(postNo);
+				postDetailVo.setPostTitle(postTitle);
+				postDetailVo.setContent(content);
+				postDetailVo.setBlogNo(blogNo);
+				postDetailVo.setBlogUrl(blogUrl);
+				postDetailVo.setGroupNo(groupNo);
+				postDetailVo.setCategoryNo(categoryNo);
+				postDetailVo.setCategoryName(categoryName);
+				postDetailVo.setUserNo(userNo);
+				postDetailVo.setUserId(userId);
+				postDetailVo.setUserNick(userNick);
+				postDetailVo.setOpen(open);
+				postDetailVo.setPostDelYn(delYn);
+				postDetailVo.setModifyDate(modifyDate);
+				postDetailVo.setEnrollDate(enrollDate);
+				postDetailVo.setInquiry(inquiryCnt);
+				
+				postVoList.add(postDetailVo);
+			}
+			
+			// close
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+			
+			return postVoList;
+		}
 
 
 }// class

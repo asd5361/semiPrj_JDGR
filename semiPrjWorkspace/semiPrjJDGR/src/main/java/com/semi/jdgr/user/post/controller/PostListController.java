@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.semi.jdgr.blog.service.BlogService;
 import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.service.PostServiceJOJ;
 import com.semi.jdgr.post.vo.PostVo;
@@ -27,9 +28,18 @@ public class PostListController extends HttpServlet {
 			
 			// data
 			// 클라이언트로부터 전송된 JSON 데이터 읽기
-			String groupNo = req.getParameter("categoryNo");
+			String groupNo = req.getParameter("GroupNo");
 			String blogUrl = req.getParameter("url");
+			String pNo = req.getParameter("pNo");		// null 값으로 들어옴
+			System.out.println("cont = " + pNo);
+			PostVo postDetailVo = ps.PostDetail(groupNo, blogUrl, pNo); 
 			
+			// pNo 값으로 들어올 경우 실행
+			BlogService bs = new BlogService();
+			if( groupNo == null ) {
+				groupNo = postDetailVo.getGroupNo();
+				req.getRequestDispatcher("/post/detail?url=").forward(req, resp);
+			}
 			
 			int listCount = ps.getPostVoListCount(groupNo); // 전체 포스트 갯수
 			String currentPage_ = req.getParameter("pnum");

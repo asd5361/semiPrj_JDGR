@@ -6,6 +6,7 @@ import java.util.List;
 import com.semi.jdgr.alarm.vo.AlarmVo;
 import com.semi.jdgr.heart.dao.HeartDao;
 import com.semi.jdgr.heart.vo.HeartVo;
+import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.dao.PostDaoJOJ;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
@@ -38,16 +39,17 @@ public class PostServiceJOJ {
 
 		// dao
 		PostDaoJOJ dao = new PostDaoJOJ();
-		
+
 		PostVo postDetailVo = null;
-		if((GroupNo == null) && (BlogUrl== null)){
+		if ((GroupNo == null) && (BlogUrl == null)) {
 			postDetailVo = dao.GetPnoPostDetail(conn, pNo);
-		}else if (GroupNo == null) {
+			System.out.println("ser = " + pNo);
+		} else if (GroupNo == null) {
 			postDetailVo = dao.GetUrlPostDetail(conn, BlogUrl);
 		} else {
 			postDetailVo = dao.PostDetail(conn, GroupNo, BlogUrl);
 		}
-		
+		System.out.println("ser = " + postDetailVo);
 		int result = dao.PostDetailIncreaseHit(conn, postDetailVo);
 
 		// tx
@@ -156,6 +158,38 @@ public class PostServiceJOJ {
 		}
 
 		return UserNo;
+	}
+
+	// 전체 포스트 갯수
+	public int getPostVoListCount(String GroupNo) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+
+		// dao
+		PostDaoJOJ dao = new PostDaoJOJ();
+		int listCount = dao.getPostVoListCount(conn, GroupNo);
+
+		// close
+		JDBCTemplate.close(conn);
+
+		return listCount;
+	}
+
+	// 페이지에 맞는 포스트 List 가져오기
+	public List<PostVo> getPostVoList(String categoryNo, PageVo pvo) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+
+		// dao
+		PostDaoJOJ dao = new PostDaoJOJ();
+		List<PostVo> postVoList = dao.getPostVoList(conn, categoryNo, pvo);
+
+		// close
+		JDBCTemplate.close(conn);
+
+		return postVoList;
 	}
 
 }// class

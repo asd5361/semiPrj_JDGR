@@ -96,9 +96,9 @@ public class HeartController extends HttpServlet {
 				}
 			}
 			
-			if( ( loginMember.getMemNo().equals(heartVo.getMemNo()) ) &&( postDetailVo.getPostNo().equals(heartVo.getPostNo()) ) ){
-				
-			}
+//			if( ( loginMember.getMemNo().equals(heartVo.getMemNo()) ) &&( postDetailVo.getPostNo().equals(heartVo.getPostNo()) ) ){
+//				
+//			}
 
 //			session.setAttribute("heartVoList", heartVoList);
 //			req.getSession().setAttribute("heartVoList", heartVoList);

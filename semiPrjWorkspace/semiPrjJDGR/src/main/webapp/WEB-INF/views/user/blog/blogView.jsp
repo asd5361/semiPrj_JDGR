@@ -324,4 +324,120 @@
 </main>
 <!-- //main -->
 
+<script>
+    // 파라미터 가져오기
+    const currentUrl = window.location.href;
+    const url = new URL(currentUrl);
+    const urlParams = url.searchParams;
+    const blogUrl = urlParams.get("url");
+    const groupNo = urlParams.get("GroupNo");
+    let pnumCnt = urlParams.get("pnum");
+
+    console.log(blogUrl);
+    console.log(groupNo);
+    console.log('pnum' + pnumCnt);
+    
+    function getPostList(pnum, blogurl, groupno){
+        fetch('/jdgr/post/list?pnum=' + pnum + "&&categoryNo=" + groupno + "&&url=" + blogurl)
+        .then(resp => resp.json())
+        .then(data => {
+            // 서버 응답 처리
+            const pvo = data.pvo;
+            const postVoList = data.postVoList;
+            console.log(postVoList);
+            console.log(pvo);
+            console.log(data.PblogUrl);
+            console.log(data.PgroupNo);
+
+            const tbody = document.querySelector('.b_post_list table tbody');
+
+            // 기존 tr 제거
+            tbody.innerHTML = '';
+
+            //
+            for (let i = 0; i < postVoList.length; i++) {
+                const post = postVoList[i];
+                const tr = document.createElement('tr');
+
+                // td 추가
+                const titleCell = document.createElement('td');
+                titleCell.textContent = post.postTitle;
+                tr.appendChild(titleCell);
+
+                const inquiryCell = document.createElement('td');
+                inquiryCell.textContent = post.inquiry;
+                tr.appendChild(inquiryCell);
+
+                const dateCell = document.createElement('td');
+                dateCell.textContent = post.enrollDate;
+                tr.appendChild(dateCell);
+
+                // 클릭 이벤트 추가
+                tr.onclick = function() {
+                    location.href = '/jdgr/post/detail?pNo=' + post.postNo;
+                };
+
+                // tbody에 행 추가
+                tbody.appendChild(tr);
+            }
+            
+            const pagingBox = document.querySelector('.paging_box');
+            const pagingUl = document.createElement('ul');
+
+            // 이전 페이지 링크
+            if (pvo.startPage < pvo.currentPage) {
+                const prevLi = document.createElement('li');
+                const prevLiBtn = document.createElement('a');
+                prevLiBtn.href = '/jdgr/post/detail?pnum=' + (pvo.currentPage - 1) + '&&url=' + data.PblogUrl + '&&categoryNo=' + data.PgroupNo;
+                prevLi.classList.add('prev');
+                prevLi.appendChild(prevLiBtn);
+                pagingUl.appendChild(prevLi);
+            }
+
+            // 중간 페이지 링크
+            for (let i = pvo.startPage; i < pvo.endPage + 1; i++) {
+                const pagingLi = document.createElement('li');
+                const pagingLiBtn = document.createElement('a');
+                if (pvo.currentPage === i) {
+                    pagingLi.classList.add('on');
+                    pagingLiBtn.href = '#';  // 현재 페이지는 링크를 비활성화
+                } else {
+                    pagingLiBtn.href = '/jdgr/post/detail?pnum=' + i + '&&url=' + data.PblogUrl + '&&categoryNo=' + data.PgroupNo;
+                }
+                pagingLiBtn.textContent = i;
+                pagingLi.appendChild(pagingLiBtn);
+                pagingUl.appendChild(pagingLi);
+            }
+
+            // 다음 페이지 링크
+            if (pvo.endPage > pvo.currentPage) {
+                const nextLi = document.createElement('li');
+                const nextLiBtn = document.createElement('a');
+                nextLiBtn.href = '/jdgr/post/detail?pnum=' + (pvo.currentPage + 1) + '&&url=' + data.PblogUrl + '&&categoryNo=' + data.PgroupNo;
+                nextLi.classList.add('next');
+                nextLi.appendChild(nextLiBtn);
+                pagingUl.appendChild(nextLi);
+            }
+
+            pagingBox.appendChild(pagingUl);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    
+    if(pnumCnt === null){
+        pnumCnt = 1;
+    }
+    getPostList(pnumCnt, blogUrl, groupNo);
+
+    // function getReplyList(refNo){
+    //     fetch("/app99/board/reply/list?refNo=" + refNo)
+    //     .then( (resp) => { return resp.json() } )
+    //     .then( (data) => { console.log(data) } )
+    //     .catch(() => { alert("댓글불러오기 실패") });
+    // }
+    // getReplyList(1);
+</script>
+
 <%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
