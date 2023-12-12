@@ -13,36 +13,66 @@ import com.semi.jdgr.user.follow.vo.FollowVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class FollowDao {
-	
+
 	// 유저 넘버로 구독자 리스트 가져오기
-	public List<FollowVo> getFollowListByUserNo(Connection conn, String userNo) throws Exception{
-		
+	public List<FollowVo> getFollowListByUserNo(Connection conn, String userNo) throws Exception {
+
 		// sql
 		String sql = "SELECT F.MEM_NO, B.MEM_NO AS FOLLOW_BLOG_MEM FROM FOLLOW F JOIN BLOG B ON B.BLOG_NO = F.BLOG_NO WHERE F.MEM_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, userNo);
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		// rs
 		List<FollowVo> followVoList = new ArrayList<FollowVo>();
-		while(rs.next()) {
+		while (rs.next()) {
 			String followBlogMem = rs.getString("FOLLOW_BLOG_MEM");
 			String MemNo = rs.getString("MEM_NO");
-			
+
 			FollowVo vo = new FollowVo();
 			vo.setFollowMem(followBlogMem);
 			vo.setMemNo(MemNo);
-			
+
 			followVoList.add(vo);
 		}
-		
+
 		// close
-		
+
 		return followVoList;
 	}
-	
-	// 구독 리스트 가져오기
-	public List<FollowVo> FollowList(Connection conn, String blogNo) throws Exception {
+
+//	// 구독 리스트 가져오기
+//	public List<FollowVo> FollowList(Connection conn, String blogNo) throws Exception {
+//
+//		// sql
+//		String sql = "SELECT * FROM FOLLOW WHERE BLOG_NO = ?";
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		pstmt.setString(1, blogNo);
+//		ResultSet rs = pstmt.executeQuery();
+//
+//		// rs
+//		List<FollowVo> followVoList = new ArrayList<FollowVo>();
+//		while (rs.next()) {
+//			String FollowMem = rs.getString("BLOG_NO");
+//			String userNo = rs.getString("MEM_NO");
+//
+//			FollowVo followVo = new FollowVo();
+//			followVo.setFollowMem(FollowMem);
+//			followVo.setMemNo(userNo);
+//
+//			followVoList.add(followVo);
+//		}
+//
+//		// close
+//		JDBCTemplate.close(pstmt);
+//		JDBCTemplate.close(rs);
+//
+//		return followVoList;
+//
+//	}// FollowList
+
+	// 구독 VO 가져오기
+	public FollowVo FollowList(Connection conn, String blogNo) throws Exception {
 
 		// sql
 		String sql = "SELECT * FROM FOLLOW WHERE BLOG_NO = ?";
@@ -51,26 +81,25 @@ public class FollowDao {
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
-		List<FollowVo> followVoList = new ArrayList<FollowVo>();
+		FollowVo followVo = null;
 		while (rs.next()) {
 			String FollowMem = rs.getString("BLOG_NO");
 			String userNo = rs.getString("MEM_NO");
 
-			FollowVo followVo = new FollowVo();
+			followVo = new FollowVo();
 			followVo.setFollowMem(FollowMem);
 			followVo.setMemNo(userNo);
 
-			followVoList.add(followVo);
 		}
 
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
 
-		return followVoList;
+		return followVo;
 
-	}// HeartList
-	
+	}// FollowList
+
 	// 구독체크 기능
 	public boolean checkFollow(Connection conn, String blogNo, String memberNo) throws Exception {
 
@@ -132,8 +161,7 @@ public class FollowDao {
 		return del;
 
 	}
-	
-	
+
 	// 구독 알림테이블로 저장
 	public int insertFollowAlarm(Connection conn, AlarmVo alarmVo) throws Exception {
 //		String sql = "INSERT INTO MEMBER ( ALARM_NO ,RECEIVER_NO ,POST_NO ,SENDER_NO ,ALARM_TYPE ) VALUES ( SEQ_ALARM.NEXTVAL , ? , ? , ? , ?)";
@@ -150,5 +178,5 @@ public class FollowDao {
 
 		return result;
 	}
-	
+
 }

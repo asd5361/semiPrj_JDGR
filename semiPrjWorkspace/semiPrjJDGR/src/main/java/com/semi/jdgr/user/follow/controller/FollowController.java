@@ -29,49 +29,45 @@ public class FollowController extends HttpServlet {
 			// data
 			PostVo postDetailVo = (PostVo) req.getSession().getAttribute("postDetailVo");
 			MemberVo loginMember = (MemberVo) req.getSession().getAttribute("loginMember");
-			
-			System.out.println("구독기능 실행");
-			System.out.println(postDetailVo);
-			System.out.println(postDetailVo.getBlogNo());
-//			MemberVo loginMember = new MemberVo();
+
 			AlarmVo alarmVo = new AlarmVo();
-			
-			
-//			loginMember.setMemNo("4");
+
 			if (loginMember == null) {
 				throw new Exception("로그인 먼저 진행하세요.");
 			}
+
 			String blogNo = postDetailVo.getBlogNo();
 			String memberNo = loginMember.getMemNo();
 
-//			if(loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
-//				throw new Exception("본인 블로그 입니다.");
-//			};
-			
+			if (loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
+				throw new Exception("본인 블로그 입니다.");
+			}
+
 			// service
 			FollowService fs = new FollowService();
-			
+
 			// 구독 중복체크
 			boolean isOk = fs.checkFollow(blogNo, memberNo);
-			
+
 			// 구독 vo 불러오기
-			List<FollowVo> followVoList = fs.FollowList(blogNo);
-			
-			//알람에 인서트
+			FollowVo followVo = fs.FollowList(blogNo);
+//			List<FollowVo> followVoList = fs.FollowList(blogNo);
+
+			// 알람에 인서트
 			PostServiceJOJ ps = new PostServiceJOJ();
 			String userNo = ps.findUserNo(postDetailVo.getUserNick());
-			
+
 			alarmVo.setReceiverNo(userNo);
 			alarmVo.setPostNo(postDetailVo.getPostNo());
 			alarmVo.setSenderNo(loginMember.getMemNo());
 			alarmVo.setAlarmType("FOLLOW");
 			int insert = fs.insertFollowAlarm(alarmVo);
-			
-			if(insert != 1) {
+
+			if (insert != 1) {
 				throw new Exception("알람 인서트 실패");
 			}
-			
-			HttpSession session = req.getSession();			
+
+			HttpSession session = req.getSession();
 
 			// result
 			int add = 0;
@@ -88,16 +84,17 @@ public class FollowController extends HttpServlet {
 //					req.setAttribute("del", del);
 					session.setAttribute("del", del);
 					req.getSession().setAttribute("del", del);
-			} else {
+				} else {
 					throw new Exception("구독 기능 오류 발생");
 				}
-			}  
-				
-			session.setAttribute("followVoList", followVoList);
-			req.getSession().setAttribute("followVoList", followVoList);
+			}
+
+			session.setAttribute("followVo", followVo);
+			req.getSession().setAttribute("followVo", followVo);
 
 //			resp.sendRedirect("/jdgr/post/detail?url=${blogUrlVo.blogUrl}&&categoryNo=groupVo.getNo() %>");
-			resp.sendRedirect("/jdgr/post/detail?url=" + postDetailVo.getBlogUrl() + "&&GroupNo=" + postDetailVo.getGroupNo());
+			resp.sendRedirect(
+					"/jdgr/post/detail?url=" + postDetailVo.getBlogUrl() + "&&GroupNo=" + postDetailVo.getGroupNo());
 
 		} catch (Exception e) {
 			System.out.println("구독 오류 발생");
@@ -107,5 +104,5 @@ public class FollowController extends HttpServlet {
 		}
 
 	}// doGet
-	
+
 }

@@ -28,7 +28,7 @@ public class HeartService {
 //		return heartVoList;
 //	}
 	
-	// 공감 리스트 가져오기
+	// 공감 VO 가져오기
 	public HeartVo HeartList(String no) throws Exception {
 		
 		// conn
@@ -109,7 +109,24 @@ public class HeartService {
 
 	}
 
-
+//	// 공감수 (블로그 카테고리 상세보기용)
+//	public PostVo PostDetailHeartCnt(PostVo postDetailVo) throws Exception {
+//
+//		// conn
+//		Connection conn = JDBCTemplate.getConnection();
+//
+//		// dao
+//		HeartDao dao = new HeartDao();
+//		PostVo postDetailHeartCnt = dao.PostDetailHeartCnt(conn, postDetailVo);
+//
+//		// tx
+//
+//		// close
+//		JDBCTemplate.close(conn);
+//
+//		return postDetailHeartCnt;
+//
+//	}// heartHit
 
 	// 공감 알림테이블로 저장
 	public int insertHeartAlarm(AlarmVo alarmVo) throws Exception {

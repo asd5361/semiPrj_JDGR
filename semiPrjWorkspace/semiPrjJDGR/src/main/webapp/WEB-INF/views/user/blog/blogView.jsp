@@ -2,6 +2,133 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 
+<script>
+	// 댓글창
+	let ReplyList = false;
+
+	function toggleReplyList() {
+    const replyList = document.getElementById('replyList');
+    ReplyList = !ReplyList;
+
+    if (ReplyList) {
+    	replyList.style.display = 'block';
+    } else {
+    	replyList.style.display = 'none';
+    }
+}
+
+    let likeClick = true;
+    let plusClick = true;
+    let repClick = true;
+    let repListClick = true;
+    
+    // 이미지 변경	
+    function clickEvent(mode) {
+        switch (mode) {
+        
+            case 'like' :
+                const likeBtn = document.getElementById('like_btn');
+                likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
+                likeClick = !likeClick;
+                heart();
+            break;
+                
+            case 'follow' :
+                const plusBtn = document.getElementById('plus_btn');
+                plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
+                plusClick = !plusClick;
+                follow()
+            break;
+                
+            case 'reply' :
+                const repBtn = document.getElementById('rep_btn');
+                repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
+                repClick = !repClick;
+                toggleReplyList()
+            break;
+                
+        }
+        
+    }
+    
+    // 신고
+    function blame() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/user/blame/p_blamepop";
+        
+        form.method = "POST";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
+    
+//     // 공감
+//     function heart() {
+//     	const form = document.createElement("form");
+//         form.action = "/jdgr/post/heart";
+//         form.method = "GET";
+        
+//         document.body.appendChild(form);
+        
+//         form.submit();
+//     }
+    
+//     // 구독
+//     function follow() {
+//     	const form = document.createElement("form");
+//         form.action = "/jdgr/post/follow";
+//         form.method = "GET";
+        
+//         document.body.appendChild(form);
+        
+//         form.submit();
+//     }
+    
+    // ajax 공감
+    function heart(){
+        
+        fetch('/jdgr/post/heart', {
+           method : 'get',
+        })
+        .then(resp => { 
+        	if (!resp.ok) {
+            	throw new Error('Network response was not ok');
+        	}
+        	return resp.json(); 
+        })
+      
+        .then( data => {
+        	console.log('공감 성공:', data);
+        })
+        .catch(error => {
+            console.error('catch블럭 실행:', error);
+        });
+     }
+    
+ 	// ajax 구독
+    function follow() {
+        fetch('/jdgr/post/follow', {
+            method: 'GET'
+        })
+        .then(resp => {
+            if (!resp.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return resp.json();
+        })
+        .then(data => {
+            console.log('구독 성공:', data);
+            // 받은 데이터를 처리하여 필요한 동작 수행
+        })
+        .catch(error => {
+            console.error('catch블럭 실행:', error);
+        });
+    }
+    
+    
+</script>
+
 <!-- main -->
 <main>
     <div class="inner">
@@ -77,7 +204,7 @@
                             </div>
                             <div class="reply_info">
                                 <span class="date">2023.11.12 15:12</span>
-                                <a href="">신고</a>
+                                <a href="/jdgr/user/blame/r_blamepop" class="modal_open" data-target="#pop_email">신고</a>
                             </div>
                             <div class="btn_area">
                                 <button>댓글</button>
@@ -283,6 +410,9 @@
 </main>
 <!-- //main -->
 
+
+
+
 <script>
     // 파라미터 가져오기
     const currentUrl = window.location.href;
@@ -294,13 +424,8 @@
     
     let pnumCnt = urlParams.get("pnum");
 
-    console.log(pNo);
-    console.log(blogUrl);
-    console.log(groupNo);
-    console.log('pnum' + pnumCnt);
     
     function getPostList(pnum, blogurl, groupno, pno){
-    	console.log('pno값' + pno);
     	
         fetch('/jdgr/post/list?pnum=' + pnum + "&categoryNo=" + groupno + "&url=" + blogurl + "&pNo=" + pno)
 //         fetch('/jdgr/post/list?pNo=' + pNo)
@@ -309,10 +434,6 @@
             // 서버 응답 처리
             const pvo = data.pvo;
             const postVoList = data.postVoList;
-            console.log(postVoList);
-            console.log(pvo);
-            console.log(data.PblogUrl);
-            console.log(data.PgroupNo);
 
             const tbody = document.querySelector('.b_post_list table tbody');
 
@@ -394,7 +515,6 @@
     if(pnumCnt === null){
         pnumCnt = 1;
     }
-    console.log(pNo);
     getPostList(pnumCnt, blogUrl, groupNo, pNo);
 
     // function getReplyList(refNo){

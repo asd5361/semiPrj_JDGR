@@ -32,10 +32,11 @@ public class PostControllerJOJ extends HttpServlet {
 			String GroupNo = req.getParameter("GroupNo");
 			// data (포스트 넘버)
 			String pNo = req.getParameter("pNo");
-
+			
+			int cnt = 0;
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
-			PostVo postDetailVo = ps.PostDetail(GroupNo, BlogUrl, pNo);
+			PostVo postDetailVo = ps.PostDetail(GroupNo, BlogUrl, pNo, cnt);
 			PostVo heartCnt = ps.PostDetailHeartCnt(postDetailVo);
 			PostVo replyCnt = ps.PostDetailReplyCnt(postDetailVo);
 
@@ -57,7 +58,6 @@ public class PostControllerJOJ extends HttpServlet {
 			MemberVo loginMemberVo = (MemberVo) req.getSession().getAttribute("loginMember");
 
 			
-			System.out.println("포스트 상세보기 정보= " + postDetailVo);
 			// result
 			HttpSession session = req.getSession();
 			session.setAttribute("postDetailVo", postDetailVo);
