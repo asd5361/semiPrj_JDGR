@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import com.semi.jdgr.blog.service.BlogService;
 import com.semi.jdgr.blog.vo.BlogVo;
+import com.semi.jdgr.page.vo.PageVo;
 import com.semi.jdgr.post.service.PostServiceLYJ;
 import com.semi.jdgr.post.vo.CategoryVo;
+import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
 
 @WebServlet("/home")
@@ -23,11 +25,38 @@ public class HomeController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		try {
+			PostServiceLYJ ps = new PostServiceLYJ();   
+			int listCount = ps.selectUserPostCount();
+			
+	         
+	         //data
+	         String currentPage__ = req.getParameter("pno");
+	         if(currentPage__ == null) {
+	            currentPage__ = "1";
+	         }
+	         int currentPage = Integer.parseInt(currentPage__);   //현재 페이지
+	         int pageLimit = 10;
+	         int boardLimit = 5;
+	         PageVo pvo = new PageVo(listCount, currentPage, pageLimit, boardLimit);         
+	         
+	         
+	         //service
+	         List<PostVo> postVoList = ps.allSelectUserPostList(pvo);
+	         
+	         
+	         System.out.println("===============");
+	         for (PostVo vo : postVoList) {
+	            System.out.println(vo);
+	         }
+	         
+	         //result(==view)
+	         req.setAttribute("postVoList", postVoList);
+	         req.setAttribute("pvo" , pvo);
+	         
 			// 로그인 세션 가져오기
 			HttpSession session = req.getSession();
 			MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
 
-			PostServiceLYJ ps = new PostServiceLYJ();
 			List<CategoryVo> categoryVoList = ps.selectCategory();
 			
 			if(categoryVoList == null) {

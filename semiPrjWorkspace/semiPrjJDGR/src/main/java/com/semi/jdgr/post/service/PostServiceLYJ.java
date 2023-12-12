@@ -171,7 +171,22 @@ public List<PostVo> separatedList(String categoryNo) throws Exception {
 	//dao
 	PostDaoLYJ dao = new PostDaoLYJ();
 	List<PostVo> postVoList = dao.separatedList(conn,categoryNo);
+	
+	// 공감수 조회하는 쿼리문 실행
+    for (PostVo vo : postVoList) {
+//             vo = postVoList.get(0)
+        String heartCnt = dao.getheartCnt(conn , vo.getPostNo());
+       vo.setHeartCnt(heartCnt);
+    }
+    
+    // 댓글수 조회하는 쿼리문 실행      
+    for (PostVo vo : postVoList) {
+       String replyCnt = dao.getreplyCnt(conn , vo.getPostNo());
+       vo.setReplyCnt(replyCnt);
+    }
+	
 	return postVoList;
+	
 
 	
 }
