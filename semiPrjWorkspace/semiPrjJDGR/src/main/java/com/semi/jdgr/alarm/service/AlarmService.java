@@ -25,6 +25,11 @@ public class AlarmService {
 			String userNick = dao.getUserNick(conn, alarmVo.getSenderNo());
 			alarmVo.setUserNick(userNick);
 		}
+		
+		for (AlarmVo alarmVo : alarmVoList) {
+			String blogUrl = dao.getBlogUrl(conn, alarmVo.getSenderNo());
+			alarmVo.setBlogUrl(blogUrl);
+		}
 		// close
 		for (AlarmVo alarmVo : alarmVoList) {
 			if(alarmVo.getPostNo() != null) {				
@@ -32,6 +37,7 @@ public class AlarmService {
 			alarmVo.setPostTitle(postTitle);
 			}
 		}
+		
 		
 		System.out.println();
 		JDBCTemplate.close(conn);

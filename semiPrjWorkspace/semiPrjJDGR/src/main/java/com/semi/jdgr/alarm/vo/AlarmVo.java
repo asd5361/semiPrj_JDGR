@@ -12,12 +12,13 @@ public class AlarmVo {
 	private String activeYn;
 	private String userNick;
 	private String postTitle;
+	private String blogUrl;
 	public AlarmVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public AlarmVo(String alarmNo, String receiverNo, String postNo, String senderNo, String alarmType,
-			String alarmDate, String activeYn, String userNick, String postTitle) {
+			String alarmDate, String activeYn, String userNick, String postTitle, String blogUrl) {
 		super();
 		this.alarmNo = alarmNo;
 		this.receiverNo = receiverNo;
@@ -28,12 +29,13 @@ public class AlarmVo {
 		this.activeYn = activeYn;
 		this.userNick = userNick;
 		this.postTitle = postTitle;
+		this.blogUrl = blogUrl;
 	}
 	@Override
 	public String toString() {
 		return "AlarmVo [alarmNo=" + alarmNo + ", receiverNo=" + receiverNo + ", postNo=" + postNo + ", senderNo="
 				+ senderNo + ", alarmType=" + alarmType + ", alarmDate=" + alarmDate + ", activeYn=" + activeYn
-				+ ", userNick=" + userNick + ", postTitle=" + postTitle + "]";
+				+ ", userNick=" + userNick + ", postTitle=" + postTitle + ", blogUrl=" + blogUrl + "]";
 	}
 	public String getAlarmNo() {
 		return alarmNo;
@@ -89,6 +91,11 @@ public class AlarmVo {
 	public void setPostTitle(String postTitle) {
 		this.postTitle = postTitle;
 	}
+	public String getBlogUrl() {
+		return blogUrl;
+	}
+	public void setBlogUrl(String blogUrl) {
+		this.blogUrl = blogUrl;
+	}
 	
-	
-}
+	}

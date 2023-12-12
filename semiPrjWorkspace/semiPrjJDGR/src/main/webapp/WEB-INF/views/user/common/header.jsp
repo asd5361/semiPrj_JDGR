@@ -67,10 +67,11 @@
             <h1><a href="/jdgr/home">JDGR</a></h1>
 
             <div class="search_box">
-            	<form action="/jdgr/search" method="get">
-                	<select id="searchOption">
+            	<form action="/jdgr/post/search" method="get">
+                	<select name="searchOption">
                 	    <option value="title">제목</option>
-                	    <option value="writer">작성자</option>
+                	    <option value="content">내용</option>
+                	    <option value="writer">작성자닉네임</option>
                     
                 	</select>
                 	<input type="text" name ="searchContent"id="searchInput">
@@ -178,9 +179,10 @@
 	                                            <li>
 	                                                <span class="ico_subscribe"></span>
 	                                            	
-	                                                <div class="txt" onclick="goBlog()">
+	                                                <div class="txt">
 	                                                    <strong><%=alarmVo.getUserNick() %></strong>
 	                                                    님이 <%=alarmVo.getAlarmType() %>
+	                                                   	<input type="hidden" id="blogUrl" name = "blogUrl" value="<%=alarmVo.getBlogUrl()%>"> 
 	                                                </div>
 	                                            	
 	                                                <a href="" class="delete" >삭제</a>
@@ -226,28 +228,60 @@
 
     function goPost(event) {
     		const li = event.currentTarget;
-        	
-        	const postNo = li.children[1].value;
-        	console.log(postNo);
-
+    		
+    		const id = li.children[1].id;
+        	const vlaue = li.children[1].value;
+        		
         	const form = document.createElement("form");
-        	form.action = "/jdgr/post/detail";
-        	form.method = "GET";
+            form.method = "GET";
+
+            if (id === "blogUrl") {
+            	console.log("dkdkdkdk");
+	            document.body.appendChild(form);
+                form.action = "/jdgr/blog/view/" + vlaue;
+                
+                
+            } else if (id === "postNo") {
+            	
+                const input = document.createElement("input");
+	            input.type = "hidden";
+	            input.name = id; // id 값에 따라 name 설정
+	            form.appendChild(input);
+	            document.body.appendChild(form);
+	
+	            form.action = "/jdgr/post/detail";
+            }
+                form.submit();
+            
+        	
+            
+//         	const form = document.createElement("form");
+//             form.action = "/jdgr/post/detail";
+//             form.method = "GET";
+	
+//             const input = document.createElement("input");
+//             input.type = "hidden";
+//             input.name = "pNo";
+//             input.value = postNo;
+//             form.appendChild(input);
+//             document.body.appendChild(form);
+            	
+
+//         	else{
+//         		const blogUrl = li.children[1].value;
+        		
+//         		const form = document.createElement("form");
+//             	form.action = "/jdgr/blog/view/"+blogUrl;
+//             	form.method = "GET";	
+
+//                 form.appendChild(input);
+//                 document.body.appendChild(form);
+//             	form.submit();
+//         	}
 
         	
-        	
-        	const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "pNo";
-            input.value = postNo;
-
-            form.appendChild(input);
-            document.body.appendChild(form);
-        	form.submit();
     }
-    function goBlog() {
-    	
-    }
+    
     function search(){
     	
     	 var selectedOption = document.getElementById("searchOption").value;
