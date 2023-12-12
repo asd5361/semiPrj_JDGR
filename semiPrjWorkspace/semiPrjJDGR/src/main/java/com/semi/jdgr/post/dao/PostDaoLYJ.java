@@ -216,9 +216,10 @@ public class PostDaoLYJ {
 
 	// 유저 홈화면에 맨 처음에 보이는 전체 리스트 조회
 	public List<PostVo> allSelectUserPostList(Connection conn, PageVo pvo) throws Exception {
+		
 
 		// SQL
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NICK , P.CONTENT, P.POST_IMG FROM POST P JOIN BLOG  B ON  P .BLOG_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE P.DEL_YN = 'N' ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NICK , P.CONTENT, P.POST_IMG, P.POST_NO FROM POST P JOIN BLOG  B ON  P .BLOG_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE P.DEL_YN = 'N' ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, pvo.getStartRow());
 		pstmt.setInt(2, pvo.getLastRow());
@@ -231,11 +232,13 @@ public class PostDaoLYJ {
 			String userNick = rs.getString("MEM_NICK");// 작성자닉네임
 			String content = rs.getString("CONTENT");// 내용
 			String postImg = rs.getString("POST_IMG");// 포스트 이미지
+			String postNo = rs.getString("POST_NO");//포스트 번호
 
 			PostVo postVo = new PostVo();
 			postVo.setUserNick(userNick);
 			postVo.setContent(content);
 			postVo.setPostImg(postImg);
+			postVo.setPostNo(postNo);
 
 			postVoList.add(postVo);
 
@@ -248,99 +251,7 @@ public class PostDaoLYJ {
 
 	}// allSelectUserPostList
 
-	public String getUserheartCnt(Connection conn, PostVo postVo) throws Exception {
-		// SQL
-		String sql3 = "SELECT COUNT(H.POST_NO) AS HEARTCNT FROM HEART H JOIN POST P ON P.POST_NO = H.POST_NO";
-		PreparedStatement pstmt3 = conn.prepareStatement(sql3);
-		ResultSet rs3 = pstmt3.executeQuery();
-
-		// rs
-		String heartCnt = null;// 공감수
-		if (rs3.next()) {
-			heartCnt = rs3.getString("HEARTCNT");// 공감수
-		}
-		PostVo vo = new PostVo();
-		vo.setHeartCnt(heartCnt);
-
-		// close
-		JDBCTemplate.close(pstmt3);
-		JDBCTemplate.close(rs3);
-		return heartCnt;
-	}
-
-	public String getUserreplyCnt(Connection conn, PostVo postVo) throws Exception {
-		// SQL
-		String sql2 = "SELECT COUNT(R.REPLY_NO) AS REPLYCNT FROM REPLY R JOIN POST P ON P.POST_NO = R.POST_NO";
-		PreparedStatement pstmt2 = conn.prepareStatement(sql2);
-		ResultSet rs2 = pstmt2.executeQuery();
-
-		// rs
-		String replyCnt = null;// 댓글수
-		if (rs2.next()) {
-			replyCnt = rs2.getString("REPLYCNT");// 댓글수
-		}
-		PostVo vo = new PostVo();
-		vo.setReplyCnt(replyCnt);
-
-		// close
-		JDBCTemplate.close(pstmt2);
-		JDBCTemplate.close(rs2);
-		return replyCnt;
-	}
-
-	// 게시글 갯수 조회(유저 홈화면에 맨 처음에 보이는 전체 리스트 조회)
-	public int selectUserPostCount(Connection conn) throws Exception {
-		// SQL
-		String sql = "SELECT COUNT(*) FROM POST";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-
-		// rs
-		int cnt = 0;
-		if (rs.next()) {
-			cnt = rs.getInt(1);
-		}
-
-		// close
-		JDBCTemplate.close(rs);
-		JDBCTemplate.close(pstmt);
-
-		return cnt;
-	}
-
-	// 유저 홈화면에 미술,디자인 포스트 조회
-	public List<PostVo> allSelectUserArtPostList(Connection conn, PageVo pvo) throws Exception {
-
-		// SQL
-		String sql = "SELECT * FROM ( SELECT  ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NICK , P.CONTENT, P.POST_IMG FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE DEL_YN = 'Y' ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ? ;";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, pvo.getStartRow());
-		pstmt.setInt(2, pvo.getLastRow());
-		ResultSet rs = pstmt.executeQuery();
-
-		// rs
-		List<PostVo> postVoList = new ArrayList<PostVo>();
-		while (rs.next()) {
-
-			String userNick = rs.getString("MEM_NICK");// 작성자닉네임
-			String content = rs.getString("CONTENT");// 내용
-			String postImg = rs.getString("POST_IMG");// 포스트 이미지
-
-			PostVo postVo = new PostVo();
-			postVo.setUserNick(userNick);
-			postVo.setContent(content);
-			postVo.setPostImg(postImg);
-
-			postVoList.add(postVo);
-
-		}
-		JDBCTemplate.close(rs);
-		JDBCTemplate.close(pstmt);
-
-		return postVoList;
-
-	}
-
+	// 카테고리 선택
 	public List<CategoryVo> selectCategory(Connection conn) throws Exception {
 		String sql = "SELECT * FROM CATEGORY_LIST";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -374,25 +285,43 @@ public class PostDaoLYJ {
 		return categoryVoList;
 	}
 
-	public List<PostVo> separatedList(Connection conn, String categoryNo) throws Exception {
+	//카테고리별 리스트 조회
+	public List<PostVo> separatedList(Connection conn, String categoryNo, PageVo pvo) throws Exception {
+		
+		String where = null; 
+		
+		if(!categoryNo.equals("0")) {
+			where = " WHERE CL.CATEGORY_NO = ? ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ?";
+		}else {
+			where = " ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ?";
+		}
 
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NICK , P.CONTENT, P.POST_IMG FROM POST P JOIN BLOG  B ON  P .BLOG_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE P.DEL_YN = 'N' AND CL.CATEGORY_NO = ? ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ?";
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NICK , P.CONTENT, P.POST_IMG, P.POST_NO FROM POST P JOIN BLOG  B ON  P .BLOG_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO" + where;
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, categoryNo);
-		pstmt.setInt(2, 1);
-		pstmt.setInt(3, 100);
+		
+		if(!categoryNo.equals("0")) {
+			pstmt.setString(1, categoryNo);
+			pstmt.setInt(2, pvo.getStartRow());
+			pstmt.setInt(3, pvo.getLastRow());
+		}else {
+			pstmt.setInt(1, pvo.getStartRow());
+			pstmt.setInt(2, pvo.getLastRow());
+		}
+		
 		ResultSet rs = pstmt.executeQuery();
 		List<PostVo> postVoList = new ArrayList<PostVo>();
 		while (rs.next()) {
 			String memNick = rs.getString("MEM_NICK");
 			String content = rs.getString("CONTENT");
 			String postImg = rs.getString("POST_IMG");
+			String postNo = rs.getString("POST_NO");
 
 			PostVo postVo = new PostVo();
 
 			postVo.setUserNick(memNick);
 			postVo.setContent(content);
 			postVo.setPostImg(postImg);
+			postVo.setPostNo(postNo);
 
 			postVoList.add(postVo);
 

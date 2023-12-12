@@ -1,4 +1,5 @@
 
+<%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="com.semi.jdgr.post.vo.CategoryVo"%>
 <%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
@@ -10,7 +11,9 @@
 		<% 
 			PostVo postListDetailVo = (PostVo) session.getAttribute("postListDetailVo"); 
 			List<CategoryVo> categoryVoList = (List<CategoryVo>)request.getAttribute("categoryVoList");
+			
 			List<PostVo> postVoList = (List<PostVo>)request.getAttribute("postVoList");
+			PageVo pvo = (PageVo)request.getAttribute("pvo");
 		%>
      	
 <!-- main -->
@@ -179,15 +182,6 @@
                        
                     <%} %>
                     
-                    
-                    
-<!--                     <li><button onclick="art()" value="">미술·디자인</button></li> -->
-<!--                     <li><button onclick="animal()" value="">반려동물</button></li> -->
-<!--                     <li><button onclick="picture()" value="">사진</button></li> -->
-<!--                     <li><button onclick="foreign()" value="">어학·외국어</button></li> -->
-<!--                     <li><button onclick="game()" value="">게임</button></li> -->
-<!--                     <li><button onclick="car()" value="">자동차</button></li> -->
-<!--                     <li><button onclick="house()" value="">맛집</button></li> -->
                 </ul>
 
                 <!-- 카테고리별 블로그 포스트 -->
@@ -207,30 +201,32 @@
                                 <div class="postWrite2"><img src="/jdgr/resources/user/images/ico/ico_reply.svg"><%= postVo.getReplyCnt() %></div>
                             </div>         
                         </div>
-                       
-                        
-                    </div>
+                 </div>
                     <%} %>
-                </div>
-                <!-- 페이징 -->
+                 </div>
+ 
+            	<!-- 페이징 -->
                 <div class="paging_box">
                     <ul>
-                        <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                        <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                        <li class="on"><a href="">1</a></li>
-                        <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li><a href="">6</a></li>
-                        <li><a href="">7</a></li>
-                        <li><a href="">8</a></li>
-                        <li><a href="">9</a></li>
-                        <li><a href="">10</a></li>
-                        <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
+                    <%if(pvo.getCurrentPage() != 1) {%>
+                        <li class="prev_all"><a href="/jdgr/home?pno=1" title="최신페이지로 이동"></a></li>
+                        <li class="prev"><a href="/jdgr/home?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
+                        <%} %>
+                        
+                        <%for(int i = pvo.getStartPage(); i<= pvo.getEndPage(); i++) {%>
+                           <%if(i == pvo.getCurrentPage()) {%>   
+                           <li class="on"><a href="/jdgr/home?pno=<%= i%>"><%= i%></a></li>
+                           <%}else{ %>  
+                           <li><a href="/jdgr/home?pno=<%= i%>"><%= i%></a></li>
+                        <%} }%>
+                        <li class="next"><a href="/jdgr/home?pno=<%=pvo.getCurrentPage()+1 %>" title="다음페이지로 이동"></a></li>
+                        <li class="next_all"><a href="/jdgr/home?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
                     </ul>
                 </div>
+                
+                
+            </div>
+            	
             </div>
 
             <!-- right -->
@@ -467,11 +463,13 @@ const divArray = document.querySelectorAll("div.categorybtn");
        divArray[j].addEventListener('click' , selectCategory);
     }
 
+    
     function selectCategory(event) {
     	var postBoxes = document.querySelectorAll('.postbox'); // postbox 클래스의 모든 요소 선택
         postBoxes.forEach(function(postBox) {
             postBox.remove(); // 각 postbox 요소를 삭제
         });
+    	
           const cateLi = event.currentTarget;
            
            const categoryNo = cateLi.children[1].value;
@@ -481,7 +479,14 @@ const divArray = document.querySelectorAll("div.categorybtn");
            .then((resp) => {return resp.json()})
            .then((data)=>{
             console.log(data);
-            const cateVoList = data;
+            
+//          const map = data;
+// 			HashMap<String, Object> map = new HashMap<String, Object>();
+            const cateVoList = data.postVoList;
+			const pvo = data.pvo;
+			console.log(cateVoList);
+			console.log(pvo);
+			
             const targetTag = document.querySelector("#target");
             
             cateVoList.forEach((vo) => {
@@ -541,14 +546,25 @@ const divArray = document.querySelectorAll("div.categorybtn");
 
                    targetTag.appendChild(postBox); // 실제로 추가할 부분
                    
-                   
                });
            });
-           
-           
    }
 
-///
+    <!-- 카테고리 페이징 -->
+ 	// 모든 .paging_box 요소를 선택하여 삭제하는 함수
+    function removeAllPagingBoxes() {
+        var pagingBoxes = document.querySelectorAll('.paging_box'); // paging_box 클래스의 모든 요소 선택
+        pagingBoxes.forEach(function(pagingBox) {
+            pagingBox.remove(); // 각 paging_box 요소를 삭제
+        });
+    }
+
+    
+    
+    
+    
+    
+    
 const swiper = new Swiper('.swiper-container', {
     direction: 'horizontal', // 수평 슬라이드
     slidesPerView: 4,

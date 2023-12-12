@@ -128,26 +128,7 @@ public class PostServiceLYJ {
    }//allSelectUserPostList
 
    
-   // 게시글 갯수 조회(유저 홈화면에 맨 처음에 보이는 전체 리스트 조회)
-   public int selectUserPostCount() throws Exception {
-      
-      // conn
-      Connection conn = JDBCTemplate.getConnection();
-      
-      // DAO
-      PostDaoLYJ dao = new PostDaoLYJ();
-      int cnt = dao.selectUserPostCount(conn);
-      
-      // close
-      JDBCTemplate.close(conn);
-      
-      return cnt;
-   }
-   
- 
-
-
-
+// 카테고리 선택
 public List<CategoryVo> selectCategory() throws Exception {
 	
 	//conn
@@ -163,14 +144,14 @@ public List<CategoryVo> selectCategory() throws Exception {
 }
 
 
-
-public List<PostVo> separatedList(String categoryNo) throws Exception {
+//카테고리별 리스트 조회
+public List<PostVo> separatedList(String categoryNo, PageVo pvo) throws Exception {
 	//conn
 	Connection conn = JDBCTemplate.getConnection();
 	
 	//dao
 	PostDaoLYJ dao = new PostDaoLYJ();
-	List<PostVo> postVoList = dao.separatedList(conn,categoryNo);
+	List<PostVo> postVoList = dao.separatedList(conn,categoryNo,pvo);
 	
 	// 공감수 조회하는 쿼리문 실행
     for (PostVo vo : postVoList) {
