@@ -44,7 +44,7 @@ public class HomeController extends HttpServlet{
 				blogVo = bs.getUserReqblog(memberVo); // 대표 블로그 정보 가져오기
 				blogVoList = bs.getBlogList(memberVo); // 블로그 리스트 가져오기
 			}
-			
+			System.out.println(categoryVoList);
 			session.setAttribute("loginMemberBlogVo", blogVo);
 			session.setAttribute("loginMemberBlogVoList", blogVoList);
 			
