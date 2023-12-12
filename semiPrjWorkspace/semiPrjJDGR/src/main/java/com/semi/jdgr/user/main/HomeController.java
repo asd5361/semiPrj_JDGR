@@ -26,7 +26,7 @@ public class HomeController extends HttpServlet{
 
 		try {
 			PostServiceLYJ ps = new PostServiceLYJ();   
-			int listCount = ps.selectUserPostCount();
+			int listCount = ps.selectPostCount();
 			
 	         
 	         //data
