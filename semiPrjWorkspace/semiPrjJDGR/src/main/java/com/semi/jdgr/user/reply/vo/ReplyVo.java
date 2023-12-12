@@ -10,8 +10,7 @@ public class ReplyVo {
 	private String writeDate;
 	private String updateDate;
 	private String delYn;
-	
-	
+	private String replyMemNick;
 	public String getReplyNo() {
 		return replyNo;
 	}
@@ -60,10 +59,20 @@ public class ReplyVo {
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
 	}
-	
-	
+	public String getReplyMemNick() {
+		return replyMemNick;
+	}
+	public void setReplyMemNick(String replyMemNick) {
+		this.replyMemNick = replyMemNick;
+	}
+	@Override
+	public String toString() {
+		return "ReplyVo [replyNo=" + replyNo + ", postNo=" + postNo + ", replyMem=" + replyMem + ", parentsNo="
+				+ parentsNo + ", con=" + con + ", writeDate=" + writeDate + ", updateDate=" + updateDate + ", delYn="
+				+ delYn + ", replyMemNick=" + replyMemNick + "]";
+	}
 	public ReplyVo(String replyNo, String postNo, String replyMem, String parentsNo, String con, String writeDate,
-			String updateDate, String delYn) {
+			String updateDate, String delYn, String replyMemNick) {
 		super();
 		this.replyNo = replyNo;
 		this.postNo = postNo;
@@ -73,24 +82,13 @@ public class ReplyVo {
 		this.writeDate = writeDate;
 		this.updateDate = updateDate;
 		this.delYn = delYn;
+		this.replyMemNick = replyMemNick;
 	}
-	
-	
-	@Override
-	public String toString() {
-		return "ReplyVo [replyNo=" + replyNo + ", postNo=" + postNo + ", replyMem=" + replyMem + ", parentsNo="
-				+ parentsNo + ", con=" + con + ", writeDate=" + writeDate + ", updateDate=" + updateDate + ", delYn="
-				+ delYn + "]";
-	}
-	
-	
 	public ReplyVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-
 	
 	
 }

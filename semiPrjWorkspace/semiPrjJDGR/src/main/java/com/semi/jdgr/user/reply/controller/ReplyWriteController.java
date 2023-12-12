@@ -26,6 +26,13 @@ public class ReplyWriteController extends HttpServlet {
 			String postNo = req.getParameter("pNo");
 			String replyMem = req.getParameter("replyMem");
 			String con = req.getParameter("con");
+			String replyNo = req.getParameter("replyNo");
+			
+			System.out.println("포스트넘버" + postNo);
+			System.out.println("댓글쓴멤버" + replyMem);
+			System.out.println("포스트내용" + con);
+			System.out.println("댓글넘버" + replyNo);
+			
 			ReplyVo vo = new ReplyVo();
 			vo.setPostNo(postNo);
 			vo.setReplyMem(replyMem);
@@ -37,16 +44,10 @@ public class ReplyWriteController extends HttpServlet {
 			if(result != 1) {
 				throw new Exception();
 			}
-			/********작성 끝난 후 댓글 조회가 실행되어야 함*********/
-			// result (replyVoList 를 JSON 문자열로 바꿔서 내보내기 - GSON 활용 예정)
-			Gson gson = new Gson();				// GSON 이 제공하는 메소드를 사용하기 위해 객체 생성
-			String str = gson.toJson(result);	// 객체 -> JSON형식문자열 변환 함수 호출
 			
-			resp.setCharacterEncoding("UTF-8");	// 한글 처리
-			PrintWriter out = resp.getWriter();	// 문자열 내보내기를 위한 통로 준비 (JSP 필요없음)
-			out.write(str);						// JSON 으로 변환된 문자열을 내보냄
+			// result
+			req.getRequestDispatcher("/WEB-INF/views/user/blog/blogView.jsp").forward(req, resp);
 			
-			//ajax 처리 예정
 		}catch(Exception e) {
 			e.printStackTrace();
 			req.setAttribute("errorMsg", "[ERROR] 댓글 작성 에러 발생");

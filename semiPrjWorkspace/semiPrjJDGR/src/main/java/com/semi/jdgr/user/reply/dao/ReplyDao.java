@@ -37,7 +37,7 @@ public class ReplyDao {
 	public List<ReplyVo> getReplyList(Connection conn, String postNum) throws Exception{
 		
 		// SQL
-		String sql = "SELECT REPLY_NO , POST_NO, REPLY_MEM, PARENTS_NO ,CON ,WRITE_DATE ,UPDATE_DATE, DEL_YN FROM REPLY WHERE POST_NO = ? AND DEL_YN = 'N' ORDER BY COALESCE(PARENTS_NO, REPLY_NO) ASC, REPLY_NO ASC";
+		String sql = "SELECT R.* , M.MEM_NICK AS REPLY_MEM_NICK FROM REPLY R JOIN MEMBER M ON M.MEM_NO = R.REPLY_MEM WHERE R.POST_NO = ? AND R.DEL_YN = 'N' ORDER BY COALESCE(PARENTS_NO, REPLY_NO) ASC, REPLY_NO ASC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, postNum);
 		ResultSet rs = pstmt.executeQuery();
@@ -51,6 +51,7 @@ public class ReplyDao {
 			String parentsNo = rs.getString("PARENTS_NO");
 			String con = rs.getString("CON");
 			String writeDate = rs.getString("WRITE_DATE");
+			String replyUserName = rs.getString("REPLY_MEM_NICK");
 			
 			ReplyVo vo = new ReplyVo();
 			vo.setReplyNo(no);
@@ -59,6 +60,7 @@ public class ReplyDao {
 			vo.setParentsNo(parentsNo);
 			vo.setCon(con);
 			vo.setWriteDate(writeDate);
+			vo.setReplyMemNick(replyUserName);
 			
 			replyVoList.add(vo);
 		}
