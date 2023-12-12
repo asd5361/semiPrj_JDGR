@@ -61,11 +61,11 @@ public class PostControllerJOJ extends HttpServlet {
 			// result
 			HttpSession session = req.getSession();
 			session.setAttribute("postDetailVo", postDetailVo);
-
+			
 			req.setAttribute("heartCnt", heartCnt);
 			req.setAttribute("replyCnt", replyCnt);
 			req.getRequestDispatcher("/WEB-INF/views/user/blog/blogView.jsp").forward(req, resp);
-
+			
 		} catch (Exception e) {
 			System.out.println("블로그 포스트 상세보기 실패");
 			e.printStackTrace();

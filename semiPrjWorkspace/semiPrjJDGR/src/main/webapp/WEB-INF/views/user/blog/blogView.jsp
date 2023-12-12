@@ -34,50 +34,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                <td>33</td>
-                                <td>2023-11-23</td>
-                            </tr>
-                            <tr>
-                                <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                <td>33</td>
-                                <td>2023-11-23</td>
-                            </tr>
-                            <tr>
-                                <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                <td>33</td>
-                                <td>2023-11-23</td>
-                            </tr>
-                            <tr>
-                                <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                <td>33</td>
-                                <td>2023-11-23</td>
-                            </tr>
-                            <tr>
-                                <td>유저가 작성한 글 제목이 여기에 표시됩니다.</td>
-                                <td>33</td>
-                                <td>2023-11-23</td>
-                            </tr>
                         </tbody>
                     </table>
                     <div class="paging_box">
-                        <ul>
-                            <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                            <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                            <li class="on"><a href="">1</a></li>
-                            <li><a href="">2</a></li>
-                            <li><a href="">3</a></li>
-                            <li><a href="">4</a></li>
-                            <li><a href="">5</a></li>
-                            <li><a href="">6</a></li>
-                            <li><a href="">7</a></li>
-                            <li><a href="">8</a></li>
-                            <li><a href="">9</a></li>
-                            <li><a href="">10</a></li>
-                            <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                            <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
-                        </ul>
                     </div>
                 </div>
 
@@ -331,14 +290,20 @@
     const urlParams = url.searchParams;
     const blogUrl = urlParams.get("url");
     const groupNo = urlParams.get("GroupNo");
+    const pNo = urlParams.get("pNo");
+    
     let pnumCnt = urlParams.get("pnum");
 
+    console.log(pNo);
     console.log(blogUrl);
     console.log(groupNo);
     console.log('pnum' + pnumCnt);
     
-    function getPostList(pnum, blogurl, groupno){
-        fetch('/jdgr/post/list?pnum=' + pnum + "&&categoryNo=" + groupno + "&&url=" + blogurl)
+    function getPostList(pnum, blogurl, groupno, pno){
+    	console.log('pno값' + pno);
+    	
+        fetch('/jdgr/post/list?pnum=' + pnum + "&categoryNo=" + groupno + "&url=" + blogurl + "&pNo=" + pno)
+//         fetch('/jdgr/post/list?pNo=' + pNo)
         .then(resp => resp.json())
         .then(data => {
             // 서버 응답 처리
@@ -429,7 +394,8 @@
     if(pnumCnt === null){
         pnumCnt = 1;
     }
-    getPostList(pnumCnt, blogUrl, groupNo);
+    console.log(pNo);
+    getPostList(pnumCnt, blogUrl, groupNo, pNo);
 
     // function getReplyList(refNo){
     //     fetch("/app99/board/reply/list?refNo=" + refNo)
