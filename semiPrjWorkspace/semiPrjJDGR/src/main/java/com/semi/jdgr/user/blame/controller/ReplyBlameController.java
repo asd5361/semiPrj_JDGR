@@ -34,9 +34,6 @@ public class ReplyBlameController extends HttpServlet{
 			
 			
 			//data
-
-			//GPT
-			// doGet 메서드에서 vo 객체 생성 및 댓글 정보 설정
 			ReplyVo vo = new ReplyVo();
 			vo.setReplyNo(req.getParameter("replyNo"));	
 			vo.setReplyMem(req.getParameter("replyMem"));
@@ -44,25 +41,7 @@ public class ReplyBlameController extends HttpServlet{
 
 			// 댓글 정보를 모달에 전달
 			req.setAttribute("vo", vo);
-//			---------------
-//			ReplyVo vo = new ReplyVo();
-//			
-//			vo.setReplyNo("3");	
-//			vo.setReplyMem("2");
-//			vo.setCon("내용");
-			
-//			String replyNo = req.getParameter("replyNo");
-//			String postNo = req.getParameter("postNo");
-//			String replyMem = req.getParameter("replyMem");
-//			String parentsNo = req.getParameter("parentsNo");
-//			String con = req.getParameter("con");
-//			
-//			ReplyBlameVo vo = new ReplyBlameVo();
-//			vo.setReplyNo(replyNo);
-//			vo.setPostNo(postNo);
-//			vo.setReplyMem(replyMem);
-//			vo.setParentsNo(parentsNo);
-//			vo.setCon(con);
+
 			
 			//service
 			ReplyBlameService rbs = new ReplyBlameService();	

@@ -8,6 +8,7 @@
        
        <%
        String pno = (String)request.getAttribute("pno");
+   		String currPage = (String)request.getAttribute("currPage");       
        AdminPostBlameVo vo = (AdminPostBlameVo) request.getAttribute("vo");
     	%>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
@@ -70,27 +71,29 @@
                                                 <option value="">로그인 정지 3일</option>
                                                 <option value="">로그인 정지 7일</option>
                                             </select>
+                                  			<input type="hidden" name="pno" value="<%=pno%>">
+                                            <input type="hidden" name="currPage" value="<%=currPage%>"> 
                                         </div>
                                     </td>
                                     <th scope="row"><label for="">답변 일자</label></th>
-                                    <td><%= vo.getpBlaNo() %></td>
+                                    <td><%= vo.getpAnsDate() %></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">처리일자</label></th>
-                                    <td><%= vo.getpBlaNo() %></td>
+                                    <td><%= vo.getpDelYn() %></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="inp_03">세부 신고 사유</label></th>
                                     <td colspan="3"><%= vo.getpBlaDetail() %></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row"><label for="inp_03">답변 내용</label></th>
-                                    <td colspan="3">
-                                         <div class="form_box">
-                                            <textarea placeholder="답변을 입력하세요"></textarea>
-                                        </div>
-                                    </td>
-                                </tr>
+<!--                                 <tr> -->
+<!--                                     <th scope="row"><label for="inp_03">답변 내용</label></th> -->
+<!--                                     <td colspan="3"> -->
+<!--                                          <div class="form_box"> -->
+<!--                                             <textarea placeholder="답변을 입력하세요"></textarea> -->
+<!--                                         </div> -->
+<!--                                     </td> -->
+<!--                                 </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -99,10 +102,10 @@
 
                 <div class="btn_box_group right mt20">
                     <div class="btn_box">
-                        <a href="/jdgr/admin/blame/p_blame_list" class="btn_grayline">목록가기</a>
+                        <a href="/jdgr/admin/blame/p_blame_list?no=1" class="btn_grayline">목록가기</a>
                     </div>
                     <div class="btn_box">
-                        <a href="" class="btn_grayline">저장</a>
+                        <a href="javascript:sendPost();" class="btn_grayline">저장</a>
                     </div>
                     <div class="btn_box">
                         <a href="" class="btn_blue">처리완료</a>
@@ -114,3 +117,19 @@
         <!-- //container -->
 
    <%@ include file="/WEB-INF/views/admin/common/footer.jsp" %>
+   
+   
+   
+      <script>
+   function sendPost(){
+       let tableTag = document.querySelector(".tbl_box table");
+       let formTag = document.createElement("form");
+       let divTag = document.querySelector(".tbl_box");
+       formTag.setAttribute('method','get');
+       formTag.setAttribute('action','/jdgr/admin/blame/p_blame_update');
+       formTag.appendChild(tableTag);
+       divTag.appendChild(formTag);
+       formTag.submit();
+   }
+</script>
+   

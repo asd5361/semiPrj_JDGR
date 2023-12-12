@@ -65,9 +65,9 @@
                         <label for="sel_01">제재 여부</label>
                         <div class="form_box">
                             <select class="sel_box" name="sancYn">
-                                <option value="">어떻게 구현하지X</option>
-                                <option value="">로그인 3일 정지</option>
-                                <option value="">로그인 7일 정지</option>
+                                <option value="1">제재 X</option>
+                                <option value="2">로그인 3일 정지</option>
+                                <option value="3">로그인 7일 정지</option>
                             </select>
                         </div>
                     </div>

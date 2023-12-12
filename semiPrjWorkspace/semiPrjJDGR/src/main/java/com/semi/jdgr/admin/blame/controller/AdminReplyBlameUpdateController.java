@@ -24,28 +24,23 @@ public class AdminReplyBlameUpdateController extends HttpServlet{
 		String pno = req.getParameter("pno");
 		String currPage = req.getParameter("currPage");
 		String sancYn = req.getParameter("sancYn");
-		String deleteYnColumn = "R_DELETE_YN";
 
 
 		AdminReplyBlameVo vo = new AdminReplyBlameVo();
-		vo.setrBlaNo(req.getParameter("rBlaNo"));
-		vo.setrNo(req.getParameter("rNo"));
-		vo.setrBlamerNo(req.getParameter("rBlamerNo"));
-		vo.setrBlaCon(req.getParameter("rBlaCon"));
-		vo.setrBlaDate("rBlaDate");
-		vo.setrSancYn(req.getParameter("sancYn"));
+		vo.setrNo(pno);
+		vo.setrSancYn(sancYn);
 		
 		
 		//service
 		AdminReplyBlameService ars = new AdminReplyBlameService();
-		int result = ars.rBlameUpdate(vo, deleteYnColumn);
+		int results = ars.rBlameUpdate(vo);
 				
 		
 		//result 
-		if(result != 1) {
+		if(results != 1) {
 			throw new Exception();
 		}
-		resp.sendRedirect("/jdgr/admin/blame/r_blame_list?pno="+ pno);
+		resp.sendRedirect("/jdgr/admin/blame/r_blame_list?pno="+ currPage);
 		
 //		AdminReplyBlameVo vo = ars.updateBlameSanc(sancYn);
 //		resp.sendRedirect("/admin/blame/r_blame_detail");

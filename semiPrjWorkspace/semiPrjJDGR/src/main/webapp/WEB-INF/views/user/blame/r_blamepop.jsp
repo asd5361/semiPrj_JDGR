@@ -7,18 +7,32 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
     
-     <%
-     	ReplyVo vo = (ReplyVo) request.getAttribute("vo");
-     	Map<String, String> searchMap = (Map<String, String>)request.getAttribute("searchMap");
-    	ReplyBlameService rbs = new ReplyBlameService();
-    	List<ReplyBlameVo> rvo = (List<ReplyBlameVo>)request.getAttribute("rvo");
-    %>
     
-<!--     로그인 안 했을 경우 신고 제한 -->
-
-
+<%--     <% --%>
+<!-- //     // 사용자가 로그인했는지 확인 -->
+<!-- //     MemberVo member = (MemberVo)session.getAttribute("loginUser"); -->
+<!-- //     if (member == null) { -->
+<%-- %> --%>
+<!--         <script> -->
+<!-- //             alert("로그인 후 신고 가능합니다."); -->
+<!--         </script> -->
+<%-- <% --%>
+<!-- //     } else { -->
+<!-- //         // 사용자가 로그인했으면, 모달에 대한 기존 코드를 계속 진행 -->
+<!-- //         ReplyVo vo = (ReplyVo) request.getAttribute("vo"); -->
+<!-- //         ReplyBlameService rbs = new ReplyBlameService(); -->
+<!-- //         List<ReplyBlameVo> rvo = (List<ReplyBlameVo>)request.getAttribute("rvo"); -->
+<%-- %> --%>
+    
+     <%
+		ReplyVo vo = (ReplyVo) request.getAttribute("vo");
+		ReplyBlameService rbs = new ReplyBlameService();
+		List<ReplyBlameVo> rvo = (List<ReplyBlameVo>)request.getAttribute("rvo");
+		
+	 %>
+    
 <link rel="stylesheet" href="/jdgr/resources/user/css/blamepop.css">
-<button class="modal_open" data-target="#pop_email" >신고하기</button>
+<button class="modal_open" data-target="#pop_email" >신고하기</button>		<!-- 로그인 정보 / 댓글 정보 / 작성자 정보 가져오기 -->
 <!-- 레이어팝업 모달 -->
 <div id="pop_email" class="modal_bg">
     <div class="modal_box">
@@ -27,12 +41,19 @@
             <button class="modal_close">닫기</button>
         </div>
         <hr>
+        <%
+    // 임의의 사용자 이름 설정
+    String fakeUserName = "1";
+	String fakeContent = "댓글내용";
+    // 나머지 코드에서 vo.getReplyMem() 대신에 가상의 사용자 이름 사용
+%>
         <div class="writer_content">
-        <h5>작성자 |<%= vo.getReplyMem() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
+<%--         <h5>작성자 |<%= vo.getReplyMem() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 --> --%>
+        <h5>작성자 |   <%= fakeUserName %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
         
         <br>
-        <h5>내   용| <%= vo.getCon() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
-        
+<%--         <h5>내   용| <%= vo.getCon() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 --> --%>
+        <h5>내   용| <%= fakeContent %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
         </div>
         <hr>
         <form action ="/jdgr/user/blame/r_blamepop" method="post">
@@ -63,9 +84,12 @@
 <!--             <input type="hidden" name="rWriterNo" value = "1"> -->
 <!--             <input type="hidden" name="rBlaCon" value = "댓글내용"> -->
 <!--             <input type="hidden" name="replyNo" value = "1"> -->
-            <input type="hidden" name="rWriterNo" value=<%= vo.getReplyMem() %>>
-            <input type="hidden" name="rBlaCon" value=<%= vo.getCon() %>>
-            <input type="hidden" name="replyNo" value = <%= vo.getrNo %>>
+<%--             <input type="hidden" name="rWriterNo" value=<%= vo.getReplyMem() %>> --%>
+<%--             <input type="hidden" name="rBlaCon" value=<%= vo.getCon() %>> --%>
+            <input type="hidden" name="rWriterNo" value=<%= fakeUserName %>>
+            <input type="hidden" name="rBlaCon" value=<%= fakeContent %>>
+
+            <input type="hidden" name="replyNo" value = <%= vo.getReplyNo() %>>
              
         </div>
         <div class="modal_footer">
