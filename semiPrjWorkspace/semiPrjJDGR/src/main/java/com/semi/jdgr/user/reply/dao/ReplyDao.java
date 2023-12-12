@@ -34,12 +34,12 @@ public class ReplyDao {
 
 	
 	//댓글 목록 조회
-	public List<ReplyVo> getReplyList(Connection conn, String replyNo) throws Exception{
+	public List<ReplyVo> getReplyList(Connection conn, String postNum) throws Exception{
 		
 		// SQL
-		String sql = "SELECT REPLY_NO ,POST_NO ,REPLY_MEM ,CON ,WRITE_DATE ,UPDATE_DATE, DEL_YN FROM REPLY WHERE REPLY_NO = ? ORDER BY REPLY_NO DESC";
+		String sql = "SELECT REPLY_NO , POST_NO, REPLY_MEM, PARENTS_NO ,CON ,WRITE_DATE ,UPDATE_DATE, DEL_YN FROM REPLY WHERE POST_NO = ? AND DEL_YN = 'N' ORDER BY COALESCE(PARENTS_NO, REPLY_NO) ASC, REPLY_NO ASC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, replyNo);
+		pstmt.setString(1, postNum);
 		ResultSet rs = pstmt.executeQuery();
 		
 		// rs
@@ -48,6 +48,7 @@ public class ReplyDao {
 			String no = rs.getString("REPLY_NO");
 			String postNo = rs.getString("POST_NO");
 			String replyMem = rs.getString("REPLY_MEM");
+			String parentsNo = rs.getString("PARENTS_NO");
 			String con = rs.getString("CON");
 			String writeDate = rs.getString("WRITE_DATE");
 			
@@ -55,6 +56,7 @@ public class ReplyDao {
 			vo.setReplyNo(no);
 			vo.setPostNo(postNo);
 			vo.setReplyMem(replyMem);
+			vo.setParentsNo(parentsNo);
 			vo.setCon(con);
 			vo.setWriteDate(writeDate);
 			

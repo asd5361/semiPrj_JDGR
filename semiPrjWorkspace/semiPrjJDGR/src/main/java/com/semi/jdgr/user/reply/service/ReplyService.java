@@ -32,20 +32,20 @@ public class ReplyService {
 	}
 	
 	
-		// 댓글 목록 조회
-		public List<ReplyVo> getReplyListByNo(String no) throws Exception {
+	// 댓글 목록 조회
+	public List<ReplyVo> getReplyListByNo(String postNo) throws Exception {
+	
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
 		
-			// conn
-			Connection conn = JDBCTemplate.getConnection();
-			
-			// DAO
-			ReplyDao dao = new ReplyDao();
-			List<ReplyVo> replyVoList = dao.getReplyList(conn, no);
-			
-			// close
-			JDBCTemplate.close(conn);
-			
-			return replyVoList;
-		}
+		// DAO
+		ReplyDao dao = new ReplyDao();
+		List<ReplyVo> replyVoList = dao.getReplyList(conn, postNo);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return replyVoList;
+	}
 	
 }
