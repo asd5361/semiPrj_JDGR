@@ -37,7 +37,12 @@
                             <tbody>
                             	<tr>
                                     <th scope="row"><label for="">신고번호</label></th>
+                                    <% if (vo != null) { %>
                                     <td><%= vo.getrBlaNo()%></td>
+                                    <% } else { %>
+                                    <!-- vo가 null일 때 처리 -->
+										    Null 값이 발견되었습니다.
+										<% } %>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">댓글 번호</label></th>
