@@ -47,5 +47,38 @@ public class ReplyService {
 		
 		return replyVoList;
 	}
+
+
+	// 댓글 수정
+	public int replyEdit(ReplyVo replyVo) throws Exception {
+
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		ReplyDao dao = new ReplyDao();
+		int result = dao.replyEdit(conn, replyVo);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	// 댓글 삭제
+	public int replyDelete(ReplyVo replyVo) throws Exception {
+		
+		// conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		// dao
+		ReplyDao dao = new ReplyDao();
+		int result = dao.replyDelete(conn, replyVo);
+		
+		// close
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
 	
 }

@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import com.semi.jdgr.blog.service.BlogService;
 import com.semi.jdgr.blog.vo.BlogVo;
 import com.semi.jdgr.blog.vo.GroupVo;
@@ -80,6 +84,17 @@ public class BlogWriteController extends HttpServlet {
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
 			String blogUrl = req.getParameter("blogUrl");
+			String postImg = null;
+			
+			// 글내용에서 제일먼저 있는 img태그 src추출
+			Document postContent = Jsoup.parse(content);
+			Element firstImg = postContent.select("img").first();
+
+            // img 태그가 존재하는 경우에만 src 속성 값 출력
+            if (firstImg != null) {
+                String src = firstImg.attr("src");
+                postImg = src;
+            } 
 			
 			PostVo postVo = new PostVo();
 			postVo.setCategoryNo(categoryNo);
@@ -87,6 +102,8 @@ public class BlogWriteController extends HttpServlet {
 			postVo.setPostTitle(title);
 			postVo.setContent(content);
 			postVo.setBlogUrl(blogUrl);
+			postVo.setPostImg(postImg);
+			
 			
 			// service
 			PostServiceHJY ps = new PostServiceHJY();

@@ -17,12 +17,13 @@ public class ReplyDao {
 	public int write(Connection conn, ReplyVo vo) throws Exception {
 	
 		// SQL
-		String sql = "INSERT INTO REPLY ( REPLY_NO ,POST_NO ,REPLY_MEM ,CON) VALUES ( SEQ_REPLY_NO.NEXTVAL , ? , ? , ?)";
+		String sql = "INSERT INTO REPLY (REPLY_NO, POST_NO, REPLY_MEM, PARENTS_NO, CON) VALUES ( SEQ_REPLY_NO.NEXTVAL , ? , ? , ?, ?)";
 
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, vo.getPostNo());
 		pstmt.setString(2, vo.getReplyMem());
-		pstmt.setString(3, vo.getCon());
+		pstmt.setString(3, vo.getParentsNo());
+		pstmt.setString(4, vo.getCon());
 		int result = pstmt.executeUpdate();
 		
 		// close
@@ -71,4 +72,36 @@ public class ReplyDao {
 		
 		return replyVoList;
 	}//getReplyList
+
+	// 댓글 수정
+	public int replyEdit(Connection conn, ReplyVo replyVo) throws Exception {
+
+		// sql
+		String sql = "UPDATE REPLY SET CON = ? , UPDATE_DATE = SYSDATE WHERE REPLY_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, replyVo.getCon());
+		pstmt.setString(2, replyVo.getReplyNo());
+		
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
+
+	// 댓글 삭제
+	public int replyDelete(Connection conn, ReplyVo replyVo) throws Exception {
+		// sql
+		String sql = "UPDATE REPLY SET DEL_YN = 'Y' WHERE REPLY_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, replyVo.getReplyNo());
+		
+		int result = pstmt.executeUpdate();
+		
+		// close
+		JDBCTemplate.close(pstmt);
+		
+		return result;
+	}
 }
