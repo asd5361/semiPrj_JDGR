@@ -147,17 +147,17 @@
         form.submit();
     }
     
-    // 신고
-    function blame() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/user/blame/p_blamepop" + <%=postDetailVo.getUserNo()%>"&&" + ;
+//     // 신고
+//     function blame() {
+//     	const form = document.createElement("form");
+<%--         form.action = "/jdgr/user/blame/p_blamepop" + <%=postDetailVo.getUserNo()%>"&&" + ; --%>
         
-        form.method = "POST";
+//         form.method = "POST";
         
-        document.body.appendChild(form);
+//         document.body.appendChild(form);
         
-        form.submit();
-    }
+//         form.submit();
+//     }
     
     포스트 작성자 / 포스트 제목 / 신고 목록 / 상세 내용 / 내가 로그인한 정보
     

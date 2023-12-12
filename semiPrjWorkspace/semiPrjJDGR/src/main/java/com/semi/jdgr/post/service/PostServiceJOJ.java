@@ -32,8 +32,22 @@ public class PostServiceJOJ {
 	}// PostDetail
 
 	// 포스트 상세보기 (블로그 카테고리 상세보기용) (+조회수 증가) (+공감수) (+댓글수)
-	public PostVo PostDetail(String GroupNo, String BlogUrl, String pNo) throws Exception {
+	public PostVo PostDetail(String groupNo, String blogUrl, String pNo) throws Exception {
 
+		String tname = Thread.currentThread().getName();
+
+		
+		System.out.println(tname + "====서비스=====");
+		System.out.println(groupNo);
+		System.out.println(blogUrl);
+		System.out.println(pNo);
+		
+		try {
+			System.out.println("blogUrl.length() : " + blogUrl.length());
+		}catch(Exception e) {
+			System.out.println("cccccccccccccc");
+		}
+		
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 
@@ -41,17 +55,23 @@ public class PostServiceJOJ {
 		PostDaoJOJ dao = new PostDaoJOJ();
 
 		PostVo postDetailVo = null;
-		if ((GroupNo == null) && (BlogUrl == null)) {
+		
+		System.out.println("TRUE???:" +((groupNo == null)));
+		System.out.println("TRUE???:" +((blogUrl == null)));
+		System.out.println("TRUE???:" +((groupNo == null) && (blogUrl == null)));
+		
+		if ((groupNo == null) && (blogUrl == null)) {
+			System.out.println("서비스111 = " + pNo);
 			postDetailVo = dao.GetPnoPostDetail(conn, pNo);
-			System.out.println("ser = " + pNo);
-		} else if (GroupNo == null) {
-			postDetailVo = dao.GetUrlPostDetail(conn, BlogUrl);
+		} else if (groupNo == null) {
+			System.out.println("서비스222 = " + pNo);
+			postDetailVo = dao.GetUrlPostDetail(conn, blogUrl);
 		} else {
-			postDetailVo = dao.PostDetail(conn, GroupNo, BlogUrl);
+			System.out.println("서비스333 = " + pNo);
+			postDetailVo = dao.PostDetail(conn, groupNo, blogUrl);
 		}
-		System.out.println("ser = " + postDetailVo);
 		int result = dao.PostDetailIncreaseHit(conn, postDetailVo);
-
+		System.out.println("조회수 통과");
 		// tx
 		if (result == 1) {
 			JDBCTemplate.commit(conn);
@@ -61,7 +81,7 @@ public class PostServiceJOJ {
 
 		// close
 		JDBCTemplate.close(conn);
-
+		System.out.println("서비스 postDetailVo : " + postDetailVo);
 		return postDetailVo;
 
 	}// PostDetail

@@ -22,23 +22,33 @@ public class PostListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		Thread.currentThread().setName("ajax 관련 쓰레드");
+		
 		try {
 			
 			PostServiceJOJ ps = new PostServiceJOJ();
 			
 			// data
 			// 클라이언트로부터 전송된 JSON 데이터 읽기
+			String pNo = req.getParameter("pNo");
 			String groupNo = req.getParameter("GroupNo");
 			String blogUrl = req.getParameter("url");
-			String pNo = req.getParameter("pNo");		// null 값으로 들어옴
-			System.out.println("cont = " + pNo);
+			System.out.println("pno:::::::::::::" + pNo);
+			System.out.println("groupNo : " + groupNo);
+			System.out.println("blogUrl : " + blogUrl);
+			if(blogUrl.equals("null")) {
+				blogUrl = null;
+			}
 			PostVo postDetailVo = ps.PostDetail(groupNo, blogUrl, pNo); 
+			System.out.println("돌아온 컨트롤러 postDetailVo : " + postDetailVo);
 			
-			// pNo 값으로 들어올 경우 실행
-			BlogService bs = new BlogService();
-			if( groupNo == null ) {
+			if ((groupNo == null) && (blogUrl == null)) {
+				blogUrl = postDetailVo.getBlogUrl();
 				groupNo = postDetailVo.getGroupNo();
-				req.getRequestDispatcher("/post/detail?url=").forward(req, resp);
+			} else if((groupNo == null)){
+				groupNo = postDetailVo.getGroupNo();
+			}else if((blogUrl == null)){
+				blogUrl = postDetailVo.getBlogUrl();
 			}
 			
 			int listCount = ps.getPostVoListCount(groupNo); // 전체 포스트 갯수
