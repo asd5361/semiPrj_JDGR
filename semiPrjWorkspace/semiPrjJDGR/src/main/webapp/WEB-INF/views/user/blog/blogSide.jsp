@@ -43,7 +43,6 @@
         	<% if(groupVoList != null){ %>
         		<% for(GroupVo groupVo : groupVoList){ %>
         			<li class="category"><a href="/jdgr/post/detail?url=${blogUrlVo.blogUrl}&&GroupNo=<%= groupVo.getNo() %>"><strong><%= groupVo.getName() %></strong><span>(3)</span></a></li>
-        			<li class="category"><form.action = "/jdgr/user/blame/p_blamepop?" + <%=postDetailVo.getUserNo()%> + <%=postDetailVo.getUserNo()%>"&&" + ;<strong><%= groupVo.getName() %></strong><span>(3)</span></a></li>
         		<% } %>
         	<% } %>
             <li class="line"></li>

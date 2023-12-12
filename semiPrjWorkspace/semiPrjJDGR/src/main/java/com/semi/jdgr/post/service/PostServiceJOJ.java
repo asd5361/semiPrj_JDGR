@@ -31,7 +31,7 @@ public class PostServiceJOJ {
 	}// PostDetail
 
 	// 포스트 상세보기 (블로그 카테고리 상세보기용) (+조회수 증가) (+공감수) (+댓글수)
-	public PostVo PostDetail(String GroupNo, String BlogUrl) throws Exception {
+	public PostVo PostDetail(String GroupNo, String BlogUrl, String pNo) throws Exception {
 
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
@@ -40,8 +40,9 @@ public class PostServiceJOJ {
 		PostDaoJOJ dao = new PostDaoJOJ();
 		
 		PostVo postDetailVo = null;
-		if (GroupNo == null) {
-			System.out.println("2222");
+		if((GroupNo == null) && (BlogUrl== null)){
+			postDetailVo = dao.GetPnoPostDetail(conn, pNo);
+		}else if (GroupNo == null) {
 			postDetailVo = dao.GetUrlPostDetail(conn, BlogUrl);
 		} else {
 			postDetailVo = dao.PostDetail(conn, GroupNo, BlogUrl);

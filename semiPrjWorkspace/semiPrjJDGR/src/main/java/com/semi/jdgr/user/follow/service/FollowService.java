@@ -95,6 +95,7 @@ public class FollowService {
 
 	}
 
+	// 구독 알림테이블로 저장
 	public int insertFollowAlarm(AlarmVo alarmVo) throws Exception {
 
 		// conn
