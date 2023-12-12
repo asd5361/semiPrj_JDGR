@@ -33,7 +33,7 @@
         <!-- 메뉴 -->
         <nav>
             <ul>
-                <li><a href="">사용자 관리</a></li>
+                <li><a href="/jdgr/admin/userManagement/list?pno=1">사용자 관리</a></li>
                 <li><a href="/jdgr/admin/csboard/list?pno=1">고객센터</a></li>
                 <li><a href="/jdgr/admin/blame/r_blame_list">댓글 신고/제재</a></li>
                 <li><a href="/jdgr/admin/blame/p_blame_list">포스트 신고/제재</a></li>
