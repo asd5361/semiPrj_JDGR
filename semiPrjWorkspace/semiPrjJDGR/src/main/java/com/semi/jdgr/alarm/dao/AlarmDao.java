@@ -109,7 +109,7 @@ public class AlarmDao {
 	}
 	
 	public int deleteAlarm(Connection conn, String alarmNo) throws Exception {
-		String sql = "UPDATE ALARM SET ACTIVE_YN = 'Y' WHERE = ?";
+		String sql = "UPDATE ALARM SET ACTIVE_YN = 'Y' WHERE ALARM_NO = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, alarmNo);
 

@@ -1,6 +1,7 @@
 package com.semi.jdgr.alarm.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,8 @@ import com.semi.jdgr.user.member.vo.MemberVo;
 public class AlarmDeleteController extends HttpServlet {
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		PrintWriter out = resp.getWriter();
 		try {
 
 			
@@ -35,9 +37,10 @@ public class AlarmDeleteController extends HttpServlet {
 			if (result != 1) {
 				throw new Exception("읽음처리 실패");
 			}
-			
+			out.write("{\"msg\" : \"ok\"}");
 		
 		} catch (Exception e) {
+			out.write("{\"msg\" : \"fail\"}");
 			e.printStackTrace();
 		}
 	}
