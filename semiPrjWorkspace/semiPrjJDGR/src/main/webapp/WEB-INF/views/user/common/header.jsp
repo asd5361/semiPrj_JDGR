@@ -67,13 +67,15 @@
             <h1><a href="/jdgr/home">JDGR</a></h1>
 
             <div class="search_box">
-                <select>
-                    <option value="">검색기준</option>
-                    <option value="">검색기준</option>
-                    <option value="">검색기준</option>
-                </select>
-                <input type="text">
-                <button>검색</button>
+            	<form action="/jdgr/search" method="get">
+                	<select id="searchOption">
+                	    <option value="title">제목</option>
+                	    <option value="writer">작성자</option>
+                    
+                	</select>
+                	<input type="text" name ="searchContent"id="searchInput">
+               	 	<button type="submit">검색</button>
+                </form>
             </div>
 
             
@@ -229,7 +231,7 @@
         	console.log(postNo);
 
         	const form = document.createElement("form");
-        	form.action = "/jdgr/post/view";
+        	form.action = "/jdgr/post/detail";
         	form.method = "GET";
 
         	
@@ -246,6 +248,20 @@
     function goBlog() {
     	
     }
+    function search(){
+    	
+    	 var selectedOption = document.getElementById("searchOption").value;
+         var searchInputValue = document.getElementById("searchInput").value;
+
+         // 여기에서 서블릿 주소로 데이터를 전송하는 로직을 추가
+         var servletAddress = "/jdgr/search";
+         var parameters = "?option=" + selectedOption + "&input=" + searchInputValue;
+         var fullAddress = servletAddress + parameters;
+
+         // 예시로 콘솔에 출력하는 부분
+         console.log("전송할 주소:", fullAddress);
+    }
+    
     </script>
 
     
