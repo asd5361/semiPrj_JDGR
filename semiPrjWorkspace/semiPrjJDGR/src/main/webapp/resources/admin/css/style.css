@@ -91,10 +91,10 @@ aside nav li a::before {
 aside nav li:nth-child(1) a::before {background-image: url(../images/ico/ico_menu01.svg);}
 aside nav li:nth-child(2) a::before {background-image: url(../images/ico/ico_menu02.svg);}
 aside nav li:nth-child(3) a::before {background-image: url(../images/ico/ico_menu03.png);}
-aside nav li:nth-child(4) a::before {background-image: url(../images/ico/ico_menu04.png);}
-aside nav li:nth-child(5) a::before {background-image: url(../images/ico/ico_menu05.png);}
-aside nav li:nth-child(6) a::before {background-image: url(../images/ico/ico_menu06.png);}
-aside nav li:nth-child(7) a::before {background-image: url(../images/ico/ico_menu07.png);}
+aside nav li:nth-child(4) a::before {background-image: url(../images/ico/ico_menu03.png);}
+aside nav li:nth-child(5) a::before {background-image: url(../images/ico/ico_menu04.png);}
+aside nav li:nth-child(6) a::before {background-image: url(../images/ico/ico_menu05.png);}
+aside nav li:nth-child(7) a::before {background-image: url(../images/ico/ico_menu06.png);}
 
 /* header */
 header {
