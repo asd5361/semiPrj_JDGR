@@ -31,7 +31,6 @@ public class AdminReplyBlameDetailController extends HttpServlet{
 			//result(==view)
 			req.setAttribute("pno", req.getParameter("currPage"));
 			req.setAttribute("vo", vo);
-//			req.setAttribute("vo", vo != null ? vo : new AdminReplyBlameVo());
 			req.getRequestDispatcher("/WEB-INF/views/admin/blame/r_blame_detail.jsp").forward(req, resp);
 
 		}catch(Exception e) {

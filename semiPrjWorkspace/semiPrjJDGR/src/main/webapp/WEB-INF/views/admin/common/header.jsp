@@ -35,11 +35,11 @@
             <ul>
                 <li><a href="">사용자 관리</a></li>
                 <li><a href="/jdgr/admin/csboard/list?pno=1">고객센터</a></li>
-                <li><a href="">신고/제재</a></li>
+                <li><a href="/jdgr/admin/blame/r_blame_list">댓글 신고/제재</a></li>
+                <li><a href="/jdgr/admin/blame/p_blame_list">포스트 신고/제재</a></li>
                 <li><a href="/jdgr/admin/notice/list?pno=1">공지사항</a></li>
                 <li><a href="/jdgr/admin/blog/list">블로그 관리</a></li>
                 <li><a href="/jdgr/admin/post/list">포스트 관리</a></li>
-                <li><a href="">관리자 설정</a></li>
             </ul>
         </nav>
 

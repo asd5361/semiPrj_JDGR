@@ -7,9 +7,8 @@
 
        
        <%
-       String pBlaNo = request.getParameter("no");
-       AdminPostBlameVo blameVoList = (AdminPostBlameVo) request.getAttribute("blameVoList");
-       AdminBlamePageVo pvo = (AdminBlamePageVo)request.getAttribute("pvo");
+       String pno = (String)request.getAttribute("pno");
+       AdminPostBlameVo vo = (AdminPostBlameVo) request.getAttribute("vo");
     	%>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
        
@@ -41,26 +40,26 @@
                             <tbody>
                             	<tr>
                                     <th scope="row"><label for="">신고번호</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getpBlaNo() : "" %></td>
+                                    <td><%= vo.getpBlaNo() %></td>
 
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">포스트 번호</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getpBlaNo() : "" %></td>
+                                    <td><%= vo.getpNo()%></td>
                                     <th scope="row"><label for="">신고 구분</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getpBlaNo() : "" %></td>
+                                    <td><%= vo.getpBlaList() %></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">신고자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getpBlaNo() : "" %></td>
+                                    <td><%= vo.getpBlamerNo() %></td>
                                     <th scope="row"><label for="">작성자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getpBlaNo() : "" %></td>
+                                    <td><%= vo.getpWriterNo()  %></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">포스트 제목</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getpBlaNo() : "" %></td>
+                                    <td><%= vo.getpBlaTit() %></td>
                                     <th scope="row"><label for="">신고 일자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getpBlaNo() : "" %></td>
+                                    <td><%= vo.getpBlaDate() %></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">제재 여부</label></th>
@@ -74,15 +73,15 @@
                                         </div>
                                     </td>
                                     <th scope="row"><label for="">답변 일자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getpBlaNo() : "" %></td>
+                                    <td><%= vo.getpBlaNo() %></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">처리일자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getpBlaNo() : "" %></td>
+                                    <td><%= vo.getpBlaNo() %></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="inp_03">세부 신고 사유</label></th>
-                                    <td colspan="3"><%= (blameVoList != null) ? blameVoList.getpBlaDetail() : ""  %></td>
+                                    <td colspan="3"><%= vo.getpBlaDetail() %></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="inp_03">답변 내용</label></th>

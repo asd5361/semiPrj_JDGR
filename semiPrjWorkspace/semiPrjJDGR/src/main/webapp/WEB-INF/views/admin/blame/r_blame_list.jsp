@@ -17,7 +17,7 @@
             <div class="container">
                 <!-- 제목 -->
                 <div class="tit_box">
-                    <h2>신고 목록 조회</h2>
+                    <h2>댓글 신고 목록 조회</h2>
                 </div>
                 
                 <!-- 검색박스 예시 -->
@@ -137,18 +137,18 @@
                         <li class="prev_all"><a href="/jdgr/admin/blame/r_blame_list?pno=1" title="최신페이지로 이동"></a></li>
                         <li class="prev"><a href="/jdgr/admin/blame/r_blame_list?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
 
-<%} %>
+						<%} %>
 
-<%for(int i = pvo.getStartPage(); i<=pvo.getEndPage(); i++) {%>
-	<%if(i == pvo.getCurrentPage()) {%>
-						<li class="on"><a href="/jdgr/admin/blame/r_blame_list?pno=<%=i%>"><%=i %></a></li>
-	<%}else{ %>
-						<li><a href="/jdgr/admin/blame/r_blame_list?pno=<%=i%>"><%=i %></a></li>
-<%} } %>
-<%if(pvo.getEndPage() != pvo.getMaxPage()) {%>
-                        <li class="next"><a href="/jdgr/admin/blame/r_blame_list?pno=<%=pvo.getEndPage()+1 %>" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="/jdgr/admin/blame/r_blame_list?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
-<%} %>
+						<%for(int i = pvo.getStartPage(); i<=pvo.getEndPage(); i++) {%>
+							<%if(i == pvo.getCurrentPage()) {%>
+								<li class="on"><a href="/jdgr/admin/blame/r_blame_list?pno=<%=i%>"><%=i %></a></li>
+							<%}else{ %>
+								<li><a href="/jdgr/admin/blame/r_blame_list?pno=<%=i%>"><%=i %></a></li>
+						<%} } %>
+						<%if(pvo.getEndPage() != pvo.getMaxPage()) {%>
+	                        <li class="next"><a href="/jdgr/admin/blame/r_blame_list?pno=<%=pvo.getEndPage()+1 %>" title="다음페이지로 이동"></a></li>
+	                        <li class="next_all"><a href="/jdgr/admin/blame/r_blame_list?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
+						<%} %>
                     </ul>
                 </div>
 
@@ -205,8 +205,10 @@
         var writer = document.getElementById('inp_02_writer').value;
         var content = document.getElementById('inp_02_content').value;
         var blameDate = document.getElementById('inp_02_blameDate').value;
-        var answerDate = document.getElementById('inp_02_answerDate').value;
-        var delDate = document.getElementById('inp_02_delDate').value;
+        var blameList = document.querySelector('select[name="blameList"]').value;
+        var sancYn = document.querySelector('select[name="sancYn"]').value;
+//         var answerDate = document.getElementById('inp_02_answerDate').value;
+//         var delDate = document.getElementById('inp_02_delDate').value;
 //         // (다른 검색 조건들도 필요에 따라 추가)
 	    
 	    
@@ -247,7 +249,11 @@
         // 검색 조건을 객체로 만들기
         var searchParams = {
             blamer: blamer,
-
+            writer: writer,
+            content: content,
+            blameDate: blameDate,
+            blameList: blameList,
+            sancYn: sancYn
             // (다른 검색 조건들도 필요에 따라 추가)
         };
 
@@ -270,15 +276,17 @@
                 console.error('서버 에러:', xhr.status);
             }
         };
-
+        
+        
+        // 검색 매개변수를 JSON으로 변환하여 요청 전송
 	        var requestBody = JSON.stringify(searchParams);
 	        xhr.send(requestBody);
 	    }
 
 	    // 서버 응답을 기반으로 테이블을 채우는 함수
 	    function populateTable(data) {
-	        var table = document.getElementById('blameTable');
-	        var tbody = document.createElement('tbody');
+	        var tableBody = document.querySelector('.tbl_box tbody');
+	        tableBody.innerHTML = ''; // 기존 행 삭제
 
 	        // 데이터를 반복하여 행을 추가
 	        for (var i = 0; i < data.length; i++) {
@@ -307,9 +315,6 @@
 	            tbody.appendChild(row);
 	        }
 
-	        // 테이블의 기존 tbody 삭제 후 새로운 tbody 추가
-	        table.removeChild(table.getElementsByTagName('tbody')[0]);
-	        table.appendChild(tbody);
 	    }
 
 
