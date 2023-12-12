@@ -23,13 +23,15 @@ public class AdminReplyBlameDetailController extends HttpServlet{
 		try {
 			//data
 			String rBlaNo = req.getParameter("no");
+			String currPage = req.getParameter("currPage");
 			
 			//service
 			AdminReplyBlameService abs = new AdminReplyBlameService();
 			
 			AdminReplyBlameVo vo = abs.selectBlameDetail(rBlaNo);
 			//result(==view)
-			req.setAttribute("pno", req.getParameter("currPage"));
+			req.setAttribute("pno",rBlaNo );
+			req.setAttribute("currPage",currPage );
 			req.setAttribute("vo", vo);
 			req.getRequestDispatcher("/WEB-INF/views/admin/blame/r_blame_detail.jsp").forward(req, resp);
 

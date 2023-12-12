@@ -18,7 +18,7 @@
 
 
 <link rel="stylesheet" href="/jdgr/resources/user/css/blamepop.css">
-<button class="modal_open" data-target="#pop_email">신고하기</button>
+<button class="modal_open" data-target="#pop_email" >신고하기</button>
 <!-- 레이어팝업 모달 -->
 <div id="pop_email" class="modal_bg">
     <div class="modal_box">
@@ -35,7 +35,7 @@
         
         </div>
         <hr>
-        <form>
+        <form action ="/jdgr/user/blame/r_blamepop" method="post">
         <div class="select_reason">사유선택</div>
 		<div class="modal_container">
             <div class="reason_detail">
@@ -46,7 +46,7 @@
                         <div class="check_area">
                             <input type="radio" name="rBlaList" id="<%= i %>" class="report_reason"  value="<%= num.getrBlaList() %>">
                             <label class="reason_content"  for="<%=i %>">
-                            	<%= num.getrBlaList() %>
+                            	<%= num.getrBlamerNo() %>
                           
                            	</label>
 
@@ -60,17 +60,26 @@
         </div>
         <div class="detail_reason">
             <input type="text" class="detail_content" name="rBlaDetail" placeholder=" 세부 내용 작성">
+<!--             <input type="hidden" name="rWriterNo" value = "1"> -->
+<!--             <input type="hidden" name="rBlaCon" value = "댓글내용"> -->
+<!--             <input type="hidden" name="replyNo" value = "1"> -->
             <input type="hidden" name="rWriterNo" value=<%= vo.getReplyMem() %>>
             <input type="hidden" name="rBlaCon" value=<%= vo.getCon() %>>
+            <input type="hidden" name="replyNo" value = <%= vo.getrNo %>>
+             
         </div>
         <div class="modal_footer">
-            <button class="modal_close btn_black" onclick="submitReport()">신고하기</button>
+            <button type="submit" class="modal_close btn_black">신고하기</button>
         </div>
     </form>
     </div>
 </div>
 
 <script>
+
+	
+
+
     function submitReport() {
         // 선택된 라디오 버튼의 값 가져오기
         

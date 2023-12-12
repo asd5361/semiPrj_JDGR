@@ -33,6 +33,8 @@ public class ReplyBlameDao {
 	        getReplyInfo.setrBlaList(rBlaList);
 	        getReplyInfo.setrBlaDetail(rBlaDetail);
 	    }
+	    
+	    
 	    //close
 	    JDBCTemplate.close(pstmt);
 	    JDBCTemplate.close(rs);
@@ -70,11 +72,10 @@ public class ReplyBlameDao {
 		
 		//GPT
 		// REPLY_BLAME 테이블에 데이터 입력
-	    String sql = "INSERT INTO REPLY_BLAME (R_NO, R_BLAMER_NO, R_WRITER_NO, R_BLA_CON, R_BLA_LIST, R_BLA_DETAIL) VALUES (?, ?, ?, ?, ?, ?)";
+	    String sql = "INSERT INTO REPLY_BLAME (R_BLA_NO, R_NO, R_BLAMER_NO, R_WRITER_NO, R_BLA_CON, R_BLA_LIST, R_BLA_DETAIL) VALUES(SEQ_REPLY_BLAME.NEXTVAL, ?, ?, ?, ? , ?, ?)";
 	    PreparedStatement pstmt = conn.prepareStatement(sql);
+	    
 	    pstmt.setString(1, vo.getrNo());
-	    
-	    
 	    pstmt.setString(2, vo.getrBlamerNo());
 	    pstmt.setString(3, vo.getrWriterNo());
 	    pstmt.setString(4, vo.getrBlaCon());
@@ -82,25 +83,6 @@ public class ReplyBlameDao {
 	    pstmt.setString(6, vo.getrBlaDetail());
 
 	    int result = pstmt.executeUpdate();
-//		--------------------
-		
-		
-		
-//		String sql = "INSERT INTO REPLY_BLAME ( R_BLA_NO , R_NO , R_BLAMER_NO , R_WRITER_NO , R_BLA_CON, R_BLA_DATE, R_BLA_LIST , R_SANC_YN,  R_BLA_DETAIL ) VALUES(?, ? , ?, ?, ?, ?, ?)";
-//		PreparedStatement pstmt = conn.prepareStatement(sql);
-//		pstmt.setString(1, vo.getrBlaNo());
-//		pstmt.setString(2, vo.getrNo());
-//		pstmt.setString(3, vo.getrBlamerNo());
-//		pstmt.setString(4, vo.getrWriterNo());
-//		pstmt.setString(5, vo.getrBlaCon());
-////		pstmt.setString(6, vo.getrBlaDate());
-//		pstmt.setString(6, vo.getrBlaList());
-////		pstmt.setString(6, vo.getrSancYn());
-////		pstmt.setString(9, vo.getrAnsDate());
-//		pstmt.setString(7, vo.getrBlaDetail());
-////		pstmt.setString(8, vo.getrDelYn());
-//		int result = pstmt.executeUpdate();
-
 
 		// close
 		JDBCTemplate.close(pstmt);
@@ -113,16 +95,18 @@ public class ReplyBlameDao {
 	//BLA_LIST 불러와서 모달창 띄우기
 	public List<ReplyBlameVo> blameList(Connection conn) throws Exception {
 		   //SQL
-		   String sql = "SELECT BLA_REASON FROM BLAME_REASON";
+		   String sql = "SELECT * FROM BLAME_REASON";
 		   PreparedStatement pstmt = conn.prepareStatement(sql);
 		   ResultSet rs = pstmt.executeQuery();
 		   //rs
 		   List<ReplyBlameVo> reasonList = new ArrayList<>();
 		   while(rs.next()) {
-			   String rBlaList = rs.getString("BLA_REASON");
+			   String blaList = rs.getString("BLA_LIST");
+			   String blaReason = rs.getString("BLA_REASON");
 			   
 			   ReplyBlameVo vo = new ReplyBlameVo();
-			   vo.setrBlaList(rBlaList);
+			   vo.setrBlaList(blaList);
+			   vo.setrBlamerNo(blaReason);
 			   reasonList.add(vo);
 		   }
 		   
