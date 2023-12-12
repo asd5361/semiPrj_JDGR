@@ -341,6 +341,9 @@ public class NoticeDao {
 			vo.setAdminName(rs.getString("ADMIN_NAME"));
 			
 			
+			
+			
+			
 			noticeVoList.add(vo);
 		}
 		

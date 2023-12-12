@@ -1,16 +1,12 @@
-<%@page import="com.semi.jdgr.page.vo.AdminBlamePageVo"%>
-<%@page import="java.util.List"%>
 <%@page import="com.semi.jdgr.admin.blame.vo.AdminReplyBlameVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
        
 
-       
-       <%
-	       String rBlaNo = request.getParameter("no");
-	       AdminReplyBlameVo blameVoList = (AdminReplyBlameVo) request.getAttribute("blameVoList");
-	       AdminBlamePageVo pvo = (AdminBlamePageVo)request.getAttribute("pvo");
-    	%>
+    <%
+     String pno = (String)request.getAttribute("pno");
+     AdminReplyBlameVo vo = (AdminReplyBlameVo) request.getAttribute("vo");
+ 	%>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
        
 <!-- container -->
@@ -41,25 +37,36 @@
                             <tbody>
                             	<tr>
                                     <th scope="row"><label for="">신고번호</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getrBlaNo() : "" %></td>
+                                    <% if (vo != null) { %>
+                                    <td><%= vo.getrBlaNo()%></td>
+                                    <% } else { %>
+                                    <!-- vo가 null일 때 처리 -->
+										    Null 값이 발견되었습니다.
+										<% } %>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">댓글 번호</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getrNo() : ""  %></td>
+                                    <td>ss</td>
+<%--                                     <td><%= vo.getrNo() %></td> --%>
                                     <th scope="row"><label for="">신고 구분</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getrBlaList() : ""  %></td>
+                                    <td>dd</td>
+<%--                                     <td><%= vo.getrBlaList()%></td> --%>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">신고자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getrBlamerNo() : ""  %></td>
+                                    <td>ff</td>
+<%--                                     <td><%= vo.getrBlamerNo() %></td> --%>
                                     <th scope="row"><label for="">작성자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getrWriterNo() : ""  %></td>
+                                    <td>aa</td>
+<%--                                     <td><%= vo.getrWriterNo() %></td> --%>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">댓글 내용</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getrBlaCon() : ""  %></td>
+                                    <td>qq</td>
+<%--                                     <td><%= vo.getrBlaCon() %></td> --%>
                                     <th scope="row"><label for="">신고 일자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getrBlaDate() : ""  %></td>
+                                    <td>tt</td>
+<%--                                     <td><%= vo.getrBlaDate()   %></td> --%>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">제재 여부</label></th>
@@ -73,15 +80,18 @@
                                         </div>
                                     </td>
                                     <th scope="row"><label for="">답변 일자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getrAnsDate() : ""  %></td>
+                                    <td>dd</td>
+<%--                                     <td><%= vo.getrAnsDate()%></td> --%>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">처리일자</label></th>
-                                    <td><%= (blameVoList != null) ? blameVoList.getrDelYn() : ""  %></td>
+                                    <td>ww</td>
+<%--                                     <td><%= vo.getrDelYn()%></td> --%>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="inp_03">세부 신고 사유</label></th>
-                                    <td colspan="3"><%= (blameVoList != null) ? blameVoList.getrBlaDetail() : ""  %></td>
+                                    <td colspan="3">cc</td>
+<%--                                     <td colspan="3"><%= vo.getrBlaDetail() %></td> --%>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="inp_03">답변 내용</label></th>
@@ -99,7 +109,7 @@
 
                 <div class="btn_box_group right mt20">
                     <div class="btn_box">
-                        <a href="/jdgr/admin/blame/r_blame_list" class="btn_grayline">목록가기</a>
+                        <a href="/jdgr/admin/blame/r_blame_list?no=1" class="btn_grayline">목록가기</a>
                     </div>
                     <div class="btn_box">
                         <a href="" class="btn_grayline">저장</a>
