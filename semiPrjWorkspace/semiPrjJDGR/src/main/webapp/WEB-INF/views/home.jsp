@@ -1,3 +1,5 @@
+
+<%@page import="com.semi.jdgr.post.vo.CategoryVo"%>
 <%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@page import="com.semi.jdgr.user.member.vo.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,7 +7,11 @@
 
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 
-		<% PostVo postListDetailVo = (PostVo) session.getAttribute("postListDetailVo"); %>
+		<% 
+			PostVo postListDetailVo = (PostVo) session.getAttribute("postListDetailVo"); 
+			List<CategoryVo> categoryVoList = (List<CategoryVo>)request.getAttribute("categoryVoList");
+			List<PostVo> postVoList = (List<PostVo>)request.getAttribute("postVoList");
+		%>
      	
 <!-- main -->
 <main>
@@ -20,8 +26,7 @@
                 <div class="swiper-container">
                     <ul class="swiper-wrapper">
                         <li class="swiper-slide">
-<%--                             <a href="/jdgr/post/view?pNo=<%= postListDetailVo.getPostNo() %>"> --%>
-                            <a href="/jdgr/post/view?pNo=7">
+                            <a href="/jdgr/post/detail?pNo=7">
                                 <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
                                 <div class="txt">
                                     <div class="info">
@@ -165,19 +170,48 @@
                 
 
                 <!-- 카테고리 버튼 -->
-                <ul class="tab_btns">
-                    <li class="on"><button>전체</button></li>
-                    <li><button>미술·디자인</button></li>
-                    <li><button>반려동물</button></li>
-                    <li><button>사진</button></li>
-                    <li><button>어학·외국어</button></li>
-                    <li><button>게임</button></li>
-                    <li><button>자동차</button></li>
-                    <li><button>맛집</button></li>
+                 <ul class="tab_btns">
+                    <% for(CategoryVo categoryVo : categoryVoList) {%>
+                      	<div class ="categorybtn">
+                       		<li class="on"><%=categoryVo.getCategoryName() %></li>
+                  			<input type="hidden" value="<%= categoryVo.getCategoryNo()%>">                                     
+                     	</div>
+                       
+                    <%} %>
+                    
+                    
+                    
+<!--                     <li><button onclick="art()" value="">미술·디자인</button></li> -->
+<!--                     <li><button onclick="animal()" value="">반려동물</button></li> -->
+<!--                     <li><button onclick="picture()" value="">사진</button></li> -->
+<!--                     <li><button onclick="foreign()" value="">어학·외국어</button></li> -->
+<!--                     <li><button onclick="game()" value="">게임</button></li> -->
+<!--                     <li><button onclick="car()" value="">자동차</button></li> -->
+<!--                     <li><button onclick="house()" value="">맛집</button></li> -->
                 </ul>
 
                 <!-- 카테고리별 블로그 포스트 -->
-
+                <div id="target">
+                
+                <% for(PostVo postVo : postVoList) {%>
+                <div class="postbox">
+                      	<div class="postImg"><%= postVo.getPostImg() %></div>
+                        <div class="postWrite"> 
+                            <div class="postWriteNick">
+<!--                                 <div class="postNickimg"><img src="../images/ico/ico_people.svg"></div> -->
+                                <div class="postNickname"><%= postVo.getUserNick() %></div>
+                            </div>    
+                            <div class="postWriteLink"><%= postVo.getContent() %></div>
+                            <div class="postWrite12">
+                                <div class="postWrite1"><img src="/jdgr/resources/user/images/ico/ico_like.svg"><%= postVo.getHeartCnt() %></div>
+                                <div class="postWrite2"><img src="/jdgr/resources/user/images/ico/ico_reply.svg"><%= postVo.getReplyCnt() %></div>
+                            </div>         
+                        </div>
+                       
+                        
+                    </div>
+                    <%} %>
+                </div>
                 <!-- 페이징 -->
                 <div class="paging_box">
                     <ul>
@@ -411,7 +445,7 @@ function goPost2(event) {
     	console.log(postNo2);
 
     	const form2 = document.createElement("form");
-    	form2.action = "/jdgr/post/view";
+    	form2.action = "/jdgr/post/detail";
     	form2.method = "GET";
 
     	
@@ -427,6 +461,94 @@ function goPost2(event) {
 }function goBlog() {
 	
 }
+///
+const divArray = document.querySelectorAll("div.categorybtn");
+    for(let j = 0 ; j < divArray.length; ++j){
+       divArray[j].addEventListener('click' , selectCategory);
+    }
+
+    function selectCategory(event) {
+    	var postBoxes = document.querySelectorAll('.postbox'); // postbox 클래스의 모든 요소 선택
+        postBoxes.forEach(function(postBox) {
+            postBox.remove(); // 각 postbox 요소를 삭제
+        });
+          const cateLi = event.currentTarget;
+           
+           const categoryNo = cateLi.children[1].value;
+           console.log(categoryNo);
+
+           fetch("/jdgr/post/category?categoryNo="+categoryNo)
+           .then((resp) => {return resp.json()})
+           .then((data)=>{
+            console.log(data);
+            const cateVoList = data;
+            const targetTag = document.querySelector("#target");
+            
+            cateVoList.forEach((vo) => {
+                   const postBox = document.createElement("div");
+                   postBox.classList.add("postbox");
+
+                   const postImg = document.createElement("div");
+                   postImg.classList.add("postImg");
+                   postImg.textContent = vo.postImg;
+                   postBox.appendChild(postImg);
+
+                   const postWrite = document.createElement("div");
+                   postWrite.classList.add("postWrite");
+
+                   const postWriteNick = document.createElement("div");
+                   postWriteNick.classList.add("postWriteNick");
+
+
+                   const postNickname = document.createElement("div");
+                   postNickname.classList.add("postNickname");
+                   postNickname.textContent = vo.userNick;
+                   postWriteNick.appendChild(postNickname);
+                   postWrite.appendChild(postWriteNick);
+
+                   const postWriteLink = document.createElement("div");
+                   postWriteLink.classList.add("postWriteLink");
+                   postWriteLink.textContent = vo.content;
+                   postWrite.appendChild(postWriteLink);
+
+                   const postWrite12 = document.createElement("div");
+                   postWrite12.classList.add("postWrite12");
+
+                   const postWrite1 = document.createElement("div");
+                   postWrite1.classList.add("postWrite1");
+
+                   const likeImg = document.createElement("img");
+                   likeImg.src = "/jdgr/resources/user/images/ico/ico_like.svg";
+
+                   postWrite1.appendChild(likeImg); // 이미지를 postWrite1 div에 추가
+                   postWrite1.textContent = vo.heartCnt; // 이미지 다음에 텍스트 추가
+
+                   postWrite12.appendChild(postWrite1);
+
+                   const postWrite2 = document.createElement("div");
+                   postWrite2.classList.add("postWrite2");
+                   
+                   const replyImg = document.createElement("img");
+                   replyImg.src = "/jdgr/resources/user/images/ico/ico_reply.svg";
+                   postWrite2.appendChild(replyImg);
+                   
+                   postWrite2.textContent = vo.replyCnt;
+                   
+                   postWrite12.appendChild(postWrite2);
+
+                   postWrite.appendChild(postWrite12);
+                   postBox.appendChild(postWrite);
+
+                   targetTag.appendChild(postBox); // 실제로 추가할 부분
+                   
+                   
+               });
+           });
+           
+           
+   }
+
+///
 const swiper = new Swiper('.swiper-container', {
     direction: 'horizontal', // 수평 슬라이드
     slidesPerView: 4,
