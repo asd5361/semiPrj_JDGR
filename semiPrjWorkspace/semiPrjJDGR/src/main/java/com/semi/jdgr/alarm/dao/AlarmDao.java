@@ -94,6 +94,20 @@ public class AlarmDao {
 		return postTitle;
 	}
 
+	public String getBlogUrl(Connection conn, String senderNo) throws Exception {
+		String sql = "SELECT BLOG_URL FROM BLOG WHERE MEM_NO = ? AND REP_YN = 'Y'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, senderNo);
+		ResultSet rs = pstmt.executeQuery();
+		String blogUrl = null;
+		if (rs.next()) {
+			blogUrl = rs.getString("BLOG_URL");
+		}
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		return blogUrl;
+	}
+	
 	public int deleteAlarm(Connection conn, String alarmNo) throws Exception {
 		String sql = "UPDATE ALARM SET ACTIVE_YN = 'Y' WHERE = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -106,5 +120,6 @@ public class AlarmDao {
 		return result;
 
 	}
+
 
 }
