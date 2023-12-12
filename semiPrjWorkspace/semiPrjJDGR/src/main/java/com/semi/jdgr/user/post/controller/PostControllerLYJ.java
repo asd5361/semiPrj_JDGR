@@ -20,7 +20,7 @@ public class PostControllerLYJ extends HttpServlet {
 
 	PostServiceLYJ ps = new PostServiceLYJ();   
 	
-	//유저 홈화면에 맨 처음에 보이는 전체 리스트 조회
+	//유저 홈화면에 맨 처음에 보이는 전체,카테고리 리스트 조회
 	   @Override
 	   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	      

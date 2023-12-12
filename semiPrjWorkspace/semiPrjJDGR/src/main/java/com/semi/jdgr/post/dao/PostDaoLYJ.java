@@ -378,17 +378,44 @@ public class PostDaoLYJ {
 				String categoryNo = rs.getString("CATEGORY_NO");
 				String categoryName = rs.getString("CATEGORY_NAME");
 				
+				CategoryVo categoryVo2 = new CategoryVo();
+				categoryVo2.setCategoryNo(categoryNo);
+				categoryVo2.setCategoryName(categoryName);
 				
-				categoryVo.setCategoryNo(categoryNo);
-				categoryVo.setCategoryName(categoryName);
-				
-				categoryVoList.add(categoryVo);
+				categoryVoList.add(categoryVo2);
 				
 				}
 			JDBCTemplate.close(rs);
 			JDBCTemplate.close(pstmt);
 			
 			return categoryVoList;
+		}
+
+
+		public List<PostVo> separatedList(Connection conn, String categoryNo) throws Exception {
+			
+			String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NICK , P.CONTENT, P.POST_IMG FROM POST P JOIN BLOG  B ON  P .BLOG_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE P.DEL_YN = 'N' AND CL.CATEGORY_NO = ? ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,categoryNo);
+			pstmt.setInt(2,1);
+		    pstmt.setInt(3,100);
+		    ResultSet rs = pstmt.executeQuery();
+		    List<PostVo> postVoList = new ArrayList<PostVo>();
+		    while(rs.next()) {
+		    	String memNick = rs.getString("MEM_NICK");
+		    	String content = rs.getString("CONTENT");
+		    	String postImg = rs.getString("POST_IMG");
+		    	
+		    	PostVo postVo = new PostVo();
+		    	
+		    	postVo.setUserNick(memNick);
+		    	postVo.setContent(content);
+		    	postVo.setPostImg(postImg);
+		    	
+		    	postVoList.add(postVo);
+		    	
+		    }
+		    return postVoList; 
 		}
 
 

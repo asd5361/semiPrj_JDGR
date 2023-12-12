@@ -161,6 +161,20 @@ public List<CategoryVo> selectCategory() throws Exception {
 	
 	return categoryVoList;
 }
+
+
+
+public List<PostVo> separatedList(String categoryNo) throws Exception {
+	//conn
+	Connection conn = JDBCTemplate.getConnection();
+	
+	//dao
+	PostDaoLYJ dao = new PostDaoLYJ();
+	List<PostVo> postVoList = dao.separatedList(conn,categoryNo);
+	return postVoList;
+
+	
+}
    
    
    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
