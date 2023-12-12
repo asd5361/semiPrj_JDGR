@@ -3,6 +3,7 @@ package com.semi.jdgr.admin.blame.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -273,6 +274,30 @@ public class AdminReplyBlameDao {
 			JDBCTemplate.close(pstmt);
 			
 			return cnt;
+		}
+
+		//제재 처리 저장
+		public int rBlameUpdate(Connection conn, AdminReplyBlameVo vo, String deleteYnColumn) throws Exception {
+			//sql
+			String sql = "UPDATE REPLY_BLAME SET R_SANC_YN = 'Y', R_ANS_DATE =SYSDATE WHERE R_BLA_NO = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getrBlaNo());
+			int result = pstmt.executeUpdate();
+			
+			//close
+			JDBCTemplate.close(pstmt);
+			
+			return result;
+		}
+
+
+		//제재
+		public int rSancUpdate(Connection conn, AdminReplyBlameVo vo, String deleteYnColumn) {
+			
+			//sql
+			String sql = "INSERT INTO "
+			
+		
 		}
 
 	   

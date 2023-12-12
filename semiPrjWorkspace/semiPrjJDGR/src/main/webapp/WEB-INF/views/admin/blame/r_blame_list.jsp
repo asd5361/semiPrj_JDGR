@@ -186,64 +186,28 @@
 		
 	    
 	    //검색 버튼
-	            function search(){
-            let aaTag = document.querySelector(".aa");
-            let divTag = document.querySelector(".search_box");
-            let formTag = document.createElement("form");
-            formTag.setAttribute('method','get');
-            formTag.setAttribute('action','/jdgr/admin/blame/r_blame_detail?pno=?');
-            formTag.appendChild(divTag);
-            aaTag.appendChild(formTag);
-            formTag.submit();
-        }       
+// 	            function search(){
+//             let aaTag = document.querySelector(".aa");
+//             let divTag = document.querySelector(".search_box");
+//             let formTag = document.createElement("form");
+//             formTag.setAttribute('method','get');
+//             formTag.setAttribute('action','/jdgr/admin/blame/r_blame_list?pno=?');
+//             formTag.appendChild(divTag);
+//             aaTag.appendChild(formTag);
+//             formTag.submit();
+//         }       
 	    
 	    function search() {
         // 검색 조건을 가져오기
-        let aaTag = document.querySelector(".aa");
-        aaTag.appenChild(divTag);
+//         let aaTag = document.querySelector(".aa");
+//         aaTag.appendChild(divTag);
         var blamer = document.getElementById('inp_02_blamer').value;
         var writer = document.getElementById('inp_02_writer').value;
         var content = document.getElementById('inp_02_content').value;
         var blameDate = document.getElementById('inp_02_blameDate').value;
         var blameList = document.querySelector('select[name="blameList"]').value;
         var sancYn = document.querySelector('select[name="sancYn"]').value;
-//         var answerDate = document.getElementById('inp_02_answerDate').value;
-//         var delDate = document.getElementById('inp_02_delDate').value;
-//         // (다른 검색 조건들도 필요에 따라 추가)
-	    
-	    
-	    
-<%-- 	            <%if(arbv != null){%> --%>
-//         //검색 후에도 검색어 남기기
-// 		function setSearchArea(){
-//             const blamerIntput = document.querySelector(".search_box input[name=blamer]");
-//             const writerIntput = document.querySelector(".search_box input[name=writer]");
-//             const contentIntput = document.querySelector(".search_box input[name=content]");
-//             const blameDateIntput = document.querySelector(".search_box input[name=blameDate]");
-//             const blameListOptionArr = document.querySelectorAll("select[name=blameList] option");
-//             const sancYnOptionArr = document.querySelectorAll("select[name=sancYn] option");      
 
-            
-<%--             blamerIntput.value = '<%=arbv.getrBlamerNo()%>'; --%>
-<%--             writerIntput.value = '<%=arbv.getrWriterNo()%>'; --%>
-<%--             contentIntput.value = '<%=arbv.getrBlaCon()%>'; --%>
-<%--             blameDateIntput.value = '<%=arbv.getrBlaDate()%>'; --%>
-            
-//             for(let i = 0; i< blameListOptionArr.length; ++i){
-<%--                 if(blameListOptionArr[i].value == '<%=arbv.getBlameList()%>'){ --%>
-//                 	blameListOptionArr[i].selected = true;
-//                 } 
-//             }
-//             for(let i = 0; i< sancYnOptionArr.length; ++i){
-<%--                 if(sancYnOptionArr[i].value == '<%=arbv.getSancYn()%>'){ --%>
-//                 	sancYnOptionArr[i].selected = true;
-//                 } 
-//             }
-//         }
-	    
-	    
-// 		  setSearchArea();
-	    
 	    
 
         // 검색 조건을 객체로 만들기
@@ -319,3 +283,51 @@
 
 
 	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<!-- 	//         var answerDate = document.getElementById('inp_02_answerDate').value; -->
+<!-- //         var delDate = document.getElementById('inp_02_delDate').value; -->
+<!-- //         // (다른 검색 조건들도 필요에 따라 추가) -->
+	    
+	    
+	    
+<%-- <%-- 	            <%if(arbv != null){%> --%> --%>
+<!-- //         //검색 후에도 검색어 남기기 -->
+<!-- // 		function setSearchArea(){ -->
+<!-- //             const blamerIntput = document.querySelector(".search_box input[name=blamer]"); -->
+<!-- //             const writerIntput = document.querySelector(".search_box input[name=writer]"); -->
+<!-- //             const contentIntput = document.querySelector(".search_box input[name=content]"); -->
+<!-- //             const blameDateIntput = document.querySelector(".search_box input[name=blameDate]"); -->
+<!-- //             const blameListOptionArr = document.querySelectorAll("select[name=blameList] option"); -->
+<!-- //             const sancYnOptionArr = document.querySelectorAll("select[name=sancYn] option");       -->
+
+            
+<%-- <%--             blamerIntput.value = '<%=arbv.getrBlamerNo()%>'; --%> --%>
+<%-- <%--             writerIntput.value = '<%=arbv.getrWriterNo()%>'; --%> --%>
+<%-- <%--             contentIntput.value = '<%=arbv.getrBlaCon()%>'; --%> --%>
+<%-- <%--             blameDateIntput.value = '<%=arbv.getrBlaDate()%>'; --%> --%>
+            
+<!-- //             for(let i = 0; i< blameListOptionArr.length; ++i){ -->
+<%-- <%--                 if(blameListOptionArr[i].value == '<%=arbv.getBlameList()%>'){ --%> --%>
+<!-- //                 	blameListOptionArr[i].selected = true; -->
+<!-- //                 }  -->
+<!-- //             } -->
+<!-- //             for(let i = 0; i< sancYnOptionArr.length; ++i){ -->
+<%-- <%--                 if(sancYnOptionArr[i].value == '<%=arbv.getSancYn()%>'){ --%> --%>
+<!-- //                 	sancYnOptionArr[i].selected = true; -->
+<!-- //                 }  -->
+<!-- //             } -->
+<!-- //         } -->
+	    
+	    
+<!-- // 		  setSearchArea(); -->
+	    

@@ -5,6 +5,7 @@
 
     <%
      String pno = (String)request.getAttribute("pno");
+    	String currPage = (String)request.getAttribute("currPage");
      AdminReplyBlameVo vo = (AdminReplyBlameVo) request.getAttribute("vo");
  	%>
 <%@ include file="/WEB-INF/views/admin/common/header.jsp" %>
@@ -66,6 +67,8 @@
                                                 <option value="3">로그인 정지 3일</option>
                                                 <option value="7">로그인 정지 7일</option>
                                             </select>
+                                            <input type="hidden" name="pno" value="<%=pno%>">
+                                            <input type="hidden" name="currPage" value="<%=currPage%>">                                            
                                         </div>
                                     </td>
                                     <th scope="row"><label for="">답변 일자</label></th>
@@ -112,14 +115,12 @@
    <%@ include file="/WEB-INF/views/admin/common/footer.jsp" %>
    
    <script>
-   console.log(
-		   <%=pno%>)
    function sendPost(){
        let tableTag = document.querySelector(".tbl_box table");
        let formTag = document.createElement("form");
        let divTag = document.querySelector(".tbl_box");
        formTag.setAttribute('method','get');
-       formTag.setAttribute('action','/jdgr/admin/blame/r_blame_update?pno=<%=pno %>&currPage=1');
+       formTag.setAttribute('action','/jdgr/admin/blame/r_blame_update');
        formTag.appendChild(tableTag);
        divTag.appendChild(formTag);
        formTag.submit();
