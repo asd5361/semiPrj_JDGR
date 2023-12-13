@@ -16,6 +16,8 @@ import com.semi.jdgr.blog.vo.GroupVo;
 import com.semi.jdgr.post.service.PostServiceJOJ;
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
+import com.semi.jdgr.user.reply.service.ReplyService;
+import com.semi.jdgr.user.reply.vo.ReplyVo;
 
 @WebServlet("/post/detail")
 public class PostControllerJOJ extends HttpServlet {
@@ -56,6 +58,16 @@ public class PostControllerJOJ extends HttpServlet {
 			req.setAttribute("groupVoList", groupVoList);
 
 			MemberVo loginMemberVo = (MemberVo) req.getSession().getAttribute("loginMember");
+			
+			/****************** 댓글 ***************************/
+			// service
+			ReplyService replayService = new ReplyService();
+			List<ReplyVo> replyVoList = replayService.getReplyListByNo(postDetailVo.getPostNo());
+			System.out.println("댓글volist::" + replyVoList);
+			System.out.println("포스트넘버" + postDetailVo.getPostNo());
+			req.setAttribute("replyVoList", replyVoList);
+			
+			/********************************************************/
 
 			
 			// result

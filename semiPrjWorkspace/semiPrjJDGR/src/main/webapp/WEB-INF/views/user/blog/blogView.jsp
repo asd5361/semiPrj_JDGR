@@ -1,7 +1,10 @@
+<%@page import="com.semi.jdgr.user.reply.vo.ReplyVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
-
+<% 
+	List<ReplyVo> replyVoList = (List<ReplyVo>) request.getAttribute("replyVoList");
+%> 
 <script>
 	// 댓글창
 	let ReplyList = false;
@@ -126,7 +129,7 @@
         });
     }
     
-    
+  
 </script>
 
 <!-- main -->
@@ -180,223 +183,135 @@
                     수정취소 :: li에 edit class 제거됨 reply_edit class에 display none / 나머지 block
                     삭제하기 :: li에 delete class 추가됨 blind div태그 추가됨
                 -->
-                <div id="replyList" class="b_post_reply" style="display : none">
+                <div id="replyList" class="b_post_reply">
                     <ul>
-                        <li>
-                            <div class="reply_pop">
-                                <a href=""></a>
-                                <div class="pop_content">
-                                    <a href="" class="edit">수정하기</a>
-                                    <a href="" class="delete">삭제하기</a>
-                                </div>
-                            </div>
-                            <div class="user_nick">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
-                                <strong>댓글 단 유저의 닉네임</strong>
-                            </div>
-                            <div class="reply_content">ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ뭔데</div>
-                            <div class="reply_edit">
-                                <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다."></textarea>
-                                <div>
-                                    <button>취소</button>
-                                    <button>수정</button>
-                                </div>
-                            </div>
-                            <div class="reply_info">
-                                <span class="date">2023.11.12 15:12</span>
-                                <a href="/jdgr/user/blame/r_blamepop" class="modal_open" data-target="#pop_email">신고</a>
-                            </div>
-                            <div class="btn_area">
-                                <button>댓글</button>
-                            </div>
-                            <div class="reply_inp_box">
-                                <div class="user_nick">
-                                    <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
-                                    <strong>유저닉네임</strong>
-                                </div>
-                                <div class="reply_inp">
-                                    <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다."></textarea>
-                                </div>
-                                <div class="reply_footer">
-                                    <div class="count">
-                                        <span>0</span>
-                                        <span>/ 3000</span>
-                                    </div>
-                                    <div class="reply_btn">
-                                        <button>등록</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="rreply">
-                            <div class="reply_pop">
-                                <a href=""></a>
-                                <div class="pop_content">
-                                    <a href="" class="edit">수정하기</a>
-                                    <a href="" class="delete">삭제하기</a>
-                                </div>
-                            </div>
-                            <div class="user_nick">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
-                                <strong>댓글 단 유저의 닉네임</strong>
-                            </div>
-                            <div class="reply_content">ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ뭔데</div>
-                            <div class="reply_edit">
-                                <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다."></textarea>
-                                <div>
-                                    <button>취소</button>
-                                    <button>수정</button>
-                                </div>
-                            </div>
-                            <div class="reply_info">
-                                <span class="date">2023.11.12 15:12</span>
-                                <a href="">신고</a>
-                            </div>
-                            <div class="reply_inp_box">
-                                <div class="user_nick">
-                                    <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
-                                    <strong>유저닉네임</strong>
-                                </div>
-                                <div class="reply_inp">
-                                    <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다."></textarea>
-                                </div>
-                                <div class="reply_footer">
-                                    <div class="count">
-                                        <span>0</span>
-                                        <span>/ 3000</span>
-                                    </div>
-                                    <div class="reply_btn">
-                                        <button>등록</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="rreply">
-                            <div class="reply_pop">
-                                <a href=""></a>
-                                <div class="pop_content">
-                                    <a href="" class="edit">수정하기</a>
-                                    <a href="" class="delete">삭제하기</a>
-                                </div>
-                            </div>
-                            <div class="user_nick">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
-                                <strong>댓글 단 유저의 닉네임</strong>
-                            </div>
-                            <div class="reply_content">ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ뭔데</div>
-                            <div class="reply_edit">
-                                <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다."></textarea>
-                                <div>
-                                    <button>취소</button>
-                                    <button>수정</button>
-                                </div>
-                            </div>
-                            <div class="reply_info">
-                                <span class="date">2023.11.12 15:12</span>
-                                <a href="">신고</a>
-                            </div>
-                            <div class="reply_inp_box">
-                                <div class="user_nick">
-                                    <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
-                                    <strong>유저닉네임</strong>
-                                </div>
-                                <div class="reply_inp">
-                                    <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다."></textarea>
-                                </div>
-                                <div class="reply_footer">
-                                    <div class="count">
-                                        <span>0</span>
-                                        <span>/ 3000</span>
-                                    </div>
-                                    <div class="reply_btn">
-                                        <button>등록</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="reply_pop">
-                                <a href=""></a>
-                                <div class="pop_content">
-                                    <a href="" class="edit">수정하기</a>
-                                    <a href="" class="delete">삭제하기</a>
-                                </div>
-                            </div>
-                            <div class="user_nick">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
-                                <strong>댓글 단 유저의 닉네임</strong>
-                            </div>
-                            <div class="reply_content">ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ뭔데</div>
-                            <div class="reply_edit">
-                                <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다."></textarea>
-                                <div>
-                                    <button>취소</button>
-                                    <button>수정</button>
-                                </div>
-                            </div>
-                            <div class="reply_info">
-                                <span class="date">2023.11.12 15:12</span>
-                                <a href="">신고</a>
-                            </div>
-                            <div class="btn_area">
-                                <button>댓글</button>
-                            </div>
-                            <div class="reply_inp_box">
-                                <div class="user_nick">
-                                    <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
-                                    <strong>유저닉네임</strong>
-                                </div>
-                                <div class="reply_inp">
-                                    <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다."></textarea>
-                                </div>
-                                <div class="reply_footer">
-                                    <div class="count">
-                                        <span>0</span>
-                                        <span>/ 3000</span>
-                                    </div>
-                                    <div class="reply_btn">
-                                        <button>등록</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+		                <% for(ReplyVo vo : replyVoList){ %>
+			                <% if(vo.getParentsNo() == null){ %>
+		                        <li>
+		                        	<% if(loginMemberVo != null) { %>
+		                        		<% if(loginMemberVo.getMemNo().equals(vo.getReplyMem())){ %>
+				                            <div class="reply_pop">
+				                                <a href=""></a>
+				                                <div class="pop_content">
+				                                    <a href="" class="edit">수정하기</a>
+				                                    <a href="/jdgr/reply/delete?replyNo=<%= vo.getReplyNo() %>&postNo=<%= vo.getPostNo() %>" class="delete">삭제하기</a>
+				                                </div>
+				                            </div>
+		                        		<% } %>
+		                        	<% } %>
+		                            <div class="user_nick">
+		                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
+		                                <strong><%= vo.getReplyMemNick() %></strong>
+		                            </div>
+		                            <div class="reply_content"><%= vo.getCon() %></div>
+		                            <div class="reply_edit">
+                                        <form action="/jdgr/reply/edit" method="get">
+                                            <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다." name="con"><%= vo.getCon() %></textarea>
+                                            <div>
+                                                <button type="button">취소</button>
+                                                <button>수정</button>
+                                            </div>
+                                            <input type="hidden" name="replyNo" value="<%= vo.getReplyNo() %>">
+                                            <input type="hidden" name="postNo" value="<%= vo.getPostNo() %>">
+                                        </form>
+		                            </div>
+		                            <div class="reply_info">
+		                                <span class="date"><%= vo.getWriteDate() %></span>
+		                                <a href="">신고</a>
+		                            </div>
+		                            <% if(loginMemberVo != null){%>
+		                            <div class="btn_area">
+		                                <button>댓글</button>
+		                            </div>
+		                            	
+		                            <div class="reply_inp_box">
+                                        <form action="/jdgr/reply/write" method="get">
+                                            <div class="user_nick">
+                                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
+                                                <strong><%= loginMemberVo.getMemNick() %></strong>
+                                            </div>
+                                            <div class="reply_inp">
+                                                <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다." name="con"></textarea>
+                                            </div>
+                                            <div class="reply_footer">
+                                                <div class="count">
+                                                    <span>0</span>
+                                                    <span>/ 3000</span>
+                                                </div>
+                                                <div class="reply_btn">
+                                                    <button>등록</button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="replyMem" value="<%= loginMemberVo.getMemNo() %>">
+                                            <input type="hidden" name="replyNo" value="<%= vo.getReplyNo() %>">
+                                            <input type="hidden" name="postNo" value="<%= vo.getPostNo() %>">
+                                        </form>
+		                            </div>
+		                            <% } %>
+		                        </li>
+			                <% } else { %>
+			                	<li class="rreply">
+		                            <% if(loginMemberVo != null) { %>
+		                        		<% if(loginMemberVo.getMemNo().equals(vo.getReplyMem())){ %>
+				                            <div class="reply_pop">
+				                                <a href=""></a>
+				                                <div class="pop_content">
+				                                    <a href="" class="edit">수정하기</a>
+				                                    <a href="/jdgr/reply/delete?replyNo=<%= vo.getReplyNo() %>&postNo=<%= vo.getPostNo() %>" class="delete">삭제하기</a>
+				                                </div>
+				                            </div>
+		                        		<% } %>
+		                        	<% } %>
+		                            <div class="user_nick">
+		                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
+		                                <strong><%= vo.getReplyMemNick() %></strong>
+		                            </div>
+		                            <div class="reply_content"><%= vo.getCon() %></div>
+		                            <div class="reply_edit">
+                                        <form action="/jdgr/reply/edit" method="get">
+                                            <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다." name="con"><%= vo.getCon() %></textarea>
+                                            <div>
+                                                <button type="button">취소</button>
+                                                <button>수정</button>
+                                            </div>
+                                            <input type="hidden" name="replyNo" value="<%= vo.getReplyNo() %>">
+                                            <input type="hidden" name="postNo" value="<%= vo.getPostNo() %>">
+                                        </form>
+		                            </div>
+		                            <div class="reply_info">
+		                                <span class="date"><%= vo.getWriteDate() %></span>
+		                                <a href="">신고</a>
+		                            </div>
+		                        </li>
+			                <% } %>
+		                <% } %>
                     </ul>
-                    <div class="paging_box">
-                        <ul>
-                            <li class="prev_all"><a href="" title="최신페이지로 이동"></a></li>
-                            <li class="prev"><a href="" title="이전페이지로 이동"></a></li>
-                            <li class="on"><a href="">1</a></li>
-                            <li><a href="">2</a></li>
-                            <li><a href="">3</a></li>
-                            <li><a href="">4</a></li>
-                            <li><a href="">5</a></li>
-                            <li><a href="">6</a></li>
-                            <li><a href="">7</a></li>
-                            <li><a href="">8</a></li>
-                            <li><a href="">9</a></li>
-                            <li><a href="">10</a></li>
-                            <li class="next"><a href="" title="다음페이지로 이동"></a></li>
-                            <li class="next_all"><a href="" title="마지막페이지로 이동"></a></li>
-                        </ul>
-                    </div>
-                    <div class="reply_inp_box">
-                        <div class="user_nick">
-                            <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
-                            <strong>유저닉네임</strong>
-                        </div>
-                        <div class="reply_inp">
-                            <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다."></textarea>
-                        </div>
-                        <div class="reply_footer">
-                            <div class="count">
-                                <span>0</span>
-                                <span>/ 3000</span>
+                    <% if(loginMemberVo != null){ %>
+                        <form action="/jdgr/reply/write" method="get">
+                            <div class="reply_inp_box">
+                                <div class="user_nick">
+                                    <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt=""></div>
+                                    <strong>
+                                        <%= loginMemberVo.getMemNick() %>
+                                    </strong>
+                                </div>
+                                <div class="reply_inp">
+                                    <textarea placeholder="타인에게 불쾌감을 주는 욕설과 악플은 삭제될 수 있습니다." name="con"></textarea>
+                                </div>
+                                <div class="reply_footer">
+                                    <div class="count">
+                                        <span>0</span>
+                                        <span>/ 3000</span>
+                                    </div>
+                                    <div class="reply_btn">
+                                        <button>등록</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="reply_btn">
-                                <button>등록</button>
-                            </div>
-                        </div>
-                    </div>
+                            <input type="hidden" name="replyMem" value="<%= loginMemberVo.getMemNo() %>">
+                            <input type="hidden" name="postNo" value="<%= postDetailVo.getPostNo() %>">
+                        </form>
+                    <% } %>
                 </div>
 
             </div>
