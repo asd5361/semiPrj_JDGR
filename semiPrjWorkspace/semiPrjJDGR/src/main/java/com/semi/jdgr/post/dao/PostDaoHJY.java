@@ -16,13 +16,14 @@ public class PostDaoHJY {
 	public int postWrite(Connection conn, PostVo postVo, String blogNum) throws Exception {
 		
 		// sql
-		String sql = "INSERT INTO POST (POST_NO, BLOG_NO, CATEGORY_NO, GROUP_NO, TITLE, CONTENT) VALUES (SEQ_POST_NO.NEXTVAL, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO POST (POST_NO, BLOG_NO, CATEGORY_NO, GROUP_NO, TITLE, CONTENT, POST_IMG) VALUES (SEQ_POST_NO.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, blogNum);
 		pstmt.setString(2, postVo.getCategoryNo());
 		pstmt.setString(3, postVo.getGroupNo());
 		pstmt.setString(4, postVo.getPostTitle());
 		pstmt.setString(5, postVo.getContent());
+		pstmt.setString(6, postVo.getPostImg());
 		
 		int result = pstmt.executeUpdate();
 		

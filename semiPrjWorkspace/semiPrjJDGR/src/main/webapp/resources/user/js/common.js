@@ -220,29 +220,29 @@ if(editBtn){
             editLi.classList.remove('on');
             editLi.querySelector('button:nth-child(1)').addEventListener('click', (ev) => {
                 console.log();
-                ev.target.parentNode.parentNode.parentNode.classList.remove('edit');
+                ev.target.parentNode.parentNode.parentNode.parentNode.classList.remove('edit');
             });
         });
     });
 }
 // 댓글삭제 버튼
-const deleteBtn = document.querySelectorAll('.b_post_reply .reply_pop > div .delete');
-let blindEl = null;
-if(deleteBtn){
-    deleteBtn.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const editLi = e.target.parentNode.parentNode.parentNode;
-
-            blindElAdd('삭제된 댓글입니다.');
-            editLi.appendChild(blindEl);
-            editLi.classList.remove('on');
-
-        });
-    });
-}
-function blindElAdd(txt){
-    blindEl = document.createElement('div');
-    blindEl.classList.add('blind');
-    blindEl.textContent = txt;
-}
+//const deleteBtn = document.querySelectorAll('.b_post_reply .reply_pop > div .delete');
+//let blindEl = null;
+//if(deleteBtn){
+//    deleteBtn.forEach(btn => {
+//        btn.addEventListener('click', (e) => {
+//            e.preventDefault();
+//            const editLi = e.target.parentNode.parentNode.parentNode;
+//
+//            blindElAdd('삭제된 댓글입니다.');
+//            editLi.appendChild(blindEl);
+//            editLi.classList.remove('on');
+//
+//        });
+//    });
+//}
+//function blindElAdd(txt){
+//    blindEl = document.createElement('div');
+//    blindEl.classList.add('blind');
+//    blindEl.textContent = txt;
+//}

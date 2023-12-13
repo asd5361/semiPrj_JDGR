@@ -1281,11 +1281,18 @@ li.on .reply_pop > div {
 .b_post_reply li.edit .reply_content {
     display: none;
 }
-.reply_edit {
+.reply_edit form {
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: flex-end;
     margin-top: 10px;
+}
+.reply_edit form > div {
+	width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 .reply_edit textarea {
     display: block;
@@ -1297,10 +1304,6 @@ li.on .reply_pop > div {
 }
 .reply_edit textarea::placeholder {
     color: #aaa;
-}
-.reply_edit > div {
-    display: flex;
-    gap: 10px;
 }
 .reply_edit button {
     display: flex;

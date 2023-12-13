@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.semi.jdgr.user.reply.service.ReplyService;
@@ -23,20 +24,21 @@ public class ReplyWriteController extends HttpServlet {
 		
 		try {
 			//data
-			String postNo = req.getParameter("pNo");
+			String postNo = req.getParameter("postNo");
 			String replyMem = req.getParameter("replyMem");
 			String con = req.getParameter("con");
-			String replyNo = req.getParameter("replyNo");
+			String parentsNo = req.getParameter("replyNo");
 			
-			System.out.println("포스트넘버" + postNo);
-			System.out.println("댓글쓴멤버" + replyMem);
-			System.out.println("포스트내용" + con);
-			System.out.println("댓글넘버" + replyNo);
+			System.out.println("포스트넘버zz" + postNo);
+			System.out.println("댓글쓴멤버zz" + replyMem);
+			System.out.println("포스트내용zz" + con);
+			System.out.println("댓글넘버zz" + parentsNo);
 			
 			ReplyVo vo = new ReplyVo();
 			vo.setPostNo(postNo);
 			vo.setReplyMem(replyMem);
 			vo.setCon(con);
+			vo.setParentsNo(parentsNo);
 			
 			//service
 			ReplyService rs = new ReplyService();
@@ -46,12 +48,12 @@ public class ReplyWriteController extends HttpServlet {
 			}
 			
 			// result
-			req.getRequestDispatcher("/WEB-INF/views/user/blog/blogView.jsp").forward(req, resp);
+			resp.sendRedirect("/jdgr/post/detail?pNo=" + postNo);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 			req.setAttribute("errorMsg", "[ERROR] 댓글 작성 에러 발생");
-			req.getRequestDispatcher("/WEB-INF/views/user/common/error.jsp").forward(req, resp);			e.printStackTrace();
+			req.getRequestDispatcher("/WEB-INF/views/user/common/error.jsp").forward(req, resp);
 			
 		}
 		
