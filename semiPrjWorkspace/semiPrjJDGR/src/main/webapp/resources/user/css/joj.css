@@ -108,18 +108,18 @@
 }
 
 button.btn_k.like {
-    background: url(../images/ico/ico-like-red.svg) no-repeat left;
+    background: #fff url(../images/ico/ico-like-red.svg) no-repeat left;
 }
 
 button.btn_k.un_like {
-    background: url(../images/ico/ico_like.svg) no-repeat left;
+    background: #fff url(../images/ico/ico_like.svg) no-repeat left;
 }
 
 button.btn_k.plus {
-    background: url(../images/ico/ico_v2.svg) no-repeat left;
+    background: #fff url(../images/ico/ico_v2.svg) no-repeat left;
 }
 
 button.btn_k.rep {
-    background: url(../images/ico/ico_reply_b.svg) no-repeat left;
+    background: #fff url(../images/ico/ico_reply_b.svg) no-repeat left;
 }
 

@@ -68,8 +68,8 @@ public class PostControllerJOJ extends HttpServlet {
 			req.setAttribute("replyVoList", replyVoList);
 			
 			/********************************************************/
-
 			
+			 System.out.println(postDetailVo);
 			// result
 			HttpSession session = req.getSession();
 			session.setAttribute("postDetailVo", postDetailVo);
