@@ -29,18 +29,15 @@ public class PostListController extends HttpServlet {
 			PostServiceJOJ ps = new PostServiceJOJ();
 			
 			// data
+			int cnt = 1;
 			// 클라이언트로부터 전송된 JSON 데이터 읽기
 			String pNo = req.getParameter("pNo");
 			String groupNo = req.getParameter("GroupNo");
 			String blogUrl = req.getParameter("url");
-			System.out.println("pno:::::::::::::" + pNo);
-			System.out.println("groupNo : " + groupNo);
-			System.out.println("blogUrl : " + blogUrl);
 			if(blogUrl.equals("null")) {
 				blogUrl = null;
 			}
-			PostVo postDetailVo = ps.PostDetail(groupNo, blogUrl, pNo); 
-			System.out.println("돌아온 컨트롤러 postDetailVo : " + postDetailVo);
+			PostVo postDetailVo = ps.PostDetail(groupNo, blogUrl, pNo, cnt); 
 			
 			if ((groupNo == null) && (blogUrl == null)) {
 				blogUrl = postDetailVo.getBlogUrl();
@@ -53,7 +50,6 @@ public class PostListController extends HttpServlet {
 			
 			int listCount = ps.getPostVoListCount(groupNo); // 전체 포스트 갯수
 			String currentPage_ = req.getParameter("pnum");
-			System.out.println("페이지넘버" + currentPage_);
 			if(currentPage_ == null) {
 				currentPage_ = "1";
 			}

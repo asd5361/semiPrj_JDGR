@@ -30,9 +30,6 @@ public class AdminPostControllerJOJ extends HttpServlet{
 			PostVo replyCnt = ps.PostDetailReplyCnt(adminPostDetailVo);
 			
 			// result
-			System.out.println(adminPostDetailVo);
-			System.out.println(heartCnt);
-			System.out.println(replyCnt);
 			req.setAttribute("adminPostDetailVo", adminPostDetailVo);
 			req.setAttribute("heartCnt", heartCnt);
 			req.setAttribute("replyCnt", replyCnt);
@@ -63,7 +60,6 @@ public class AdminPostControllerJOJ extends HttpServlet{
 			vo.setPostDelYn(postDelYn);
 			vo.setPostNo(no);
 			
-			System.out.println(vo);
 			// service
 			PostServiceJOJ ps = new PostServiceJOJ();
 			int result = ps.AdminPostEdit(vo);

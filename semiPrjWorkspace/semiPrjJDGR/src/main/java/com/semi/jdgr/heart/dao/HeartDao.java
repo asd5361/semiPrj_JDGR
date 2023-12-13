@@ -43,7 +43,7 @@ public class HeartDao {
 //
 //	}// HeartList
 	
-	// 공감 리스트 가져오기
+	// 공감 VO 가져오기
 	public HeartVo HeartList(Connection conn, String no) throws Exception {
 
 		// sql
@@ -133,6 +133,32 @@ public class HeartDao {
 		return del;
 
 	}
+	
+//	// 공감수
+//	public PostVo PostDetailHeartCnt(Connection conn, PostVo postDetailVo) throws Exception {
+//
+//		// sql
+//		String sql = "SELECT COUNT(POST_NO) AS POST_NO FROM HEART WHERE POST_NO = ?";
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		pstmt.setString(1, postDetailVo.getPostNo());
+//		ResultSet rs = pstmt.executeQuery();
+//
+//		// rs
+//		PostVo heartCnt = null;
+//		if (rs.next()) {
+//			String postNo = rs.getString("POST_NO");
+//
+//			heartCnt = new PostVo();
+//			heartCnt.setPostNo(postNo);
+//		}
+//
+//		// close
+//		JDBCTemplate.close(pstmt);
+//		JDBCTemplate.close(rs);
+//
+//		return heartCnt;
+//
+//	}// heartCnt
 
 	// 공감 알림테이블로 저장
 	public int insertHeartAlarm(Connection conn, AlarmVo alarmVo) throws Exception {

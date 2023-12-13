@@ -158,7 +158,6 @@ public class PostDaoJOJ {
 			postDetailVo.setInquiry(inquiryCnt);
 
 		}
-		System.out.println("디에이오 postDetailVo : " + postDetailVo);
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
@@ -228,7 +227,6 @@ public class PostDaoJOJ {
 
 	// 조회수 증가 (블로그 카테고리 상세보기용)
 	public int PostDetailIncreaseHit(Connection conn, PostVo postDetailVo) throws Exception {
-		System.out.println("조회수 dao = " + postDetailVo.getPostNo());
 		// sql
 		String sql = "UPDATE POST SET INQUIRY = INQUIRY+1 WHERE POST_NO = ? AND OPEN = 'Y'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);

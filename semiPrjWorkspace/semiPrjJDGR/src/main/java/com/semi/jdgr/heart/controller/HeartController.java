@@ -29,35 +29,28 @@ public class HeartController extends HttpServlet {
 			PostVo postDetailVo = (PostVo) req.getSession().getAttribute("postDetailVo");
 			MemberVo loginMember = (MemberVo) req.getSession().getAttribute("loginMember");
 
-			System.out.println("공감기능 실행");
-			System.out.println(postDetailVo);
-			System.out.println(postDetailVo.getPostNo());
-//				MemberVo loginMember = new MemberVo();
 			AlarmVo alarmVo = new AlarmVo();
 
-//				loginMember.setMemNo("4");
 			if (loginMember == null) {
 				throw new Exception("로그인 먼저 진행하세요.");
 			}
+
 			String no = postDetailVo.getPostNo();
 			String memberNo = loginMember.getMemNo();
 
-//			if (loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
-//				throw new Exception("본인이 작성한 포스트 입니다.");
-//			}
-			
-			System.out.println(postDetailVo);
-			System.out.println("로그인 멤 번호" + loginMember.getMemNo());
-			System.out.println("포스트 멤 번호" + postDetailVo.getUserNo());
+			if (loginMember.getMemNo().equals(postDetailVo.getUserNo())) {
+				throw new Exception("본인이 작성한 포스트 입니다.");
+			}
 
 			// service
 			HeartService hs = new HeartService();
+			
 
 			// 공감 중복체크
 			boolean isOk = hs.checkHeart(no, memberNo);
 
 			// 공감 vo 불러오기 (불러온 값으로 JS처리)
-			HeartVo heartVo = hs.HeartList(no);
+//			HeartVo heartVo = hs.HeartList(no);
 //			List<HeartVo> heartVoList = hs.HeartList(no);
 
 			// 알람에 인서트
@@ -96,18 +89,14 @@ public class HeartController extends HttpServlet {
 				}
 			}
 			
-//			if( ( loginMember.getMemNo().equals(heartVo.getMemNo()) ) &&( postDetailVo.getPostNo().equals(heartVo.getPostNo()) ) ){
-//				
-//			}
 
 //			session.setAttribute("heartVoList", heartVoList);
 //			req.getSession().setAttribute("heartVoList", heartVoList);
-			session.setAttribute("heartVo", heartVo);
-			req.getSession().setAttribute("heartVo", heartVo);
+//			session.setAttribute("heartVo", heartVo);
+//			req.getSession().setAttribute("heartVo", heartVo);
 
 //				resp.sendRedirect("/jdgr/post/detail?url=${blogUrlVo.blogUrl}&&categoryNo=groupVo.getNo() %>");
-			resp.sendRedirect(
-					"/jdgr/post/detail?url=" + postDetailVo.getBlogUrl() + "&&GroupNo=" + postDetailVo.getGroupNo());
+			resp.sendRedirect("/jdgr/post/detail?url=" + postDetailVo.getBlogUrl() + "&&GroupNo=" + postDetailVo.getGroupNo());
 
 		} catch (Exception e) {
 			System.out.println("공감 오류 발생");

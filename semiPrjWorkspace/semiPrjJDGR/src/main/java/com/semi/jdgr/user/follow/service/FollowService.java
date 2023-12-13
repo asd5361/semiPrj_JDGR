@@ -13,15 +13,15 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class FollowService {
 	
-	// 구독 리스트 가져오기
-	public List<FollowVo> FollowList(String blogNo) throws Exception {
+	// 구독 VO 가져오기
+	public FollowVo FollowList(String blogNo) throws Exception {
 
 		// conn
 		Connection conn = JDBCTemplate.getConnection();
 
 		// dao
 		FollowDao dao = new FollowDao();
-		List<FollowVo> followVoList = dao.FollowList(conn, blogNo);
+		FollowVo followVoList = dao.FollowList(conn, blogNo);
 
 		// close
 		JDBCTemplate.close(conn);

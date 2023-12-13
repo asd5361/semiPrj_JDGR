@@ -18,8 +18,8 @@
     	Integer del = (Integer) request.getAttribute("del");
     	
     	// 공감and구독 vo 가져와서 js 처리
-    	List<HeartVo> heartVoList = (List<HeartVo>) session.getAttribute("heartVoList");
-    	List<FollowVo> followVoList = (List<FollowVo>) session.getAttribute("followVoList");
+//     	List<HeartVo> heartVoList = (List<HeartVo>) session.getAttribute("heartVoList");
+//     	List<FollowVo> followVoList = (List<FollowVo>) session.getAttribute("followVoList");
     	
     %>
 
@@ -68,7 +68,7 @@
                     </div>
                     <div class="right02">
                         <button id="plus_btn" class="btn_k un_plus" onclick="{clickEvent('follow')}">구독하기</button>
-                        <button class="btn_k" onclick="{clickEvent('blame')}"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button>
+                        <button class="btn_k" onclick="blame()"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button>
                     </div>    
                 </div>
             </div>
@@ -76,81 +76,81 @@
 
 <script>
 
-	// 댓글창
-	let ReplyList = false;
 
-	function toggleReplyList() {
-    const replyList = document.getElementById('replyList');
-    ReplyList = !ReplyList;
+// 	// 댓글창
+// 	let ReplyList = false;
 
-    if (ReplyList) {
-    	replyList.style.display = 'block';
-    } else {
-    	replyList.style.display = 'none';
-    }
-}
+// 	function toggleReplyList() {
+//     const replyList = document.getElementById('replyList');
+//     ReplyList = !ReplyList;
+
+//     if (ReplyList) {
+//     	replyList.style.display = 'block';
+//     } else {
+//     	replyList.style.display = 'none';
+//     }
+// }
 
 
-    let likeClick = true;
-    let plusClick = true;
-    let repClick = true;
-    let repListClick = true;
+//     let likeClick = true;
+//     let plusClick = true;
+//     let repClick = true;
+//     let repListClick = true;
     
-    // 이미지 변경	
-    function clickEvent(mode) {
-        switch (mode) {
+//     // 이미지 변경	
+//     function clickEvent(mode) {
+//         switch (mode) {
         
-            case 'like' :
-                const likeBtn = document.getElementById('like_btn');
-                likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
-                likeClick = !likeClick;
-                heart()
-            break;
+//             case 'like' :
+//                 const likeBtn = document.getElementById('like_btn');
+//                 likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
+//                 likeClick = !likeClick;
+//                 heart()
+//             break;
                 
-            case 'follow' :
-                const plusBtn = document.getElementById('plus_btn');
-                plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
-                plusClick = !plusClick;
-                follow()
-            break;
+//             case 'follow' :
+//                 const plusBtn = document.getElementById('plus_btn');
+//                 plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
+//                 plusClick = !plusClick;
+//                 follow()
+//             break;
                 
-            case 'reply' :
-                const repBtn = document.getElementById('rep_btn');
-                repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
-                repClick = !repClick;
-                toggleReplyList()
-            break;
+//             case 'reply' :
+//                 const repBtn = document.getElementById('rep_btn');
+//                 repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
+//                 repClick = !repClick;
+//                 toggleReplyList()
+//             break;
                 
-        }
+//         }
         
-    }
+//     }
     
-    // 공감
-    function heart() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/post/heart";
-        form.method = "GET";
+//     // 공감
+//     function heart() {
+//     	const form = document.createElement("form");
+//         form.action = "/jdgr/post/heart";
+//         form.method = "GET";
         
-        document.body.appendChild(form);
+//         document.body.appendChild(form);
         
-        form.submit();
-    }
+//         form.submit();
+//     }
     
-    // 구독
-    function follow() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/post/follow";
-        form.method = "GET";
+//     // 구독
+//     function follow() {
+//     	const form = document.createElement("form");
+//         form.action = "/jdgr/post/follow";
+//         form.method = "GET";
         
-        document.body.appendChild(form);
+//         document.body.appendChild(form);
         
-        form.submit();
-    }
-    
+//         form.submit();
+//     }
 //     // 신고
 //     function blame() {
 //     	const form = document.createElement("form");
-<%--         form.action = "/jdgr/user/blame/p_blamepop" + <%=postDetailVo.getUserNo()%>"&&" + ; --%>
+//         form.action = "/jdgr/user/blame/p_blamepop";
         
 //         form.method = "POST";
         
@@ -159,69 +159,69 @@
 //         form.submit();
 //     }
     
-    포스트 작성자 / 포스트 제목 / 신고 목록 / 상세 내용 / 내가 로그인한 정보
+//     포스트 작성자 / 포스트 제목 / 신고 목록 / 상세 내용 / 내가 로그인한 정보
     
-    // function likeClickEvent() {
-    //     const likeBtn = document.getElementById('like_btn');
-    //     likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
-    //     likeClick = !likeClick;
-    // }
+//     // function likeClickEvent() {
+//     //     const likeBtn = document.getElementById('like_btn');
+//     //     likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
+//     //     likeClick = !likeClick;
+//     // }
 
 
-    // function plusClickEvent() {
-    //     const plusBtn = document.getElementById('plus_btn');
+//     // function plusClickEvent() {
+//     //     const plusBtn = document.getElementById('plus_btn');
 
-    //     if(plusClick){
-    //         plusBtn.className = "btn_k plus";
-    //     } else {c
-    //         plusBtn.className = "btn_k";
-    //     }
-    //     plusClick = !plusClick;
-    // }
+//     //     if(plusClick){
+//     //         plusBtn.className = "btn_k plus";
+//     //     } else {c
+//     //         plusBtn.className = "btn_k";
+//     //     }
+//     //     plusClick = !plusClick;
+//     // }
     
-    // 공감
-//     function clickHeart() {
-//     	const heart = document.querySelector();
-//     }
+//     // 공감
+// //     function clickHeart() {
+// //     	const heart = document.querySelector();
+// //     }
     
-//     const p = new Promise( ( resolve , reject ) => {
-//         console.log("공감");
-//         if(voList.length > 0){
-//             resolve();
-//         }else{
-//             reject();
-//         }
-//         resolve();  // 작업상태 변경
-//     } )
-//     .then( (데이터) => {
+// //     const p = new Promise( ( resolve , reject ) => {
+// //         console.log("공감");
+// //         if(voList.length > 0){
+// //             resolve();
+// //         }else{
+// //             reject();
+// //         }
+// //         resolve();  // 작업상태 변경
+// //     } )
+// //     .then( (데이터) => {
     	
-//         console.log("hello");
-//     } )
-//     .catch( () => {
+// //         console.log("hello");
+// //     } )
+// //     .catch( () => {
     	
-//         console.log("bye");
-//     } )
-//     ;
+// //         console.log("bye");
+// //     } )
+// //     ;
 
     
- // 공감 중복체크
-// 	function checkHeartDup() {
+//  // 공감 중복체크
+// // 	function checkHeartDup() {
 		
-// 		const memberIdvalue = document.querySelector("main input[name=memberId]").value;
+// // 		const memberIdvalue = document.querySelector("main input[name=memberId]").value;
 		
-// 		fetch("/app99/member/check/id?memberId=" + memberIdvalue)
-// 		.then( (resp) => { return resp.json() } )
-// 		.then( (data) => {
-// 			const result = data.msg;
-// 			const isOk = result == "ok";
-// 			if(isOk){
-// 				alert("사용가능");
-// 				window.idOk = true;
-// 			}else{
-// 				alert("사용불가");
-// 				window.idOk = false;
-// 			}
-// 		} );
+// // 		fetch("/app99/member/check/id?memberId=" + memberIdvalue)
+// // 		.then( (resp) => { return resp.json() } )
+// // 		.then( (data) => {
+// // 			const result = data.msg;
+// // 			const isOk = result == "ok";
+// // 			if(isOk){
+// // 				alert("사용가능");
+// // 				window.idOk = true;
+// // 			}else{
+// // 				alert("사용불가");
+// // 				window.idOk = false;
+// // 			}
+// // 		} );
 </script>
 
 
