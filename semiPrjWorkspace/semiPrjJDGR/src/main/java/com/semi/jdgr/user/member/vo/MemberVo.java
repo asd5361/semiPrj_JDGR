@@ -12,12 +12,19 @@ public class MemberVo {
 	private String quitYn;
 	private String enrollDate;
 	private String updateDate;
+	private String LoginBan;
+	private String banYn;
+	private String quitData;
+	
+	
 	public MemberVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public MemberVo(String memNo, String memName, String memId, String memPwd, String memPwd2, String memNick,
-			String memPhoneNum, String memEmail, String quitYn, String enrollDate, String updateDate) {
+			String memPhoneNum, String memEmail, String quitYn, String enrollDate, String updateDate, String loginBan,
+			String banYn) {
 		super();
 		this.memNo = memNo;
 		this.memName = memName;
@@ -30,13 +37,21 @@ public class MemberVo {
 		this.quitYn = quitYn;
 		this.enrollDate = enrollDate;
 		this.updateDate = updateDate;
+		LoginBan = loginBan;
+		this.banYn = banYn;
 	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "MemberVo [memNo=" + memNo + ", memName=" + memName + ", memId=" + memId + ", memPwd=" + memPwd
 				+ ", memPwd2=" + memPwd2 + ", memNick=" + memNick + ", memPhoneNum=" + memPhoneNum + ", memEmail="
-				+ memEmail + ", quitYn=" + quitYn + ", enrollDate=" + enrollDate + ", updateDate=" + updateDate + "]";
+				+ memEmail + ", quitYn=" + quitYn + ", enrollDate=" + enrollDate + ", updateDate=" + updateDate
+				+ ", LoginBan=" + LoginBan + ", banYn=" + banYn + ", quitData=" + quitData + "]";
 	}
+
 	public String getMemNo() {
 		return memNo;
 	}
@@ -102,7 +117,28 @@ public class MemberVo {
 	}
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+		if(quitYn.equals("Y")) {
+			this.quitData = updateDate;
+		}
 	}
-	
-	
+	public String getLoginBan() {
+		return LoginBan;
+	}
+
+	public void setLoginBan(String loginBan) {
+		LoginBan = loginBan;
+	}
+
+	public String getBanYn() {
+		return banYn;
+	}
+
+	public void setBanYn(String banYn) {
+		this.banYn = banYn;
+	}
+
+	public String getQuitData() {
+		return quitData;
+	}
+
 }
