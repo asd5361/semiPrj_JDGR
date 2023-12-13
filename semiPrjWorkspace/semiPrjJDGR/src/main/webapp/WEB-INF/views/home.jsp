@@ -28,10 +28,10 @@
        		<div class="best10_content">
                 <div class="swiper-container">
                     <ul class="swiper-wrapper">
+                        <% for(PostVo vo : postVoList){ %>
                         <li class="swiper-slide">
-                            <a href="/jdgr/post/detail?pNo=7">
-                            <% for(PostVo vo : postVoList){ %>
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
+                            <a href="/jdgr/post/detail?pNo=7">                           
+                                <div class="img"><%= vo.getPostImg()%></div>
                                 <div class="txt">
                                     <div class="info">
                                         <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
@@ -45,10 +45,10 @@
                                         <span class="date"><%= vo.getEnrollDate()%></span>
                                         <span class="like"><%= vo.getHeartCnt()%></span>
                                     </div>
-                                </div>
-                            <%} %>   
+                                </div>                           
                             </a>
                         </li>
+                        <%} %> 
                     </ul>
                 </div>
                 <button class="swiper_btn ico_prev"></button>
@@ -80,13 +80,12 @@
                 
 
                 <!-- 카테고리 버튼 -->
-                 <ul class="tab_btns">
-                    <% for(CategoryVo categoryVo : categoryVoList) {%>
-                      	<div class ="categorybtn">
-                       		<li class="on"><%=categoryVo.getCategoryName() %></li>
-                  			<input type="hidden" value="<%= categoryVo.getCategoryNo()%>">                                     
-                     	</div>
-                       
+                <ul class="tab_btns category">
+                    <% for(CategoryVo categoryVo : categoryVoList) {%>                        
+                        <li class="on">
+                            <button><%=categoryVo.getCategoryName() %></button>
+                            <input type="hidden" value="<%= categoryVo.getCategoryNo()%>">   
+                        </li>
                     <%} %>
                     
                 </ul>
@@ -94,47 +93,49 @@
                 <!-- 카테고리별 블로그 포스트 -->
                 <div id="target">
                 
-                <% for(PostVo postVo : postVoList) {%>
-                <div class="postbox">
-                      	<div class="postImg"><%= postVo.getPostImg() %></div>
-                        <div class="postWrite"> 
-                            <div class="postWriteNick">
-<!--                                 <div class="postNickimg"><img src="../images/ico/ico_people.svg"></div> -->
-                                <div class="postNickname"><%= postVo.getUserNick() %></div>
-                            </div>    
-                            <div class="postWriteLink"><%= postVo.getContent() %></div>
-                            <div class="postWrite12">
-                                <div class="postWrite1"><img src="/jdgr/resources/user/images/ico/ico_like.svg"><%= postVo.getHeartCnt() %></div>
-                                <div class="postWrite2"><img src="/jdgr/resources/user/images/ico/ico_reply.svg"><%= postVo.getReplyCnt() %></div>
-                            </div>         
+                    <% for(PostVo postVo : postVoList) {%>
+                        <div class="postbox">
+                                <div class="postImg"><%= postVo.getPostImg() %></div>
+                                <div class="postWrite"> 
+                                    <div class="postWriteNick">
+        <!--                                 <div class="postNickimg"><img src="../images/ico/ico_people.svg"></div> -->
+                                        <div class="postNickname"><%= postVo.getUserNick() %></div>
+                                    </div>    
+                                    <div class="postWriteLink"><%= postVo.getContent() %></div>
+                                    <div class="postWrite12">
+                                        <div class="postWrite1"><img src="/jdgr/resources/user/images/ico/ico_like.svg"><%= postVo.getHeartCnt() %></div>
+                                        <div class="postWrite2"><img src="/jdgr/resources/user/images/ico/ico_reply.svg"><%= postVo.getReplyCnt() %></div>
+                                    </div>         
+                                </div>
                         </div>
-                 </div>
                     <%} %>
-                 </div>
- 
-            	<!-- 페이징 -->
-                <div class="paging_box">
-                    <ul>
-                    <%if(pvo.getCurrentPage() != 1) {%>
-                        <li class="prev_all"><a href="/jdgr/home?pno=1" title="최신페이지로 이동"></a></li>
-                        <li class="prev"><a href="/jdgr/home?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
-                        <%} %>
-                        
-                        <%for(int i = pvo.getStartPage(); i<= pvo.getEndPage(); i++) {%>
-                           <%if(i == pvo.getCurrentPage()) {%>   
-                           <li class="on"><a href="/jdgr/home?pno=<%= i%>"><%= i%></a></li>
-                           <%}else{ %>  
-                           <li><a href="/jdgr/home?pno=<%= i%>"><%= i%></a></li>
-                        <%} }%>
-                        <li class="next"><a href="/jdgr/home?pno=<%=pvo.getCurrentPage()+1 %>" title="다음페이지로 이동"></a></li>
-                        <li class="next_all"><a href="/jdgr/home?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
-                    </ul>
                 </div>
+ 				<div id="target2">
+ 				
+                    <!-- 페이징 -->
+                    <div class="paging_box mt30">
+                        <ul>
+                        <%if(pvo.getCurrentPage() != 1) {%>
+                            <li class="prev_all"><a href="/jdgr/home?pno=1" title="최신페이지로 이동"></a></li>
+                            <li class="prev"><a href="/jdgr/home?pno=<%=pvo.getStartPage()-1 %>" title="이전페이지로 이동"></a></li>
+                            <%} %>
+                            
+                            <%for(int i = pvo.getStartPage(); i<= pvo.getEndPage(); i++) {%>
+                            <%if(i == pvo.getCurrentPage()) {%>   
+                            <li class="on"><a href="/jdgr/home?pno=<%= i%>"><%= i%></a></li>
+                            <%}else{ %>  
+                            <li><a href="/jdgr/home?pno=<%= i%>"><%= i%></a></li>
+                            <%} }%>
+                            <li class="next"><a href="/jdgr/home?pno=<%=pvo.getCurrentPage()+1 %>" title="다음페이지로 이동"></a></li>
+                            <li class="next_all"><a href="/jdgr/home?pno=<%=pvo.getMaxPage() %>" title="마지막페이지로 이동"></a></li>
+                        </ul>
+                    </div>
+ 				</div>
                 
                 
             </div>
-            	
-            </div>
+           
+            
 
             <!-- right -->
             <div class="main_right">
@@ -423,7 +424,7 @@ function goPost2(event) {
 //        }
 //     } );
 ///
-const divArray = document.querySelectorAll("div.categorybtn");
+const divArray = document.querySelectorAll(".tab_btns.category li");
     for(let j = 0 ; j < divArray.length; ++j){
        divArray[j].addEventListener('click' , selectCategory);
     }
@@ -448,12 +449,11 @@ const divArray = document.querySelectorAll("div.categorybtn");
 //          const map = data;
 // 			HashMap<String, Object> map = new HashMap<String, Object>();
             const cateVoList = data.postVoList;
-			const pvo = data.pvo;
-			console.log(cateVoList);
-			console.log(pvo);
+			const pageVo = data.pvo;
+			
+            
 			
             const targetTag = document.querySelector("#target");
-            
             cateVoList.forEach((vo) => {
                    const postBox = document.createElement("div");
                    postBox.classList.add("postbox");
@@ -490,8 +490,13 @@ const divArray = document.querySelectorAll("div.categorybtn");
                    const likeImg = document.createElement("img");
                    likeImg.src = "/jdgr/resources/user/images/ico/ico_like.svg";
 
-                   postWrite1.appendChild(likeImg); // 이미지를 postWrite1 div에 추가
-                   postWrite1.textContent = vo.heartCnt; // 이미지 다음에 텍스트 추가
+                   // 텍스트 내용을 담을 span 요소를 생성합니다.
+                   const textSpan = document.createElement("span");
+                   textSpan.textContent = vo.heartCnt;
+
+                   // 이미지와 텍스트 요소를 postWrite1에 추가합니다.
+                   postWrite1.appendChild(likeImg);
+                   postWrite1.appendChild(textSpan);
 
                    postWrite12.appendChild(postWrite1);
 
@@ -500,9 +505,12 @@ const divArray = document.querySelectorAll("div.categorybtn");
                    
                    const replyImg = document.createElement("img");
                    replyImg.src = "/jdgr/resources/user/images/ico/ico_reply.svg";
-                   postWrite2.appendChild(replyImg);
                    
-                   postWrite2.textContent = vo.replyCnt;
+                   const textSpan1 = document.createElement("span");
+                   textSpan1.textContent = vo.replyCnt;
+                   
+                   postWrite2.appendChild(replyImg);
+                   postWrite2.appendChild(textSpan1);
                    
                    postWrite12.appendChild(postWrite2);
 
@@ -512,19 +520,68 @@ const divArray = document.querySelectorAll("div.categorybtn");
                    targetTag.appendChild(postBox); // 실제로 추가할 부분
                    
                });
+
+         	
+            createPageLink(pageVo);
            });
    }
 
     <!-- 카테고리 페이징 -->
  	// 모든 .paging_box 요소를 선택하여 삭제하는 함수
-    function removeAllPagingBoxes() {
-        var pagingBoxes = document.querySelectorAll('.paging_box'); // paging_box 클래스의 모든 요소 선택
-        pagingBoxes.forEach(function(pagingBox) {
-            pagingBox.remove(); // 각 paging_box 요소를 삭제
-        });
+function createPageLink(pageVo) {
+ 		console.log("페이지 브이오11 :::");
+	console.log(pageVo);
+	var pagingBoxes = document.querySelectorAll('.paging_box'); // paging_box 클래스의 모든 요소 선택
+    pagingBoxes.forEach(function(pagingBox) {
+        pagingBox.remove(); // 각 paging_box 요소를 삭제
+    });
+    const pagingBox = document.createElement('div');
+    pagingBox.classList.add('paging_box');
+
+    const ul = document.createElement('ul');
+    pagingBox.appendChild(ul);
+
+    const currentPage = pageVo.currentPage;
+    const startPage = pageVo.startPage;
+    const endPage = pageVo.endPage;
+    const maxPage = pageVo.maxPage;
+
+    if (currentPage !== 1) {
+        createPageLinkElement(ul, '/jdgr/home?pno=1', '최신페이지로 이동', 'prev_all');
+        createPageLinkElement(ul, '/jdgr/home?pno=' + (startPage - 1), '이전페이지로 이동', 'prev');
     }
 
+    for (let i = startPage; i <= endPage; i++) {
+        if (i === currentPage) {
+            createPageLinkElement(ul, '/jdgr/home?pno=' + i, i, 'on');
+        } else {
+            createPageLinkElement(ul, '/jdgr/home?pno=' + i, i);
+        }
+    }
+
+    if (currentPage < maxPage) {
+        createPageLinkElement(ul, '/jdgr/home?pno=' + (currentPage + 1), '다음페이지로 이동', 'next');
+        createPageLinkElement(ul, '/jdgr/home?pno=' + maxPage, '마지막페이지로 이동', 'next_all');
+    }
+
+    const target2 = document.querySelector('#target2');
     
+    target2.appendChild(pagingBox);
+}
+
+function createPageLinkElement(parent, href, text, className = '') {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.setAttribute('href', href);
+    a.setAttribute('title', text);
+    a.textContent = text;
+    li.appendChild(a);
+    if (className !== '') {
+        li.classList.add(className);
+    }
+    parent.appendChild(li);
+}
+
     
     
     
