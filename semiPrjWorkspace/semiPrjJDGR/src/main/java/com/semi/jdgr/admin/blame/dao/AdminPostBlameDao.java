@@ -19,7 +19,7 @@ public class AdminPostBlameDao {
 	   public List<AdminPostBlameVo> selectBlameList(Connection conn, AdminBlamePageVo pvo) throws Exception{
 	      
 	      //SQL
-	      String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , PB.* FROM ( SELECT PB.P_BLA_NO , PB.P_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN FROM POST_BLAME PB ORDER BY PB.P_NO DESC ) PB) WHERE RNUM BETWEEN ? AND ?";
+	      String sql = "SELECT * FROM ( SELECT ROWNUM RNUM , PB.* FROM ( SELECT PB.P_BLA_NO , PB.P_NO , PB.P_BLAMER_NO , PB.P_WRITER_NO , PB.P_BLA_TIT , PB.P_BLA_DATE , PB.P_BLA_LIST , PB.P_SANC_YN , PB.P_ANS_DATE , PB.P_BLA_DETAIL , PB.P_DEL_YN FROM POST_BLAME PB ORDER BY PB.P_BLA_NO DESC ) PB) WHERE RNUM BETWEEN ? AND ?";
 	      PreparedStatement pstmt = conn.prepareStatement(sql);
 	      pstmt.setInt(1, pvo.getStartRow());
 	      pstmt.setInt(2, pvo.getLastRow());

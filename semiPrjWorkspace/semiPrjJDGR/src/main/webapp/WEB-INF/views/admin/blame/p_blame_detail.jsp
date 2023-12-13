@@ -42,44 +42,58 @@
                             	<tr>
                                     <th scope="row"><label for="">신고번호</label></th>
                                     <td><%= vo.getpBlaNo() %></td>
+<!--                               	    <th scope="row"><label for="">신고 구분</label></th> -->
+<%--                                     <td><%= vo.getpBlaList() %></td> --%>
 
                                 </tr>
                                 <tr>
-                                    <th scope="row"><label for="">포스트 번호</label></th>
-                                    <td><%= vo.getpNo()%></td>
                                     <th scope="row"><label for="">신고 구분</label></th>
                                     <td><%= vo.getpBlaList() %></td>
+<!--                                     <th scope="row"><label for="">포스트 번호</label></th> -->
+<%--                                     <td><%= vo.getpNo()%></td> --%>
+                              		<th scope="row"><label for="">작성자</label></th>
+                                    <td><%= vo.getpWriterNo()  %></td>
+<!--                                     <th scope="row"><label for="">신고 구분</label></th> -->
+<%--                                     <td><%= vo.getpBlaList() %></td> --%>
                                 </tr>
                                 <tr>
+                                <th scope="row"><label for="">포스트 번호</label></th>
+                                    <td><%= vo.getpNo()%></td>
                                     <th scope="row"><label for="">신고자</label></th>
                                     <td><%= vo.getpBlamerNo() %></td>
-                                    <th scope="row"><label for="">작성자</label></th>
-                                    <td><%= vo.getpWriterNo()  %></td>
+
+<!--                                     <th scope="row"><label for="">작성자</label></th> -->
+<%--                                     <td><%= vo.getpWriterNo()  %></td> --%>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">포스트 제목</label></th>
                                     <td><%= vo.getpBlaTit() %></td>
                                     <th scope="row"><label for="">신고 일자</label></th>
                                     <td><%= vo.getpBlaDate() %></td>
+<!--                                     <th scope="row"><label for="">신고 일자</label></th> -->
+<%--                                     <td><%= vo.getpBlaDate() %></td> --%>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><label for="">제재 여부</label></th>
+                                    <th scope="row"><label for="">제재 구분</label></th>
                                     <td>
                                         <div class="form_box">
                                             <select class="sel_box">
-                                                <option value="">이건 어떻게 가져오지</option>
+                                                <option value="">제재 x</option>
+                                                <option value="">로그인 정지 1일</option>
                                                 <option value="">로그인 정지 3일</option>
                                                 <option value="">로그인 정지 7일</option>
+                                                <option value="">로그인 정지 30일</option>
+                                                <option value="">로그인 영구 정지</option>
                                             </select>
                                   			<input type="hidden" name="pno" value="<%=pno%>">
                                             <input type="hidden" name="currPage" value="<%=currPage%>"> 
                                         </div>
                                     </td>
-                                    <th scope="row"><label for="">답변 일자</label></th>
+                                    <th scope="row"><label for="">처리 일자</label></th>
                                     <td><%= vo.getpAnsDate() %></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><label for="">처리일자</label></th>
+                                    <th scope="row"><label for="">제재 여부</label></th>
                                     <td><%= vo.getpDelYn() %></td>
                                 </tr>
                                 <tr>
