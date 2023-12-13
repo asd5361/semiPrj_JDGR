@@ -11,9 +11,8 @@
 
     
      <%
-		ReplyVo vo = (ReplyVo) request.getAttribute("vo");
-		ReplyBlameService rbs = new ReplyBlameService();
-		List<ReplyBlameVo> rvo = (List<ReplyBlameVo>)request.getAttribute("rvo");
+		ReplyBlameVo rbo = (ReplyBlameVo) request.getAttribute("rbo");
+		List<ReplyBlameVo> list = (List<ReplyBlameVo>)request.getAttribute("list");
 		
 	 %>
     
@@ -27,19 +26,12 @@
             <button class="modal_close">닫기</button>
         </div>
         <hr>
-        <%
-    // 임의의 사용자 이름 설정
-    String fakeUserName = "1";
-	String fakeContent = "댓글내용";
-    // 나머지 코드에서 vo.getReplyMem() 대신에 가상의 사용자 이름 사용
-%>
-        <div class="writer_content">
-<%--         <h5>작성자 |<%= vo.getReplyMem() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 --> --%>
-        <h5>작성자 |   <%= fakeUserName %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
-        
-        <br>
-<%--         <h5>내   용| <%= vo.getCon() %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 --> --%>
-        <h5>내   용| <%= fakeContent %></h5>	<!-- 그냥 reply 패키지에서 가져와야 할 듯 -->
+        <<div class="writer_content">
+        	<h5>작성자 | <%=rbo.getrWriterNo() %></h5>
+<%-- 				<h5>작성자 | <%=pbo.getUserNo() %></h5> --%>
+
+        	
+			<h5>포스트 제목 | <%=rbo.getCon() %></h5>
         </div>
         <hr>
         <form action ="/jdgr/user/blame/r_blamepop" method="post">
@@ -48,10 +40,10 @@
             <div class="reason_detail">
                 <ul>
                 <% int i = 0 ; %>
-                <% for( ReplyBlameVo num : rvo){ %>
+                <% for( ReplyBlameVo num : list){ %>
                 	<li class="list">
                         <div class="check_area">
-                            <input type="radio" name="rBlaList" id="<%= i %>" class="report_reason"  value="<%= num.getrBlaList() %>">
+                            <input type="radio" name="rBlaList" id="<%= i %>" class="report_reason"  value="">
                             <label class="reason_content"  for="<%=i %>">
                             	<%= num.getrBlamerNo() %>
                           
@@ -72,10 +64,10 @@
 <!--             <input type="hidden" name="replyNo" value = "1"> -->
 <%--             <input type="hidden" name="rWriterNo" value=<%= vo.getReplyMem() %>> --%>
 <%--             <input type="hidden" name="rBlaCon" value=<%= vo.getCon() %>> --%>
-            <input type="hidden" name="rWriterNo" value=<%= fakeUserName %>>
-            <input type="hidden" name="rBlaCon" value=<%= fakeContent %>>
+            <input type="hidden" name="rWriterNo" value=<%= rbo.getrWriterNo() %>>
+            <input type="hidden" name="rBlaCon" value=<%= rbo.getCon() %>>
 
-            <input type="hidden" name="replyNo" value = <%= vo.getReplyNo() %>>
+            <input type="hidden" name="replyNo" value = <%= rbo.getReplyNo() %>>
              
         </div>
         <div class="modal_footer">
@@ -87,19 +79,23 @@
 
 <script>
 
-	
+function blame() { 
+	//p_blamepop.jsp에서 모달 열기 
+const modal = document.getElementById('pop_email');
+	modal.style.display = 'block'; 
+	} 
 
 
-    function submitReport() {
-        // 선택된 라디오 버튼의 값 가져오기
-        
-        const selectedReason = document.querySelector('input[name="select"]:checked').value;
+function submitReport() { 
+	 // 선택된 라디오 버튼의 값 가져오기 
+	  const selectedReason = document.querySelector('input[name="select"]:checked').value;
+	  
 
-        // 만약 라디오 버튼이 선택되지 않은 경우, 경고 메시지를 표시하고 함수 종료
-        if (!selectedReason) {
-            alert('신고 사유를 선택하세요.');
-            return;
-        }
+	  // 만약 라디오 버튼이 선택되지 않은 경우, 경고 메시지를 표시하고 함수 종료  
+	 if (!selectedReason) { 
+	  alert('신고 사유를 선택하세요.'); 
+	  return; 
+	 }  
 
         // 선택된 라디오 버튼의 값
        	const selectedReasonValue = selectedReason.value;
@@ -110,10 +106,10 @@
         // 서버로 데이터 전송
         //------------------------------
         //gpt
-        const formData = new FormData();
-        formData.append('rNo', '<%= vo.getReplyNo() %>');  // 댓글 번호 추가
-        formData.append('rBlaList', selectedReasonValue);
-        formData.append('rBlaDetail', detailContent);
+//         const formData = new FormData();
+<%--         formData.append('rNo', '<%= vo.getReplyNo() %>');  // 댓글 번호 추가 --%>
+//         formData.append('rBlaList', selectedReasonValue);
+//         formData.append('rBlaDetail', detailContent);
         //-------------------------------
 //         const formData = new FormData();
 //         formData.append('selectedReason', selectedReasonValue);
@@ -155,30 +151,43 @@
         var modal = document.getElementById('pop_email');
         modal.style.display = 'none';
     }
-//             console.log('서버 응답:', data);
-//             // 성공 또는 실패에 따른 처리
-//             if (data.success) {
-//                 // 성공 처리
-//                 closePopup();
-//             } else {
-//                 // 실패 처리
-//                 alert('서버 오류가 발생했습니다.');
-//             }
-//         })
-//         .catch(error => {
-//             console.error('오류 발생:', error);
-//             alert('서버 통신 중 오류가 발생했습니다.');
-//         });
+//          .then( (resp) => {return resp.json() } )  
+          .then( (data) => { 
+  			const result = data.msg;  
+  			const isOk = result == "ok"; 
+  			if(isOk){  
+  				alert("신고 완료");  
+  				window.idOk = true;  
+  			}else{  
+  				alert("신고 오류");  
+  				window.idOk = false;  
+  			}  
+          }  
+          );  
+      }  
+              console.log('서버 응답:', data);  
+              // 성공 또는 실패에 따른 처리  
+              if (data.success) {  
+                  // 성공 처리  
+                  closePopup();  
+              } else {  
+                  // 실패 처리  
+                  alert('서버 오류가 발생했습니다.');  
+              }  
+          })  
+          .catch(error => {  
+              console.error('오류 발생:', error);  
+              alert('서버 통신 중 오류가 발생했습니다.');  
+          });  
         
-//         // 모달 닫기
-//         closePopup();
-//     }
+          // 모달 닫기  
+          closePopup();  
+      }  
 
-//     function closePopup() {
-//         // 모달 닫기
-//         var modal = document.getElementById('pop_email');
-//         modal.style.display = 'none';
-//     }
+      function closePopup() {  
+          // 모달 닫기  
+          var modal = document.getElementById('pop_email');  
+          modal.style.display = 'none';  
+      }  
 </script>
 
-<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>

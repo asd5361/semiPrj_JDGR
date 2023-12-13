@@ -11,23 +11,23 @@ import com.semi.jdgr.util.JDBCTemplate;
 public class ReplyBlameService {
 
 	//신고하기 버튼 클릭했을 때 댓글 정보 불러오기
-	public ReplyBlameVo getReplyInfo(ReplyBlameVo vo) throws Exception {
+	public ReplyBlameVo getReplyInfo(String rNo) throws Exception {
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
 		
 		//dao
 		ReplyBlameDao dao = new ReplyBlameDao();
-		ReplyBlameVo rvo = dao.getReplyInfo(conn, vo);
+		ReplyBlameVo rbo = dao.getReplyInfo(conn, rNo);
 		
 		//close
 		JDBCTemplate.close(conn);
 		
-		return rvo;	
+		return rbo;	
 	}
 	
 	
 	//신고하기
-	public int blame(ReplyBlameVo vo) throws Exception {
+	public int blame(ReplyBlameVo rbo) throws Exception {
 		
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
@@ -42,7 +42,7 @@ public class ReplyBlameService {
 		
 		//dao
 		ReplyBlameDao dao =  new ReplyBlameDao();
-		int result = dao.blame(conn, vo);
+		int result = dao.blame(conn, rbo);
 		
 		// tx
 		if(result == 1) {
