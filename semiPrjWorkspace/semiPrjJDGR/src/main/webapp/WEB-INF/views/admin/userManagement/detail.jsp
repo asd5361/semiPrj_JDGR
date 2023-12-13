@@ -69,27 +69,27 @@
                                     <th scope="row"><label for="">탈퇴일자</label></th>
                                     <td><%=vo.getQuitData()%></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row"><label for="" name="">로그인정지</label></th>
-                                    <td>
-                                        <div class="form_box">
-                                            <select class="sel_box Longin" name="loginban">
-                                                <option value="">-</option>
-                                                <option value="3">3일</option>
-                                                <option value="7">7일</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <th scope="row"><label for="">제재여부</label></th>
-                                    <td>
-                                        <div class="form_box Ban" name="banYn">
-                                            <select class="sel_box">
-                                                <option value="N">N</option>
-                                                <option value="Y">Y</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
+<!--                                 <tr> -->
+<!--                                     <th scope="row"><label for="" name="">로그인정지</label></th> -->
+<!--                                     <td> -->
+<!--                                         <div class="form_box"> -->
+<!--                                             <select class="sel_box Longin" name="loginban"> -->
+<!--                                                 <option value="">-</option> -->
+<!--                                                 <option value="3">3일</option> -->
+<!--                                                 <option value="7">7일</option> -->
+<!--                                             </select> -->
+<!--                                         </div> -->
+<!--                                     </td> -->
+<!--                                     <th scope="row"><label for="">제재여부</label></th> -->
+<!--                                     <td> -->
+<!--                                         <div class="form_box Ban" name="banYn"> -->
+<!--                                             <select class="sel_box"> -->
+<!--                                                 <option value="N">N</option> -->
+<!--                                                 <option value="Y">Y</option> -->
+<!--                                             </select> -->
+<!--                                         </div> -->
+<!--                                     </td> -->
+<!--                                 </tr> -->
                             </tbody>
                         </table>
                     </div>

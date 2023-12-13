@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.semi.jdgr.admin.member.service.AdminService;
-import com.semi.jdgr.admin.member.vo.AdaminVo;
+import com.semi.jdgr.admin.member.vo.AdminVo;
 
 @WebServlet("/admin/login")
 public class AdminLoginController extends HttpServlet {
@@ -27,13 +27,13 @@ public class AdminLoginController extends HttpServlet {
 			String memberId = req.getParameter("memberId");
 			String memberPwd = req.getParameter("memberPwd");
 			
-			AdaminVo vo = new AdaminVo();
+			AdminVo vo = new AdminVo();
 			vo.setAdminId(memberId);
 			vo.setAdminPwd(memberPwd);
 			
 			// service
 			AdminService as = new AdminService();
-			AdaminVo loginMember = as.login(vo);
+			AdminVo loginMember = as.login(vo);
 
 			HttpSession session = req.getSession();
 			// result (==view)
@@ -41,15 +41,12 @@ public class AdminLoginController extends HttpServlet {
 				session.setAttribute("alertMsg", "아이디 또는 비밀번호가 틀렸습니다.");
 				throw new Exception("로그인 실패 ...");
 			}
-			
-			session.setAttribute("loginMember", loginMember);
-			resp.sendRedirect("/jdgr/admin/notice/list"); 
+			session.setAttribute("loginAdmin", loginMember);
+			resp.sendRedirect("/jdgr/admin/userManagement/list"); 
 			
 		}catch(Exception e) {
 			e.printStackTrace();
-			
 			resp.sendRedirect("/jdgr/admin/login"); 
-			
 		}
 		
 	}
