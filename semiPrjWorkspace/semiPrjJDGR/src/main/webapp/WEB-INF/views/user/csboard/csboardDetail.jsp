@@ -74,16 +74,16 @@
                         <col width=""/>
                         <col width="90%"/>
                     </colgroup>
-                    <tbody>
-                        <tr>
-                            <th>이전글</th>
-                            <td><a href="" >공지사항 제목입니다.</a></td>
-                        </tr>
-                        <tr>
-                            <th>이전글</th>
-                            <td><a href="" >공지사항 제목입니다.</a></td>
-                        </tr>
-                    </tbody>
+<!--                     <tbody> -->
+<!--                         <tr> -->
+<!--                             <th>이전글</th> -->
+<!--                             <td><a href="" >공지사항 제목입니다.</a></td> -->
+<!--                         </tr> -->
+<!--                         <tr> -->
+<!--                             <th>이전글</th> -->
+<!--                             <td><a href="" >공지사항 제목입니다.</a></td> -->
+<!--                         </tr> -->
+<!--                     </tbody> -->
                 </table>
             </div>
         </div>

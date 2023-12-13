@@ -366,5 +366,35 @@ public class NoticeDao {
 		
 		return result;
 	}
+	public NoticeVo adminNoticeDetail(Connection conn, String noticeNo) throws SQLException {
+		//sql
+		String sql ="SELECT * FROM NOTICE LEFT JOIN(SELECT ADMIN_NO AS AMO,ADMIN_NAME FROM ADMIN) ON AMO = ADMIN_NO WHERE NOTICE_NO = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1,noticeNo);
+		ResultSet rs = pstmt.executeQuery();
+		NoticeVo vo = null;
+		
+		//rs
+		if(rs.next()) {
+			vo =new NoticeVo();
+			
+			vo.setNoticeNo(rs.getString("NOTICE_NO"));
+			vo.setAdminNo(rs.getString("ADMIN_NO"));
+			vo.setTitle(rs.getString("TITLE"));
+			vo.setContent(rs.getString("CONTENT"));
+			vo.setInquiry(rs.getString("INQUIRY"));
+			vo.setEnrollDate(rs.getString("ENROLL_DATE"));
+			vo.setUpdateDate(rs.getString("UPDATE_DATE"));
+			vo.setFixedYn(rs.getString("FIXED_YN"));
+			vo.setDelYn(rs.getString("DEL_YN"));			
+			vo.setAdminName(rs.getString("ADMIN_NAME"));
+		}
+		
+		//result
+		JDBCTemplate.close(rs);
+		JDBCTemplate.close(pstmt);
+		
+		return vo;
+	}
 
 }

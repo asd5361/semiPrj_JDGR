@@ -89,7 +89,9 @@
             </ul>
         </div>
         <div class="noti_btn qboard_btn mb20">
-            <a href="javascript:loginCheck();" data-target="#pop_complete">문의 하기</a>
+<% if(loginMemberVo != null){ %>
+            <a href="/jdgr/csboard/write?pno=<%=pvo.getCurrentPage() %>" data-target="#pop_complete">문의 하기</a>
+<% }%>
         </div>
         </div>
     </main>
@@ -136,13 +138,6 @@
 <%}else{%>
             cs_modal();
 <%}%>
-        }
-		
-        //문의하기 로그인 여부 확인
-        function loginCheck(){
-<% if(loginMemberVo != null){ %>
-            	location.href = "/jdgr/csboard/write?pno=<%=pvo.getCurrentPage() %>";        
-<% }%>
         }
 	
 
