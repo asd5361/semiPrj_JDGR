@@ -3,26 +3,12 @@
 <%@page import="com.semi.jdgr.user.reply.vo.ReplyVo"%>
 <%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="com.semi.jdgr.user.blame.vo.ReplyBlameVo"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
     
-    
-<%--     <% --%>
-<!-- //     // 사용자가 로그인했는지 확인 -->
-<!-- //     MemberVo member = (MemberVo)session.getAttribute("loginUser"); -->
-<!-- //     if (member == null) { -->
-<%-- %> --%>
-<!--         <script> -->
-<!-- //             alert("로그인 후 신고 가능합니다."); -->
-<!--         </script> -->
-<%-- <% --%>
-<!-- //     } else { -->
-<!-- //         // 사용자가 로그인했으면, 모달에 대한 기존 코드를 계속 진행 -->
-<!-- //         ReplyVo vo = (ReplyVo) request.getAttribute("vo"); -->
-<!-- //         ReplyBlameService rbs = new ReplyBlameService(); -->
-<!-- //         List<ReplyBlameVo> rvo = (List<ReplyBlameVo>)request.getAttribute("rvo"); -->
-<%-- %> --%>
+
     
      <%
 		ReplyVo vo = (ReplyVo) request.getAttribute("vo");

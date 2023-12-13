@@ -8,42 +8,40 @@ pageEncoding="UTF-8"%>
 <%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="com.semi.jdgr.user.blame.vo.PostBlameVo"%>
-    
+    <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
      <%
-yPostVo vo = (PostVo) request.getAttribute("vo"); 
-PostBlameService pbs = new PostBlameService();  
-List<PostBlameVo> pvo = (List<PostBlameVo>)request.getAttribute("pvo"); 
+		PostVo vo = (PostVo) request.getAttribute("vo"); 
+		PostBlameService pbs = new PostBlameService();  
+		List<PostBlameVo> pvo = (List<PostBlameVo>)request.getAttribute("pvo"); 
 	%>  
     
 
     
     
-<link rel="stylesheet" href="/jdgr/resources/user/css/blamepop.css">
-<button class="modal_open" data-target="#pop_email">신고하기</button>
-<!-- 레이어팝업 모달 -->
-
- <button class="btn_k" onclick="blame()"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button> 
- <button class="btn_k" onclick="{clickEvent('blame')}"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button> 
+	<link rel="stylesheet" href="/jdgr/resources/user/css/blamepop.css">
+<!-- 	<button class="modal_open" data-target="#pop_email">신고하기</button> -->
+	<!-- 레이어팝업 모달 -->
 
 
-<div id="pop_email" class="modal_bg">
-    <div class="modal_box">
-        <div class="modal_header">
-            <div class="rep_pos_pop"><h2>포스트 신고하기</h2></div>
-            <button class="modal_close">닫기</button>
-        </div>
-        <hr>
+
+	<div id="pop_email" class="modal_bg">
+	    <div class="modal_box">
+	        <div class="modal_header">
+	            <div class="rep_pos_pop"><h2>포스트 신고하기</h2></div>
+	            <button class="modal_close">닫기</button>
+	        </div>
+	        <hr>
                 <%
-    // 임의의 사용자 이름 설정
-    String fakeUserName = "1";
-	String fakeContent = "댓글내용";
-    // 나머지 코드에서 vo.getReplyMem() 대신에 가상의 사용자 이름 사용
-%>
+				    // 임의의 사용자 이름 설정
+				    String fakeUserName = "1";
+					String fakeContent = "댓글내용";
+				    // 나머지 코드에서 vo.getReplyMem() 대신에 가상의 사용자 이름 사용
+				%>
 
 
         <div class="writer_content">
          <h5>작성자 |<%= fakeUserName %></h5>	 
-        <br>
+        	<br>
         <h5>내   용| <%=fakeContent %></h5>
         </div>
         <hr>
