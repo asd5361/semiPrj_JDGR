@@ -19,7 +19,7 @@ public class PostDaoLYJ {
 	public List<PostVo> allSelectPostList(Connection conn, PageVo pvo) throws Exception {
 
 		// SQL
-		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NAME ,  B.BLOG_NO , P.POST_NO , CL.CATEGORY_NAME, P.TITLE , P.INQUIRY  ,  P.ENROLL_DATE  , P.MODIFY_DATE  , P.DEL_YN FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO WHERE DEL_YN = 'N' ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ? ";
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , T.* FROM ( SELECT M.MEM_NAME ,  B.BLOG_NO , P.POST_NO , CL.CATEGORY_NAME, P.TITLE , P.INQUIRY  ,  P.ENROLL_DATE  , P.MODIFY_DATE  , P.DEL_YN FROM POST P JOIN BLOG  B ON  P .POST_NO = B .BLOG_NO JOIN CATEGORY_LIST CL ON CL.CATEGORY_NO = P.CATEGORY_NO JOIN MEMBER M ON M.MEM_NO = B.MEM_NO ORDER BY B.BLOG_NO ASC ) T ) WHERE RNUM BETWEEN ? AND ? ";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, pvo.getStartRow());
 		pstmt.setInt(2, pvo.getLastRow());
@@ -335,12 +335,12 @@ public class PostDaoLYJ {
 	public List<PostVo> bestSelectPostList(Connection conn) throws Exception {
 		
 		// SQL
-		String sql = "SELECT P.POST_IMG , P.CONTENT , P.ENROLL_DATE FROM POST P WHERE DEL_YN = 'N'";
+		String sql = "SELECT * FROM POST  WHERE DEL_YN = 'N' ORDER BY INQUIRY DESC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 
 		// rs
-		List<PostVo> postVoList = new ArrayList<PostVo>();
+		List<PostVo> bestVoList = new ArrayList<PostVo>();
 		while (rs.next()) {
 
 			String postImg = rs.getString("POST_IMG");// 포스트 이미지
@@ -354,14 +354,14 @@ public class PostDaoLYJ {
 			postVo.setEnrollDate(enrollDate);
 			postVo.setPostNo(postNo);
 
-			postVoList.add(postVo);
+			bestVoList.add(postVo);
 
 		}
 		// close
 		JDBCTemplate.close(pstmt);
 		JDBCTemplate.close(rs);
 
-		return postVoList;
+		return bestVoList;
 	}
 
 	
