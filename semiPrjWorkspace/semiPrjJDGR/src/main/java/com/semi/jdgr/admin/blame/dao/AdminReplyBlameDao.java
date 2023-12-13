@@ -277,11 +277,11 @@ public class AdminReplyBlameDao {
 		}
 
 		//제재 처리 저장
-		public int rBlameUpdate(Connection conn, AdminReplyBlameVo vo, String deleteYnColumn) throws Exception {
+		public int rBlameUpdate(Connection conn, AdminReplyBlameVo vo) throws Exception {
 			//sql
 			String sql = "UPDATE REPLY_BLAME SET R_SANC_YN = 'Y', R_ANS_DATE =SYSDATE WHERE R_BLA_NO = ?";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getrBlaNo());
+			pstmt.setString(1, vo.getrNo());
 			int result = pstmt.executeUpdate();
 			
 			//close
@@ -292,13 +292,23 @@ public class AdminReplyBlameDao {
 
 
 		//제재
-		public int rSancUpdate(Connection conn, AdminReplyBlameVo vo, String deleteYnColumn) {
+		public int rSancUpdate(Connection conn, AdminReplyBlameVo vo) throws Exception {
 			
 			//sql
-			String sql = "INSERT INTO "
+			String sql = "INSERT INTO REPLY_SANCTIONS ( R_SANC_NO , R_BLA_NO , BAN_DAY , SANC_DATE) VALUES(SEQ_REPLY_SANCTIONS.NEXTVAL, ?,?, SYSDATE)";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getrNo());
+			pstmt.setString(2, vo.getrSancYn());
+			int result = pstmt.executeUpdate();
 			
+			//close
+			JDBCTemplate.close(pstmt);
+			
+			return result;
 		
 		}
 
+		
+		
 	   
 }//class

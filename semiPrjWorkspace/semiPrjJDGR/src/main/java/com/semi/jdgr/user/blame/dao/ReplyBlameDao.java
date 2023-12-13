@@ -41,47 +41,33 @@ public class ReplyBlameDao {
 	    
 	    return getReplyInfo;
 	    
-//		----------------------------
-		
-//			String sql = "SELECT BLA_REASON FROM BLAME_REASON";
-//			PreparedStatement pstmt = conn.prepareStatement(sql);
-//			ResultSet rs = pstmt.executeQuery();
-//			
-//			//rs
-//			ReplyBlameVo getReplyInfo = null;
-//			while(rs.next()) {
-//				String rBlaList = rs.getString("BLA_REASON");
-//				
-//				getReplyInfo = new ReplyBlameVo();
-//				getReplyInfo.setrBlaList(rBlaList);
-//			}
-//			//close
-//			JDBCTemplate.close(pstmt);
-//			JDBCTemplate.close(rs);
-//			
-//			return getReplyInfo;
 
-	}
-	
-	
+
+	}//getReplyInfo
 	
 	
 	public int blame(Connection conn, ReplyBlameVo vo) throws Exception {
 		
 		// sql
-		
-		//GPT
-		// REPLY_BLAME 테이블에 데이터 입력
-	    String sql = "INSERT INTO REPLY_BLAME (R_BLA_NO, R_NO, R_BLAMER_NO, R_WRITER_NO, R_BLA_CON, R_BLA_LIST, R_BLA_DETAIL) VALUES(SEQ_REPLY_BLAME.NEXTVAL, ?, ?, ?, ? , ?, ?)";
+	    String sql = "INSERT INTO REPLY_BLAME (R_BLA_NO, R_NO, R_BLAMER_NO, R_WRITER_NO, R_BLA_CON, R_BLA_LIST, R_BLA_DETAIL) VALUES(SEQ_REPLY_BLAME.NEXTVAL, 1, 2, 3, '신고댓글', ?, ?)";
 	    PreparedStatement pstmt = conn.prepareStatement(sql);
 	    
-	    pstmt.setString(1, vo.getrNo());
-	    pstmt.setString(2, vo.getrBlamerNo());
-	    pstmt.setString(3, vo.getrWriterNo());
-	    pstmt.setString(4, vo.getrBlaCon());
-	    pstmt.setString(5, vo.getrBlaList());
-	    pstmt.setString(6, vo.getrBlaDetail());
+//	    pstmt.setString(1, vo.getrNo());
+//	    pstmt.setString(1, vo.getrBlamerNo());
+//	    pstmt.setString(1, vo.getrWriterNo());
+//	    pstmt.setString(2, vo.getrBlaCon());
+	    pstmt.setString(1, vo.getrBlaList());
+	    pstmt.setString(2, vo.getrBlaDetail());
 
+//	    System.out.println(vo.getrNo());
+//	    System.out.println(vo.getrBlamerNo());
+//	    System.out.println(vo.getrWriterNo());
+//	    System.out.println(vo.getrBlaCon());
+	    System.out.println(vo.getrBlaList());
+	    System.out.println(vo.getrBlaDetail());
+	    
+	    
+	    
 	    int result = pstmt.executeUpdate();
 
 		// close
@@ -89,7 +75,7 @@ public class ReplyBlameDao {
 		
 		return result;		
 
-	}
+	}//blame
 
 
 	//BLA_LIST 불러와서 모달창 띄우기

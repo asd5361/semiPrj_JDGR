@@ -16,11 +16,14 @@ public class ReplyBlameVo {
 	private String rAnsDate;
 	private String rBlaDetail;
 	private String rDelYn;
+	
 	private String replyNo;
 	private String postNo;
 	private String replyMem;
 	private String parentsNo;
 	private String con;
+	
+	
 	public String getrBlaNo() {
 		return rBlaNo;
 	}

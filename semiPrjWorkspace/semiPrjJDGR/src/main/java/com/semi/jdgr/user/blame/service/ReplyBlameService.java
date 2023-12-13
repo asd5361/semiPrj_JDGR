@@ -10,7 +10,7 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class ReplyBlameService {
 
-	
+	//신고하기 버튼 클릭했을 때 댓글 정보 불러오기
 	public ReplyBlameVo getReplyInfo(ReplyBlameVo vo) throws Exception {
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
@@ -25,6 +25,8 @@ public class ReplyBlameService {
 		return rvo;	
 	}
 	
+	
+	//신고하기
 	public int blame(ReplyBlameVo vo) throws Exception {
 		
 		//conn

@@ -13,19 +13,59 @@ import com.semi.jdgr.util.JDBCTemplate;
 
 public class PostBlameDao {
 
+	
+	public PostBlameVo getPostInfo(Connection conn, PostBlameVo vo) throws Exception {
+		
+		//gpt
+		String sql = "SELECT P_BLA_LIST, P_BLA_DETAIL FROM POST_BLAME WHERE P_NO = ?";
+	    PreparedStatement pstmt = conn.prepareStatement(sql);
+	    pstmt.setString(1, vo.getpNo());
+
+	    ResultSet rs = pstmt.executeQuery();
+
+	    // rs
+	    PostBlameVo getPostInfo = null;
+	    while (rs.next()) {
+	        String pBlaList = rs.getString("P_BLA_LIST");
+	        String pBlaDetail = rs.getString("P_BLA_DETAIL");
+
+	        getPostInfo = new PostBlameVo();
+	        getPostInfo.setpBlaList(pBlaList);
+	        getPostInfo.setpBlaDetail(pBlaDetail);
+	    }
+	    
+	    
+	    //close
+	    JDBCTemplate.close(pstmt);
+	    JDBCTemplate.close(rs);
+	    
+	    return getPostInfo;
+	    
+
+
+	}//getPostInfo
+	
+	
 	public int blame(Connection conn, PostBlameVo vo) throws Exception {
 
 		// sql
-		String sql = "INSERT INTO POST_BLAME (P_BLA_NO, P_NO, P_BLAMER_NO, P_WRITER_NO, P_BLA_TIT, P_BLA_DATE, P_BLA_LIST, P_SANC_YN, P_ANS_DATE, P_BLA_DETAIL, P_DEL_YN) VALUES(SEQ_POST_BLAME.NEXTVAL, ?, ?, ?, ?, SYSTIMESTAMP, ?, ?, SYSTIMESTAMP, ?, ?)";
+		String sql = "INSERT INTO POST_BLAME (P_BLA_NO, P_NO, P_BLAMER_NO, P_WRITER_NO, P_BLA_TIT, P_BLA_LIST, P_BLA_DETAIL) VALUES(SEQ_POST_BLAME.NEXTVAL, 1, 1, 1, '제목테스트', ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, vo.getpNo());
-		pstmt.setString(2, vo.getpBlamerNo());
-		pstmt.setString(3, vo.getpWriterNo());
-		pstmt.setString(4, vo.getpBlaTit());
-		pstmt.setString(5, vo.getpBlaList());
-		pstmt.setString(6, vo.getpSancYn());
-		pstmt.setString(7, vo.getpBlaDetail());
-		pstmt.setString(8, vo.getpDelYn());
+//		pstmt.setString(1, vo.getpNo());
+//		pstmt.setString(2, vo.getpBlamerNo());
+//		pstmt.setString(3, vo.getpWriterNo());
+//		pstmt.setString(4, vo.getpBlaTit());
+		pstmt.setString(1, vo.getpBlaList());
+		pstmt.setString(2, vo.getpBlaDetail());
+		
+	    System.out.println(vo.getpNo());
+	    System.out.println(vo.getpBlamerNo());
+	    System.out.println(vo.getpWriterNo());
+	    System.out.println(vo.getpBlaTit());
+	    System.out.println(vo.getpBlaList());
+	    System.out.println(vo.getpBlaDetail());
+	    
+	    
 		int result = pstmt.executeUpdate();
 		
 		
@@ -34,9 +74,6 @@ public class PostBlameDao {
 		
 		return result;		
 		
-		//rs
-		
-		//close
 		
 	}//blame
 	
@@ -44,18 +81,21 @@ public class PostBlameDao {
 	
 
 	//BLA_LIST 불러와서 모달창 띄우기
-	public List<String> blameList(Connection conn) throws Exception {
+	public List<PostBlameVo> blameList(Connection conn) throws Exception {
 		   //SQL
-		   String sql = "SELECT BLA_REASON FROM BLAME_REASON";
+		   String sql = "SELECT * FROM BLAME_REASON";
 		   PreparedStatement pstmt = conn.prepareStatement(sql);
 		   ResultSet rs = pstmt.executeQuery();
 		   //rs
-		   List<String> reasonList = new ArrayList<>();
+		   List<PostBlameVo> reasonList = new ArrayList<>();
 		   while(rs.next()) {
-			   String rBlaList = rs.getString("BLA_REASON");
+			   String blaList = rs.getString("BLA_LIST");
+			   String blaReason = rs.getString("BLA_REASON");
 			   
-			   ReplyBlameVo vo = new ReplyBlameVo();
-			   vo.setrBlaList(rBlaList);
+			   PostBlameVo vo = new PostBlameVo();
+			   vo.setpBlaList(blaList);
+			   vo.setpBlamerNo(blaReason);
+			   reasonList.add(vo);
 		   }
 		   
 		   //close

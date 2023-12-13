@@ -107,8 +107,8 @@
                                 <th scope="col">신고 일자</th>
                                 <th scope="col">신고 구분</th>
                                 <th scope="col">제재 여부</th>
-                                <th scope="col">답변 일자</th>
                                 <th scope="col">처리 일자</th>
+<!--                                 <th scope="col">처리 일자</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -122,7 +122,7 @@
                                 <td><%= vo.getrBlaList() %></td>
                                 <td><%= vo.getrSancYn() %></td>
                                 <td><%= vo.getrAnsDate() %></td>
-                                <td><%= vo.getrDelYn() %></td>
+<%--                                 <td><%= vo.getrDelYn() %></td> --%>
                             </tr>
                         <%} %>
                             

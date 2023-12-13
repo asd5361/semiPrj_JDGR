@@ -142,7 +142,7 @@ public class AdminReplyBlameService {
 	}
 
 
-	public int rBlameUpdate(AdminReplyBlameVo vo, String deleteYnColumn) throws Exception {
+	public int rBlameUpdate(AdminReplyBlameVo vo) throws Exception {
 		
 		//conn
 		Connection conn = JDBCTemplate.getConnection();
@@ -150,18 +150,21 @@ public class AdminReplyBlameService {
 		
 		//dao
 		AdminReplyBlameDao dao = new AdminReplyBlameDao();
-		int result = dao.rBlameUpdate(conn, vo, deleteYnColumn);
-		int result2 = dao.rSancUpdate(conn, vo, deleteYnColumn)
+		int result = dao.rBlameUpdate(conn, vo);
+		int result2 = dao.rSancUpdate(conn, vo);
 		
-		if(result ==1) {
+		int results = 0;
+		
+		if(result ==1 && result2 == 1) {
 			JDBCTemplate.commit(conn);
+			results = 1;
 		}else {
 			JDBCTemplate.rollback(conn);
 		}
 		//close
 		JDBCTemplate.close(conn);
 		
-		return result;
+		return results;
 		
 		//close
 	

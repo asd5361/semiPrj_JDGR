@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.semi.jdgr.admin.blame.vo.AdminBlameCategoryVo;
 import com.semi.jdgr.admin.blame.vo.AdminPostBlameVo;
+import com.semi.jdgr.admin.blame.vo.AdminReplyBlameVo;
 import com.semi.jdgr.page.vo.AdminBlamePageVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
@@ -199,8 +200,8 @@ public class AdminPostBlameDao {
 			pstmt.setString(5, apbv.getpBlaList());
 			pstmt.setString(6, apbv.getpDelYn());
 			
-			pstmt.setInt(2, pvo.getStartRow());
-			pstmt.setInt(3, pvo.getLastRow());
+			pstmt.setInt(7, pvo.getStartRow());
+			pstmt.setInt(8, pvo.getLastRow());
 			ResultSet rs = pstmt.executeQuery();
 			
 			// rs
@@ -246,7 +247,7 @@ public class AdminPostBlameDao {
 		public int selectSearchBlameCount(Connection conn, AdminPostBlameVo apbv) throws Exception {
 			
 			// SQL
-			String sql = "SELECT COUNT(*) FROM POST_BLAME WHERE P_BLAMER_NO LIKE '%'||?||'%' AND P_WRITER_NO LIKE '%'||?||'%' AND P_BLA_TIT LIKE '%'||?\\\\'%' AND P_BLA_DATE LIKE  '%'||?||'%' AND P_BLA_LIST LIKE '%'||?||'%' AND P_DEL_YN LIKE '%'||?||'%' ORDER BY P_BLA_NO DESC";
+			String sql = "SELECT COUNT(*) FROM POST_BLAME WHERE P_BLAMER_NO LIKE '%'||?||'%' AND P_WRITER_NO LIKE '%'||?||'%' AND P_BLA_TIT LIKE '%'||?||'%' AND P_BLA_DATE LIKE  '%'||?||'%' AND P_BLA_LIST LIKE '%'||?||'%' AND P_DEL_YN LIKE '%'||?||'%' ORDER BY P_BLA_NO DESC";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, apbv.getpBlamerNo());
 			pstmt.setString(2, apbv.getpWriterNo());
@@ -267,6 +268,41 @@ public class AdminPostBlameDao {
 			JDBCTemplate.close(pstmt);
 			
 			return cnt;
+		}
+		
+		
+		
+		
+		//제재 처리 저장
+		public int pBlameUpdate(Connection conn, AdminPostBlameVo vo) throws Exception {
+			//sql
+			String sql = "UPDATE POST_BLAME SET P_SANC_YN = 'Y', P_ANS_DATE =SYSDATE WHERE P_BLA_NO = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getpNo());
+			int result = pstmt.executeUpdate();
+			
+			//close
+			JDBCTemplate.close(pstmt);
+			
+			return result;
+		}
+
+
+		//제재
+		public int pSancUpdate(Connection conn, AdminPostBlameVo vo) throws Exception {
+			
+			//sql
+			String sql = "INSERT INTO POST_SANCTIONS ( P_SANC_NO , P_BLA_NO , BAN_DAY , SANC_DATE) VALUES(SEQ_REPLY_SANCTIONS.NEXTVAL, ?,?, SYSDATE)";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getpNo());
+			pstmt.setString(2, vo.getpSancYn());
+			int result = pstmt.executeUpdate();
+			
+			//close
+			JDBCTemplate.close(pstmt);
+			
+			return result;
+		
 		}
 
 	   

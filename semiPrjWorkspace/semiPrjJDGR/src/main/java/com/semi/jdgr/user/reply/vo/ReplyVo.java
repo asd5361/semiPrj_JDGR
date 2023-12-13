@@ -11,6 +11,7 @@ public class ReplyVo {
 	private String updateDate;
 	private String delYn;
 	private String replyMemNick;
+	
 	public String getReplyNo() {
 		return replyNo;
 	}

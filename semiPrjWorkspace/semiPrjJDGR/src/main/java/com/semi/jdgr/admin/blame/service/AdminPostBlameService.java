@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.semi.jdgr.admin.blame.dao.AdminPostBlameDao;
+import com.semi.jdgr.admin.blame.dao.AdminReplyBlameDao;
 import com.semi.jdgr.admin.blame.vo.AdminBlameCategoryVo;
 import com.semi.jdgr.admin.blame.vo.AdminPostBlameVo;
 import com.semi.jdgr.admin.blame.vo.AdminReplyBlameVo;
@@ -145,6 +146,34 @@ public class AdminPostBlameService {
 		return cnt;
 	}
 	
+	//제재 처리
+	public int pBlameUpdate(AdminPostBlameVo vo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		
+		//dao
+		AdminPostBlameDao dao = new AdminPostBlameDao();
+		int result = dao.pBlameUpdate(conn, vo);
+		int result2 = dao.pSancUpdate(conn, vo);
+		
+		int results = 0;
+		
+		if(result ==1 && result2 == 1) {
+			JDBCTemplate.commit(conn);
+			results = 1;
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		//close
+		JDBCTemplate.close(conn);
+		
+		return results;
+		
+		//close
+	
+	}
 	
 	
 }//class
