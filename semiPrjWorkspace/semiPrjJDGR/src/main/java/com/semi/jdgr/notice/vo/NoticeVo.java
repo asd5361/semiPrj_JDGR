@@ -51,12 +51,18 @@ public class NoticeVo {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+		if(title == null && this.noticeNo != null) {
+			this.title = "";
+		}
 	}
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
+		if(content == null && this.noticeNo != null) {
+			this.content = "";
+		}
 	}
 	public String getInquiry() {
 		return inquiry;
@@ -75,6 +81,9 @@ public class NoticeVo {
 	}
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+		if(updateDate == null && this.noticeNo != null) {
+			this.updateDate = "";
+		}
 	}
 	public String getFixedYn() {
 		return fixedYn;

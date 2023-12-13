@@ -89,7 +89,7 @@
             </ul>
         </div>
         <div class="noti_btn qboard_btn mb20">
-            <a href="/jdgr/csboard/write?pno=<%=pvo.getCurrentPage() %>" data-target="#pop_complete">문의 하기</a>
+            <a href="javascript:loginCheck();" data-target="#pop_complete">문의 하기</a>
         </div>
         </div>
     </main>
@@ -97,8 +97,8 @@
 	
 	<%@ include file="/WEB-INF/views/user/common/footer.jsp" %>
 	
-	
     <script>
+        
         //cs 팝업 분리
         function cs_modal(){
             document.querySelector("#pop_warning").style.display ='flex';
@@ -138,6 +138,12 @@
 <%}%>
         }
 		
+        //문의하기 로그인 여부 확인
+        function loginCheck(){
+<% if(loginMemberVo != null){ %>
+            	location.href = "/jdgr/csboard/write?pno=<%=pvo.getCurrentPage() %>";        
+<% }%>
+        }
 	
 
 
