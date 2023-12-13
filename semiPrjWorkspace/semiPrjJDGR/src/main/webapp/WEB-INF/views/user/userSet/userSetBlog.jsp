@@ -25,7 +25,7 @@
                     <dt>계정 관리</dt>
                     <dd>
                         <ul>
-                            <li><a href="">개인정보 수정</a></li>
+                            <li><a href="/jdgr/member/mypage">개인정보 수정</a></li>
                         </ul>
                     </dd>
                 </dl>
