@@ -22,7 +22,6 @@ public class PostCategoryController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			
 			resp.setCharacterEncoding("UTF-8");
 			//ajax는 get으로 보낸다.
 			String categoryNo = req.getParameter("categoryNo");
@@ -45,10 +44,10 @@ public class PostCategoryController extends HttpServlet{
 			//service
 			List<PostVo> postVoList = ps.separatedList(categoryNo,pvo);
 			
-			System.out.println("===============");
-	        for (PostVo vo : postVoList) {
-	           System.out.println(vo);
-	        }
+//			System.out.println("===============");
+//	        for (PostVo vo : postVoList) {
+//	           System.out.println(vo);
+//	        }
 			
 			//result(==view)
 //	        req.setAttribute("postVoList", postVoList);

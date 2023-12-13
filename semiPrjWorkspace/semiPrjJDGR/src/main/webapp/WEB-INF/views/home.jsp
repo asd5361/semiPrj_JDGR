@@ -14,6 +14,8 @@
 			
 			List<PostVo> postVoList = (List<PostVo>)request.getAttribute("postVoList");
 			PageVo pvo = (PageVo)request.getAttribute("pvo");
+			
+			List<PostVo> bestVoList = (List<PostVo>)request.getAttribute("bestVoList");
 		%>
      	
 <!-- main -->
@@ -28,10 +30,10 @@
        		<div class="best10_content">
                 <div class="swiper-container">
                     <ul class="swiper-wrapper">
-                        <% for(PostVo vo : postVoList){ %>
+                        <% for(PostVo vo : bestVoList){ %>
                         <li class="swiper-slide">
-                            <a href="/jdgr/post/detail?pNo=7">                           
-                                <div class="img"><%= vo.getPostImg()%></div>
+                            <a href="/jdgr/post/detail?pNo=<%= vo.getPostNo()%>">                           
+                                <div class="img"><img src="<%= vo.getPostImg()%>"></div>
                                 <div class="txt">
                                     <div class="info">
                                         <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
@@ -95,7 +97,7 @@
                 
                     <% for(PostVo postVo : postVoList) {%>
                         <div class="postbox">
-                                <div class="postImg"><%= postVo.getPostImg() %></div>
+                                <div class="postImg"><img src="<%= postVo.getPostImg() %>"></div>
                                 <div class="postWrite"> 
                                     <div class="postWriteNick">
         <!--                                 <div class="postNickimg"><img src="../images/ico/ico_people.svg"></div> -->
@@ -460,7 +462,13 @@ const divArray = document.querySelectorAll(".tab_btns.category li");
 
                    const postImg = document.createElement("div");
                    postImg.classList.add("postImg");
-                   postImg.textContent = vo.postImg;
+                   
+                   
+                   const img = document.createElement("img");
+                   img.src = vo.postImg;
+                   
+                   
+                   postImg.appendChild(img);
                    postBox.appendChild(postImg);
 
                    const postWrite = document.createElement("div");

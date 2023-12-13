@@ -26,6 +26,24 @@ public class HomeController extends HttpServlet{
 
 		try {
 			PostServiceLYJ ps = new PostServiceLYJ();   
+			
+			/////인기 포스트
+			//service
+	         List<PostVo> bestVoList = ps.bestSelectPostList();
+	         
+	         
+//	         System.out.println("===============");
+//	         for (PostVo vo : bestVoList) {
+//	            System.out.println(vo);
+//	         }
+	         
+	         //result(==view)
+	         System.out.println("컨트롤러쪽 :" +bestVoList);
+	         req.setAttribute("bestVoList", bestVoList);           
+	         /////////////////인기 포스트
+	         
+	         
+	         
 			int listCount = ps.selectPostCount();
 			
 	         
@@ -44,10 +62,10 @@ public class HomeController extends HttpServlet{
 	         List<PostVo> postVoList = ps.allSelectUserPostList(pvo);
 	         
 	         
-	         System.out.println("===============");
-	         for (PostVo vo : postVoList) {
-	            System.out.println(vo);
-	         }
+//	         System.out.println("===============");
+//	         for (PostVo vo : postVoList) {
+//	            System.out.println(vo);
+//	         }
 	         
 	         //result(==view)
 	         req.setAttribute("postVoList", postVoList);
