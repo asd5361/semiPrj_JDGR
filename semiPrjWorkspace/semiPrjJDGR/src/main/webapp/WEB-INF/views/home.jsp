@@ -137,8 +137,6 @@
                 
             </div>
            
-            
-
             <!-- right -->
             <div class="main_right">
                 <!-- 로그인창 or 유저정보 -->
@@ -159,13 +157,15 @@
 	                            <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></div>
 	                            <div class="txt">
 	                                <strong><%= loginMemberVo.getMemNick() %></strong>
+	                                <% if(loginMemberBlogVo != null && loginMemberBlogVo.getVisitCnt() != null){ %>
 	                                <span>오늘 <em><%= loginMemberBlogVo.getVisitCnt() %></em>명 방문</span>
+	                                <% } %>
 	                            </div>
 	                            <a href="/jdgr/member/logout" class="btn_logout">로그아웃</a>
 	                        </div>
 	
 							<!-- 유저가 가지고있는 블로그가 있으면  -->
-							<% if(loginMemberBlogVoList != null){ %>
+							<% if(loginMemberBlogVoList != null && !loginMemberBlogVoList.isEmpty()){ %>
 								<div class="btn_util">
 		                            <a href="/jdgr/blog/view/<%= loginMemberBlogVo.getBlogUrl() %>" class="my_blog">내 블로그</a>
 		                            <a href="/jdgr/blog/write?url=<%= loginMemberBlogVo.getBlogUrl() %>" class="my_write">글쓰기</a>
@@ -173,7 +173,7 @@
 							<% } else { %>
 							<!-- 유저가 가지고있는 블로그가 없으면  -->
 								<div class="btn_util">
-		                            <a href="/jdgr/userSet/newblog" class="my_blog">블로그 만들기</a>
+		                            <a href="/jdgr/blog/create" class="my_blog">블로그 만들기</a>
 		                        </div>
 							<% } %>
 	
@@ -309,15 +309,15 @@
 	                                    <div class="user_blog">
 	                                        <div class="tit_box">
 	                                            <strong>운영중인 블로그</strong>
-	                                            <a href="" class="ico_add">추가하기</a>
+	                                            <a href="/jdgr/userSet/blog" class="ico_add">추가하기</a>
 	                                        </div>
 	                                        <ul>
 	                                        	<% if(loginMemberBlogVoList != null){ %>
 	                                        		<% for(BlogVo blogVo : loginMemberBlogVoList){ %>
 	                                        			<li>
 			                                                <a href="/jdgr/blog/view/<%= blogVo.getBlogUrl() %>" class="tit"><%= blogVo.getBlogTitle() %></a>
-			                                                <a href="/jdgr/blog/write" class="ico_write"></a>
-			                                                <a href="/jdgr/userSet/blog" class="ico_set">관리</a>
+			                                                <a href="/jdgr/blog/write?url=<%= blogVo.getBlogUrl() %>" class="ico_write"></a>
+			                                                <a href="/jdgr/blogSet/blogInfo?url=<%= blogVo.getBlogUrl() %>" class="ico_set">관리</a>
 			                                            </li>
 	                                        		<% } %>
 	                                        	<% } %>

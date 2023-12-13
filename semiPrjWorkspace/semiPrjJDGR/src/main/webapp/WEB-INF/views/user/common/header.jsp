@@ -17,13 +17,17 @@ if (blogClassName == null) {
 MemberVo loginMemberVo = (MemberVo) session.getAttribute("loginMember");
 
 // 로그인 멤버 블로그정보
-BlogVo loginMemberBlogVo = null;
+BlogVo loginMemberBlogVo = (BlogVo) session.getAttribute("loginMemberBlogVo"); // 대표블로그 설정 가져오기	
 List<AlarmVo> alarmVoList = null;
-List<BlogVo> loginMemberBlogVoList = new ArrayList<BlogVo>();
+List<BlogVo> loginMemberBlogVoList = (List<BlogVo>) session.getAttribute("loginMemberBlogVoList"); // 블로그 리스트 가져오기
 
 if (loginMemberVo != null) {
-	loginMemberBlogVo = (BlogVo) session.getAttribute("loginMemberBlogVo"); // 대표블로그 설정 가져오기
-	loginMemberBlogVoList = (List<BlogVo>) session.getAttribute("loginMemberBlogVoList"); // 블로그 리스트 가져오기
+	if(loginMemberBlogVo == null){
+		loginMemberBlogVo = new BlogVo();
+	}
+	if(loginMemberBlogVoList == null){
+		loginMemberBlogVoList = new ArrayList<BlogVo>();
+	}
 	AlarmService as = new AlarmService();
 	alarmVoList = (List<AlarmVo>) as.selectAlarmList(loginMemberVo.getMemNo());//회원의 읽지 않은 알람 가져오기
 
@@ -142,8 +146,8 @@ BlogVo blogUrlVo = (BlogVo) session.getAttribute("blogUrlVo"); // url에 맞는 
 											for (BlogVo blogVo : loginMemberBlogVoList) {
 											%>
 											<li><a href="/jdgr/blog/view/<%=blogVo.getBlogUrl()%>"
-												class="tit"><%=blogVo.getBlogTitle()%></a> <a href=""
-												class="ico_write"></a> <a href="/jdgr/userSet/blog"
+												class="tit"><%=blogVo.getBlogTitle()%></a> <a href="/jdgr/blog/write?url=<%= blogVo.getBlogUrl() %>"
+												class="ico_write"></a> <a href="/jdgr/blogSet/blogInfo?url=<%= blogVo.getBlogUrl() %>"
 												class="ico_set">관리</a></li>
 											<%
 											}
@@ -159,7 +163,7 @@ BlogVo blogUrlVo = (BlogVo) session.getAttribute("blogUrlVo"); // url에 맞는 
 										</ul>
 									</div>
 									<div class="btn_group">
-										<a href="">고객센터</a> <a href="/jdgr/member/logout">로그아웃</a>
+										<a href="/jdgr/csboard">고객센터</a> <a href="/jdgr/member/logout">로그아웃</a>
 									</div>
 								</div>
 								<!-- //유저 팝업 -->
