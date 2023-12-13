@@ -115,6 +115,8 @@
     font-weight: 300;
     color: #fff;
 }
+.best10_content ul li a .txt .content img {display: none;}
+.postbox .postWrite img {display: none;}
 .best10_content ul li a:hover .txt .content span {
     display: -webkit-box;
 }
