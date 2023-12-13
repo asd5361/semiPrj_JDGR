@@ -171,10 +171,36 @@ public List<PostVo> separatedList(String categoryNo, PageVo pvo) throws Exceptio
 
 	
 }
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//인기베스트 10포스트 보여주기
+public List<PostVo> bestSelectPostList() throws Exception {
+	// conn
+    Connection conn = JDBCTemplate.getConnection();
+    
+    // dao
+    PostDaoLYJ dao = new PostDaoLYJ();
+    List<PostVo> postVoList = dao.bestSelectPostList(conn);
+    
+    
+    // 공감수 조회하는 쿼리문 실행
+    for (PostVo vo : postVoList) {
+//             vo = postVoList.get(0)
+        String heartCnt = dao.getheartCnt(conn , vo.getPostNo());
+       vo.setHeartCnt(heartCnt);
+    }
+    
+    // close
+    JDBCTemplate.close(conn);
+    
+    return postVoList;
+
+}//bestSelectPostList
    
    
-   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
+
    
    
 

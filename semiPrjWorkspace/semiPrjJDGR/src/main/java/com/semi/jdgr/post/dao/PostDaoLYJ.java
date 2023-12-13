@@ -328,5 +328,42 @@ public class PostDaoLYJ {
 		}
 		return postVoList;
 	}
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//인기베스트 10포스트 보여주기
+	public List<PostVo> bestSelectPostList(Connection conn) throws Exception {
+		
+		// SQL
+		String sql = "SELECT P.POST_IMG , P.CONTENT , P.ENROLL_DATE FROM POST P WHERE DEL_YN = 'N'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+
+		// rs
+		List<PostVo> postVoList = new ArrayList<PostVo>();
+		while (rs.next()) {
+
+			String postImg = rs.getString("POST_IMG");// 포스트 이미지
+			String content = rs.getString("CONTENT");// 내용
+			String enrollDate = rs.getString("ENROLL_DATE");// 등록일자
+			String postNo = rs.getString("POST_NO");//포스트 번호
+
+			PostVo postVo = new PostVo();
+			postVo.setPostImg(postImg);
+			postVo.setContent(content);
+			postVo.setEnrollDate(enrollDate);
+			postVo.setPostNo(postNo);
+
+			postVoList.add(postVo);
+
+		}
+		// close
+		JDBCTemplate.close(pstmt);
+		JDBCTemplate.close(rs);
+
+		return postVoList;
+	}
+
+	
 
 }// class
