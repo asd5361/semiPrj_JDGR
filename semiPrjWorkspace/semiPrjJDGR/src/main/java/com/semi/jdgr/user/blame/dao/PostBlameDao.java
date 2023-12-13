@@ -3,14 +3,11 @@ package com.semi.jdgr.user.blame.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.blame.vo.PostBlameVo;
-import com.semi.jdgr.user.blame.vo.ReplyBlameVo;
-import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class PostBlameDao {
@@ -55,7 +52,7 @@ public class PostBlameDao {
 	public PostBlameVo getPostInfo(Connection conn, String pNo) throws Exception {
 		
 		//gpt
-		String sql = "SELECT P.POST_NO , P.TITLE , M.MEM_NICK FROM POST P JOIN POST_BLAME PB ON P.POST_NO = PB.P_NO JOIN MEMBER M ON PB.P_WRITER_NICK = M.MEM_NICK JOIN MEMBER M ON PB.P_BLAMER_NICK = M.MEM_NICK WHERE P.POST_NO = ? ORDER BY PB.P_NO DESC";
+		String sql = "SELECT P.POST_NO , P.TITLE , M.MEM_NO FROM POST P JOIN POST_BLAME PB ON P.POST_NO = PB.P_NO JOIN MEMBER M  ON PB.P_WRITER_NO = M.MEM_NO WHERE P.POST_NO = ? ORDER BY PB.P_NO DESC";
 	    PreparedStatement pstmt = conn.prepareStatement(sql);
 	    pstmt.setString(1, pNo);
 
@@ -66,14 +63,17 @@ public class PostBlameDao {
 	    if (rs.next()) {
 	    	String postNo = rs.getString("POST_NO");
 	    	String pTit = rs.getString("TITLE");
-	    	String pWriterNick = rs.getString("MEM_NICK");
+	    	String pWriterNo = rs.getString("MEM_NO");
+//	    	String pBlamerNick = rs.getString("MEM_NICK");
 	    	
 
 	    	getPostInfo = new PostBlameVo();
 	        getPostInfo.setpNo(postNo);
 	        getPostInfo.setpTit(pTit);
-	        getPostInfo.setpWriterNick(pWriterNick);
+	        getPostInfo.setpWriterNo(pWriterNo);
+//	        getPostInfo.setpBlamerNick(pBlamerNick);
 	        
+
 	    }
 	    
 	    
@@ -121,23 +121,23 @@ public class PostBlameDao {
 //	}//blame
 	
 
-	public int blame(Connection conn, MemberVo mvo, PostVo vo, PostBlameVo pbo) throws Exception {
+	public int blame(Connection conn, PostBlameVo pbo) throws Exception {
 
 		// sql
-		String sql = "INSERT INTO POST_BLAME (P_BLA_NO, P_NO, P_BLAMER_NICK, P_WRITER_NICK, P_BLA_TIT, P_BLA_LIST, P_BLA_DETAIL) VALUES(SEQ_POST_BLAME.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO POST_BLAME ( P_BLA_NO , P_NO , P_BLAMER_NO , P_WRITER_NO , P_BLA_TIT , P_BLA_LIST , P_BLA_DETAIL ) VALUES( SEQ_POST_BLAME.NEXTVAL , ? , ? , ? , ? , ? , ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, vo.getPostNo());
-		pstmt.setString(2, mvo.getMemNick());
-		pstmt.setString(3, vo.getUserNick());
-		pstmt.setString(4, vo.getPostTitle());
+		pstmt.setString(1, pbo.getPostNo());
+		pstmt.setString(2, pbo.getpBlamerNo());
+		pstmt.setString(3, pbo.getpWriterNo());
+		pstmt.setString(4, pbo.getpBlaTit());
 		pstmt.setString(5, pbo.getpBlaList());
 		pstmt.setString(6, pbo.getpBlaDetail());
 
 		
-		System.out.println(vo.getPostNo());
-		System.out.println(mvo.getMemNick());
-		System.out.println(vo.getUserNick());
-		System.out.println(vo.getPostTitle());
+		System.out.println(pbo.getPostNo());
+		System.out.println(pbo.getpBlamerNo());
+		System.out.println(pbo.getpWriterNo());
+		System.out.println(pbo.getpTit());
 		System.out.println(pbo.getpBlaList());
 		System.out.println(pbo.getpBlaDetail());
 	    
@@ -163,14 +163,14 @@ public class PostBlameDao {
 		   PreparedStatement pstmt = conn.prepareStatement(sql);
 		   ResultSet rs = pstmt.executeQuery();
 		   //rs
-		   List<PostBlameVo> reasonList = new ArrayList<>();
+		   List<PostBlameVo> reasonList = new ArrayList<PostBlameVo>();
 		   while(rs.next()) {
 			   String blaList = rs.getString("BLA_LIST");
 			   String blaReason = rs.getString("BLA_REASON");
 			   
 			   PostBlameVo vo = new PostBlameVo();
 			   vo.setpBlaList(blaList);
-			   vo.setpBlamerNick(blaReason);
+			   vo.setpBlamerNo(blaReason);
 			   reasonList.add(vo);
 		   }
 		   

@@ -4,15 +4,15 @@
 pageEncoding="UTF-8"%> 
 
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
-<%@page import="com.semi.jdgr.user.blame.service.PostBlameService"%>
 <%@page import="com.semi.jdgr.post.vo.PostVo"%>
 <%@page import="com.semi.jdgr.page.vo.PageVo"%>
 <%@page import="com.semi.jdgr.user.blame.vo.PostBlameVo"%>
 
     <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
      <%
+//      	PostBlameVo pbo = (PostBlameVo)request.getAttribute("pbo");
+     PostBlameVo pbo = (PostBlameVo)request.getAttribute("pbo");
 		List<PostBlameVo> list = (List<PostBlameVo>)request.getAttribute("list");
-     	PostBlameVo pbo = (PostBlameVo)request.getAttribute("pbo");
 	%>  
     
 
@@ -37,14 +37,16 @@ pageEncoding="UTF-8"%>
 <!-- // 					String fakeContent = "댓글내용"; -->
 <!-- // 				    // 나머지 코드에서 vo.getReplyMem() 대신에 가상의 사용자 이름 사용 -->
 <%-- 				%> --%>
-
-
-        <div class="writer_content">
-<%--         	<h5>작성자 | <%=pvo.getpWriterNo() %></h5> --%>
-        	<h5>작성자 | <%=pbo.getpWriterNick() %></h5>
 <%--          <h5>작성자 |<%= fakeUserName %></h5>	  --%>
 <!--         	<br> -->
 <%--         <h5>내   용| <%=fakeContent %></h5> --%>
+
+
+        <div class="writer_content">
+        	<h5>작성자 | <%=pbo.getpWriterNo() %></h5>
+<%-- 				<h5>작성자 | <%=pbo.getUserNo() %></h5> --%>
+
+        	
 			<h5>포스트 제목 | <%=pbo.getpTit() %></h5>
         </div>
         <hr>
@@ -55,22 +57,23 @@ pageEncoding="UTF-8"%>
             	<div class="reason_detail">
                 	<ul>
 	                	<% int i = 0 ;
-// 	                		if(pvo != null){
+// 	                		if(pbo != null){
 	                		
 	                          	for( PostBlameVo num : list){ %>
 	                        	<li class="list">
 	                                <div class="check_area">
-	                                    <input type="radio" name="pBlaList" id="<%= i %>" class="report_reason"  value="<%= num.getpBlaList() %>">
-	                                    
+	                                    <input type="radio" name="pBlaList" id="<%= i %>" class="report_reason"  value="">
+<%-- 	                                    <%= num.getpBlaList() %> --%>
 	                                    <label class="reason_content"  for="<%=i %>">
-<%-- 	                                    	<%= num.getpBlamerNo() %> --%>
+	                                    	<%= num.getpBlamerNo() %>
 	                                  
 	                                   	</label>
 	
 	                                </div>
 	                            </li>
 	                        
-	                        <%i++; } %> 
+	                        <%i++; %>
+	                     <%	} %> 
 <%-- 	                          	<%} %> --%>
 	             
 <%-- 	                       <% if(pvo == null) { %> --%>
@@ -104,10 +107,15 @@ pageEncoding="UTF-8"%>
 <%--             <input type="hidden" name="pBlaTit" value=<%= vo.getPostTitle() %>>     --%>
 <%--             <input type="hidden" name="pWriterNo" value=<%= fakeUserName %>> --%>
 <%--             <input type="hidden" name="pBlaTit" value=<%= fakeContent %>> --%>
-            <input type="hidden" name="pWriterNick" value=<%= pbo.getpWriterNick() %>>
-            <input type="hidden" name="pBlaTit" value=<%= pbo.getpTit() %>>
 
-            <input type="hidden" name="postNo" value = <%= pbo.getPostNo() %>>
+
+
+
+
+            <input type="hidden" name="pWriterNo" value=<%= pbo.getpWriterNo() %>>
+            <input type="hidden" name="pTit" value=<%= pbo.getpTit() %>>
+
+            <input type="hidden" name="PostNo" value = <%= pbo.getPostNo() %>>
              
         </div>
         <div class="modal_footer">
@@ -227,4 +235,3 @@ function blame() {
           modal.style.display = 'none';  
       }  
    </script>   
-

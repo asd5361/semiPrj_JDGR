@@ -79,9 +79,18 @@ public class PostBlameController extends HttpServlet{
 			
 
 			//service
+//			PostBlameService pbs = new PostBlameService();
+//			PostBlameVo pbo = pbs.getPostInfo(pNo);
+//			List<PostBlameVo> list = pbs.blameList();
+//			System.out.println("@@@@@@@@"+pbo);
+//			System.out.println("@@@@@@@@@@"+list);
+//			System.out.println("!!!!!!"+pNo);
+			
+			
 			PostBlameService pbs = new PostBlameService();
 			PostBlameVo pbo = pbs.getPostInfo(pNo);
 			List<PostBlameVo> list = pbs.blameList();
+
 			
 			
 			//result
@@ -108,38 +117,39 @@ public class PostBlameController extends HttpServlet{
 			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 
 //			String loginMem = "1";
-			String loginMem = loginMember.getMemNick();
+			String loginMem = loginMember.getMemNo();
 			String postNo = req.getParameter("postNo");
-			String pWriterNick = req.getParameter("pWriterNick");
-			String pTit = req.getParameter("pTit");
+			String userNo = req.getParameter("userNo");
+			String PostTitle = req.getParameter("PostTitle");
 			String pBlaList = req.getParameter("pBlaList");
 			String pBlaDetail = req.getParameter("pBlaDetail");
 			
-			MemberVo mvo = new MemberVo();
-			mvo.setMemNick(loginMem);
+	
 			
-			PostVo vo = new PostVo();
-			vo.setPostNo(postNo);
-			vo.setPostTitle(pTit);
-			
-			PostBlameVo pbo = new PostBlameVo();
-			pbo.setpWriterNick(pWriterNick);
-			pbo.setpBlaList(pBlaList);
-			pbo.setpBlaDetail(pBlaDetail);
+//			MemberVo mvo = new MemberVo();
+//			mvo.setMemNo(loginMem);
+//			
+//			PostVo vo = new PostVo();
+//			vo.setPostNo(postNo);
+//			vo.setPostTitle(pTit);
+//			
+//			PostBlameVo pbo = new PostBlameVo();
+//			pbo.setpWriterNo(pWriterNo);
+//			pbo.setpBlaList(pBlaList);
+//			pbo.setpBlaDetail(pBlaDetail);
 
 			
-//			PostBlameVo vo = new PostBlameVo();
-//			vo.setpBlamerNick(loginMem);
-//			vo.setpWriterNick(pWriterNo);
-//			vo.setpBlaTit(pBlaTit);
-//			vo.setpBlaList(pBlaList);
-//			vo.setpBlaDetail(pBlaDetail);
-//			vo.setpNo(postNo);
+			PostBlameVo pbo = new PostBlameVo();
+			pbo.setpBlamerNo(loginMem);
+			pbo.setpWriterNo(userNo);
+			pbo.setpTit(PostTitle);
+			pbo.setpBlaList(pBlaList);
+			pbo.setpBlaDetail(pBlaDetail);
+			pbo.setPostNo(postNo);
 			
 			//service
 			PostBlameService pbs = new PostBlameService();
-			int result = pbs.blame(mvo, vo, pbo);
-			
+			int result = pbs.blame(pbo);
 			//result(==view)
 			if(result != 1) {
 		
@@ -148,7 +158,7 @@ public class PostBlameController extends HttpServlet{
 			
 			//나중에 포스트 합치면 필요한 값 넣어서 화면으로
 			System.out.println("성공");
-			resp.sendRedirect("/jdgr/post/detail?pNo=?" + postNo);
+			resp.sendRedirect("/jdgr/post/detail?pNo=?");
 			
 		}catch(Exception e) {
 			System.out.println("신고 중 에러 발생");

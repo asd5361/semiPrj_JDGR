@@ -4,25 +4,10 @@ package com.semi.jdgr.user.blame.vo;
 public class PostBlameVo {
 	
 	
-//	private String pBlaNo;
-//	private String pNo;
-//	private String pBlamerNo;
-//	private String pWriterNo;
-//	private String pBlaTit;
-//	private String pTit;
-//	private String pBlaDate;
-//	private String pBlaList;
-//	private String pSancYn;
-//	private String pAnsDate;
-//	private String pBlaDetail;
-//	private String pDelYn;
-//	private String postNo;
-	
-	
 	private String pBlaNo;
 	private String pNo;
-	private String pBlamerNick;
-	private String pWriterNick;
+	private String pBlamerNo;
+	private String pWriterNo;
 	private String pBlaTit;
 	private String pTit;
 	private String pBlaDate;
@@ -32,6 +17,8 @@ public class PostBlameVo {
 	private String pBlaDetail;
 	private String pDelYn;
 	private String postNo;
+	
+	
 	public String getpBlaNo() {
 		return pBlaNo;
 	}
@@ -44,17 +31,17 @@ public class PostBlameVo {
 	public void setpNo(String pNo) {
 		this.pNo = pNo;
 	}
-	public String getpBlamerNick() {
-		return pBlamerNick;
+	public String getpBlamerNo() {
+		return pBlamerNo;
 	}
-	public void setpBlamerNick(String pBlamerNick) {
-		this.pBlamerNick = pBlamerNick;
+	public void setpBlamerNo(String pBlamerNo) {
+		this.pBlamerNo = pBlamerNo;
 	}
-	public String getpWriterNick() {
-		return pWriterNick;
+	public String getpWriterNo() {
+		return pWriterNo;
 	}
-	public void setpWriterNick(String pWriterNick) {
-		this.pWriterNick = pWriterNick;
+	public void setpWriterNo(String pWriterNo) {
+		this.pWriterNo = pWriterNo;
 	}
 	public String getpBlaTit() {
 		return pBlaTit;
@@ -110,14 +97,21 @@ public class PostBlameVo {
 	public void setPostNo(String postNo) {
 		this.postNo = postNo;
 	}
-	private PostBlameVo(String pBlaNo, String pNo, String pBlamerNick, String pWriterNick, String pBlaTit, String pTit,
+	@Override
+	public String toString() {
+		return "PostBlameVo [pBlaNo=" + pBlaNo + ", pNo=" + pNo + ", pBlamerNo=" + pBlamerNo + ", pWriterNo="
+				+ pWriterNo + ", pBlaTit=" + pBlaTit + ", pTit=" + pTit + ", pBlaDate=" + pBlaDate + ", pBlaList="
+				+ pBlaList + ", pSancYn=" + pSancYn + ", pAnsDate=" + pAnsDate + ", pBlaDetail=" + pBlaDetail
+				+ ", pDelYn=" + pDelYn + ", postNo=" + postNo + "]";
+	}
+	private PostBlameVo(String pBlaNo, String pNo, String pBlamerNo, String pWriterNo, String pBlaTit, String pTit,
 			String pBlaDate, String pBlaList, String pSancYn, String pAnsDate, String pBlaDetail, String pDelYn,
 			String postNo) {
 		super();
 		this.pBlaNo = pBlaNo;
 		this.pNo = pNo;
-		this.pBlamerNick = pBlamerNick;
-		this.pWriterNick = pWriterNick;
+		this.pBlamerNo = pBlamerNo;
+		this.pWriterNo = pWriterNo;
 		this.pBlaTit = pBlaTit;
 		this.pTit = pTit;
 		this.pBlaDate = pBlaDate;
@@ -128,18 +122,10 @@ public class PostBlameVo {
 		this.pDelYn = pDelYn;
 		this.postNo = postNo;
 	}
-	@Override
-	public String toString() {
-		return "PostBlameVo [pBlaNo=" + pBlaNo + ", pNo=" + pNo + ", pBlamerNick=" + pBlamerNick + ", pWriterNick="
-				+ pWriterNick + ", pBlaTit=" + pBlaTit + ", pTit=" + pTit + ", pBlaDate=" + pBlaDate + ", pBlaList="
-				+ pBlaList + ", pSancYn=" + pSancYn + ", pAnsDate=" + pAnsDate + ", pBlaDetail=" + pBlaDetail
-				+ ", pDelYn=" + pDelYn + ", postNo=" + postNo + "]";
-	}
 	public PostBlameVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 	
 	

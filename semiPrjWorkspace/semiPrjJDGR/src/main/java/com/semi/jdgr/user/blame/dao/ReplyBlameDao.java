@@ -14,24 +14,25 @@ import com.semi.jdgr.util.JDBCTemplate;
 public class ReplyBlameDao {
 
 	
-	public ReplyBlameVo getReplyInfo(Connection conn, ReplyBlameVo vo) throws Exception {
+	public ReplyBlameVo getReplyInfo(Connection conn, String rNo) throws Exception {
 		
 		//gpt
-		String sql = "SELECT R_BLA_LIST, R_BLA_DETAIL FROM REPLY_BLAME WHERE R_NO = ?";
+		String sql = "SELECT R.REPLY_NO , R.CON , M.MEM_NO FROM REPLY R JOIN REPLY_BLAME RB ON R.REPLY_NO = RB.R_NO JOIN MEMBER M  ON RB.R_WRITER_NO = M.MEM_NO WHERE R.POST_NO = ? ORDER BY RB.R_NO DESC";
 	    PreparedStatement pstmt = conn.prepareStatement(sql);
-	    pstmt.setString(1, vo.getrNo());
+	    pstmt.setString(1, rNo);
 
 	    ResultSet rs = pstmt.executeQuery();
 
 	    // rs
 	    ReplyBlameVo getReplyInfo = null;
 	    while (rs.next()) {
-	        String rBlaList = rs.getString("R_BLA_LIST");
-	        String rBlaDetail = rs.getString("R_BLA_DETAIL");
+	        String rBlaList = rs.getString("REPLY_NO");
+	        String Con = rs.getString("CON");
+	        String rWriterNo = rs.getString("R_BLA_DETAIL");
 
 	        getReplyInfo = new ReplyBlameVo();
 	        getReplyInfo.setrBlaList(rBlaList);
-	        getReplyInfo.setrBlaDetail(rBlaDetail);
+	        getReplyInfo.setrBlaDetail(rWriterNo);
 	    }
 	    
 	    
@@ -46,25 +47,25 @@ public class ReplyBlameDao {
 	}//getReplyInfo
 	
 	
-	public int blame(Connection conn, ReplyBlameVo vo) throws Exception {
+	public int blame(Connection conn, ReplyBlameVo rbo) throws Exception {
 		
 		// sql
-	    String sql = "INSERT INTO REPLY_BLAME (R_BLA_NO, R_NO, R_BLAMER_NO, R_WRITER_NO, R_BLA_CON, R_BLA_LIST, R_BLA_DETAIL) VALUES(SEQ_REPLY_BLAME.NEXTVAL, 1, 2, 3, '신고댓글', ?, ?)";
+	    String sql = "INSERT INTO REPLY_BLAME (R_BLA_NO, R_NO, R_BLAMER_NO, R_WRITER_NO, R_BLA_CON, R_BLA_LIST, R_BLA_DETAIL) VALUES(SEQ_REPLY_BLAME.NEXTVAL, ?,?,?,?,?,?)";
 	    PreparedStatement pstmt = conn.prepareStatement(sql);
 	    
-//	    pstmt.setString(1, vo.getrNo());
-//	    pstmt.setString(1, vo.getrBlamerNo());
-//	    pstmt.setString(1, vo.getrWriterNo());
-//	    pstmt.setString(2, vo.getrBlaCon());
-	    pstmt.setString(1, vo.getrBlaList());
-	    pstmt.setString(2, vo.getrBlaDetail());
+	    pstmt.setString(1, rbo.getReplyNo());
+	    pstmt.setString(2, rbo.getrBlamerNo());
+	    pstmt.setString(3, rbo.getrWriterNo());
+	    pstmt.setString(4, rbo.getrBlaCon());
+	    pstmt.setString(5, rbo.getrBlaList());
+	    pstmt.setString(6, rbo.getrBlaDetail());
 
 //	    System.out.println(vo.getrNo());
 //	    System.out.println(vo.getrBlamerNo());
 //	    System.out.println(vo.getrWriterNo());
 //	    System.out.println(vo.getrBlaCon());
-	    System.out.println(vo.getrBlaList());
-	    System.out.println(vo.getrBlaDetail());
+//	    System.out.println(vo.getrBlaList());
+//	    System.out.println(vo.getrBlaDetail());
 	    
 	    
 	    

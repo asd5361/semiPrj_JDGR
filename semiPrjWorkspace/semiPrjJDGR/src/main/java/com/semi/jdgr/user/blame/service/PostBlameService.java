@@ -5,10 +5,7 @@ import java.util.List;
 
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.blame.dao.PostBlameDao;
-import com.semi.jdgr.user.blame.dao.ReplyBlameDao;
 import com.semi.jdgr.user.blame.vo.PostBlameVo;
-import com.semi.jdgr.user.blame.vo.ReplyBlameVo;
-import com.semi.jdgr.user.member.vo.MemberVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class PostBlameService {
@@ -85,7 +82,7 @@ public class PostBlameService {
 	
 	
 	//신고하기
-		public int blame(MemberVo mvo, PostVo vo, PostBlameVo pbo) throws Exception {
+		public int blame(PostBlameVo  pbo) throws Exception {
 			
 			//conn
 			Connection conn = JDBCTemplate.getConnection();
@@ -101,7 +98,7 @@ public class PostBlameService {
 			
 			//dao
 			PostBlameDao dao =  new PostBlameDao();
-			int result = dao.blame(conn, mvo, vo, pbo);
+			int result = dao.blame(conn, pbo);
 			
 			// tx
 			if(result == 1) {
