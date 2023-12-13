@@ -25,121 +25,28 @@
             <h3 class="tit">인기블로그 글 BEST10</h3>
 
             <!-- swiper -->
-            <div class="best10_content">
+       		<div class="best10_content">
                 <div class="swiper-container">
                     <ul class="swiper-wrapper">
                         <li class="swiper-slide">
                             <a href="/jdgr/post/detail?pNo=7">
+                            <% for(PostVo vo : postVoList){ %>
                                 <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
                                 <div class="txt">
                                     <div class="info">
                                         <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
+                                        <strong><%= vo.getUserNick()%></strong>
                                     </div>
                                     <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
+                                        <strong><%= vo.getContent()%></strong>
+                                        <span><%= vo.getContent()%></span>
                                     </div>
                                     <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
+                                        <span class="date"><%= vo.getEnrollDate()%></span>
+                                        <span class="like"><%= vo.getHeartCnt()%></span>
                                     </div>
                                 </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
+                            <%} %>   
                             </a>
                         </li>
                     </ul>
