@@ -90,8 +90,8 @@ public class PostBlameController extends HttpServlet{
 			PostBlameService pbs = new PostBlameService();
 			PostBlameVo pbo = pbs.getPostInfo(pNo);
 			List<PostBlameVo> list = pbs.blameList();
-
-			
+			System.out.println("@@@@@@@@@@@@@@@@@");
+			System.out.println(pbo.getPostNo());
 			
 			//result
 			req.setAttribute("pbo", pbo);

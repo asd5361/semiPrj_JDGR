@@ -8,7 +8,7 @@
     pageEncoding="UTF-8"%>
     
     <%
-    	// 포스트 상세보기 정보 출력
+    	// 포스트 상세보기 정부 출력
     	PostVo postDetailVo = (PostVo) session.getAttribute("postDetailVo");
     	PostVo heartCnt = (PostVo) request.getAttribute("heartCnt");
     	PostVo replyCnt = (PostVo) request.getAttribute("replyCnt");
@@ -16,6 +16,10 @@
     	// 공감and구독 중복체크
     	Integer add = (Integer) request.getAttribute("add");
     	Integer del = (Integer) request.getAttribute("del");
+    	
+    	// 공감and구독 vo 가져와서 js 처리
+//     	List<HeartVo> heartVoList = (List<HeartVo>) session.getAttribute("heartVoList");
+//     	List<FollowVo> followVoList = (List<FollowVo>) session.getAttribute("followVoList");
     	
     %>
 

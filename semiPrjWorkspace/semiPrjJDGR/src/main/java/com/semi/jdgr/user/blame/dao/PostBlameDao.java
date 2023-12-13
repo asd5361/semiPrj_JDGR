@@ -126,7 +126,7 @@ public class PostBlameDao {
 		// sql
 		String sql = "INSERT INTO POST_BLAME ( P_BLA_NO , P_NO , P_BLAMER_NO , P_WRITER_NO , P_BLA_TIT , P_BLA_LIST , P_BLA_DETAIL ) VALUES( SEQ_POST_BLAME.NEXTVAL , ? , ? , ? , ? , ? , ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, pbo.getPostNo());
+		pstmt.setString(1, "8");
 		pstmt.setString(2, pbo.getpBlamerNo());
 		pstmt.setString(3, pbo.getpWriterNo());
 		pstmt.setString(4, pbo.getpBlaTit());

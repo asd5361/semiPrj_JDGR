@@ -115,7 +115,9 @@ pageEncoding="UTF-8"%>
             <input type="hidden" name="pWriterNo" value=<%= pbo.getpWriterNo() %>>
             <input type="hidden" name="pTit" value=<%= pbo.getpTit() %>>
 
-            <input type="hidden" name="PostNo" value = <%= pbo.getPostNo() %>>
+
+<%--             <input type="hidden" name="PostNo" value = <%= pbo.getPostNo() %>> --%>
+			<input type="hidden" name="PostNo" value = 8>
              
         </div>
         <div class="modal_footer">
