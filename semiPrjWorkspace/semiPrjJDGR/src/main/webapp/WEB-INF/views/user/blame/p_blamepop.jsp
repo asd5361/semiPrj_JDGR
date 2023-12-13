@@ -18,6 +18,7 @@
     
 <link rel="stylesheet" href="/jdgr/resources/user/css/blamepop.css">
 <button class="modal_open" data-target="#pop_email">신고하기</button>
+<!-- <button class="btn_k" onclick="blame()"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button> -->
 <!-- <button class="btn_k" onclick="{clickEvent('blame')}"><img src="/jdgr/resources/user/images/ico/ico_declaration.svg" alt="신고">신고하기</button> -->
 <!-- 레이어팝업 모달 -->
 <div id="pop_email" class="modal_bg">
@@ -72,7 +73,11 @@
 </div>
 <script>
 
-
+function blame() {
+    // p_blamepop.jsp에서 모달 열기
+    const modal = document.getElementById('pop_email');
+    modal.style.display = 'block';
+}
 
     function submitReport() {
         // 선택된 라디오 버튼의 값 가져오기

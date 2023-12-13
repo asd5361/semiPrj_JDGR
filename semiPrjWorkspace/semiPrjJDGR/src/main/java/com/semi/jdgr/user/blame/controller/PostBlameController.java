@@ -12,11 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.semi.jdgr.post.vo.PostVo;
 import com.semi.jdgr.user.blame.service.PostBlameService;
-import com.semi.jdgr.user.blame.service.ReplyBlameService;
 import com.semi.jdgr.user.blame.vo.PostBlameVo;
-import com.semi.jdgr.user.blame.vo.ReplyBlameVo;
 import com.semi.jdgr.user.member.vo.MemberVo;
-import com.semi.jdgr.user.reply.vo.ReplyVo;
 
 @WebServlet("/user/blame/p_blamepop")
 public class PostBlameController extends HttpServlet{
@@ -93,7 +90,7 @@ public class PostBlameController extends HttpServlet{
 			int result = pbs.blame(vo);
 			
 			//result(==view)
-			if(result == 1) {
+			if(result != 1) {
 		
 				throw new Exception("result 값이 1이 아님");
 			}
