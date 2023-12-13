@@ -23,10 +23,10 @@ public class PostBlameController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			
-			MemberVo memberVo = (MemberVo) req.getSession().getAttribute("loginMember");
-			if(memberVo == null) {
-				throw new Exception("로그인이 필요한 서비스입니다.");
-			}
+//			MemberVo memberVo = (MemberVo) req.getSession().getAttribute("loginMember");
+//			if(memberVo == null) {
+//				throw new Exception("로그인이 필요한 서비스입니다.");
+//			}
 			
 			
 			//data
