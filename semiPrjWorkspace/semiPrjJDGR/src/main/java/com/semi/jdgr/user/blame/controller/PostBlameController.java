@@ -23,11 +23,11 @@ public class PostBlameController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			
-//			MemberVo memberVo = (MemberVo) req.getSession().getAttribute("loginMember");
-//			if(memberVo == null) {
-//				throw new Exception("로그인이 필요한 서비스입니다.");
-//			}
-//			
+			MemberVo memberVo = (MemberVo) req.getSession().getAttribute("loginMember");
+			if(memberVo == null) {
+				throw new Exception("로그인이 필요한 서비스입니다.");
+			}
+			
 			
 			//data
 			PostVo vo = new PostVo();
@@ -38,7 +38,7 @@ public class PostBlameController extends HttpServlet{
 			// 댓글 정보를 모달에 전달
 			req.setAttribute("vo", vo);
 
-			
+			 
 			//service
 			PostBlameService pbs = new PostBlameService();	
 			List<PostBlameVo> pvo = pbs.blameList();			//신고 구분 목록 가져오기
@@ -49,7 +49,7 @@ public class PostBlameController extends HttpServlet{
 				throw new Exception("댓글 신고 실패");
 			}
 			req.setAttribute("pvo", pvo);
-			req.setAttribute("vo", vo);
+//			req.setAttribute("vo", vo);
 			req.getRequestDispatcher("/WEB-INF/views/user/blame/p_blamepop.jsp").forward(req, resp);
 			
 		}catch(Exception e) {
