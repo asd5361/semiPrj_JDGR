@@ -69,7 +69,7 @@
 	                    </div>
 	
 	                    <div class="blog_set_btn">
-	                        <button type="button" onclick="newBlogValidationCheck();">개설하기</button>
+	                        <button type="submit" onclick="newBlogValidationCheck();">개설하기</button>
 	                    </div>
 	                </form>
 					

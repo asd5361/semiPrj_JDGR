@@ -379,6 +379,20 @@ header .util_box .after_login .user_box > a {
     font-weight: 600;
     color: #333;
 }
+.pop_alarm ul li .txt1 {
+    display: block;
+    overflow: hidden;
+    width: calc(100% - 55px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    font-size: var(--small-size);
+    color: #333;
+}
+.pop_alarm ul li .txt1 strong {
+    font-weight: 600;
+    color: #333;
+}
 .pop_alarm ul li .delete {
     display: block;
     position: absolute;
