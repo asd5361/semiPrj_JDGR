@@ -25,121 +25,28 @@
             <h3 class="tit">인기블로그 글 BEST10</h3>
 
             <!-- swiper -->
-            <div class="best10_content">
+       		<div class="best10_content">
                 <div class="swiper-container">
                     <ul class="swiper-wrapper">
                         <li class="swiper-slide">
                             <a href="/jdgr/post/detail?pNo=7">
+                            <% for(PostVo vo : postVoList){ %>
                                 <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
                                 <div class="txt">
                                     <div class="info">
                                         <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
+                                        <strong><%= vo.getUserNick()%></strong>
                                     </div>
                                     <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
+                                        <strong><%= vo.getContent()%></strong>
+                                        <span><%= vo.getContent()%></span>
                                     </div>
                                     <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
+                                        <span class="date"><%= vo.getEnrollDate()%></span>
+                                        <span class="like"><%= vo.getHeartCnt()%></span>
                                     </div>
                                 </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="swiper-slide">
-                            <a href="">
-                                <div class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="이미지"></div>
-                                <div class="txt">
-                                    <div class="info">
-                                        <span class="img"><img src="/jdgr/resources/user/images/content/img_main01.png" alt="유저이미지"></span>
-                                        <strong>작성자 닉네임</strong>
-                                    </div>
-                                    <div class="content">
-                                        <strong>키덜트들의 성지, 국제 전자센터 방문하고싶은 사람들의 마음이 블라블라블라</strong>
-                                        <span>국제전자센터를 가다 키덜트들의 성지 방문 드디어 엄청나게 가보고싶었던 국제전자센터를 가보았다 키덜트들의 성지라 불리는 어쩌구저쩌구 내용들...</span>
-                                    </div>
-                                    <div class="util">
-                                        <span class="date">2023-11-12</span>
-                                        <span class="like">2319</span>
-                                    </div>
-                                </div>
+                            <%} %>   
                             </a>
                         </li>
                     </ul>
@@ -290,10 +197,11 @@
 	                                            		<span style ="background-image: url(/jdgr/resources/user/images/ico/ico_write_b.svg) "></span>
 	                                            	<%}%>
 	                                                <div class="txt">
-	                                                    <strong><%=alarmVo.getUserNick() %></strong>
-	                                                   	님이 "<%=alarmVo.getPostTitle() %>" <%=alarmVo.getAlarmType() %>
-	                                                   	<input type="hidden" id="postNo2" name = "postNo2" value="<%=alarmVo.getPostNo()%>">
-	                                                </div>
+                                                       <strong><%=alarmVo.getUserNick() %></strong>
+                                                         님이 "<%=alarmVo.getPostTitle() %>" <%=alarmVo.getAlarmType() %>
+                                                         <input type="hidden" id="postNo2" name = "postNo2" value="<%=alarmVo.getPostNo()%>">
+                                                         <input type="hidden" id="alarmNo" name="alarmNo" value="<%=alarmVo.getAlarmNo()%>">
+                                                   </div>
 	                                            
 	                                                <a href="" class="delete">삭제</a>
 	                                            </li>
@@ -304,6 +212,8 @@
 	                                                <div class="txt" onclick="goBlog()">
 	                                                    <strong><%=alarmVo.getUserNick() %></strong>
 	                                                    님이 <%=alarmVo.getAlarmType() %>
+                                                         <input type="hidden" id="blogUrl2" name = "blogUrl2" value="<%=alarmVo.getBlogUrl()%>">
+                                                         <input type="hidden" id="alarmNo" name="alarmNo" value="<%=alarmVo.getAlarmNo()%>">
 	                                                </div>
 	                                            	
 	                                                <a href="" class="delete">삭제</a>
@@ -435,28 +345,83 @@ for(let i = 0 ; i < divArr2.length; ++i){
 }
 
 function goPost2(event) {
-		const li2 = event.currentTarget;
-    	
-    	const postNo2 = li2.children[1].value;
-    	console.log(postNo2);
+    const li2 = event.currentTarget;
+    
+     const id2 = li2.children[1].id;
+     const postNo2 = li2.children[1].value;
+     console.log("아앙"+id2);
+     console.log(postNo2);
 
-    	const form2 = document.createElement("form");
-    	form2.action = "/jdgr/post/detail";
-    	form2.method = "GET";
+     const form2 = document.createElement("form");
+     form2.method = "GET";
 
-    	
-    	
-    	const input2 = document.createElement("input");
-        input2.type = "hidden";
-        input2.name = "pNo";
-        input2.value = postNo2;
-
-        form2.appendChild(input2);
-        document.body.appendChild(form2);
-    	form2.submit();
-}function goBlog() {
-	
+     if (id2 === "blogUrl2") {
+         form2.action = "/jdgr/blog/view/" + postNo2;
+         //
+	const alarmNo2 = li2.children[2].value;
+              
+              fetch("/jdgr/alarm/delete?alarmNo=" + alarmNo2 )
+             .then( (resp) => { return resp.json() } )
+             .then( (data) => { 
+                const result = data.msg;
+                const isOk = result === "ok";
+                if(isOk){
+                   consloe.log("알람 지우기 성공");
+                }else{
+                   consloe.log("알람 지우기 실패");
+                }
+             } );
+         //
+         console.log("블로그");
+     }else if (id2 === "postNo2") {
+     	
+         const input2 = document.createElement("input");
+         input2.type = "hidden";
+         input2.name = "pNo"; // id 값에 따라 name 설정
+         input2.value = postNo2;
+         form2.appendChild(input2);
+         console.log("포스트");
+			//
+			const alarmNo2 = li2.children[2].value;
+	            console.log("포스트 삭제 " +alarmNo2);
+	            fetch("/jdgr/alarm/delete?alarmNo=" + alarmNo2 )
+	             .then( (resp) => { return resp.json() } )
+	             .then( (data) => { 
+	                const result = data.msg;
+	                const isOk = result === "ok";
+	                if(isOk){
+	                   consloe.log("알람 지우기 성공");
+	                }else{
+	                   consloe.log("알람 지우기 실패");
+	                }
+	             } );
+			//
+         form2.action = "/jdgr/post/detail";
+     }
+     
+//      const input2 = document.createElement("input");
+//       input2.type = "hidden";
+//       input2.name = "pNo";
+//       input2.value = postNo2;
+      
+//      form2.appendChild(input2);
+     document.body.appendChild(form2);
+     form2.submit();
 }
+
+
+//       const alarmNo = li2.children[2].value;
+//      fetch("/jdgr/alarm/delete?alarmNo=" + alarmNo )
+//     .then( (resp) => { return resp.json() } )
+//     .then( (data) => { 
+//        const result = data.msg;
+//        const isOk = result === "ok";
+//        if(isOk){
+//           consloe.log("알람 지우기 성공");
+//        }else{
+//           consloe.log("알람 지우기 실패");
+//        }
+//     } );
 ///
 const divArray = document.querySelectorAll("div.categorybtn");
     for(let j = 0 ; j < divArray.length; ++j){
