@@ -182,11 +182,11 @@ public List<PostVo> bestSelectPostList() throws Exception {
     
     // dao
     PostDaoLYJ dao = new PostDaoLYJ();
-    List<PostVo> postVoList = dao.bestSelectPostList(conn);
+    List<PostVo> bestVoList = dao.bestSelectPostList(conn);
     
     
     // 공감수 조회하는 쿼리문 실행
-    for (PostVo vo : postVoList) {
+    for (PostVo vo : bestVoList) {
 //             vo = postVoList.get(0)
         String heartCnt = dao.getheartCnt(conn , vo.getPostNo());
        vo.setHeartCnt(heartCnt);
@@ -195,7 +195,7 @@ public List<PostVo> bestSelectPostList() throws Exception {
     // close
     JDBCTemplate.close(conn);
     
-    return postVoList;
+    return bestVoList;
 
 }//bestSelectPostList
    
