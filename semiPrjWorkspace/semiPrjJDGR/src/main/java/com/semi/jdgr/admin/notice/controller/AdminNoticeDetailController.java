@@ -23,7 +23,7 @@ public class AdminNoticeDetailController extends HttpServlet {
 			
 			//service
 			NoticeService ns = new NoticeService();
-			NoticeVo vo = ns.noticeDetail(noticeNo);
+			NoticeVo vo = ns.adminNoticeDetail(noticeNo);
 			
 			//view
 			if(vo ==null) {

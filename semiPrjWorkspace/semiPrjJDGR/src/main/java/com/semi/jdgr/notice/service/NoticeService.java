@@ -203,5 +203,19 @@ public class NoticeService {
 		
 		return noticeVoList;
 	}
+	public NoticeVo adminNoticeDetail(String noticeNo) throws Exception {
+		
+		//conn
+		Connection conn = JDBCTemplate.getConnection();
+		
+		//dao
+		NoticeDao dao = new NoticeDao();
+		 NoticeVo vo = dao.adminNoticeDetail(conn,noticeNo);
+		
+		//close
+		JDBCTemplate.close(conn);
+		
+		return vo;
+	}
 
 }

@@ -64,17 +64,17 @@
                         <col width=""/>
                         <col width="90%"/>
                     </colgroup>
-                    <tbody>
-                        <tr>
-                            <th>이전글</th>
-                            <td><a href="" >공지사항 제목입니다.</a></td>
-                        </tr>
-                        <tr>
-                            <th>다음글</th>
-<%int x = Integer.parseInt(noticeVo.getNoticeNo())+1; %> <!-- 앞 뒤 컬럼 조회 후 max 나 min 확인해서 없으면 숨기기 -->
-                            <td><a href="/jdgr/notice/detail?no=<%=x%>&currPage=<%=pno%>" >공지사항 제목입니다.</a></td>
-                        </tr>
-                    </tbody>
+<!--                     <tbody> -->
+<!--                         <tr> -->
+<!--                             <th>이전글</th> -->
+<!--                             <td><a href="" >공지사항 제목입니다.</a></td> -->
+<!--                         </tr> -->
+<!--                         <tr> -->
+<!--                             <th>다음글</th> -->
+<%-- <%int x = Integer.parseInt(noticeVo.getNoticeNo())+1; %> <!-- 앞 뒤 컬럼 조회 후 max 나 min 확인해서 없으면 숨기기 --> --%>
+<%--                             <td><a href="/jdgr/notice/detail?no=<%=x%>&currPage=<%=pno%>" >공지사항 제목입니다.</a></td> --%>
+<!--                         </tr> -->
+<!--                     </tbody> -->
                 </table>
             </div>
         </div>
