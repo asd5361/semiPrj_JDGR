@@ -4,8 +4,10 @@
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 <% 
 	List<ReplyVo> replyVoList = (List<ReplyVo>) request.getAttribute("replyVoList");
+PostVo postDetailVo = (PostVo) session.getAttribute("postDetailVo");
 %> 
 <script>
+
 	// 댓글창
 	let ReplyList = false;
 
@@ -14,81 +16,13 @@
     ReplyList = !ReplyList;
 
     if (ReplyList) {
-    	replyList.style.display = 'block';
-    } else {
     	replyList.style.display = 'none';
+    } else {
+    	replyList.style.display = 'block';
     }
 }
-
-    let likeClick = true;
-    let plusClick = true;
-    let repClick = true;
-    let repListClick = true;
-    
-    // 이미지 변경	
-    function clickEvent(mode) {
-        switch (mode) {
-        
-            case 'like' :
-                const likeBtn = document.getElementById('like_btn');
-                likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
-                likeClick = !likeClick;
-                heart();
-            break;
-                
-            case 'follow' :
-                const plusBtn = document.getElementById('plus_btn');
-                plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
-                plusClick = !plusClick;
-                follow()
-            break;
-                
-            case 'reply' :
-                const repBtn = document.getElementById('rep_btn');
-                repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
-                repClick = !repClick;
-                toggleReplyList()
-            break;
-                
-        }
-        
-    }
-    
-    // 신고
-    function blame() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/user/blame/p_blamepop";
-        
-        form.method = "POST";
-        
-        document.body.appendChild(form);
-        
-        form.submit();
-    }
-    
-//     // 공감
-//     function heart() {
-//     	const form = document.createElement("form");
-//         form.action = "/jdgr/post/heart";
-//         form.method = "GET";
-        
-//         document.body.appendChild(form);
-        
-//         form.submit();
-//     }
-    
-//     // 구독
-//     function follow() {
-//     	const form = document.createElement("form");
-//         form.action = "/jdgr/post/follow";
-//         form.method = "GET";
-        
-//         document.body.appendChild(form);
-        
-//         form.submit();
-//     }
-    
-    // ajax 공감
+	
+	// ajax 공감
     function heart(){
         
         fetch('/jdgr/post/heart', {
@@ -128,6 +62,53 @@
             console.error('catch블럭 실행:', error);
         });
     }
+
+    let likeClick = true;
+    let plusClick = true;
+    let repClick = true;
+    let repListClick = true;
+    
+    // 이미지 변경	
+    function clickEvent(mode) {
+        switch (mode) {
+        
+            case 'like' :
+                const likeBtn = document.getElementById('like_btn');
+                likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
+                likeClick = !likeClick;
+                heart();
+            break;
+                
+            case 'follow' :
+                const plusBtn = document.getElementById('plus_btn');
+                plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
+                plusClick = !plusClick;
+                follow()
+            break;
+                
+            case 'reply' :
+                const repBtn = document.getElementById('rep_btn');
+                repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
+                repClick = !repClick;
+                toggleReplyList()
+            break;
+                
+        }
+        
+    }
+    
+    // 신고
+    function blame() {
+    	const form = document.createElement("form");
+        form.action = "/jdgr/user/blame/p_blamepop?<%= postDetailVo.getP%> ";
+        
+        form.method = "get";
+        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
+    
     
   
 </script>

@@ -44,7 +44,6 @@ public class HeartController extends HttpServlet {
 
 			// service
 			HeartService hs = new HeartService();
-			
 
 			// 공감 중복체크
 			boolean isOk = hs.checkHeart(no, memberNo);
@@ -88,14 +87,7 @@ public class HeartController extends HttpServlet {
 					throw new Exception("공감 기능 오류 발생");
 				}
 			}
-			
 
-//			session.setAttribute("heartVoList", heartVoList);
-//			req.getSession().setAttribute("heartVoList", heartVoList);
-//			session.setAttribute("heartVo", heartVo);
-//			req.getSession().setAttribute("heartVo", heartVo);
-
-//				resp.sendRedirect("/jdgr/post/detail?url=${blogUrlVo.blogUrl}&&categoryNo=groupVo.getNo() %>");
 			resp.sendRedirect("/jdgr/post/detail?url=" + postDetailVo.getBlogUrl() + "&&GroupNo=" + postDetailVo.getGroupNo());
 
 		} catch (Exception e) {
