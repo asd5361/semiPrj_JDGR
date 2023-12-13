@@ -52,6 +52,9 @@ public class CsboardVo {
 	}
 	public void setAdminNo(String adminNo) {
 		this.adminNo = adminNo;
+		if(adminNo == null && this.qNo != null) {
+			this.adminNo = "";
+		}
 	}
 	public String getMemNo() {
 		return memNo;
@@ -64,6 +67,9 @@ public class CsboardVo {
 	}
 	public void setqTit(String qTit) {
 		this.qTit = qTit;
+		if(qTit == null && this.qNo != null) {
+			this.qTit = "";
+		}
 	}
 	public String getqCon() {
 		return qCon;
@@ -80,6 +86,10 @@ public class CsboardVo {
 		 * 
 		 */
 		this.qCon = qCon;
+		if(qCon == null && this.qNo != null) {
+			this.qCon = "";
+			this.qConFirstLine = "";
+		}
 	}
 	public String getqWriteDate() {
 		return qWriteDate;
@@ -92,18 +102,27 @@ public class CsboardVo {
 	}
 	public void setAnsewr(String ansewr) {
 		this.ansewr = ansewr;
+		if(ansewr == null && this.qNo != null) {
+			this.ansewr = "";
+		}
 	}
 	public String getAnsewrDate() {
 		return ansewrDate;
 	}
 	public void setAnsewrDate(String ansewrDate) {
 		this.ansewrDate = ansewrDate;
+		if(ansewrDate == null && this.qNo != null) {
+			this.ansewrDate = "";
+		}
 	}
 	public String getUpdateDate() {
 		return updateDate;
 	}
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+		if(updateDate == null && this.qNo != null) {
+			this.updateDate = "";
+		}
 	}
 	public String getDelYn() {
 		return delYn;
@@ -140,6 +159,9 @@ public class CsboardVo {
 	}
 	public void setAdminName(String adminName) {
 		this.adminName = adminName;
+		if(this.adminNo.equals("")) {
+			this.adminName = "";
+		}
 	}
 	public String getMemNick() {
 		return memNick;
