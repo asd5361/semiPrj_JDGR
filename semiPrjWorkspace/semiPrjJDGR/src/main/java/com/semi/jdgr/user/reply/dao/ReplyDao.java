@@ -40,6 +40,8 @@ public class ReplyDao {
 		// SQL
 		String sql = "SELECT R.* , M.MEM_NICK AS REPLY_MEM_NICK FROM REPLY R JOIN MEMBER M ON M.MEM_NO = R.REPLY_MEM WHERE R.POST_NO = ? AND R.DEL_YN = 'N' ORDER BY COALESCE(PARENTS_NO, REPLY_NO) ASC, REPLY_NO ASC";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
+
+		System.out.println("포스트넘버 : " + postNum);
 		pstmt.setString(1, postNum);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -65,7 +67,7 @@ public class ReplyDao {
 			
 			replyVoList.add(vo);
 		}
-		
+		System.out.println("dao voList" + replyVoList);
 		// close
 		JDBCTemplate.close(rs);
 		JDBCTemplate.close(pstmt);
