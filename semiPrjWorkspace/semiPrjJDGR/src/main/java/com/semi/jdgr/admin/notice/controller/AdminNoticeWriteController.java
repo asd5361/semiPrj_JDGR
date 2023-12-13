@@ -7,12 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.semi.jdgr.admin.member.vo.AdminVo;
 import com.semi.jdgr.notice.service.NoticeService;
 import com.semi.jdgr.notice.vo.NoticeVo;
-import com.semi.jdgr.user.member.vo.MemberVo;
 
 @WebServlet("/admin/notice/write")
 public class AdminNoticeWriteController extends HttpServlet{
@@ -23,20 +20,15 @@ public class AdminNoticeWriteController extends HttpServlet{
 		req.setAttribute("pno", req.getParameter("pno"));
 		req.getRequestDispatcher("/WEB-INF/views/admin/notice/noticeCreateEdit.jsp").forward(req, resp);
 					
-		
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			HttpSession session = req.getSession();
-			AdminVo adminVo = (AdminVo) session.getAttribute("loginAdmin");
-			
-			
 			//data
 			String CurrentPage = req.getParameter("pno");
 			System.out.println(CurrentPage);
 			NoticeVo vo = new NoticeVo();
-			vo.setAdminNo(adminVo.getAdminNo()); 
+			vo.setAdminNo("1"); /**임시 로그인 번호 넣기*************************************/
 			vo.setDelYn(req.getParameter("del"));
 			vo.setFixedYn(req.getParameter("fixed"));
 			vo.setTitle(req.getParameter("title"));

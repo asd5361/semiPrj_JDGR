@@ -62,7 +62,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="">작성자</label></th>
-                                    <td colspan="3"><%=loginAdminVo.getAdminName() %></td>
+                                    <td colspan="3">관리자</td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><label for="inp_03">제목</label></th>

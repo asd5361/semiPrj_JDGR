@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import com.semi.jdgr.admin.member.vo.AdminVo;
+import com.semi.jdgr.admin.member.vo.AdaminVo;
 import com.semi.jdgr.util.JDBCTemplate;
 
 public class AdminDao {
 
-	public AdminVo login(Connection conn, AdminVo vo) throws Exception {
+	public AdaminVo login(Connection conn, AdaminVo vo) throws Exception {
 		
 		String sql = "SELECT * FROM ADMIN WHERE ADMIN_ID = ? AND ADMIN_PWD = ? AND QUIT_YN = 'N'";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -17,7 +17,7 @@ public class AdminDao {
 		pstmt.setString(2, vo.getAdminPwd());
 		ResultSet rs = pstmt.executeQuery();
 		
-		AdminVo loginMember =null;
+		AdaminVo loginMember =null;
 		
 		if(rs.next()) {
 			String adminNo = rs.getString("ADMIN_NO");
@@ -32,7 +32,7 @@ public class AdminDao {
 			
 			
 			
-			loginMember = new AdminVo();
+			loginMember = new AdaminVo();
 			loginMember.setAdminNo(adminNo);
 			loginMember.setAdminId(adminId);
 			loginMember.setAdminPwd(adminPwd);
