@@ -18,45 +18,83 @@ import com.semi.jdgr.user.member.vo.MemberVo;
 @WebServlet("/user/blame/p_blamepop")
 public class PostBlameController extends HttpServlet{
 	
+//	//신고하기 모달 화면
+//	@Override
+//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		try {
+//			
+////			MemberVo memberVo = (MemberVo) req.getSession().getAttribute("loginMember");
+////			if(memberVo == null) {
+////				throw new Exception("로그인이 필요한 서비스입니다.");
+////			}
+//			
+//			
+//			//data
+//			PostVo vo = new PostVo();
+//			vo.setPostNo(req.getParameter("postNo"));	
+//			vo.setUserNick(req.getParameter("userNick"));
+//			vo.setPostTitle(req.getParameter("postTitle"));
+//
+//
+//			// 댓글 정보를 모달에 전달
+//			req.setAttribute("vo", vo);
+//
+//			 
+//			//service
+//			PostBlameService pbs = new PostBlameService();	
+//			List<PostBlameVo> pvo = pbs.blameList();			//신고 구분 목록 가져오기
+//			
+//			//result(==view)
+//			if(pvo == null) {
+//				req.setAttribute("alertMsg", "댓글 정보 불러오기 실패");
+//				throw new Exception("댓글 신고 실패");
+//			}
+//			req.setAttribute("pvo", pvo);
+////			req.setAttribute("vo", vo);
+//			req.getRequestDispatcher("/WEB-INF/views/user/blame/p_blamepop.jsp").forward(req, resp);
+//			
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			req.setAttribute("errorMsg", "신고");
+//			req.getRequestDispatcher("/WEB-INF/views/common/error.jsp").forward(req, resp);
+//		}
+//	
+//	}//doGet
+	
+	
+	
+	
 	//신고하기 모달 화면
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		try {
+	
 			
 //			MemberVo memberVo = (MemberVo) req.getSession().getAttribute("loginMember");
 //			if(memberVo == null) {
 //				throw new Exception("로그인이 필요한 서비스입니다.");
 //			}
-			
-			
+			try {
 			//data
-			PostVo vo = new PostVo();
-			vo.setPostNo(req.getParameter("postNo"));	
-			vo.setUserNick(req.getParameter("userNick"));
-			vo.setPostTitle(req.getParameter("postTitle"));
+			String pNo = req.getParameter("pNo");
+			
 
-			// 댓글 정보를 모달에 전달
-			req.setAttribute("vo", vo);
-
-			 
 			//service
-			PostBlameService pbs = new PostBlameService();	
-			List<PostBlameVo> pvo = pbs.blameList();			//신고 구분 목록 가져오기
+			PostBlameService pbs = new PostBlameService();
+			PostBlameVo pbo = pbs.getPostInfo(pNo);
+			List<PostBlameVo> list = pbs.blameList();
 			
-			//result(==view)
-			if(pvo == null) {
-				req.setAttribute("alertMsg", "댓글 정보 불러오기 실패");
-				throw new Exception("댓글 신고 실패");
-			}
-			req.setAttribute("pvo", pvo);
-//			req.setAttribute("vo", vo);
+			
+			//result
+			req.setAttribute("pbo", pbo);
+			req.setAttribute("list", list);
 			req.getRequestDispatcher("/WEB-INF/views/user/blame/p_blamepop.jsp").forward(req, resp);
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-			req.setAttribute("errorMsg", "신고");
-			req.getRequestDispatcher("/WEB-INF/views/common/error.jsp").forward(req, resp);
-		}
+			}catch(Exception e) {
+				System.out.println("포스트 정보 불러오기 실패");
+				e.printStackTrace();
+				req.setAttribute("error", "포스트 정보 조회 실패");
+				req.getRequestDispatcher("/WEB-INF/views/user/common/error.jsp").forward(req, resp);
+			}
+		
 	
 	}//doGet
 	
@@ -69,25 +107,38 @@ public class PostBlameController extends HttpServlet{
 			HttpSession session = req.getSession(false);
 			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 
-			String loginMem = "1";
-			String pWriterNo = req.getParameter("pWriterNo");
-			String pBlaTit = req.getParameter("pBlaTit");
+//			String loginMem = "1";
+			String loginMem = loginMember.getMemNick();
+			String postNo = req.getParameter("postNo");
+			String pWriterNick = req.getParameter("pWriterNick");
+			String pTit = req.getParameter("pTit");
 			String pBlaList = req.getParameter("pBlaList");
 			String pBlaDetail = req.getParameter("pBlaDetail");
-			String postNo = req.getParameter("postNo");
 			
-			PostBlameVo vo = new PostBlameVo();
-			vo.setpBlamerNo(loginMem);
-			vo.setpWriterNo(pWriterNo);
-			vo.setpBlaTit(pBlaTit);
-			vo.setpBlaList(pBlaList);
-			vo.setpBlaDetail(pBlaDetail);
-			vo.setpNo(postNo);
+			MemberVo mvo = new MemberVo();
+			mvo.setMemNick(loginMem);
 			
+			PostVo vo = new PostVo();
+			vo.setPostNo(postNo);
+			vo.setPostTitle(pTit);
+			
+			PostBlameVo pbo = new PostBlameVo();
+			pbo.setpWriterNick(pWriterNick);
+			pbo.setpBlaList(pBlaList);
+			pbo.setpBlaDetail(pBlaDetail);
+
+			
+//			PostBlameVo vo = new PostBlameVo();
+//			vo.setpBlamerNick(loginMem);
+//			vo.setpWriterNick(pWriterNo);
+//			vo.setpBlaTit(pBlaTit);
+//			vo.setpBlaList(pBlaList);
+//			vo.setpBlaDetail(pBlaDetail);
+//			vo.setpNo(postNo);
 			
 			//service
 			PostBlameService pbs = new PostBlameService();
-			int result = pbs.blame(vo);
+			int result = pbs.blame(mvo, vo, pbo);
 			
 			//result(==view)
 			if(result != 1) {
@@ -97,7 +148,7 @@ public class PostBlameController extends HttpServlet{
 			
 			//나중에 포스트 합치면 필요한 값 넣어서 화면으로
 			System.out.println("성공");
-//			resp.sendRedirect("/jdgr/home");
+			resp.sendRedirect("/jdgr/post/detail?pNo=?" + postNo);
 			
 		}catch(Exception e) {
 			System.out.println("신고 중 에러 발생");
