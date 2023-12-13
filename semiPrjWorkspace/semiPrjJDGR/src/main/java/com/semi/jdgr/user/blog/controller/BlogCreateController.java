@@ -40,7 +40,7 @@ public class BlogCreateController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			
+			System.out.println("확인출력문");
 			// data
 			Part blogImg = req.getPart("blogImg");
 			String blogTitle = req.getParameter("blogTitle");

@@ -70,7 +70,7 @@
                             	<% if(loginMemberBlogVoList.size() < 3){ %>
                             		<div class="gg"><span><%= subtractedSize %></span>개의 블로그를 더 운영할 수 있습니다.</div>
 	                                <div class="btn_area">
-	                                    <button onclick="newBlogValidationCheck();">새 블로그 만들기</button>
+	                                    <button type="submit" onclick="newBlogValidationCheck();">새 블로그 만들기</button>
 	                                </div>
                             	<% } else { %>
                             		
