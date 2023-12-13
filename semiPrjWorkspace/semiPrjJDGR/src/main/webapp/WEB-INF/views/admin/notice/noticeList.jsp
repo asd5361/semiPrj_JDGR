@@ -88,7 +88,7 @@
                             <col width="">
                             <col width="">
                             <col width="">
-                            <col width="">
+<!--                             <col width=""> -->
                             <col width="">
                             <col width="">
                             <col width="">
@@ -99,7 +99,7 @@
                                 <th scope="col">번호</th>
                                 <th scope="col">제목</th>
                                 <th scope="col">작성자</th>
-                                <th scope="col">내용</th>
+<!--                                 <th scope="col">내용</th> -->
                                 <th scope="col">조회수</th>
                                 <th scope="col">작성일자</th>
                                 <th scope="col">수정일자</th>
@@ -113,7 +113,7 @@
 								<td><%= vo.getNoticeNo()%></td>
 								<td><%= vo.getTitle()%></td>
 								<td><%= vo.getAdminName() %></td>
-								<td><%= vo.getContent() %></td>
+<%-- 								<td><%= vo.getContent() %></td> --%>
 								<td><%= vo.getInquiry()%></td>
 								<td><%= vo.getEnrollDate()%></td>
 								<td><%= vo.getUpdateDate() %></td>

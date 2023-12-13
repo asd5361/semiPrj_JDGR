@@ -1,3 +1,4 @@
+<%@page import="com.semi.jdgr.admin.member.vo.AdminVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -5,6 +6,9 @@
 	if(adminClassName == null){
 		adminClassName = "";
 	}
+	AdminVo loginAdminVo = (AdminVo) session.getAttribute("loginAdmin");
+	System.out.println(loginAdminVo);
+	
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -53,8 +57,8 @@
         <header>
             <div class="welcomMsg">
                 <div class="img"><img src="/jdgr/resources/admin/images/ico/ico_info.png" alt="사용자아이콘"></div>
-                <span>관리자</span>님 환영합니다.
+                <span><%=loginAdminVo.getAdminName() %></span>님 환영합니다.
             </div>
-            <a href="">로그아웃</a>
+            <a href="/jdgr/admin/logout">로그아웃</a>
         </header>
         <!-- //header -->

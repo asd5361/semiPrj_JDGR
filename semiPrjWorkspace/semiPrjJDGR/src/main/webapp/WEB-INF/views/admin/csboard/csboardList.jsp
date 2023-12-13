@@ -86,7 +86,7 @@
                             <col width="">
                             <col width="">
                             <col width="">
-                            <col width="">
+<!--                             <col width=""> -->
                             <col width="">
                             <col width="">
                             <col width="">
@@ -97,7 +97,7 @@
                                 <th scope="col">번호</th>
                                 <th scope="col">제목</th>
                                 <th scope="col">작성자</th>
-                                <th scope="col">내용</th>
+<!--                                 <th scope="col">내용</th> -->
                                 <th scope="col">작성일자</th>
                                 <th scope="col">답변여부</th>
                                 <th scope="col">답변일자</th>
@@ -111,7 +111,7 @@
 								<td><%=vo.getqNo() %></td>
 								<td><%=vo.getqTit() %></td>
 								<td><%=vo.getMemNick() %></td>
-								<td><%=vo.getqConFirstLine()%></td>
+<%-- 								<td><%=vo.getqConFirstLine()%></td> --%>
 								<td><%=vo.getqWriteDate() %></td>
 								<td><%=vo.getAnsewrDate() %></td>
 								<td><%=vo.getAnsewrDate() %></td>
