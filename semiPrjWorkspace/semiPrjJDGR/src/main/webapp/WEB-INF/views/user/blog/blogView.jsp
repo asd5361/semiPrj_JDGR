@@ -4,7 +4,6 @@
 <%@ include file="/WEB-INF/views/user/common/header.jsp" %>
 <% 
 	List<ReplyVo> replyVoList = (List<ReplyVo>) request.getAttribute("replyVoList");
-PostVo postDetailVo = (PostVo) session.getAttribute("postDetailVo");
 %> 
 <script>
 
@@ -97,17 +96,17 @@ PostVo postDetailVo = (PostVo) session.getAttribute("postDetailVo");
         
     }
     
-    // 신고
-    function blame() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/user/blame/p_blamepop?<%= postDetailVo.getP%> ";
+//     // 신고
+//     function blame() {
+//     	const form = document.createElement("form");
+<%--         form.action = "/jdgr/user/blame/p_blamepop?<%= postDetailVo.getP%> "; --%>
         
-        form.method = "get";
+//         form.method = "get";
         
-        document.body.appendChild(form);
+//         document.body.appendChild(form);
         
-        form.submit();
-    }
+//         form.submit();
+//     }
     
     
   
