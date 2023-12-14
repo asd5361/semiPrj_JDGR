@@ -1,4 +1,4 @@
-<%@page import="com.semi.jdgr.user.blame.vo.PostBlameVo"%>
+<%-- <%@page import="com.semi.jdgr.user.blame.vo.PostBlameVo"%> --%>
 <%@page import="com.semi.jdgr.user.reply.vo.ReplyVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -6,69 +6,69 @@
 <% 
 	List<ReplyVo> replyVoList = (List<ReplyVo>) request.getAttribute("replyVoList");
 // 	PostBlameVo pbo = (PostBlameVo)request.getAttribute("pbo");
-	PostVo pbo = (PostVo)request.getAttribute("pbo");
-	List<PostBlameVo> list = (List<PostBlameVo>)request.getAttribute("list");
+// 	PostVo pbo = (PostVo)request.getAttribute("pbo");
+// 	List<PostBlameVo> list = (List<PostBlameVo>)request.getAttribute("list");
 %> 
 <script>
-	// 댓글창
-	let ReplyList = false;
+// 	// 댓글창
+// 	let ReplyList = false;
 
-	function toggleReplyList() {
-    const replyList = document.getElementById('replyList');
-    ReplyList = !ReplyList;
+// 	function toggleReplyList() {
+//     const replyList = document.getElementById('replyList');
+//     ReplyList = !ReplyList;
 
-    if (ReplyList) {
-    	replyList.style.display = 'block';
-    } else {
-    	replyList.style.display = 'none';
-    }
-}
+//     if (ReplyList) {
+//     	replyList.style.display = 'block';
+//     } else {
+//     	replyList.style.display = 'none';
+//     }
+// }
 
-    let likeClick = true;
-    let plusClick = true;
-    let repClick = true;
-    let repListClick = true;
+//     let likeClick = true;
+//     let plusClick = true;
+//     let repClick = true;
+//     let repListClick = true;
     
-    // 이미지 변경	
-    function clickEvent(mode) {
-        switch (mode) {
+//     // 이미지 변경	
+//     function clickEvent(mode) {
+//         switch (mode) {
         
-            case 'like' :
-                const likeBtn = document.getElementById('like_btn');
-                likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
-                likeClick = !likeClick;
-                heart();
-            break;
+//             case 'like' :
+//                 const likeBtn = document.getElementById('like_btn');
+//                 likeClick ? likeBtn.className = "btn_k like" : likeBtn.className = "btn_k un_like";
+//                 likeClick = !likeClick;
+//                 heart();
+//             break;
                 
-            case 'follow' :
-                const plusBtn = document.getElementById('plus_btn');
-                plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
-                plusClick = !plusClick;
-                follow()
-            break;
+//             case 'follow' :
+//                 const plusBtn = document.getElementById('plus_btn');
+//                 plusClick ? plusBtn.className = "btn_k plus" : plusBtn.className = "btn_k un_plus";
+//                 plusClick = !plusClick;
+//                 follow()
+//             break;
                 
-            case 'reply' :
-                const repBtn = document.getElementById('rep_btn');
-                repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
-                repClick = !repClick;
-                toggleReplyList()
-            break;
+//             case 'reply' :
+//                 const repBtn = document.getElementById('rep_btn');
+//                 repClick ? repBtn.className = "btn_k rep" : repBtn.className = "btn_k un_rep";
+//                 repClick = !repClick;
+//                 toggleReplyList()
+//             break;
                 
-        }
+//         }
         
-    }
+//     }
     
-    // 신고
-    function blame() {
-    	const form = document.createElement("form");
-        form.action = "/jdgr/user/blame/p_blamepop?pNo=?";
-//         form.action = "/jdgr/user/blame/p_blamepop?pNo="
-        form.method = "get";
+//     신고
+//     function blame() {
+//     	const form = document.createElement("form");
+//         form.action = "/jdgr/user/blame/p_blamepop?pNo=?";
+// //         form.action = "/jdgr/user/blame/p_blamepop?pNo="
+//         form.method = "get";
         
-        document.body.appendChild(form);
+//         document.body.appendChild(form);
         
-        form.submit();
-    }
+//         form.submit();
+//     }
 
 
 
@@ -114,46 +114,7 @@
 //         form.submit();
 //     }
     
-    // ajax 공감
-    function heart(){
-        
-        fetch('/jdgr/post/heart', {
-           method : 'get',
-        })
-        .then(resp => { 
-        	if (!resp.ok) {
-            	throw new Error('Network response was not ok');
-        	}
-        	return resp.json(); 
-        })
-      
-        .then( data => {
-        	console.log('공감 성공:', data);
-        })
-        .catch(error => {
-            console.error('catch블럭 실행:', error);
-        });
-     }
-    
- 	// ajax 구독
-    function follow() {
-        fetch('/jdgr/post/follow', {
-            method: 'GET'
-        })
-        .then(resp => {
-            if (!resp.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return resp.json();
-        })
-        .then(data => {
-            console.log('구독 성공:', data);
-            // 받은 데이터를 처리하여 필요한 동작 수행
-        })
-        .catch(error => {
-            console.error('catch블럭 실행:', error);
-        });
-    }
+
     
   
 </script>
